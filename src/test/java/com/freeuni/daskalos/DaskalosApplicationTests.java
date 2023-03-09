@@ -5,8 +5,5 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 class DaskalosApplicationTests {
-
-    @Test
-    void contextLoads() {
-    }
+    // TODO
 }

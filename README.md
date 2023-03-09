@@ -1,10 +1,10 @@
 # Getting Started
 
 ----------------------------------------
-## JAVA - 1.19
+## JAVA - 1.17
 
 ჯავას დაყენების ინსტრუქცია:
-1. პირველ რიგში გადმოწერეთ JDK ამ ლინკიდან https://www.oracle.com/in/java/technologies/javase/jdk11-archive-downloads.html
+1. პირველ რიგში გადმოწერეთ JDK ამ ლინკიდან https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html
 2. ამოაარქივეთ ზიპი program files-ში და bin-ის მისამართი გადაიტანეთ სისტემურ ცვლადებში path-ში. 
 -----------------------------------------
 Maven-ის გამართვის ინსტრუქცია:
