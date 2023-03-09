@@ -19,6 +19,10 @@ Maven-ის გამართვის ინსტრუქცია:
 
 -------------------------
 
+Postgre 15 ბაზებისთვის https://www.enterprisedb.com/downloads/postgres-postgresql-downloads
+
+-------------------------
+
 ### დამატებითი ინსტრუქციები ქვემოთ:
 
 * [Official Apache Maven documentation](https://maven.apache.org/guides/index.html)
