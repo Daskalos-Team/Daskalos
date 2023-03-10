@@ -17,6 +17,12 @@ Maven-ის გამართვის ინსტრუქცია:
 --------------------------
 ასევე დააყენეთ node ტერმინალიდან `winget install OpenJS.NodeJS`
 
+--------------------------
+
+ბაზების გამართვის ინსტრუქცია
+1. PostgreSQL ჩამოწერეთ საინსტალაციო და დააინსტალირეთ https://www.postgresql.org/download/windows/
+2. პრობლემების შემთხვევაში ნახეთ ვიდეო https://www.youtube.com/watch?v=MTRtusym-2s
+3. ბაზებთან სამუშაო ვიზუალური ინტერფეისისთვის ჩაიწერეთ DBeaver(pgadmin-იც შეიძლება) https://dbeaver.io/download/
 -------------------------
 
 Postgre 15 ბაზებისთვის https://www.enterprisedb.com/downloads/postgres-postgresql-downloads
