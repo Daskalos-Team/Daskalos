@@ -15,7 +15,12 @@ Maven-ის გამართვის ინსტრუქცია:
 სისტემურ ცვლადებზე პრობლემის შემთხვევაში იხილეთ ვიდეო: https://www.youtube.com/watch?v=RQ_Z859Hd7Q
 
 --------------------------
-ასევე დააყენეთ node ტერმინალიდან `winget install OpenJS.NodeJS`
+ასევე დააყენეთ node ტერმინალიდან `winget install OpenJS.NodeJS` და შეამოწმეთ:
+1. node -v
+2. npm -v
+
+ასევე შესაძლოა დაგვჭირდეს microsoft fast-ის ინტეგრაცია რისთვისაც მიყვებით ამ ლინკს:
+https://www.fast.design/docs/integrations/react/
 
 --------------------------
 
