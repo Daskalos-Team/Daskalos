@@ -1,13 +1,17 @@
-package com.freeuni.daskalos.repository.entities.teacher;
+package com.freeuni.daskalos.repository.entities;
 
 import reactor.util.annotation.NonNull;
 
 import java.util.Date;
 
 public class ExperienceBuilder {
+
     private int ID;
+
     private String employer;
+
     private String jobDescription;
+
     private Date startDate;
 
     private Date endDate;

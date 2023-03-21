@@ -1,8 +1,5 @@
-package com.freeuni.daskalos.repository.entities.student;
+package com.freeuni.daskalos.repository.entities;
 
-import com.freeuni.daskalos.repository.entities.User;
-import com.freeuni.daskalos.repository.entities.UserType;
-import com.freeuni.daskalos.repository.entities.teacher.Teacher;
 import jakarta.annotation.Nonnull;
 import reactor.util.annotation.NonNull;
 import reactor.util.annotation.Nullable;
@@ -14,7 +11,6 @@ public class Student extends User {
 
     @NonNull
     private final List<Teacher> favouriteTeachers;
-
 
     public Student(int ID, @NonNull String name, @NonNull String secondName, @NonNull String password,
                        @NonNull String mail, @NonNull UserType userType, @NonNull String phoneNumber, int priceMin,

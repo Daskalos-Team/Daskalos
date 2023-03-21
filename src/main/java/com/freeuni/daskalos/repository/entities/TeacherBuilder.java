@@ -1,26 +1,39 @@
-package com.freeuni.daskalos.repository.entities.teacher;
+package com.freeuni.daskalos.repository.entities;
 
-import com.freeuni.daskalos.repository.entities.UserBuilder;
-import com.freeuni.daskalos.repository.entities.UserType;
 import reactor.util.annotation.NonNull;
 
 import java.util.List;
 
 public class TeacherBuilder extends UserBuilder {
+
     private int ID;
+
     private String name;
+
     private String secondName;
+
     private String password;
+
     private String mail;
+
     private UserType userType;
+
     private String phoneNumber;
+
     private int priceMin;
+
     private int priceMax;
+
     private String address;
+
     private List<String> socialNetworkUrls;
+
     private List<Experience> teachersExperience;
+
     private List<TeacherRating> teacherRatings;
+
     private boolean onPlace;
+
     private List<String> teacherSubjects;
 
     public TeacherBuilder(@NonNull Teacher teacher) {
@@ -114,5 +127,4 @@ public class TeacherBuilder extends UserBuilder {
                 this.teacherRatings,
                 this.teacherSubjects);
     }
-
 }

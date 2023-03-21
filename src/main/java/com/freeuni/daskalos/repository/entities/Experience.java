@@ -1,4 +1,4 @@
-package com.freeuni.daskalos.repository.entities.teacher;
+package com.freeuni.daskalos.repository.entities;
 
 
 import org.apache.logging.log4j.util.Strings;
@@ -11,14 +11,19 @@ import java.util.Objects;
 public class Experience {
 
     private int ID;
+
     @NonNull
     private String employer;
+
     @NonNull
     private String jobDescription;
+
     @NonNull
     private Date startDate;
+
     @Nullable
     private Date endDate;
+
 
     public Experience(int ID, @NonNull String employer, @Nullable String jobDescription, @NonNull Date startDate, @Nullable Date endDate) {
         this.ID = ID;
@@ -51,6 +56,4 @@ public class Experience {
     public Date getEndDate() {
         return this.endDate;
     }
-
-
 }

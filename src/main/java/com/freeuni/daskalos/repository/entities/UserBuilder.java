@@ -5,16 +5,27 @@ import reactor.util.annotation.NonNull;
 import java.util.List;
 
 public abstract class UserBuilder {
+
     private final int ID;
+
     private String name;
+
     private String secondName;
+
     private String password;
+
     private String mail;
+
     private UserType userType;
+
     private String phoneNumber;
+
     private int priceMin;
+
     private int priceMax;
+
     private String address;
+
     private List<String> socialNetworkUrls;
 
     public UserBuilder(@NonNull User user) {
@@ -130,5 +141,4 @@ public abstract class UserBuilder {
         this.socialNetworkUrls.addAll(List.of(socialNetworkUrls));
         return this;
     }
-
 }

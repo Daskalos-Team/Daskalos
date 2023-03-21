@@ -1,4 +1,4 @@
-package com.freeuni.daskalos.repository.entities.teacher;
+package com.freeuni.daskalos.repository.entities;
 
 import org.apache.logging.log4j.util.Strings;
 import reactor.util.annotation.NonNull;
@@ -9,9 +9,12 @@ import java.util.Objects;
 public class TeacherRating {
 
     private int ID;
+
     private int studentID;
+
     @NonNull
     private String studentComment;
+
     private int rating;
 
     public TeacherRating(int ID, int studentID, @Nullable String studentComment, int rating) {

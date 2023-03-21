@@ -26,5 +26,4 @@ public enum UserType {
     public static UserType fromName(String name) {
         return nameToEnum.get(name);
     }
-
 }

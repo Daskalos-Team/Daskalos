@@ -1,24 +1,31 @@
-package com.freeuni.daskalos.repository.entities.student;
-
-import com.freeuni.daskalos.repository.entities.UserBuilder;
-import com.freeuni.daskalos.repository.entities.UserType;
-import com.freeuni.daskalos.repository.entities.teacher.Teacher;
+package com.freeuni.daskalos.repository.entities;
 
 import java.util.List;
 
 public class StudentBuilder extends UserBuilder {
 
     private int ID;
+
     private String name;
+
     private String secondName;
+
     private String password;
+
     private String mail;
+
     private UserType userType;
+
     private String phoneNumber;
+
     private int priceMin;
+
     private int priceMax;
+
     private String address;
+
     private List<String> socialNetworkUrls;
+
     private List<Teacher> favouriteTeachers;
 
     public StudentBuilder(Student student) {

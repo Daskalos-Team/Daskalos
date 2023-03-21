@@ -1,11 +1,14 @@
-package com.freeuni.daskalos.repository.entities.teacher;
+package com.freeuni.daskalos.repository.entities;
 
 import reactor.util.annotation.NonNull;
 
 public class TeacherRatingBuilder {
     private int ID;
+
     private int studentID;
+
     private String studentComment;
+
     private int rating;
 
     public TeacherRatingBuilder(@NonNull TeacherRating teacherRating) {
@@ -54,5 +57,4 @@ public class TeacherRatingBuilder {
     public TeacherRating toTeacherRating() {
         return new TeacherRating(this.ID, this.studentID, this.studentComment, this.rating);
     }
-
 }

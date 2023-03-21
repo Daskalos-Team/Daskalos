@@ -11,22 +11,32 @@ import java.util.Objects;
 public abstract class User implements Serializable {
 
     private int ID;
+
     @NonNull
     private String name;
+
     @NonNull
     private String secondName;
+
     @NonNull
     private String password;
+
     @NonNull
     private String mail;
+
     @NonNull
     private UserType userType;
+
     @NonNull
     private String phoneNumber;
+
     private int priceMin;
+
     private int priceMax;
+
     @NonNull
     private String address;
+
     @NonNull
     private List<String> socialNetworkUrls;
 
@@ -111,5 +121,4 @@ public abstract class User implements Serializable {
     public List<String> getSocialNetworkUrls() {
         return this.socialNetworkUrls;
     }
-
 }

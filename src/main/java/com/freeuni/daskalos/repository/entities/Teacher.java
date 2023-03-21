@@ -1,7 +1,5 @@
-package com.freeuni.daskalos.repository.entities.teacher;
+package com.freeuni.daskalos.repository.entities;
 
-import com.freeuni.daskalos.repository.entities.User;
-import com.freeuni.daskalos.repository.entities.UserType;
 import reactor.util.annotation.NonNull;
 import reactor.util.annotation.Nullable;
 
@@ -12,9 +10,12 @@ public class Teacher extends User {
 
     @NonNull
     private List<Experience> teachersExperience;
+
     @NonNull
     private List<TeacherRating> teacherRatings;
+
     private final boolean onPlace;
+
     private List<String> teacherSubjects;
 
     public Teacher(int ID, @NonNull String name, @NonNull String secondName, @NonNull String password,
@@ -50,7 +51,6 @@ public class Teacher extends User {
     public List<TeacherRating> getTeacherRatings() {
         return teacherRatings;
     }
-
 
     @NonNull
     public List<String> getTeacherSubjects() {
