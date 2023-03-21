@@ -21,7 +21,7 @@ public class StudentBuilder extends UserBuilder {
     private List<String> socialNetworkUrls;
     private List<Teacher> favouriteTeachers;
 
-    public StudentBuilder(StudentImpl student) {
+    public StudentBuilder(Student student) {
         super(student);
         this.favouriteTeachers = student.getStudentFavourites();
 
@@ -47,7 +47,7 @@ public class StudentBuilder extends UserBuilder {
     }
 
     public Student toStudent() {
-        return new StudentImpl(this.ID,
+        return new Student(this.ID,
                 this.name,
                 this.secondName,
                 this.password,

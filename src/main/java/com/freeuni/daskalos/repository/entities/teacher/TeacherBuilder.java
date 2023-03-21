@@ -23,7 +23,7 @@ public class TeacherBuilder extends UserBuilder {
     private boolean onPlace;
     private List<String> teacherSubjects;
 
-    public TeacherBuilder(@NonNull TeacherImpl teacher) {
+    public TeacherBuilder(@NonNull Teacher teacher) {
         super(teacher);
         this.teachersExperience = teacher.getTeachersExperience();
         this.teacherRatings = teacher.getTeacherRatings();
@@ -98,7 +98,7 @@ public class TeacherBuilder extends UserBuilder {
     }
 
     public Teacher toTeacher() {
-        return new TeacherImpl(this.ID,
+        return new Teacher(this.ID,
                 this.name,
                 this.secondName,
                 this.password,
