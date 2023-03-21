@@ -3,6 +3,7 @@ package com.freeuni.daskalos.repository.entities;
 import reactor.util.annotation.NonNull;
 
 public class TeacherRatingBuilder {
+
     private int ID;
 
     private int studentID;

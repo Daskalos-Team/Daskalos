@@ -23,5 +23,4 @@ public class Student extends User {
     public List<Teacher> getStudentFavourites() {
         return this.favouriteTeachers;
     }
-
 }
