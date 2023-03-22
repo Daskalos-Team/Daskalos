@@ -1,13 +1,17 @@
 # Getting Started
 
 ----------------------------------------
+
 ## JAVA - 1.17
 
 ჯავას დაყენების ინსტრუქცია:
+
 1. პირველ რიგში გადმოწერეთ JDK ამ ლინკიდან https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html
-2. ამოაარქივეთ ზიპი program files-ში და bin-ის მისამართი გადაიტანეთ სისტემურ ცვლადებში path-ში. 
+2. ამოაარქივეთ ზიპი program files-ში და bin-ის მისამართი გადაიტანეთ სისტემურ ცვლადებში path-ში.
+
 -----------------------------------------
 Maven-ის გამართვის ინსტრუქცია:
+
 1. გადმოწერეთ Binary zip archive ამ ლინკიდან: https://maven.apache.org/download.cgi
 2. ამოაარქივეთ ზიპი და bin დაამატეთ სისტემურ ცვლადებში
 3. გატესტეთ ხო ნამდვილად დაემატა, ამისთვის გახსენით ტერმინალი და გაუშვით ბრძანება mvn --version, არ უნდა იყოს ერორები.
@@ -16,6 +20,7 @@ Maven-ის გამართვის ინსტრუქცია:
 
 --------------------------
 ასევე დააყენეთ node ტერმინალიდან `winget install OpenJS.NodeJS` და შეამოწმეთ:
+
 1. node -v
 2. npm -v
 
@@ -25,9 +30,11 @@ https://www.fast.design/docs/integrations/react/
 --------------------------
 
 ბაზების გამართვის ინსტრუქცია
+
 1. PostgreSQL ჩამოწერეთ საინსტალაციო და დააინსტალირეთ https://www.postgresql.org/download/windows/
 2. პრობლემების შემთხვევაში ნახეთ ვიდეო https://www.youtube.com/watch?v=MTRtusym-2s
 3. ბაზებთან სამუშაო ვიზუალური ინტერფეისისთვის ჩაიწერეთ DBeaver(pgadmin-იც შეიძლება) https://dbeaver.io/download/
+
 -------------------------
 
 Postgre 15 ბაზებისთვის https://www.enterprisedb.com/downloads/postgres-postgresql-downloads
@@ -72,4 +79,24 @@ These additional references should also help you:
 * [Azure Active Directory Sample](https://aka.ms/spring/samples/latest/aad)
 
 -------------------------
-figma poject link: https://www.figma.com/file/hGqQRZUSssUPEbJCNydP6N/Daskalos?node-id=0%3A1&t=gh15PMOxxqHKR9pY-1
+
+### figma main page link: https://www.figma.com/file/hGqQRZUSssUPEbJCNydP6N/Daskalos?node-id=0%3A1&t=gh15PMOxxqHKR9pY-1
+
+-------------------------
+
+## auto-formatter-ის გამართვა
+
+1. CTRL-ALT-S (Settings) -> Editor -> Code Style -> Java
+2. ზუსტად ეს ციფრები უნდა ეწეროს Blank Lines სექციაში:
+
+   ![img_1.png](FormatterSettings.png)
+3. settings -> Tools -> Actions on Save-ში გადადით და მონიშნეთ Reformat code ჩექბოქსი, რაც შენახვისას ავტომატურად
+   განაახლებს ფაილს
+   სტილისტურად,
+
+   ასევე საჭიროა auto save ჩართოთ ყოველ 1-2 წამში ერთხელ გასაშვებად, ამისთვის შედით:
+   Appearance & Behavior -> System Settings და auto save სექციაში მონიშნეთ: Save files if IDE is idle for [2 secs]
+
+### ფაილის სტილის ხელით გასასწორებლად, გაუშვით: `CTRL-ALT-L`
+
+--------------------------

@@ -17,7 +17,7 @@ public class UserController implements ErrorController {
     private UserService userService;
 
     @GetMapping("/info/")
-    public List<UserDao> getAllUserInfo(){
+    public List<UserDao> getAllUserInfo() {
         return userService.findAll();
     }
 
