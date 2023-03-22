@@ -82,4 +82,6 @@ These additional references should also help you:
    ![img_1.png](FormatterSettings.png)
 3. და ბოლოს ისევ სეთინგებში -> Tools -> Actions on Save მონიშნეთ Reformat code ჩექბოქსი, რაც შენახვისას ავტომატურად განაახლებს ფაილს სტილისტურად
 
+### ფაილის სტილის ხელით გასასწორებლად, გაუშვით: `CTRL-ALT-L`
+
 --------------------------
