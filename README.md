@@ -1,11 +1,10 @@
 # Getting Started
 
 ----------------------------------------
-## JAVA - 1.19
+## JAVA - 1.17
 
 ჯავას დაყენების ინსტრუქცია:
-1. პირველ რიგში გადმოწერეთ JDK ამ ლინკიდან https://www.oracle.com/in/java/technologies/javase/jdk11-archive-downloads.html
-ამოაარქივე
+1. პირველ რიგში გადმოწერეთ JDK ამ ლინკიდან https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html
 2. ამოაარქივეთ ზიპი program files-ში და bin-ის მისამართი გადაიტანეთ სისტემურ ცვლადებში path-ში. 
 -----------------------------------------
 Maven-ის გამართვის ინსტრუქცია:
@@ -16,7 +15,12 @@ Maven-ის გამართვის ინსტრუქცია:
 სისტემურ ცვლადებზე პრობლემის შემთხვევაში იხილეთ ვიდეო: https://www.youtube.com/watch?v=RQ_Z859Hd7Q
 
 --------------------------
-ასევე დააყენეთ node ტერმინალიდან `winget install OpenJS.NodeJS`
+ასევე დააყენეთ node ტერმინალიდან `winget install OpenJS.NodeJS` და შეამოწმეთ:
+1. node -v
+2. npm -v
+
+ასევე შესაძლოა დაგვჭირდეს microsoft fast-ის ინტეგრაცია რისთვისაც მიყვებით ამ ლინკს:
+https://www.fast.design/docs/integrations/react/
 
 --------------------------
 
@@ -24,6 +28,10 @@ Maven-ის გამართვის ინსტრუქცია:
 1. PostgreSQL ჩამოწერეთ საინსტალაციო და დააინსტალირეთ https://www.postgresql.org/download/windows/
 2. პრობლემების შემთხვევაში ნახეთ ვიდეო https://www.youtube.com/watch?v=MTRtusym-2s
 3. ბაზებთან სამუშაო ვიზუალური ინტერფეისისთვის ჩაიწერეთ DBeaver(pgadmin-იც შეიძლება) https://dbeaver.io/download/
+-------------------------
+
+Postgre 15 ბაზებისთვის https://www.enterprisedb.com/downloads/postgres-postgresql-downloads
+
 -------------------------
 
 ### დამატებითი ინსტრუქციები ქვემოთ:
