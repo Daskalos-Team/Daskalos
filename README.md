@@ -72,4 +72,14 @@ These additional references should also help you:
 * [Azure Active Directory Sample](https://aka.ms/spring/samples/latest/aad)
 
 -------------------------
-figma main-page link: https://www.figma.com/file/hGqQRZUSssUPEbJCNydP6N/Daskalos?node-id=0%3A1&t=gh15PMOxxqHKR9pY-1
+### figma main page link: https://www.figma.com/file/hGqQRZUSssUPEbJCNydP6N/Daskalos?node-id=0%3A1&t=gh15PMOxxqHKR9pY-1
+
+-------------------------
+## auto-formatter-ის გამართვა
+1. CTRL-ALT-S (Settings) -> Editor -> Code Style -> Java
+2. ზუსტად ეს ციფრები უნდა ეწეროს Blank Lines სექციაში:
+
+   ![img_1.png](FormatterSettings.png)
+3. და ბოლოს ისევ სეთინგებში -> Tools -> Actions on Save მონიშნეთ Reformat code ჩექბოქსი, რაც შენახვისას ავტომატურად განაახლებს ფაილს სტილისტურად
+
+--------------------------
