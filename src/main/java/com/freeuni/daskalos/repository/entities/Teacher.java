@@ -19,10 +19,10 @@ public class Teacher extends User {
     private List<String> teacherSubjects;
 
     public Teacher(int ID, @NonNull String name, @NonNull String secondName, @NonNull String password,
-                       @NonNull String mail, @NonNull UserType userType, @NonNull String phoneNumber, int priceMin,
-                       int priceMax, @NonNull String address, @Nullable List<String> socialNetworkUrls,
-                       @Nullable List<Experience> teachersExperience, boolean onPlace, @Nullable List<TeacherRating> teacherRatings,
-                       @Nullable List<String> teacherSubjects) {
+                   @NonNull String mail, @NonNull UserType userType, @NonNull String phoneNumber, int priceMin,
+                   int priceMax, @NonNull String address, @Nullable List<String> socialNetworkUrls,
+                   @Nullable List<Experience> teachersExperience, boolean onPlace, @Nullable List<TeacherRating> teacherRatings,
+                   @Nullable List<String> teacherSubjects) {
         super(ID, name, secondName, password, mail, userType, phoneNumber, priceMin, priceMax, address, socialNetworkUrls);
         this.teachersExperience = !Objects.isNull(teachersExperience) ? teachersExperience : List.of();
         this.teacherRatings = !Objects.isNull(teacherRatings) ? teacherRatings : List.of();
@@ -31,10 +31,10 @@ public class Teacher extends User {
     }
 
     public Teacher(int ID, @NonNull String name, @NonNull String secondName, @NonNull String password,
-                       @NonNull String mail, @NonNull UserType userType, @NonNull String phoneNumber, int priceMin,
-                       int priceMax, @NonNull String address, @Nullable String socialNetworkUrls,
-                       @Nullable List<Experience> teachersExperience, boolean onPlace, @Nullable List<TeacherRating> teacherRatings,
-                       @Nullable List<String> teacherSubjects) {
+                   @NonNull String mail, @NonNull UserType userType, @NonNull String phoneNumber, int priceMin,
+                   int priceMax, @NonNull String address, @Nullable String socialNetworkUrls,
+                   @Nullable List<Experience> teachersExperience, boolean onPlace, @Nullable List<TeacherRating> teacherRatings,
+                   @Nullable List<String> teacherSubjects) {
         super(ID, name, secondName, password, mail, userType, phoneNumber, priceMin, priceMax, address, socialNetworkUrls);
         this.teachersExperience = !Objects.isNull(teachersExperience) ? teachersExperience : List.of();
         this.teacherRatings = !Objects.isNull(teacherRatings) ? teacherRatings : List.of();

@@ -31,7 +31,6 @@ public class StudentBuilder extends UserBuilder {
     public StudentBuilder(Student student) {
         super(student);
         this.favouriteTeachers = student.getStudentFavourites();
-
     }
 
     public StudentBuilder setFavouriteTeachers(List<Teacher> favouriteTeachers) {

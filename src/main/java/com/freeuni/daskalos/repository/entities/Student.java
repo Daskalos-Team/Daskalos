@@ -13,8 +13,8 @@ public class Student extends User {
     private final List<Teacher> favouriteTeachers;
 
     public Student(int ID, @NonNull String name, @NonNull String secondName, @NonNull String password,
-                       @NonNull String mail, @NonNull UserType userType, @NonNull String phoneNumber, int priceMin,
-                       int priceMax, @NonNull String address, @Nullable List<String> socialNetworkUrls, List<Teacher> favouriteTeachers) {
+                   @NonNull String mail, @NonNull UserType userType, @NonNull String phoneNumber, int priceMin,
+                   int priceMax, @NonNull String address, @Nullable List<String> socialNetworkUrls, List<Teacher> favouriteTeachers) {
         super(ID, name, secondName, password, mail, userType, phoneNumber, priceMin, priceMax, address, socialNetworkUrls);
         this.favouriteTeachers = !Objects.isNull(favouriteTeachers) ? favouriteTeachers : List.of();
     }

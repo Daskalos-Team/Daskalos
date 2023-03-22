@@ -1,6 +1,5 @@
 package com.freeuni.daskalos.repository.entities;
 
-
 import org.apache.logging.log4j.util.Strings;
 import reactor.util.annotation.NonNull;
 import reactor.util.annotation.Nullable;
@@ -23,7 +22,6 @@ public class Experience {
 
     @Nullable
     private Date endDate;
-
 
     public Experience(int ID, @NonNull String employer, @Nullable String jobDescription, @NonNull Date startDate, @Nullable Date endDate) {
         this.ID = ID;
