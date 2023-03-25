@@ -1,4 +1,4 @@
-package com.freeuni.daskalos.Utils;
+package com.freeuni.daskalos.utils;
 
 import java.util.Arrays;
 import java.util.List;
