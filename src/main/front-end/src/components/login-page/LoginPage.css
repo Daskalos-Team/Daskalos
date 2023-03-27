@@ -10,7 +10,7 @@
     font-family: "CustomFont", serif;
 }
 
-.page {
+.login-page {
     height: 100vh;
     width: 100%;
     display: flex;
@@ -21,7 +21,7 @@
     background-color: #cccccc;
 }
 
-.cover {
+.login-form {
     background-color: #f6f2f1;
     width: 70%;
     height: 70%;
@@ -34,14 +34,14 @@
     justify-content: space-around;
 }
 
-.alt-login {
+.alternative-login {
     width: 80%;
     height: 3em;
     display: flex;
     justify-content: space-around;
 }
 
-.alt-login div {
+.alternative-login div {
     width: 47.5%;
     height: 90%;
     border-radius: 0.25em;
@@ -130,22 +130,22 @@ input:focus {
 }
 
 @media only screen and (min-device-width: 37em) {
-    .page {
+    .login-page {
         font-size: 1em;
     }
 
-    .cover {
+    .login-form {
         width: 60%;
         height: 70%;
     }
 }
 
 @media only screen and (min-device-width: 64em) {
-    .page {
+    .login-page {
         font-size: 1.25em;
     }
 
-    .cover {
+    .login-form {
         width: 25%;
         height: 65%;
     }
@@ -153,7 +153,7 @@ input:focus {
 
 /* Animated background */
 
-.page{
+.login-page{
     background: #e9c89e;
     background: -webkit-linear-gradient(to left, #8f94fb, #4e54c8);
     width: 100%;

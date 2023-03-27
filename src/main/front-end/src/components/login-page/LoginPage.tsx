@@ -32,7 +32,7 @@ export const LoginPage = (): JSX.Element => {
     };
 
     return (
-        <div className="page">
+        <div className="login-page">
             <ul className="circles">
                 <li></li>
                 <li></li>
@@ -45,7 +45,7 @@ export const LoginPage = (): JSX.Element => {
                 <li></li>
                 <li></li>
             </ul>
-            <div className="cover">
+            <div className="login-form">
 
                 <h1>ავტორიზაცია</h1>
                 <input type="text" placeholder="თქვენი იუზერნეიმი"/>
@@ -55,7 +55,7 @@ export const LoginPage = (): JSX.Element => {
 
                 <p className="text">ან გამოიყენეთ</p>
 
-                <div className="alt-login">
+                <div className="alternative-login">
                     <div className="facebook"></div>
                     <div className="google">
                         <GoogleLogin className="blue"
