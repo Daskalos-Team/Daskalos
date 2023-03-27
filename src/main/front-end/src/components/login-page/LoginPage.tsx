@@ -48,8 +48,13 @@ export const LoginPage = (): JSX.Element => {
             <div className="login-form">
                 <h1>სალამი!</h1>
 
-                <input type="text" placeholder="თქვენი იუზერნეიმი"/>
-                <input type="password" placeholder="თქვენი პაროლი"/>
+                <div className="inputs">
+                    <input type="text" placeholder="თქვენი იუზერნეიმი"/>
+                    <div className="password-section">
+                        <input type="password" placeholder="თქვენი პაროლი"/>
+                        <a className="forgot-password" href="">დაგავიწყდათ პაროლი?</a>
+                    </div>
+                </div>
 
                 <div className="login-button" onClick={popup}>შესვლა</div>
 
@@ -66,10 +71,12 @@ export const LoginPage = (): JSX.Element => {
                                      cookiePolicy={'single_host_origin'}
                                      isSignedIn={false}
                                      icon={false}    // with Google logo or without
-                                     theme="dark"  // dark/light mode
+                                     theme="light"  // dark/light mode
                         />
                     </div>
                 </div>
+
+                <a href="">არ გაქვთ ექაუნთი?</a>
 
                 <div className={popupStyle}>
                     <h3>შესვლა წარუმატებელია</h3>
