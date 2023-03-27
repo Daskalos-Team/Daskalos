@@ -1,14 +1,19 @@
 import React from 'react';
-import { AuthorizationForm } from "./components/AuthorizationForm";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { LoginPage } from "./components/login-page";
+import { MainPage } from "./components/main-page";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-          <AuthorizationForm>
-          </AuthorizationForm>
-      </header>
-    </div>
+      <BrowserRouter>
+          <Routes>
+              <Route path="/" element={<LoginPage />}>
+                  <Route index element={<MainPage />} />
+                  <Route path="main" element={<MainPage />} />
+                  <Route path="register" element={<LoginPage />} />
+              </Route>
+          </Routes>
+      </BrowserRouter>
   );
 }
 

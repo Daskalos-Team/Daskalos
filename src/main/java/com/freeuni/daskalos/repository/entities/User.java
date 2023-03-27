@@ -1,6 +1,6 @@
 package com.freeuni.daskalos.repository.entities;
 
-import com.freeuni.daskalos.Utils.UserUtils;
+import com.freeuni.daskalos.utils.UserUtils;
 import reactor.util.annotation.NonNull;
 import reactor.util.annotation.Nullable;
 
