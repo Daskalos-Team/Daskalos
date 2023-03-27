@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from "react";
-import {gapi} from "gapi-script";
+import React, { useEffect, useState } from "react";
+import { gapi } from "gapi-script";
 import GoogleLogin from "react-google-login";
 import "./LoginPage.css";
 
@@ -46,8 +46,8 @@ export const LoginPage = (): JSX.Element => {
                 <li></li>
             </ul>
             <div className="login-form">
+                <h1>სალამი!</h1>
 
-                <h1>ავტორიზაცია</h1>
                 <input type="text" placeholder="თქვენი იუზერნეიმი"/>
                 <input type="password" placeholder="თქვენი პაროლი"/>
 
