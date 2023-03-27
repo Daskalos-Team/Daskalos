@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from "react";
-import {gapi} from "gapi-script";
+import React, { useEffect, useState } from "react";
+import { gapi } from "gapi-script";
 import GoogleLogin from "react-google-login";
 import "./LoginPage.css";
 
