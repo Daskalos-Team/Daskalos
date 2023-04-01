@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-export const AuthorizationForm = (props: any): JSX.Element => {
+export const AuthorizationForm = (props: never): JSX.Element => {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
 
-    const formEndpoint: string = "http://localhost:8080/user/info/";
+    const formEndpoint = "http://localhost:8080/user/info/";
 
     const handleSubmit = () => {
         const userInfo = {firstName: firstName, lastName: lastName};
         axios.post(formEndpoint, userInfo).then(r => console.log(r));
-    }
+    };
 
     return (
         <form
@@ -38,4 +38,4 @@ export const AuthorizationForm = (props: any): JSX.Element => {
             <button type="submit">Submit</button>
         </form>
     );
-}
+};
