@@ -25,7 +25,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint ."
+    "lint": "eslint . --fix"
   },
   "proxy": "http://localhost:8080",
   "eslintConfig": {
@@ -66,6 +66,6 @@
     }
   },
   "lint-staged": {
-    "*.js": "npm run lint:fix"
+    "*.{js,ts,jsx,tsx}": "npm run lint"
   }
 }
