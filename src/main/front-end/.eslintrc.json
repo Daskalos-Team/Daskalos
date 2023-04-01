@@ -38,13 +38,20 @@
     "@typescript-eslint/comma-spacing": "error",
     "@typescript-eslint/indent": "error",
     "@typescript-eslint/keyword-spacing": "error",
-    "no-unused-vars": "warn",
     "no-caller": "error",
     "no-new-wrappers": "error",
     "no-multiple-empty-lines": [
       "error",
       {
         "max": 1
+      }
+    ],
+    "no-multi-spaces": [
+      "error",
+      {
+        "exceptions": {
+          "Property": false
+        }
       }
     ],
     "no-nested-ternary": "error",

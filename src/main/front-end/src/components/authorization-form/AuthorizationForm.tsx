@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-export const AuthorizationForm = (props: never): JSX.Element => {
+export const AuthorizationForm = (): JSX.Element => {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
 

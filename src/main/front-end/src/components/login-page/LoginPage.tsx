@@ -23,17 +23,17 @@ export const LoginPage = (): JSX.Element => {
         setTimeout(() => showPopup("hide"), 3000);
     };
 
-    const onSuccess = (e: any) => {
+    const onSuccess = (e: unknown) => {
         alert("User signed in");
     };
 
-    const onFailure = (e: any) => {
+    const onFailure = (e: unknown) => {
         alert("User sign in Failed");
     };
 
     return (
         <div className="login-page">
-            <ul className="circles">
+            <ul className="background-objects">
                 <li></li>
                 <li></li>
                 <li></li>
@@ -70,8 +70,8 @@ export const LoginPage = (): JSX.Element => {
                             onFailure={onFailure}
                             cookiePolicy={"single_host_origin"}
                             isSignedIn={false}
-                            icon={false}    // with Google logo or without
-                            theme="light"  // dark/light mode
+                            icon={false} // with Google logo or without
+                            theme="light" // dark/light mode
                         />
                     </div>
                 </div>
