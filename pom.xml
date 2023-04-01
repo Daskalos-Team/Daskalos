@@ -131,6 +131,15 @@
                         </configuration>
                     </execution>
                     <execution>
+                        <id>npm run lint:fix</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>run lint:fix</arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
                         <id>npm install</id>
                         <goals>
                             <goal>npm</goal>
