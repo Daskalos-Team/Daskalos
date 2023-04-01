@@ -1,7 +1,8 @@
-import React from 'react';
+import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { LoginPage } from "./components/login-page";
 import { MainPage } from "./components/main-page";
+import { AuthorizationForm } from "./components/authorization-form";
 
 function App() {
   return (
