@@ -1,0 +1,295 @@
+.profilePageContainerRootRoot {
+    gap: 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 0 0 281px 0;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #000000;
+    box-sizing: border-box;
+    background-color: #fdfffa;
+}
+
+.header {
+    width: 100.1%;
+    gap: 56px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin: 0 0 122px -1px;
+    padding: 7.7px 17px;
+    box-sizing: border-box;
+    background-color: #ffef9a;
+}
+
+.websiteLogo {
+    min-width: 0px;
+    min-height: 0px;
+    margin: 0px 1013px 0.92px 0px;
+    box-sizing: border-box;
+}
+
+.profileNavigationButton {
+    width: 6.99%;
+    height: 124px;
+    margin: 42.3px 0px 0px 0px;
+    padding: 0px;
+    border-width: 0px;
+    box-sizing: content-box;
+    background-color: transparent;
+    background-position: center;
+    background-size: cover;
+    background-image: url("https://file.rendit.io/n/PgUJaTVIXc1rDQGRfrH7.svg");
+    cursor: pointer;
+}
+
+.profileNavigationButton:hover {
+    opacity: 70%;
+}
+
+.accountNavigationButton {
+    width: 6.99%;
+    height: 124px;
+    margin: 42.3px 0px 0px 0px;
+    padding: 0px;
+    border-width: 0px;
+    box-sizing: content-box;
+    background-color: transparent;
+    background-position: center;
+    background-size: cover;
+    background-image: url("https://file.rendit.io/n/wGKEjHFvkzSMJEQiCx7a.svg");
+    cursor: pointer;
+}
+
+.accountNavigationButton:hover {
+    opacity: 70%;
+}
+
+.group {
+    width: 93.01%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-self: flex-end;
+    align-items: flex-start;
+    margin: 0px 63px 5px 0px;
+    box-sizing: border-box;
+}
+
+.profileImage {
+    min-width: 0px;
+    min-height: 0px;
+    box-sizing: border-box;
+    mix-blend-mode: multiply;
+}
+
+.group3 {
+    width: 46.52%;
+    gap: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-end;
+    margin: 14px 0px 0px 0px;
+    box-sizing: border-box;
+}
+
+.subjectsContainer {
+    align-self: stretch;
+    margin: 0px 0px 40px 0px;
+    color: #6a60a6;
+    font-size: 40px;
+    font-family: Abhaya Libre Medium;
+    text-align: right;
+    white-space: nowrap;
+    letter-spacing: 2.6px;
+    text-transform: uppercase;
+    box-sizing: border-box;
+}
+
+.currentOccupation {
+    margin: 0px 0px 43px 0px;
+    font-size: 40px;
+    font-family: Abhaya Libre Medium;
+    text-align: right;
+    white-space: nowrap;
+    letter-spacing: 2.6px;
+    text-transform: uppercase;
+    box-sizing: border-box;
+}
+
+.group1 {
+    width: 701px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+    margin: 0px 0px 0px 71px;
+    padding: 74px 0px 0px 0px;
+    box-sizing: border-box;
+}
+
+.fullName {
+    width: 701px;
+    height: 76px;
+    left: 0px;
+    top: 0px;
+    position: absolute;
+    align-self: stretch;
+    color: #695fa5;
+    font-size: 64px;
+    font-family: Abhaya Libre Medium;
+    white-space: nowrap;
+    letter-spacing: 4.16px;
+    text-transform: uppercase;
+    box-sizing: border-box;
+}
+
+.location1 {
+    position: relative;
+    color: #6a60a6;
+    font-size: 40px;
+    font-family: Abhaya Libre Medium;
+    white-space: nowrap;
+    letter-spacing: 2.6px;
+    text-transform: uppercase;
+    box-sizing: border-box;
+}
+
+.profileBio {
+    margin: 0px 0px 13px 71px;
+    color: #6a60a6;
+    font-size: 40px;
+    font-family: Abhaya Libre Medium;
+    white-space: nowrap;
+    letter-spacing: 2.6px;
+    text-transform: uppercase;
+    box-sizing: border-box;
+}
+
+.group2 {
+    width: 93.64%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin: 0px 0px 27px 59px;
+    box-sizing: border-box;
+}
+
+.group4 {
+    width: 43.6%;
+    gap: 39px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    box-sizing: border-box;
+}
+
+.profileInfoField {
+    width: 780px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-self: flex-end;
+    align-items: flex-start;
+    padding: 64px 26px 104px 26px;
+    box-sizing: border-box;
+    background-size: cover;
+    background-image: url("https://file.rendit.io/n/mg4wuYLwYBWcGf9TVX0a.svg");
+}
+
+.phoneNumberField {
+    width: 511px;
+    height: 38px;
+    left: 26px;
+    top: 130px;
+    position: absolute;
+    font-size: 32px;
+    font-family: Abhaya Libre Medium;
+    white-space: nowrap;
+    letter-spacing: 2.08px;
+    text-transform: uppercase;
+    box-sizing: border-box;
+}
+
+.addressField {
+    position: relative;
+    font-size: 32px;
+    font-family: Abhaya Libre Medium;
+    white-space: nowrap;
+    letter-spacing: 2.08px;
+    text-transform: uppercase;
+    box-sizing: border-box;
+}
+
+.aboutTitle {
+    margin: 0px 0px 8px 9px;
+    color: #6a60a6;
+    font-size: 40px;
+    font-family: Abhaya Libre Medium;
+    white-space: nowrap;
+    letter-spacing: 2.6px;
+    text-transform: uppercase;
+    box-sizing: border-box;
+}
+
+.aboutContainer {
+    width: 99.62%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 36px 27px 224px 27px;
+    box-sizing: border-box;
+    background-size: cover;
+    background-image: url("https://file.rendit.io/n/YyntBP1DcHb87vs13lmt.svg");
+}
+
+.aboutContent {
+    width: 624px;
+    font-size: 40px;
+    font-family: Abhaya Libre Medium;
+    letter-spacing: 2.6px;
+    text-transform: uppercase;
+    box-sizing: border-box;
+}
+
+.calendar {
+    width: 743px;
+    min-width: 0px;
+    height: 799px;
+    min-height: 0px;
+    flex-shrink: 0;
+    align-self: flex-end;
+    margin: 5px 0px 0px 0px;
+    box-sizing: border-box;
+}
+
+.experienceSection {
+    margin: 0px 0px 75px 71px;
+    color: #6a60a6;
+    font-size: 40px;
+    font-family: Abhaya Libre Medium;
+    white-space: nowrap;
+    letter-spacing: 2.6px;
+    text-transform: uppercase;
+    box-sizing: border-box;
+}
+
+.commentSection {
+    margin: 0px 0px 0px 71px;
+    color: #6a60a6;
+    font-size: 40px;
+    font-family: Abhaya Libre Medium;
+    white-space: nowrap;
+    letter-spacing: 2.6px;
+    text-transform: uppercase;
+    box-sizing: border-box;
+}

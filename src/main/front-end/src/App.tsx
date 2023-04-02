@@ -7,10 +7,10 @@ function App() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<LoginPage />}>
-                    <Route index element={<MainPage />} />
-                    <Route path="main" element={<MainPage />} />
-                    <Route path="register" element={<LoginPage />} />
+                <Route path="/" element={<LoginPage/>}>
+                    <Route index element={<MainPage/>}/>
+                    <Route path="main" element={<MainPage/>}/>
+                    <Route path="register" element={<LoginPage/>}/>
                 </Route>
             </Routes>
         </BrowserRouter>
