@@ -1,0 +1,304 @@
+.newsFeedPageRootRootRoot {
+    gap: 12.6px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    box-sizing: border-box;
+    background-color: #ffffff;
+    overflow: hidden;
+}
+.header {
+    width: 100%;
+    gap: 56px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-self: stretch;
+    align-items: flex-start;
+    margin: 0px 0px 35.5px 0px;
+    padding: 39.3px 50px 39.3px 35.7px;
+    box-sizing: border-box;
+    background-color: #ffef9a;
+    overflow: hidden;
+}
+.logo {
+    min-width: 0px;
+    min-height: 0px;
+    margin: 0px 1021px 2.9px 0px;
+    box-sizing: border-box;
+}
+.profileButton {
+    width: 124px;
+    height: 122px;
+    flex-shrink: 0;
+    margin: 9.83px 0px 0px 0px;
+    padding: 0px;
+    border-width: 0px;
+    box-sizing: content-box;
+    background-color: transparent;
+    background-position: center;
+    background-size: cover;
+    background-image: url("https://file.rendit.io/n/uKXogKCeJwQL1wrKdkuV.svg");
+    cursor: pointer;
+}
+.profileButton:hover {
+    opacity: 70%;
+}
+.accountButton {
+    width: 124px;
+    height: 122px;
+    flex-shrink: 0;
+    margin: 9.83px 0px 0px 0px;
+    padding: 0px;
+    border-width: 0px;
+    box-sizing: content-box;
+    background-color: transparent;
+    background-position: center;
+    background-size: cover;
+    background-image: url("https://file.rendit.io/n/oeLNFbM0EF4spQjBirvI.svg");
+    cursor: pointer;
+}
+.accountButton:hover {
+    opacity: 70%;
+}
+.horizontal {
+    width: 96.01%;
+    gap: 43px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    box-sizing: border-box;
+}
+.rectangles {
+    width: 30.08%;
+    gap: 25.4px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-self: flex-end;
+    margin: 5px 29px 0px 0px;
+    box-sizing: border-box;
+}
+.searchButton {
+    width: 81.45%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-self: center;
+    align-items: flex-end;
+    margin: 0px 0px 52.2px 0px;
+    padding: 27.4px 91.5px 46.2px;
+    border-width: 0px;
+    border-radius: 50px;
+    box-sizing: content-box;
+    background-color: #ece9e9;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+}
+.searchButton:hover {
+    opacity: 70%;
+}
+.searchLabel {
+    width: 77.9%;
+    height: 85%;
+    left: 23.891143798828125px;
+    top: 7px;
+    position: absolute;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    font-size: 25px;
+    font-family: Noto Serif Georgian;
+    text-align: center;
+    letter-spacing: 1.63px;
+    text-transform: uppercase;
+    box-sizing: border-box;
+}
+.dropDownArrow {
+    width: 10.19%;
+    min-width: 0px;
+    max-width: 100%;
+    min-height: 0px;
+    position: relative;
+    box-sizing: border-box;
+}
+.topLabel {
+    align-self: flex-start;
+    margin: 0px 0px 53.1px 170px;
+    font-size: 54px;
+    font-family: Archivo Black;
+    text-align: center;
+    white-space: nowrap;
+    box-sizing: border-box;
+}
+.horizontal1 {
+    width: 96.22%;
+    gap: 43px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin: 0px 0px 7.73px -3.51px;
+    box-sizing: border-box;
+}
+.rectangles1 {
+    width: 30.24%;
+    gap: 25.4px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-self: flex-end;
+    align-items: flex-start;
+    margin: 12.8px 29px 0px 0px;
+    box-sizing: border-box;
+}
+.rectangle2 {
+    width: 99.35%;
+    height: 116px;
+    flex-shrink: 0;
+    align-self: flex-end;
+    border-radius: 40px;
+    box-sizing: border-box;
+    background-color: #f7f6f6;
+}
+.rectangle3 {
+    width: 99.35%;
+    height: 116px;
+    flex-shrink: 0;
+    margin: 0px 0px 0px 1.75px;
+    border-radius: 40px;
+    box-sizing: border-box;
+    background-color: #f7f6f6;
+}
+.rectangle9 {
+    width: 99.35%;
+    height: 116px;
+    flex-shrink: 0;
+    border-radius: 40px;
+    box-sizing: border-box;
+    background-color: #f7f6f6;
+}
+.rectangle4 {
+    width: 99.35%;
+    height: 116px;
+    flex-shrink: 0;
+    align-self: flex-end;
+    border-radius: 40px;
+    box-sizing: border-box;
+    background-color: #f7f6f6;
+}
+.horizontal2 {
+    width: 96.01%;
+    gap: 43px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin: 0px 0px 32.5px 0px;
+    box-sizing: border-box;
+}
+.rectangles2 {
+    width: 30.08%;
+    gap: 25.4px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-self: flex-end;
+    margin: 5.08px 29px 0px 0px;
+    box-sizing: border-box;
+}
+.rectangle6 {
+    width: 100%;
+    height: 116px;
+    flex-shrink: 0;
+    border-radius: 40px;
+    box-sizing: border-box;
+    background-color: #f7f6f6;
+}
+.footer {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-self: stretch;
+    align-items: flex-start;
+    margin: 0px 0px 0px -4px;
+    padding: 20.6px 196px 20.6px 89.2px;
+    box-sizing: border-box;
+    background-color: #ffef9a;
+    overflow: hidden;
+}
+.contactInfo {
+    width: 19.09%;
+    gap: 15.7px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-end;
+    margin: 0px 0px 12.3px 0px;
+    box-sizing: border-box;
+}
+.contactInfoLabel {
+    width: 98.75%;
+    margin: 0px 1.76px 0px 0px;
+    font-size: 30px;
+    font-family: Noto Serif Georgian;
+    text-align: center;
+    letter-spacing: 1.95px;
+    text-transform: uppercase;
+    box-sizing: border-box;
+}
+.contactInfoData {
+    width: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-self: stretch;
+    padding: 40.7px 0px 0px 0px;
+    box-sizing: border-box;
+}
+.phoneNumber {
+    width: 275px;
+    height: 41px;
+    left: 22.45001220703125px;
+    top: 0px;
+    position: absolute;
+    font-size: 30px;
+    font-family: Noto Serif Georgian;
+    text-align: center;
+    white-space: nowrap;
+    letter-spacing: 1.95px;
+    text-transform: uppercase;
+    box-sizing: border-box;
+}
+.email {
+    position: relative;
+    font-size: 30px;
+    font-family: Noto Serif Georgian;
+    text-align: center;
+    white-space: nowrap;
+    letter-spacing: 1.95px;
+    text-transform: uppercase;
+    box-sizing: border-box;
+}
+.daskalosLabel {
+    margin: 3.89px 0px 0px 0px;
+    color: #626262;
+    font-size: 130px;
+    font-family: Inika;
+    -webkit-text-stroke-color: transparent;
+    -webkit-text-stroke-width: 6px;
+    text-align: center;
+    white-space: nowrap;
+    letter-spacing: 44.2px;
+    text-transform: uppercase;
+    -webkit-background-clip: text;
+    box-sizing: border-box;
+    background-image: linear-gradient(180deg, #000000 0%, #000000 100%);
+}
