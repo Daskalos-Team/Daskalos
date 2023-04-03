@@ -2,6 +2,13 @@
 
 ----------------------------------------
 
+## ლოკალურად გასაშვებად
+1. განაახლეთ `application.properties` ცვლადები
+2. root-დან გაუშვით `mvn clean install`
+3. გასტარტეთ `DaskalosApplication`
+
+----------------------------------------
+
 ## JAVA - 1.17
 
 ჯავას დაყენების ინსტრუქცია:
@@ -40,6 +47,41 @@ https://www.fast.design/docs/integrations/react/
 Postgre 15 ბაზებისთვის https://www.enterprisedb.com/downloads/postgres-postgresql-downloads
 
 -------------------------
+
+# კოდის სტილი
+
+---------------------------
+
+## Lint (Front End)
+
+როგორც ვიცით Lint გვეხმარება რეაქტზე პრობლემების აღმოჩენაში და სტილისტურ ფიქსში,
+თუ არ გსურთ დაქომითებისას 100+ ერორის დანახვა, სასურველია დააყენოთ სეთინგებიდან ლინტის watcher, რომელიც
+ინტელიჯეიში ლაივში ამოიცნობს შეცდომებს და გაგასწორებინებთ კოდს.
+
+ამისთვის სულ 1 დეტალის გამართვაა საჭირო პარამეტრებიდან:
+
+![img.png](img.png)
+
+----------------------------------
+
+## Spring (Back End)
+
+## auto-formatter-ის გამართვა
+
+1. CTRL-ALT-S (Settings) -> Editor -> Code Style -> Java
+2. ზუსტად ეს ციფრები უნდა ეწეროს Blank Lines სექციაში:
+
+   ![img_1.png](FormatterSettings.png)
+3. settings -> Tools -> Actions on Save-ში გადადით და მონიშნეთ Reformat code ჩექბოქსი, რაც შენახვისას ავტომატურად
+   განაახლებს ფაილს
+   სტილისტურად,
+
+   ასევე საჭიროა auto save ჩართოთ ყოველ 1-2 წამში ერთხელ გასაშვებად, ამისთვის შედით:
+   Appearance & Behavior -> System Settings და auto save სექციაში მონიშნეთ: Save files if IDE is idle for [2 secs]
+
+### ფაილის სტილის ხელით გასასწორებლად, გაუშვით: `CTRL-ALT-L`
+
+--------------------------
 
 ### დამატებითი ინსტრუქციები ქვემოთ:
 
@@ -83,20 +125,3 @@ These additional references should also help you:
 ### figma main page link: https://www.figma.com/file/hGqQRZUSssUPEbJCNydP6N/Daskalos?node-id=0%3A1&t=gh15PMOxxqHKR9pY-1
 
 -------------------------
-
-## auto-formatter-ის გამართვა
-
-1. CTRL-ALT-S (Settings) -> Editor -> Code Style -> Java
-2. ზუსტად ეს ციფრები უნდა ეწეროს Blank Lines სექციაში:
-
-   ![img_1.png](FormatterSettings.png)
-3. settings -> Tools -> Actions on Save-ში გადადით და მონიშნეთ Reformat code ჩექბოქსი, რაც შენახვისას ავტომატურად
-   განაახლებს ფაილს
-   სტილისტურად,
-
-   ასევე საჭიროა auto save ჩართოთ ყოველ 1-2 წამში ერთხელ გასაშვებად, ამისთვის შედით:
-   Appearance & Behavior -> System Settings და auto save სექციაში მონიშნეთ: Save files if IDE is idle for [2 secs]
-
-### ფაილის სტილის ხელით გასასწორებლად, გაუშვით: `CTRL-ALT-L`
-
---------------------------
