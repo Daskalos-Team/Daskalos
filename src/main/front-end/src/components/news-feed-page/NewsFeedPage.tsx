@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-export const NewsFeedPage = ({}) => {
+export const NewsFeedPage = (props: any) => {
     const ProfileButtonFunction = (e: any, name: any) => {
         alert(`${name} was clicked`);
     };
@@ -417,9 +417,9 @@ const ProfileButton = styled.button`
   background-size: cover;
   background-image: url("https://file.rendit.io/n/uKXogKCeJwQL1wrKdkuV.svg");
   cursor: pointer;
-  &: hover {
-    box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.3);
-  } ;
+  //&: hover {
+  //  box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.3);
+  //} ;
 `;
 const AccountButton = styled.button`
   width: 124px;

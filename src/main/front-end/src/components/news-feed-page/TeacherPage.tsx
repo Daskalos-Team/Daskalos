@@ -25,5 +25,5 @@ export const TeacherPage = ({style}: Props): JSX.Element => {
             <p id="price-range">გადასახადი</p>
             <p id="price-range-values">####-####</p>
         </div>
-    )
-}
+    );
+};
