@@ -11,8 +11,11 @@ export const NewsFeedPage = (props: any) => {
     const SearchButtonFunction = (e: any, name: any) => {
         alert(`${name} was clicked`);
     };
+    const FavouriteFunction = (e: any, name: any) => {
+        alert(`${name} was clicked`);
+    };
     return (
-        <NewsFeedPageRootRootRoot>
+        <NewsFeedPageRoot>
             <Header>
                 <Logo src="https://file.rendit.io/n/lPwUIopu41wY2u9k18GO.png" />
                 <ProfileButton
@@ -22,179 +25,66 @@ export const NewsFeedPage = (props: any) => {
                     onClick={(e: any) => AccountButtonFunction(e, "AccountButton")}
                 />
             </Header>
-            <Horizontal>
-                <Rectangles>
-                    <SearchButton
-                        onClick={(e: any) => SearchButtonFunction(e, "SearchButton")}
-                    >
-                        <SearchLabel>ძებნა</SearchLabel>
-                        <DropDownArrow src="https://file.rendit.io/n/axgFbCb9Vay0sesgfUVr.svg" />
-                    </SearchButton>
-                    <TopLabel>Top 10</TopLabel>
-                    <Rectangle />
-                    <Rectangle />
-                </Rectangles>
-                <TeacherPage5>
-                    <Group>
-                        <ProfilePicture5 />
-                        <Group3>
-                            <Name6>Name</Name6>
-                            <Subjects5>Subjects</Subjects5>
-                            <SubjectList5>
-                                subject 1<br />
-                                subject 2<br />
-                                subject 3<br />
-                                subject 4
-                            </SubjectList5>
-                        </Group3>
-                    </Group>
-                    <Description5>Description</Description5>
-                    <DescriptionTextfield5>
-                        aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                    </DescriptionTextfield5>
-                    <Group4>
-                        <PriceRangeText10>Price Range</PriceRangeText10>
-                        <PriceRangeText11>####-####</PriceRangeText11>
-                        <Heart5 src="https://file.rendit.io/n/5kEWfvFar2LDdSgJDzHh.svg" />
-                    </Group4>
-                </TeacherPage5>
-                <TeacherPage5>
-                    <Group>
-                        <ProfilePicture5 />
-                        <Group3>
-                            <Name6>Name</Name6>
-                            <Subjects5>Subjects</Subjects5>
-                            <SubjectList5>
-                                subject 1<br />
-                                subject 2<br />
-                                subject 3<br />
-                                subject 4
-                            </SubjectList5>
-                        </Group3>
-                    </Group>
-                    <Description5>Description</Description5>
-                    <DescriptionTextfield5>
-                        aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                    </DescriptionTextfield5>
-                    <Group4>
-                        <PriceRangeText10>Price Range</PriceRangeText10>
-                        <PriceRangeText11>####-####</PriceRangeText11>
-                        <Heart5 src="https://file.rendit.io/n/5kEWfvFar2LDdSgJDzHh.svg" />
-                    </Group4>
-                </TeacherPage5>
-            </Horizontal>
-            <Horizontal1>
-                <Rectangles1>
-                    <Rectangle2 />
-                    <Rectangle3 />
-                    <Rectangle9 />
-                    <Rectangle4 />
-                </Rectangles1>
-                <TeacherPage5>
-                    <Group>
-                        <ProfilePicture5 />
-                        <Group3>
-                            <Name6>Name</Name6>
-                            <Subjects5>Subjects</Subjects5>
-                            <SubjectList5>
-                                subject 1<br />
-                                subject 2<br />
-                                subject 3<br />
-                                subject 4
-                            </SubjectList5>
-                        </Group3>
-                    </Group>
-                    <Description5>Description</Description5>
-                    <DescriptionTextfield5>
-                        aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                    </DescriptionTextfield5>
-                    <Group4>
-                        <PriceRangeText10>Price Range</PriceRangeText10>
-                        <PriceRangeText11>####-####</PriceRangeText11>
-                        <Heart5 src="https://file.rendit.io/n/5kEWfvFar2LDdSgJDzHh.svg" />
-                    </Group4>
-                </TeacherPage5>
-                <TeacherPage5>
-                    <Group>
-                        <ProfilePicture5 />
-                        <Group3>
-                            <Name6>Name</Name6>
-                            <Subjects5>Subjects</Subjects5>
-                            <SubjectList5>
-                                subject 1<br />
-                                subject 2<br />
-                                subject 3<br />
-                                subject 4
-                            </SubjectList5>
-                        </Group3>
-                    </Group>
-                    <Description5>Description</Description5>
-                    <DescriptionTextfield5>
-                        aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                    </DescriptionTextfield5>
-                    <Group4>
-                        <PriceRangeText10>Price Range</PriceRangeText10>
-                        <PriceRangeText11>####-####</PriceRangeText11>
-                        <Heart5 src="https://file.rendit.io/n/5kEWfvFar2LDdSgJDzHh.svg" />
-                    </Group4>
-                </TeacherPage5>
-            </Horizontal1>
-            <Horizontal2>
-                <Rectangles2>
-                    <Rectangle />
-                    <Rectangle6 />
-                    <Rectangle />
-                    <Rectangle />
-                </Rectangles2>
-                <TeacherPage5>
-                    <Group>
-                        <ProfilePicture5 />
-                        <Group3>
-                            <Name6>Name</Name6>
-                            <Subjects5>Subjects</Subjects5>
-                            <SubjectList5>
-                                subject 1<br />
-                                subject 2<br />
-                                subject 3<br />
-                                subject 4
-                            </SubjectList5>
-                        </Group3>
-                    </Group>
-                    <Description5>Description</Description5>
-                    <DescriptionTextfield5>
-                        aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                    </DescriptionTextfield5>
-                    <Group4>
-                        <PriceRangeText10>Price Range</PriceRangeText10>
-                        <PriceRangeText11>####-####</PriceRangeText11>
-                        <Heart5 src="https://file.rendit.io/n/5kEWfvFar2LDdSgJDzHh.svg" />
-                    </Group4>
-                </TeacherPage5>
-                <TeacherPage5>
-                    <Group>
-                        <ProfilePicture5 />
-                        <Group3>
-                            <Name6>Name</Name6>
-                            <Subjects5>Subjects</Subjects5>
-                            <SubjectList5>
-                                subject 1<br />
-                                subject 2<br />
-                                subject 3<br />
-                                subject 4
-                            </SubjectList5>
-                        </Group3>
-                    </Group>
-                    <Description5>Description</Description5>
-                    <DescriptionTextfield5>
-                        aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                    </DescriptionTextfield5>
-                    <Group4>
-                        <PriceRangeText10>Price Range</PriceRangeText10>
-                        <PriceRangeText11>####-####</PriceRangeText11>
-                        <Heart5 src="https://file.rendit.io/n/5kEWfvFar2LDdSgJDzHh.svg" />
-                    </Group4>
-                </TeacherPage5>
-            </Horizontal2>
+            <BelowHeader>
+                <SearchButton
+                    onClick={(e: any) => SearchButtonFunction(e, "SearchButton")}
+                >
+                    <SearchLabel>ძებნა</SearchLabel>
+                    <DropDownArrow src="https://file.rendit.io/n/axgFbCb9Vay0sesgfUVr.svg" />
+                </SearchButton>
+                <TeacherFeedLabel>თქვენთვის რეკომენდირებული მასწავლებლები</TeacherFeedLabel>
+            </BelowHeader>
+            <Content>
+                <LeftPanel>
+                    <Top10Label>Top 10</Top10Label>
+                    <Top10>
+                        <TopTeacher/>
+                        <TopTeacher/>
+                        <TopTeacher/>
+                        <TopTeacher/>
+                        <TopTeacher/>
+                        <TopTeacher/>
+                        <TopTeacher/>
+                        <TopTeacher/>
+                        <TopTeacher/>
+                        <TopTeacher/>
+                    </Top10>
+                </LeftPanel>
+                <NewsFeed>
+                    <TeacherRecommendation>
+                        <TeacherRecommendationTop>
+                            <ProfilePicture />
+                            <TeacherRecommendationTopRight>
+                                <Name>Name</Name>
+                                <Subjects>Subjects</Subjects>
+                                <SubjectList>
+                                    subject 1<br />
+                                    subject 2<br />
+                                    subject 3<br />
+                                    subject 4
+                                </SubjectList>
+                            </TeacherRecommendationTopRight>
+                        </TeacherRecommendationTop>
+                        <DescriptionLabel>Description</DescriptionLabel>
+                        <DescriptionTextfield>
+                            aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                        </DescriptionTextfield>
+                        <TeacherRecommendationBottom>
+                            <PriceRangeLabel>Price Range:</PriceRangeLabel>
+                            <PriceRangeValue>####-####</PriceRangeValue>
+                            <Favourite onClick={(e: any) => FavouriteFunction(e, "Favourite")}
+                                src="https://file.rendit.io/n/5kEWfvFar2LDdSgJDzHh.svg" />
+                        </TeacherRecommendationBottom>
+                    </TeacherRecommendation>
+                    <TeacherRecommendation/>
+                    <TeacherRecommendation/>
+                    <TeacherRecommendation/>
+                    <TeacherRecommendation/>
+                    <TeacherRecommendation/>
+                    <TeacherRecommendation/>
+                    <TeacherRecommendation/>
+                </NewsFeed>
+            </Content>
             <Footer>
                 <ContactInfo>
                     <ContactInfoLabel>საკონაქტო ინფორმაცია</ContactInfoLabel>
@@ -205,27 +95,203 @@ export const NewsFeedPage = (props: any) => {
                 </ContactInfo>
                 <DaskalosLabel>Daskalos</DaskalosLabel>
             </Footer>
-        </NewsFeedPageRootRootRoot>
+        </NewsFeedPageRoot>
     );
 };
 
-const Rectangle = styled.div`
+const NewsFeedPageRoot = styled.div`
   width: 100%;
-  height: 116px;
+  gap: 12.6px;
+  background-color: #ffffff;
+  overflow: hidden;
+`;
+const Header = styled.div`
+  width: 100%;
+  height: 170px;
+  position: relative;
+  box-sizing: border-box;
+  background-color: #ffef9a;
+  overflow: hidden;
+`;
+const Logo = styled.img`
+  width: 240px;
+  height: 112px;
+  margin-left: 20px;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  box-sizing: border-box;
+`;
+const ProfileButton = styled.button`
+  width: 62px;
+  height: 62px;
+  top: 30%;
+  right: 110px;
+  position: absolute;
+  align-self: end;
   flex-shrink: 0;
+  padding: 0;
+  border-width: 0;
+  box-sizing: content-box;
+  background-color: transparent;
+  background-position: center;
+  background-size: cover;
+  background-image: url("https://file.rendit.io/n/uKXogKCeJwQL1wrKdkuV.svg");
+  cursor: pointer;
+  transform: translateY(-50%);
+  &:hover {
+    box-shadow: inset 0 0 100px 100px #ffef9a30;
+  } ;
+`;
+const AccountButton = styled.button`
+  width: 62px;
+  height: 62px;
+  right: 22px;
+  top: 30%;
+  position: absolute;
+  flex-shrink: 0;
+  vertical-align: center;
+  padding: 0;
+  border-width: 0;
+  box-sizing: content-box;
+  background-color: transparent;
+  background-position: center;
+  background-size: cover;
+  background-image: url("https://file.rendit.io/n/oeLNFbM0EF4spQjBirvI.svg");
+  cursor: pointer;
+  transform: translateY(-50%);
+  &:hover {
+    box-shadow: inset 0 0 100px 100px #ffef9a40;
+  } ;
+`;
+const BelowHeader = styled.div`
+  width: 100%;
+  height: 100px;
+  position: relative;
+  border-bottom: #00000010 solid 2px;
+`;
+const SearchButton = styled.button`
+  width: 100px;
+  left: 40px;
+  top: 50%;
+  position: relative;
+  padding: 25px 60px 25px;
+  border-width: 0;
+  border-radius: 50px;
+  box-sizing: content-box;
+  background-color: #ece9e9;
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  transform: translateY(-50%);
+
+  &:hover {
+    box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.3);
+  };
+`;
+const SearchLabel = styled.div`
+  width: 77.9%;
+  height: 85%;
+  left: 23.891143798828125px;
+  top: 50%;
+  position: absolute;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  font-family: Noto Serif Georgian;
+  text-align: center;
+  letter-spacing: 1.63px;
+  text-transform: uppercase;
+  box-sizing: border-box;
+  transform: translateY(-50%);
+`;
+const DropDownArrow = styled.img`
+  width: 25px;
+  top: 50%;
+  right: 10%;
+  position: absolute;
+  box-sizing: border-box;
+  transform: translateY(-50%);
+`;
+const TeacherFeedLabel = styled.p`
+  font-family: "Noto Serif Georgian";
+  font-weight: bold;
+  font-size: 27px;
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: max(30%, 270px);
+  width: max(75%, 500px);
+  max-height: 80px;
+  padding-right: 50px;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  transform: translateY(-50%);
+`;
+const Content = styled.div`
+  height: 1000px;
+  margin: 20px 20px 20px 0;
+  display: flex;
+`;
+const LeftPanel = styled.div`
+  margin-right: 30px;
+  height: 100%;
+  flex-basis: 28%;
+  min-width: 220px;
+`;
+const Top10Label = styled.p`
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 5px;
+  align-self: center;
+  font-size: 30px;
+  font-family: Archivo Black;
+  font-weight: bold;
+  text-align: center;
+  white-space: nowrap;
+  box-sizing: border-box;
+  border: red 2px solid;
+  border-radius: 20px;
+  background-color: #ff000070;
+`;
+const Top10 = styled.div`
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+`;
+const TopTeacher = styled.div`
+  margin-top: 5px;
+  margin-bottom: 5px;
+  width: 100%;
+  height: 50px;
+  align-self: flex-end;
   border-radius: 40px;
   box-sizing: border-box;
   background-color: #f7f6f6;
 `;
-const TeacherPage5 = styled.div`
-  width: 612px;
-  height: 541px;
+const NewsFeed = styled.div`
+  min-width: 500px;
   display: flex;
-  flex-shrink: 0;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
+  flex-wrap: wrap;
+  flex-basis: 72%;
+  align-content: start;
+  justify-content: space-evenly;
+  scroll-behavior: auto;
+  overflow-y: scroll;
+  padding: 5px;
+  margin-bottom: 10px;
+  border-left: 2px solid #9c9c9c40;
+  border-radius: 50px;
+`;
+const TeacherRecommendation = styled.div`
+  width: 450px;
+  height: 350px;
   padding: 21px 19px 26px 19px;
+  margin: 10px;
   border-width: 1px;
   border-radius: 30px;
   border-style: solid;
@@ -234,7 +300,7 @@ const TeacherPage5 = styled.div`
   background-color: #f6f6f6;
   overflow: hidden;
 `;
-const Group = styled.div`
+const TeacherRecommendationTop = styled.div`
   width: 98.25%;
   gap: 40px;
   display: flex;
@@ -244,14 +310,13 @@ const Group = styled.div`
   margin: 0 0 6px 2px;
   box-sizing: border-box;
 `;
-const ProfilePicture5 = styled.div`
-  width: 43.68%;
-  height: 228px;
+const ProfilePicture = styled.div`
+  width: 170px;
+  height: 150px;
   border-radius: 30px;
-  box-sizing: border-box;
   background-color: #d9d9d9;
 `;
-const Group3 = styled.div`
+const TeacherRecommendationTopRight = styled.div`
   width: 56.32%;
   gap: 10px;
   display: flex;
@@ -260,374 +325,121 @@ const Group3 = styled.div`
   align-items: flex-end;
   box-sizing: border-box;
 `;
-const Name6 = styled.div`
-  width: 99.66%;
+const Name = styled.p`
+  width: 100%;
   height: 24.42%;
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
   margin: 0 0 2px 0;
-  font-size: 33px;
+  font-size: 22px;
   font-weight: 700;
   font-family: Inter;
   text-transform: uppercase;
   box-sizing: border-box;
 `;
-const Subjects5 = styled.div`
-  width: 99.66%;
-  height: 17.97%;
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-self: flex-start;
-  align-items: center;
-  font-size: 23px;
+const Subjects = styled.p`
+  width: 100%;
+  height: 18%;
+  font-size: 19px;
   font-weight: 600;
   font-family: Inter;
   text-transform: uppercase;
   box-sizing: border-box;
 `;
-const SubjectList5 = styled.div`
-  width: 99.66%;
-  height: 56.68%;
-  font-size: 18px;
+const SubjectList = styled.div`
+  width: 100%;
+  height: 57%;
+  font-size: 14px;
   font-family: Inter;
   text-transform: uppercase;
   box-sizing: border-box;
 `;
-const Description5 = styled.div`
-  width: 51.22%;
-  height: 7.93%;
+const DescriptionLabel = styled.div`
+  width: 52%;
+  height: 8%;
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
-  margin: 0 0 0 2px;
-  font-size: 23px;
+  margin: 10px 0 0 2px;
+  font-size: 16px;
   font-weight: 600;
   font-family: Inter;
   text-transform: uppercase;
   box-sizing: border-box;
 `;
-const DescriptionTextfield5 = styled.div`
-  width: 99.65%;
-  height: 33.33%;
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-self: flex-end;
-  align-items: center;
-  margin: 0 0 10px 0;
-  font-size: 18px;
-  font-family: Inter;
-  text-transform: uppercase;
-  box-sizing: border-box;
-`;
-const Group4 = styled.div`
-  width: 97.55%;
-  gap: 13px;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: flex-start;
-  margin: 0 0 0 2px;
-  box-sizing: border-box;
-`;
-const PriceRangeText10 = styled.div`
-  width: 23.48%;
-  height: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  font-size: 18px;
-  font-family: Inter;
-  text-transform: uppercase;
-  box-sizing: border-box;
-`;
-const PriceRangeText11 = styled.div`
-  width: 23.48%;
-  height: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  margin: 0 244px 0 0;
-  font-size: 18px;
-  font-family: Inter;
-  text-transform: uppercase;
-  box-sizing: border-box;
-`;
-const Heart5 = styled.img`
-  width: 7.31%;
-  min-width: 0;
-  max-width: 100%;
-  min-height: 0;
-  align-self: flex-end;
-  margin: 0 0 0.51px 0;
-  box-sizing: border-box;
-`;
-const NewsFeedPageRootRootRoot = styled.div`
-  gap: 12.6px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  box-sizing: border-box;
-  background-color: #ffffff;
-  overflow: hidden;
-`;
-const Header = styled.div`
+const DescriptionTextfield = styled.p`
   width: 100%;
-  gap: 56px;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-self: stretch;
-  align-items: flex-start;
-  margin: 0 0 35.5px 0;
-  padding: 39.3px 50px 39.3px 35.7px;
-  box-sizing: border-box;
-  background-color: #ffef9a;
-  overflow: hidden;
-`;
-const Logo = styled.img`
-  min-width: 0;
-  min-height: 0;
-  margin: 0 1021px 2.9px 0;
+  height: 33%;
+  margin: 5px 0 5px 0;
+  padding: 5px;
+  font-size: 13px;
+  font-family: Inter;
+  overflow-y: scroll;
+  word-wrap: break-word;
+  border-left: 2px solid #9c9c9c40;
+  border-radius: 10px;
   box-sizing: border-box;
 `;
-const ProfileButton = styled.button`
-  width: 124px;
-  height: 122px;
-  flex-shrink: 0;
-  margin: 9.83px 0 0 0;
-  padding: 0;
-  border-width: 0;
-  box-sizing: content-box;
-  background-color: transparent;
-  background-position: center;
-  background-size: cover;
-  background-image: url("https://file.rendit.io/n/uKXogKCeJwQL1wrKdkuV.svg");
-  cursor: pointer;
-  //&: hover {
-  //  box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.3);
-  //} ;
-`;
-const AccountButton = styled.button`
-  width: 124px;
-  height: 122px;
-  flex-shrink: 0;
-  margin: 9.83px 0 0 0;
-  padding: 0;
-  border-width: 0;
-  box-sizing: content-box;
-  background-color: transparent;
-  background-position: center;
-  background-size: cover;
-  background-image: url("https://file.rendit.io/n/oeLNFbM0EF4spQjBirvI.svg");
-  cursor: pointer;
-  //&: hover {
-  //  box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.3);
-  //} ;
-`;
-const Horizontal = styled.div`
-  width: 96.01%;
-  gap: 43px;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: flex-start;
-  box-sizing: border-box;
-`;
-const Rectangles = styled.div`
-  width: 30.08%;
-  gap: 25.4px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-self: flex-end;
-  margin: 5px 29px 0 0;
-  box-sizing: border-box;
-`;
-const SearchButton = styled.button`
-  width: 81.45%;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-self: center;
-  align-items: flex-end;
-  margin: 0 0 52.2px 0;
-  padding: 27.4px 91.5px 46.2px;
-  border-width: 0;
-  border-radius: 50px;
-  box-sizing: content-box;
-  background-color: #ece9e9;
-  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
-  cursor: pointer;
-
-  //&: hover {
-  //  box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.3);
-  //}
-;
-`;
-const SearchLabel = styled.div`
-  width: 77.9%;
-  height: 85%;
-  left: 23.891143798828125px;
-  top: 7px;
-  position: absolute;
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  font-size: 25px;
-  font-family: Noto Serif Georgian;
-  text-align: center;
-  letter-spacing: 1.63px;
-  text-transform: uppercase;
-  box-sizing: border-box;
-`;
-const DropDownArrow = styled.img`
-  width: 10.19%;
-  min-width: 0;
-  max-width: 100%;
-  min-height: 0;
-  position: relative;
-  box-sizing: border-box;
-`;
-const TopLabel = styled.div`
-  align-self: flex-start;
-  margin: 0 0 53.1px 170px;
-  font-size: 54px;
-  font-family: Archivo Black;
-  text-align: center;
-  white-space: nowrap;
-  box-sizing: border-box;
-`;
-const Horizontal1 = styled.div`
-  width: 96.22%;
-  gap: 43px;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: flex-start;
-  margin: 0 0 7.73px -3.51px;
-  box-sizing: border-box;
-`;
-const Rectangles1 = styled.div`
-  width: 30.24%;
-  gap: 25.4px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-self: flex-end;
-  align-items: flex-start;
-  margin: 12.8px 29px 0 0;
-  box-sizing: border-box;
-`;
-const Rectangle2 = styled.div`
-  width: 99.35%;
-  height: 116px;
-  flex-shrink: 0;
-  align-self: flex-end;
-  border-radius: 40px;
-  box-sizing: border-box;
-  background-color: #f7f6f6;
-`;
-const Rectangle3 = styled.div`
-  width: 99.35%;
-  height: 116px;
-  flex-shrink: 0;
-  margin: 0 0 0 1.75px;
-  border-radius: 40px;
-  box-sizing: border-box;
-  background-color: #f7f6f6;
-`;
-const Rectangle9 = styled.div`
-  width: 99.35%;
-  height: 116px;
-  flex-shrink: 0;
-  border-radius: 40px;
-  box-sizing: border-box;
-  background-color: #f7f6f6;
-`;
-const Rectangle4 = styled.div`
-  width: 99.35%;
-  height: 116px;
-  flex-shrink: 0;
-  align-self: flex-end;
-  border-radius: 40px;
-  box-sizing: border-box;
-  background-color: #f7f6f6;
-`;
-const Horizontal2 = styled.div`
-  width: 96.01%;
-  gap: 43px;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: flex-start;
-  margin: 0 0 32.5px 0;
-  box-sizing: border-box;
-`;
-const Rectangles2 = styled.div`
-  width: 30.08%;
-  gap: 25.4px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-self: flex-end;
-  margin: 5.08px 29px 0 0;
-  box-sizing: border-box;
-`;
-const Rectangle6 = styled.div`
-  width: 100%;
-  height: 116px;
-  flex-shrink: 0;
-  border-radius: 40px;
-  box-sizing: border-box;
-  background-color: #f7f6f6;
-`;
-const Footer = styled.div`
+const TeacherRecommendationBottom = styled.div`
   width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-self: stretch;
-  align-items: flex-start;
-  margin: 0 0 0 -4px;
+  margin: 0 0 0 0;
+  box-sizing: border-box;
+`;
+const PriceRangeLabel = styled.div`
+  width: 170px;
+  height: 100%;
+  margin-top: 5px;
+  font-size: 13px;
+  font-family: Inter;
+  box-sizing: border-box;
+`;
+const PriceRangeValue = styled.div`
+  width: 170px;
+  height: 100%;
+  margin: 5px 244px 0 0;
+  font-size: 13px;
+  font-family: Inter;
+  text-transform: uppercase;
+  box-sizing: border-box;
+`;
+const Favourite = styled.img`
+  width: 23px;
+  align-self: flex-end;
+  margin: 2px 0 5px 0;
+  box-sizing: border-box;
+  cursor: pointer;
+`;
+const Footer = styled.div`
+  width: 100%;
+  height: 200px;
+  position: relative;
   padding: 20.6px 196px 20.6px 89.2px;
   box-sizing: border-box;
   background-color: #ffef9a;
   overflow: hidden;
 `;
 const ContactInfo = styled.div`
-  width: 19.09%;
+  width: 199%;
   gap: 15.7px;
+  top: 0;
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-end;
-  margin: 0 0 12.3px 0;
+  margin: 15px 0 12px 0;
   box-sizing: border-box;
 `;
 const ContactInfoLabel = styled.div`
-  width: 98.75%;
-  margin: 0 1.76px 0 0;
-  font-size: 30px;
+  width: 170px;
+  align-self: stretch;
+  font-size: 15px;
   font-family: Noto Serif Georgian;
   text-align: center;
-  letter-spacing: 1.95px;
+  letter-spacing: 2px;
   text-transform: uppercase;
   box-sizing: border-box;
 `;
@@ -636,39 +448,35 @@ const ContactInfoData = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: flex-start;
   align-self: stretch;
-  padding: 40.7px 0 0 0;
   box-sizing: border-box;
 `;
 const PhoneNumber = styled.div`
-  width: 275px;
   height: 41px;
-  left: 22.45001220703125px;
-  top: 0;
-  position: absolute;
-  font-size: 30px;
+  font-size: 15px;
   font-family: Noto Serif Georgian;
-  text-align: center;
   white-space: nowrap;
-  letter-spacing: 1.95px;
+  letter-spacing: 2px;
+  text-align: start;
   text-transform: uppercase;
   box-sizing: border-box;
 `;
 const Email = styled.div`
-  position: relative;
-  font-size: 30px;
+  font-size: 15px;
   font-family: Noto Serif Georgian;
-  text-align: center;
+  text-align: start;
   white-space: nowrap;
   letter-spacing: 1.95px;
   text-transform: uppercase;
   box-sizing: border-box;
 `;
 const DaskalosLabel = styled.div`
-  margin: 3.89px 0 0 0;
+  left: max(30%, 300px);
+  top: 50%;
+  position: absolute;
   color: #626262;
-  font-size: 130px;
+  font-size: 90px;
   font-family: Inika;
   -webkit-text-stroke-color: transparent;
   -webkit-text-stroke-width: 6px;
@@ -679,4 +487,5 @@ const DaskalosLabel = styled.div`
   -webkit-background-clip: text;
   box-sizing: border-box;
   background-image: linear-gradient(180deg, #000000 0%, #000000 100%);
+  transform: translateY(-50%);
 `;

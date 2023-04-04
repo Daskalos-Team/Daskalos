@@ -12,8 +12,8 @@ function App() {
                     <Route index element={<MainPage />} />
                     <Route path="main" element={<MainPage />} />
                     <Route path="register" element={<LoginPage />} />
-                    <Route path="news-feed" element={<NewsFeedPage />} />
                 </Route>
+                <Route path="/news-feed" element={<NewsFeedPage />} />
             </Routes>
         </BrowserRouter>
     );
