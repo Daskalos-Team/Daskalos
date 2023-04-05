@@ -22,7 +22,7 @@ export const LoginPage = (): JSX.Element => {
 
     const standardLogin = (e: any) => {
         // TODO get correct type and password instead of id
-        standardAuthorization(mail, password, "Teacher");
+        standardAuthorization(mail, password, "Teacher", false);
     };
 
     return (

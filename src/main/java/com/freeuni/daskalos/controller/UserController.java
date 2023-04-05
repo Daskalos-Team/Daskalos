@@ -4,6 +4,8 @@ import com.freeuni.daskalos.dto.UserDTO;
 import com.freeuni.daskalos.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.error.ErrorController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,7 +23,11 @@ public class UserController implements ErrorController {
     }
 
     @PostMapping("/save")
-    public void saveUser(@RequestBody UserDTO user) {
-        userService.addUser(user);
+    public ResponseEntity<String> saveUser(@RequestBody UserDTO user) {
+        String message = userService.addUser(user);
+        if (message.contains("successfully")) {
+            return new ResponseEntity<>(message, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
     }
 }

@@ -8,16 +8,17 @@ export const authorizationWithGoogle = (user: any) => {
             Accept: "application/json"
         }
     }).then((res) => {
-        standardAuthorization(res.data.email, res.data.id, "Teacher");
+        standardAuthorization(res.data.email, res.data.id, "Teacher", true);
     });
 };
 
-export const standardAuthorization = (mail: string, password: string, userType: string) => {
+export const standardAuthorization = (mail: string, password: string, userType: string, google: boolean) => {
     if (!mail || mail === "" || !password || password === "" || !userType || userType === "") {
         alert("გთხოვთ შეიყვანოთ ყველა მონაცემი");
         return;
     }
     const userInfo = {
+        usingGoogle: google,
         mail: mail,
         password: password,
         userType: userType
@@ -27,9 +28,9 @@ export const standardAuthorization = (mail: string, password: string, userType: 
             "Content-type": "application/json; charset=UTF-8"
         }
     })
-        .then(r => alert("successful login: " + r))
+        .then(response => alert(response.data))
         .catch((err) => {
-            alert("unsuccessful login");
+            alert(err.response.data);
             console.log(err);
         });
 };

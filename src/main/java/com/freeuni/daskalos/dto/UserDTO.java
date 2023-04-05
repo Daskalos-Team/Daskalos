@@ -8,6 +8,8 @@ import java.io.Serializable;
 @JsonAutoDetect
 public class UserDTO implements Serializable {
 
+    private boolean usingGoogle;
+
     private String mail;
 
     private String password;
@@ -18,6 +20,14 @@ public class UserDTO implements Serializable {
         this.mail = mail;
         this.password = password;
         this.userType = userType;
+    }
+
+    public boolean isUsingGoogle() {
+        return usingGoogle;
+    }
+
+    public void setUsingGoogle(boolean usingGoogle) {
+        this.usingGoogle = usingGoogle;
     }
 
     public String getMail() {

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -17,8 +18,21 @@ public class UserService {
     @Autowired
     private UserRepository repository;
 
-    public void addUser(UserDTO user) {
-        repository.save(UserUtils.toUserEntity(user));
+    public String addUser(UserDTO user) {
+        Optional<User> currentUser = repository.findByMail(user.getMail());
+        if (user.isUsingGoogle()) {
+            if (currentUser.isEmpty()) {
+                repository.save(UserUtils.toUserEntity(user));
+                return "User registered successfully";
+            }
+        } else {
+            if (currentUser.isEmpty()) {
+                return "User with this mail not found";
+            } else if (!currentUser.get().getPassword().equals(user.getPassword())) {
+                return "Wrong password";
+            }
+        }
+        return "Successful authorization";
     }
 
     public List<UserDTO> findAll() {
