@@ -60,7 +60,7 @@ Postgre 15 ბაზებისთვის https://www.enterprisedb.com/downlo
 
 ამისთვის სულ 1 დეტალის გამართვაა საჭირო პარამეტრებიდან:
 
-![img.png](img.png)
+![img.png](EslintSettings.png)
 
 ----------------------------------
 
