@@ -1,33 +1,17 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { useGoogleLogin } from "@react-oauth/google";
 import "./LoginPage.css";
-
-const formEndpoint = "http://localhost:8080/user/save";
+import { authorizationWithGoogle, standardAuthorization } from "../../service/login-page-service";
 
 export const LoginPage = (): JSX.Element => {
 
-    const [user, setUser]: any = useState([]);
+    const [user, setUser]: any = useState(undefined);
+    const [mail, setMail]: any = useState("");
+    const [password, setPassword]: any = useState("");
 
     useEffect(() => {
         if (user) {
-            axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
-                headers: {
-                    Authorization: `Bearer ${user.access_token}`,
-                    Accept: "application/json"
-                }
-            }).then((res) => {
-                const userInfo = {
-                    mail: res.data.email,
-                    password: res.data.id,
-                    userType: "Teacher"
-                }; // TODO teacher and id
-                axios.post(formEndpoint, userInfo, {
-                    headers: {
-                        "Content-type": "application/json; charset=UTF-8"
-                    }
-                }).then(r => console.log(r));
-            }).catch((err) => console.log(err));
+            authorizationWithGoogle(user);
         }
     }, [user]);
 
@@ -36,11 +20,9 @@ export const LoginPage = (): JSX.Element => {
         onError: (error) => console.log("Login Failed:", error)
     });
 
-    const [popupStyle, showPopup] = useState("hide");
-
-    const popup = () => {
-        showPopup("login-popup");
-        setTimeout(() => showPopup("hide"), 3000);
+    const standardLogin = (e: any) => {
+        // TODO get correct type and password instead of id
+        standardAuthorization(mail, password, "Teacher");
     };
 
     return (
@@ -61,24 +43,19 @@ export const LoginPage = (): JSX.Element => {
                 <h1>სალამი!</h1>
 
                 <div className='inputs'>
-                    <input type='text' placeholder='თქვენი იუზერნეიმი' />
+                    <input type='text' placeholder='თქვენი მეილი' onInput={e => setMail(e.currentTarget.value)}/>
                     <div className='password-section'>
-                        <input type='password' placeholder='თქვენი პაროლი' />
+                        <input type='password' placeholder='თქვენი პაროლი' onInput={e => setPassword(e.currentTarget.value)}/>
                         <a className='forgot-password' href=''>დაგავიწყდათ პაროლი?</a>
                     </div>
                 </div>
 
-                <div className='login-button' onClick={popup}>შესვლა</div>
+                <div className='login-button' onClick={e => standardLogin(e)}>შესვლა</div>
 
                 <hr />
 
                 <div className='alternative-login'>
                     <div className='google' onClick={() => login()} />
-                </div>
-
-                <div className={popupStyle}>
-                    <h3>შესვლა წარუმატებელია</h3>
-                    <p>გთხოვთ შეიყვანოთ სწორი მონაცემები</p>
                 </div>
             </div>
         </div>
