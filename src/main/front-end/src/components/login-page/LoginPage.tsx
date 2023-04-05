@@ -1,19 +1,28 @@
 import React, { useEffect, useState } from "react";
-import { gapi } from "gapi-script";
-import GoogleLogin from "react-google-login";
+import axios from "axios";
+import { useGoogleLogin } from "@react-oauth/google";
 import "./LoginPage.css";
 
 export const LoginPage = (): JSX.Element => {
 
-    useEffect(() => {
-        function start() {
-            gapi.client.init({
-                clientId: "79474543031-tmjo35916ufn421ej3u1i2ljao2apr4s.apps.googleusercontent.com",
-                scope: ""
-            });
-        }
+    const [user, setUser]: any = useState([]);
 
-        gapi.load("client: auth2", start);
+    useEffect(() => {
+        if (user) {
+            axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
+                headers: {
+                    Authorization: `Bearer ${user.access_token}`,
+                    Accept: "application/json"
+                }
+            }).then((res) => {
+                console.log(res);
+            }).catch((err) => console.log(err));
+        }
+    }, [user]);
+
+    const login = useGoogleLogin({
+        onSuccess: (codeResponse) => setUser(codeResponse),
+        onError: (error) => console.log("Login Failed:", error)
     });
 
     const [popupStyle, showPopup] = useState("hide");
@@ -21,14 +30,6 @@ export const LoginPage = (): JSX.Element => {
     const popup = () => {
         showPopup("login-popup");
         setTimeout(() => showPopup("hide"), 3000);
-    };
-
-    const onSuccess = (e: unknown) => {
-        alert("User signed in");
-    };
-
-    const onFailure = (e: unknown) => {
-        alert("User sign in Failed");
     };
 
     return (
@@ -58,25 +59,11 @@ export const LoginPage = (): JSX.Element => {
 
                 <div className="login-button" onClick={popup}>შესვლა</div>
 
-                <p className="text">ან გამოიყენეთ</p>
+                <hr/>
 
                 <div className="alternative-login">
-                    <div className="facebook"></div>
-                    <div className="google">
-                        <GoogleLogin className="blue"
-                            clientId="79474543031-tmjo35916ufn421ej3u1i2ljao2apr4s.apps.googleusercontent.com"
-                            buttonText=""
-                            onSuccess={onSuccess}
-                            onFailure={onFailure}
-                            cookiePolicy={"single_host_origin"}
-                            isSignedIn={false}
-                            icon={false} // with Google logo or without
-                            theme="light" // dark/light mode
-                        />
-                    </div>
+                    <div className="google" onClick={() => login()}/>
                 </div>
-
-                <a href="">არ გაქვთ ექაუნთი?</a>
 
                 <div className={popupStyle}>
                     <h3>შესვლა წარუმატებელია</h3>
