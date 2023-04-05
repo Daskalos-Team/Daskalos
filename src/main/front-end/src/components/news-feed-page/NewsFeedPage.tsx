@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { RecommendedTeacher } from "./recommended-teacher";
 
 export const NewsFeedPage = (props: any) => {
     const ProfileButtonFunction = (e: any, name: any) => {
@@ -11,13 +12,10 @@ export const NewsFeedPage = (props: any) => {
     const SearchButtonFunction = (e: any, name: any) => {
         alert(`${name} was clicked`);
     };
-    const FavouriteFunction = (e: any, name: any) => {
-        alert(`${name} was clicked`);
-    };
     return (
         <NewsFeedPageRoot>
             <Header>
-                <Logo src="https://file.rendit.io/n/lPwUIopu41wY2u9k18GO.png" />
+                <Logo src="/Logo.png" alt="Logo"/>
                 <ProfileButton
                     onClick={(e: any) => ProfileButtonFunction(e, "ProfileButton")}
                 />
@@ -30,9 +28,9 @@ export const NewsFeedPage = (props: any) => {
                     onClick={(e: any) => SearchButtonFunction(e, "SearchButton")}
                 >
                     <SearchLabel>ძებნა</SearchLabel>
-                    <DropDownArrow src="https://file.rendit.io/n/axgFbCb9Vay0sesgfUVr.svg" />
+                    <DropDownArrow src="/DownArrow.png" alt="Drop down"/>
                 </SearchButton>
-                <TeacherFeedLabel>თქვენთვის რეკომენდირებული მასწავლებლები</TeacherFeedLabel>
+                <TeacherFeedLabel>თქვენთვის რეკომენდებული მასწავლებლები</TeacherFeedLabel>
             </BelowHeader>
             <Content>
                 <LeftPanel>
@@ -51,38 +49,14 @@ export const NewsFeedPage = (props: any) => {
                     </Top10>
                 </LeftPanel>
                 <NewsFeed>
-                    <TeacherRecommendation>
-                        <TeacherRecommendationTop>
-                            <ProfilePicture />
-                            <TeacherRecommendationTopRight>
-                                <Name>Name</Name>
-                                <Subjects>Subjects</Subjects>
-                                <SubjectList>
-                                    subject 1<br />
-                                    subject 2<br />
-                                    subject 3<br />
-                                    subject 4
-                                </SubjectList>
-                            </TeacherRecommendationTopRight>
-                        </TeacherRecommendationTop>
-                        <DescriptionLabel>Description</DescriptionLabel>
-                        <DescriptionTextfield>
-                            aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                        </DescriptionTextfield>
-                        <TeacherRecommendationBottom>
-                            <PriceRangeLabel>Price Range:</PriceRangeLabel>
-                            <PriceRangeValue>####-####</PriceRangeValue>
-                            <Favourite onClick={(e: any) => FavouriteFunction(e, "Favourite")}
-                                src="https://file.rendit.io/n/5kEWfvFar2LDdSgJDzHh.svg" />
-                        </TeacherRecommendationBottom>
-                    </TeacherRecommendation>
-                    <TeacherRecommendation/>
-                    <TeacherRecommendation/>
-                    <TeacherRecommendation/>
-                    <TeacherRecommendation/>
-                    <TeacherRecommendation/>
-                    <TeacherRecommendation/>
-                    <TeacherRecommendation/>
+                    <RecommendedTeacher/>
+                    <RecommendedTeacher/>
+                    <RecommendedTeacher/>
+                    <RecommendedTeacher/>
+                    <RecommendedTeacher/>
+                    <RecommendedTeacher/>
+                    <RecommendedTeacher/>
+                    <RecommendedTeacher/>
                 </NewsFeed>
             </Content>
             <Footer>
@@ -136,7 +110,7 @@ const ProfileButton = styled.button`
   background-color: transparent;
   background-position: center;
   background-size: cover;
-  background-image: url("https://file.rendit.io/n/uKXogKCeJwQL1wrKdkuV.svg");
+  background-image: url("/ProfileButton.png");
   cursor: pointer;
   transform: translateY(-50%);
   &:hover {
@@ -157,7 +131,7 @@ const AccountButton = styled.button`
   background-color: transparent;
   background-position: center;
   background-size: cover;
-  background-image: url("https://file.rendit.io/n/oeLNFbM0EF4spQjBirvI.svg");
+  background-image: url("/AccountButton.png");
   cursor: pointer;
   transform: translateY(-50%);
   &:hover {
@@ -286,131 +260,6 @@ const NewsFeed = styled.div`
   margin-bottom: 10px;
   border-left: 2px solid #9c9c9c40;
   border-radius: 50px;
-`;
-const TeacherRecommendation = styled.div`
-  width: 450px;
-  height: 350px;
-  padding: 21px 19px 26px 19px;
-  margin: 10px;
-  border-width: 1px;
-  border-radius: 30px;
-  border-style: solid;
-  border-color: rgba(0, 0, 0, 0.2);
-  box-sizing: border-box;
-  background-color: #f6f6f6;
-  overflow: hidden;
-`;
-const TeacherRecommendationTop = styled.div`
-  width: 98.25%;
-  gap: 40px;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: flex-start;
-  margin: 0 0 6px 2px;
-  box-sizing: border-box;
-`;
-const ProfilePicture = styled.div`
-  width: 170px;
-  height: 150px;
-  border-radius: 30px;
-  background-color: #d9d9d9;
-`;
-const TeacherRecommendationTopRight = styled.div`
-  width: 56.32%;
-  gap: 10px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-end;
-  box-sizing: border-box;
-`;
-const Name = styled.p`
-  width: 100%;
-  height: 24.42%;
-  margin: 0 0 2px 0;
-  font-size: 22px;
-  font-weight: 700;
-  font-family: Inter;
-  text-transform: uppercase;
-  box-sizing: border-box;
-`;
-const Subjects = styled.p`
-  width: 100%;
-  height: 18%;
-  font-size: 19px;
-  font-weight: 600;
-  font-family: Inter;
-  text-transform: uppercase;
-  box-sizing: border-box;
-`;
-const SubjectList = styled.div`
-  width: 100%;
-  height: 57%;
-  font-size: 14px;
-  font-family: Inter;
-  text-transform: uppercase;
-  box-sizing: border-box;
-`;
-const DescriptionLabel = styled.div`
-  width: 52%;
-  height: 8%;
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  margin: 10px 0 0 2px;
-  font-size: 16px;
-  font-weight: 600;
-  font-family: Inter;
-  text-transform: uppercase;
-  box-sizing: border-box;
-`;
-const DescriptionTextfield = styled.p`
-  width: 100%;
-  height: 33%;
-  margin: 5px 0 5px 0;
-  padding: 5px;
-  font-size: 13px;
-  font-family: Inter;
-  overflow-y: scroll;
-  word-wrap: break-word;
-  border-left: 2px solid #9c9c9c40;
-  border-radius: 10px;
-  box-sizing: border-box;
-`;
-const TeacherRecommendationBottom = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin: 0 0 0 0;
-  box-sizing: border-box;
-`;
-const PriceRangeLabel = styled.div`
-  width: 170px;
-  height: 100%;
-  margin-top: 5px;
-  font-size: 13px;
-  font-family: Inter;
-  box-sizing: border-box;
-`;
-const PriceRangeValue = styled.div`
-  width: 170px;
-  height: 100%;
-  margin: 5px 244px 0 0;
-  font-size: 13px;
-  font-family: Inter;
-  text-transform: uppercase;
-  box-sizing: border-box;
-`;
-const Favourite = styled.img`
-  width: 23px;
-  align-self: flex-end;
-  margin: 2px 0 5px 0;
-  box-sizing: border-box;
-  cursor: pointer;
 `;
 const Footer = styled.div`
   width: 100%;
