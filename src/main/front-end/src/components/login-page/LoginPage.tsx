@@ -3,6 +3,8 @@ import axios from "axios";
 import { useGoogleLogin } from "@react-oauth/google";
 import "./LoginPage.css";
 
+const formEndpoint = "http://localhost:8080/user/save";
+
 export const LoginPage = (): JSX.Element => {
 
     const [user, setUser]: any = useState([]);
@@ -15,7 +17,16 @@ export const LoginPage = (): JSX.Element => {
                     Accept: "application/json"
                 }
             }).then((res) => {
-                console.log(res);
+                const userInfo = {
+                    mail: res.data.email,
+                    password: res.data.id,
+                    userType: "Teacher"
+                }; // TODO teacher and id
+                axios.post(formEndpoint, userInfo, {
+                    headers: {
+                        "Content-type": "application/json; charset=UTF-8"
+                    }
+                }).then(r => console.log(r));
             }).catch((err) => console.log(err));
         }
     }, [user]);
@@ -33,8 +44,8 @@ export const LoginPage = (): JSX.Element => {
     };
 
     return (
-        <div className="login-page">
-            <ul className="background-objects">
+        <div className='login-page'>
+            <ul className='background-objects'>
                 <li></li>
                 <li></li>
                 <li></li>
@@ -46,23 +57,23 @@ export const LoginPage = (): JSX.Element => {
                 <li></li>
                 <li></li>
             </ul>
-            <div className="login-form">
+            <div className='login-form'>
                 <h1>სალამი!</h1>
 
-                <div className="inputs">
-                    <input type="text" placeholder="თქვენი იუზერნეიმი"/>
-                    <div className="password-section">
-                        <input type="password" placeholder="თქვენი პაროლი"/>
-                        <a className="forgot-password" href="">დაგავიწყდათ პაროლი?</a>
+                <div className='inputs'>
+                    <input type='text' placeholder='თქვენი იუზერნეიმი' />
+                    <div className='password-section'>
+                        <input type='password' placeholder='თქვენი პაროლი' />
+                        <a className='forgot-password' href=''>დაგავიწყდათ პაროლი?</a>
                     </div>
                 </div>
 
-                <div className="login-button" onClick={popup}>შესვლა</div>
+                <div className='login-button' onClick={popup}>შესვლა</div>
 
-                <hr/>
+                <hr />
 
-                <div className="alternative-login">
-                    <div className="google" onClick={() => login()}/>
+                <div className='alternative-login'>
+                    <div className='google' onClick={() => login()} />
                 </div>
 
                 <div className={popupStyle}>

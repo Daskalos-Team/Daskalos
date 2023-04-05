@@ -1,63 +1,72 @@
 package com.freeuni.daskalos.repository.entities;
 
+import com.freeuni.daskalos.utils.UserType;
+import jakarta.persistence.*;
 import reactor.util.annotation.NonNull;
 import reactor.util.annotation.Nullable;
 
 import java.util.List;
 import java.util.Objects;
 
+@Entity
 public class Teacher extends User {
 
-    @NonNull
+    @ManyToMany
     private List<Experience> teachersExperience;
 
-    @NonNull
+    @ManyToMany
     private List<TeacherRating> teacherRatings;
 
-    private final boolean onPlace;
+    @ManyToMany
+    private List<Subject> teacherSubjects;
 
-    private List<String> teacherSubjects;
+    private boolean onPlace;
 
-    public Teacher(int ID, @NonNull String name, @NonNull String secondName, @NonNull String password,
-                   @NonNull String mail, @NonNull UserType userType, @NonNull String phoneNumber, int priceMin,
-                   int priceMax, @NonNull String address, @Nullable List<String> socialNetworkUrls,
-                   @Nullable List<Experience> teachersExperience, boolean onPlace, @Nullable List<TeacherRating> teacherRatings,
-                   @Nullable List<String> teacherSubjects) {
-        super(ID, name, secondName, password, mail, userType, phoneNumber, priceMin, priceMax, address, socialNetworkUrls);
+    public Teacher(Long ID, @NonNull String name, @NonNull String secondName, @NonNull String password, @NonNull String mail, @NonNull UserType userType, @NonNull String phoneNumber, @NonNull String address, @Nullable List<Experience> teachersExperience, @Nullable List<TeacherRating> teacherRatings, @Nullable List<Subject> teacherSubjects, boolean onPlace, int priceMin, int priceMax) {
+        super(ID, name, secondName, password, mail, userType, address, phoneNumber, priceMin, priceMax);
         this.teachersExperience = !Objects.isNull(teachersExperience) ? teachersExperience : List.of();
         this.teacherRatings = !Objects.isNull(teacherRatings) ? teacherRatings : List.of();
         this.onPlace = onPlace;
         this.teacherSubjects = !Objects.isNull(teacherSubjects) ? teacherSubjects : List.of();
     }
 
-    public Teacher(int ID, @NonNull String name, @NonNull String secondName, @NonNull String password,
-                   @NonNull String mail, @NonNull UserType userType, @NonNull String phoneNumber, int priceMin,
-                   int priceMax, @NonNull String address, @Nullable String socialNetworkUrls,
-                   @Nullable List<Experience> teachersExperience, boolean onPlace, @Nullable List<TeacherRating> teacherRatings,
-                   @Nullable List<String> teacherSubjects) {
-        super(ID, name, secondName, password, mail, userType, phoneNumber, priceMin, priceMax, address, socialNetworkUrls);
-        this.teachersExperience = !Objects.isNull(teachersExperience) ? teachersExperience : List.of();
-        this.teacherRatings = !Objects.isNull(teacherRatings) ? teacherRatings : List.of();
-        this.onPlace = onPlace;
-        this.teacherSubjects = !Objects.isNull(teacherSubjects) ? teacherSubjects : List.of();
+    public Teacher(@NonNull String mail, @NonNull String password) {
+        super(mail, password);
     }
 
-    @NonNull
+    public Teacher() {
+        super();
+    }
+
     public List<Experience> getTeachersExperience() {
-        return this.teachersExperience;
+        return teachersExperience;
     }
 
-    @NonNull
+    public void setTeachersExperience(List<Experience> teachersExperience) {
+        this.teachersExperience = teachersExperience;
+    }
+
     public List<TeacherRating> getTeacherRatings() {
         return teacherRatings;
     }
 
-    @NonNull
-    public List<String> getTeacherSubjects() {
-        return this.teacherSubjects;
+    public void setTeacherRatings(List<TeacherRating> teacherRatings) {
+        this.teacherRatings = teacherRatings;
     }
 
-    public boolean getOnPlace() {
-        return this.onPlace;
+    public List<Subject> getTeacherSubjects() {
+        return teacherSubjects;
+    }
+
+    public void setTeacherSubjects(List<Subject> teacherSubjects) {
+        this.teacherSubjects = teacherSubjects;
+    }
+
+    public boolean isOnPlace() {
+        return onPlace;
+    }
+
+    public void setOnPlace(boolean onPlace) {
+        this.onPlace = onPlace;
     }
 }

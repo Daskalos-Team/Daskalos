@@ -1,8 +1,12 @@
 package com.freeuni.daskalos.utils;
 
+import com.freeuni.daskalos.dto.UserDTO;
+import com.freeuni.daskalos.repository.entities.Student;
+import com.freeuni.daskalos.repository.entities.Teacher;
+import com.freeuni.daskalos.repository.entities.User;
+
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class UserUtils {
 
@@ -13,6 +17,17 @@ public class UserUtils {
     }
 
     public static String urlNetworks(List<String> networkUrls) {
-        return networkUrls.stream().collect(Collectors.joining(", "));
+        return String.join(", ", networkUrls);
+    }
+
+    public static User toUserEntity(UserDTO userDTO) {
+        return userDTO.getUserType().equals("Teacher") ?
+                new Teacher(userDTO.getMail(), userDTO.getPassword())
+                :
+                new Student(userDTO.getMail(), userDTO.getPassword());
+    }
+
+    public static UserDTO toUserDao(User userEntity) {
+        return new UserDTO(userEntity.getMail(), userEntity.getPassword(), userEntity.getUserType().name());
     }
 }
