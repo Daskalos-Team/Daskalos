@@ -52,7 +52,7 @@ const RecommendedTeacherRoot = styled.div`
   overflow: hidden;
 `;
 const RecommendedTeacherTop = styled.div`
-  width: 98.25%;
+  width: 100%;
   gap: 40px;
   display: flex;
   flex-direction: row;
@@ -68,7 +68,7 @@ const ProfilePicture = styled.div`
   background-color: #d9d9d9;
 `;
 const RecommendedTeacherTopRight = styled.div`
-  width: 56.32%;
+  width: 56%;
   gap: 10px;
   display: flex;
   flex-direction: column;
@@ -78,8 +78,7 @@ const RecommendedTeacherTopRight = styled.div`
 `;
 const Name = styled.p`
   width: 100%;
-  height: 24.42%;
-  margin: 0 0 2px 0;
+  height: 24%;
   font-size: 22px;
   font-weight: 700;
   font-family: Inter;
@@ -136,22 +135,23 @@ const RecommendedTeacherBottom = styled.div`
   width: 100%;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  margin: 0 0 0 0;
-  box-sizing: border-box;
+  align-items: center;
 `;
-const PriceRangeLabel = styled.div`
-  width: 170px;
+const PriceRangeLabel = styled.p`
+  width: 80px;
+  max-lines: 1;
+  overflow-y: hidden;
+  text-wrap: normal;
   height: 100%;
-  margin-top: 5px;
   font-size: 13px;
   font-family: Inter;
   box-sizing: border-box;
 `;
-const PriceRangeValue = styled.div`
-  width: 170px;
+const PriceRangeValue = styled.p`
+  width: 80px;
+  max-lines: 1;
   height: 100%;
-  margin: 5px 244px 0 0;
+  text-align: start;
   font-size: 13px;
   font-family: Inter;
   text-transform: uppercase;
@@ -159,8 +159,7 @@ const PriceRangeValue = styled.div`
 `;
 const Favourite = styled.img`
   width: 23px;
-  align-self: flex-end;
-  margin: 2px 0 5px 0;
+  margin-left: auto;
   box-sizing: border-box;
   cursor: pointer;
 `;
