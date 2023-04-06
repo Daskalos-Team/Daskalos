@@ -23,16 +23,16 @@ public class UserService {
         if (user.isUsingGoogle()) {
             if (currentUser.isEmpty()) {
                 repository.save(UserUtils.toUserEntity(user));
-                return "User registered successfully";
+                return "user registered successfully";
             }
         } else {
             if (currentUser.isEmpty()) {
-                return "User with this mail not found";
+                return "user with this mail not found";
             } else if (!currentUser.get().getPassword().equals(user.getPassword())) {
-                return "Wrong password";
+                return "wrong password";
             }
         }
-        return "Successful authorization";
+        return "successful authorization";
     }
 
     public List<UserDTO> findAll() {

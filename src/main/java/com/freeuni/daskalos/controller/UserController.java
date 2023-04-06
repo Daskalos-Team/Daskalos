@@ -25,7 +25,7 @@ public class UserController implements ErrorController {
     @PostMapping("/save")
     public ResponseEntity<String> saveUser(@RequestBody UserDTO user) {
         String message = userService.addUser(user);
-        if (message.contains("successfully")) {
+        if (message.contains("successful")) {
             return new ResponseEntity<>(message, HttpStatus.OK);
         }
         return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
