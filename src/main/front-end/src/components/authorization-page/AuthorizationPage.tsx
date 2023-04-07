@@ -35,63 +35,71 @@ export const AuthorizationPage = (): JSX.Element => {
     };
 
     return (
-        <div className='authorization-page'>
-            <ul className='background-objects'>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-            </ul>
-            <div className='authorization-form'>
-                <div className="switch-div">
-                    <div
-                        style={{ backgroundColor: loginOption ? "white" : "transparent" }}
-                        onClick={() => handleSwitchChange(true)}
-                    >
-                        <div className="option-div">შესვლა</div>
-                    </div>
-                    <div
-                        style={{ backgroundColor: loginOption ? "transparent": "white" }}
-                        onClick={() => handleSwitchChange(false)}
-                    >
-                        <div className="option-div">რეგისტრაცია</div>
-                    </div>
+        <div className="authorization-page">
+            <div className="welcome-section">
+                <div className="caption">
+                    <h1>კეთილი იყოს თქვენი მობრძანება დასკალოსზე, იქ, სადაც მარტივია იპოვო სასურველი მოსწავლე ან მასწავლებელი</h1>
+                    <a href="#" className="more-button button-ghost">მეტი ჩვენს შესახებ</a>
                 </div>
-
-                <div className='inputs'>
-                    <input type='text' placeholder='თქვენი მეილი' onInput={e => setMail(e.currentTarget.value)}/>
-                    <div className='password-section'>
-                        <input type='password' placeholder='თქვენი პაროლი' onInput={e => setPassword(e.currentTarget.value)}/>
-                    </div>
-                    { !loginOption ?
-                        <div className="role-div">
-                            <h5 className="role-label">თქვენი როლი</h5>
-                            <select
-                                className="role-select"
-                                onChange={e => setRole(e.target.value)}
-                                value={role}
-                            >
-                                <option value="Teacher">მასწავლებელი</option>
-                                <option value="Student">მოსწავლე</option>
-                            </select>
+            </div>
+            <div className='authorization-section'>
+                <ul className='background-objects'>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+                <div className='authorization-form'>
+                    <div className="switch-div">
+                        <div
+                            style={{ backgroundColor: loginOption ? "white" : "transparent" }}
+                            onClick={() => handleSwitchChange(true)}
+                        >
+                            <div className="option-div">შესვლა</div>
                         </div>
-                        :
-                        <a className='forgot-password' href=''>დაგავიწყდათ პაროლი?</a>
-                    }
-                </div>
+                        <div
+                            style={{ backgroundColor: loginOption ? "transparent": "white" }}
+                            onClick={() => handleSwitchChange(false)}
+                        >
+                            <div className="option-div">რეგისტრაცია</div>
+                        </div>
+                    </div>
 
-                <div className='authorization-button' onClick={e => standardLogin(e)}>{loginOption ? "შესვლა" : "რეგისტრაცია"}</div>
+                    <div className='inputs'>
+                        <input type='text' placeholder='თქვენი მეილი' onInput={e => setMail(e.currentTarget.value)}/>
+                        <div className='password-section'>
+                            <input type='password' placeholder='თქვენი პაროლი' onInput={e => setPassword(e.currentTarget.value)}/>
+                        </div>
+                        { !loginOption ?
+                            <div className="role-div">
+                                <h5 className="role-label">თქვენი როლი</h5>
+                                <select
+                                    className="role-select"
+                                    onChange={e => setRole(e.target.value)}
+                                    value={role}
+                                >
+                                    <option value="Teacher">მასწავლებელი</option>
+                                    <option value="Student">მოსწავლე</option>
+                                </select>
+                            </div>
+                            :
+                            <a className='forgot-password' href=''>დაგავიწყდათ პაროლი?</a>
+                        }
+                    </div>
 
-                <hr />
+                    <div className='authorization-button' onClick={e => standardLogin(e)}>{loginOption ? "შესვლა" : "რეგისტრაცია"}</div>
 
-                <div className='alternative-login'>
-                    <div className='google' onClick={() => googleLogin()} />
+                    <hr />
+
+                    <div className='alternative-login'>
+                        <div className='google' onClick={() => googleLogin()} />
+                    </div>
                 </div>
             </div>
         </div>

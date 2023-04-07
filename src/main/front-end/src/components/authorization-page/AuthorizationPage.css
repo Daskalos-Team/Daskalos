@@ -10,29 +10,34 @@
     font-family: "CustomFont", serif;
 }
 
-hr {
-    height: 2px;
-    width:80%;
-    border-width: 0;
-    color: #e9c89e;
-    background-color: #e9c89e;
+.authorization-page {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
 }
 
-.authorization-page {
+.about-section {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.authorization-section {
     height: 100vh;
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 0.75em;
-    background: #e9c89e;
+    background: lightsteelblue;
 }
 
 .authorization-form {
     background-color: #f6f2f1;
-    width: 70%;
-    height: 70%;
-    position: relative;
+    position: absolute;
     border-radius: 1em;
     box-shadow: 0 0.188em 1.550em rgb(156, 156, 156);
     display: flex;
@@ -90,6 +95,14 @@ hr {
     font-size: 0.7em;
     display: flex;
     align-items: flex-start;
+}
+
+hr {
+    height: 2px;
+    width:80%;
+    border-width: 0;
+    color: lightsteelblue;
+    background-color: lightsteelblue;
 }
 
 a {
@@ -194,8 +207,68 @@ select:hover {
     background-image: url("../../../../resources/images/google.png");
 }
 
+.welcome-section {
+    position: relative;
+    height: 100%;
+    width: 80%;
+}
+
+.welcome-section:before {
+    content: "";
+    position: relative;
+    z-index: 1;
+    display: block;
+    height:100vh;
+    opacity: 0.5;
+    background: url("../../../../resources/images/classroom.png") no-repeat 0;
+    -webkit-transition: all 1s ease;
+    -moz-transition: all 1s ease;
+    -o-transition: all 1s ease;
+    transition: all 1s ease;
+}
+
+.welcome-section:hover:before {
+    background-position: -50px;
+    opacity: .7;
+}
+
+.welcome-section div {
+    z-index: 5;
+    color: #fff;
+    font-weight: lighter;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+    left: 20%;
+    top: 30%;
+    width: 60%;
+}
+
+.welcome-section div h1 {
+    font-weight: lighter;
+}
+
+.more-button {
+    border: 2px solid #fff;
+    outline: 0;
+    padding: 1rem 2rem;
+    cursor: pointer;
+    border-radius: 2rem;
+    width: 60%;
+    display: inline-block;
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+}
+
+.more-button.button-ghost {
+    color: #fff;
+    background: transparent;
+}
+
 @media only screen and (min-device-width: 37em) {
-    .authorization-page {
+    .authorization-section {
         font-size: 1em;
     }
 
@@ -232,7 +305,7 @@ select:hover {
 }
 
 @media only screen and (min-device-width: 64em) {
-    .authorization-page {
+    .authorization-section {
         font-size: 1.25em;
     }
 
