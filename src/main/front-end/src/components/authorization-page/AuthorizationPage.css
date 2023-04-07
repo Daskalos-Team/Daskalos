@@ -117,11 +117,11 @@ input {
     border: none;
     background-color: #ecf0ef;
     width: 80%;
-    height: 10%;
+    height: 1em;
     border-radius: 0.75em;
     text-align: center;
     padding: 2em;
-    font-size: 0.75em;
+    font-size: 1rem;
 }
 
 input:focus {
@@ -135,6 +135,7 @@ input:hover {
 
 .role-div {
     width: 80%;
+    height: 3em;
     border-radius: 1rem;
     display: flex;
     flex-direction: row;
@@ -169,7 +170,7 @@ select:hover {
 
 .role-select {
     width: 50%;
-    height: 3rem;
+    height: 2em;
     background-color: #ecf0ef;
     color: dimgrey;
     font-size: 0.9em;
@@ -183,7 +184,7 @@ select:hover {
 
 .authorization-button {
     width: 40%;
-    height: 3em;
+    height: 3rem;
     background-color: #e9c89e;
     font-size: 1.15rem;
     display: flex;
@@ -218,7 +219,7 @@ select:hover {
     position: relative;
     z-index: 1;
     display: block;
-    height:100vh;
+    height: 100vh;
     opacity: 0.5;
     background: url("../../../../resources/images/classroom.png") no-repeat 0;
     -webkit-transition: all 1s ease;
@@ -282,9 +283,9 @@ select:hover {
     display: flex;
     background-color: #ecf0ef;;
     align-items: center;
-    border-radius: 2rem;
+    border-radius: 2em;
     width: max-content;
-    height: max-content;
+    height: 2em;
 }
 
 .switch-div > div {

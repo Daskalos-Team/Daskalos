@@ -22,12 +22,12 @@ public class UserUtils {
 
     public static User toUserEntity(UserDTO userDTO) {
         return userDTO.getUserType().equals("Teacher") ?
-                new Teacher(userDTO.getMail(), userDTO.getPassword())
+                new Teacher(userDTO.getMail(), userDTO.getPassword(), userDTO.getName(), userDTO.getSurname(), UserType.fromName(userDTO.getUserType()))
                 :
-                new Student(userDTO.getMail(), userDTO.getPassword());
+                new Student(userDTO.getMail(), userDTO.getPassword(), userDTO.getName(), userDTO.getSurname(), UserType.fromName(userDTO.getUserType()));
     }
 
     public static UserDTO toUserDao(User userEntity) {
-        return new UserDTO(userEntity.getMail(), userEntity.getPassword(), userEntity.getUserType().name());
+        return new UserDTO(userEntity.getMail(), userEntity.getPassword(), userEntity.getName(), userEntity.getSurname(), userEntity.getUserType().name());
     }
 }

@@ -22,7 +22,20 @@ public class Teacher extends User {
 
     private boolean onPlace;
 
-    public Teacher(Long ID, @NonNull String name, @NonNull String secondName, @NonNull String password, @NonNull String mail, @NonNull UserType userType, @NonNull String phoneNumber, @NonNull String address, @Nullable List<Experience> teachersExperience, @Nullable List<TeacherRating> teacherRatings, @Nullable List<Subject> teacherSubjects, boolean onPlace, int priceMin, int priceMax) {
+    public Teacher(Long ID,
+                   @NonNull String name,
+                   @NonNull String secondName,
+                   @NonNull String password,
+                   @NonNull String mail,
+                   @NonNull UserType userType,
+                   @NonNull String phoneNumber,
+                   @NonNull String address,
+                   @Nullable List<Experience> teachersExperience,
+                   @Nullable List<TeacherRating> teacherRatings,
+                   @Nullable List<Subject> teacherSubjects,
+                   boolean onPlace,
+                   int priceMin,
+                   int priceMax) {
         super(ID, name, secondName, password, mail, userType, address, phoneNumber, priceMin, priceMax);
         this.teachersExperience = !Objects.isNull(teachersExperience) ? teachersExperience : List.of();
         this.teacherRatings = !Objects.isNull(teacherRatings) ? teacherRatings : List.of();
@@ -30,8 +43,12 @@ public class Teacher extends User {
         this.teacherSubjects = !Objects.isNull(teacherSubjects) ? teacherSubjects : List.of();
     }
 
-    public Teacher(@NonNull String mail, @NonNull String password) {
-        super(mail, password);
+    public Teacher(@NonNull String mail,
+                   @NonNull String password,
+                   @NonNull String name,
+                   @NonNull String surname,
+                   @NonNull UserType userType) {
+        super(mail, password, name, surname, userType);
     }
 
     public Teacher() {

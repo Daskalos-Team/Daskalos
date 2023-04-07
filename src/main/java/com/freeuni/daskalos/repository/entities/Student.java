@@ -29,8 +29,12 @@ public class Student extends User {
         this.favouriteTeachers = !Objects.isNull(favouriteTeachers) ? favouriteTeachers : List.of();
     }
 
-    public Student(@NonNull String mail, @NonNull String password) {
-        super(mail, password);
+    public Student(@NonNull String mail,
+                   @NonNull String password,
+                   @NonNull String name,
+                   @NonNull String surname,
+                   @NonNull UserType userType) {
+        super(mail, password, name, surname, userType);
     }
 
     public Student() {

@@ -1,22 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { useGoogleLogin } from "@react-oauth/google";
-import { authorizationWithGoogle, standardAuthorization } from "../../service/login-page-service";
+import { loginWithGoogle, standardLogin, registration } from "../../service/login-page-service";
 import "./AuthorizationPage.css";
 
 export const AuthorizationPage = (): JSX.Element => {
     const [user, setUser]: any = useState(undefined);
-    const [role, setRole]: any = useState("Teacher");
+    const [userType, setUserType]: any = useState("Teacher");
     const [loginOption, setLoginOption] = useState(true);
     const [mail, setMail] = useState("");
     const [password, setPassword] = useState("");
+    const [name, setName] = useState("");
+    const [surname, setSurname] = useState("");
 
     const handleSwitchChange = (option: boolean) => {
+        setName("");
+        setSurname("");
         setLoginOption(option);
     };
 
     useEffect(() => {
         if (user) {
-            authorizationWithGoogle(user);
+            loginWithGoogle(user);
         }
     }, [user]);
 
@@ -29,9 +33,12 @@ export const AuthorizationPage = (): JSX.Element => {
         onError: (error) => console.log("Login Failed:", error)
     });
 
-    const standardLogin = (e: any) => {
-        // TODO get correct type and password instead of id
-        standardAuthorization(mail, password, "Teacher", false);
+    const login = (e: any) => {
+        standardLogin(mail, password, false);
+    };
+
+    const standardRegistration = (e: any) => {
+        registration(mail, password, name, surname, userType);
     };
 
     return (
@@ -73,16 +80,16 @@ export const AuthorizationPage = (): JSX.Element => {
 
                     <div className='inputs'>
                         <input type='text' placeholder='თქვენი მეილი' onInput={e => setMail(e.currentTarget.value)}/>
-                        <div className='password-section'>
-                            <input type='password' placeholder='თქვენი პაროლი' onInput={e => setPassword(e.currentTarget.value)}/>
-                        </div>
+                        <input type='password' placeholder='თქვენი პაროლი' onInput={e => setPassword(e.currentTarget.value)}/>
+                        { !loginOption ? <input type='text' placeholder='თქვენი სახელი' onInput={e => setName(e.currentTarget.value)}/> : null}
+                        { !loginOption ? <input type='text' placeholder='თქვენი გვარი' onInput={e => setSurname(e.currentTarget.value)}/> : null}
                         { !loginOption ?
                             <div className="role-div">
                                 <h5 className="role-label">თქვენი როლი</h5>
                                 <select
                                     className="role-select"
-                                    onChange={e => setRole(e.target.value)}
-                                    value={role}
+                                    onChange={e => setUserType(e.target.value)}
+                                    value={userType}
                                 >
                                     <option value="Teacher">მასწავლებელი</option>
                                     <option value="Student">მოსწავლე</option>
@@ -93,13 +100,18 @@ export const AuthorizationPage = (): JSX.Element => {
                         }
                     </div>
 
-                    <div className='authorization-button' onClick={e => standardLogin(e)}>{loginOption ? "შესვლა" : "რეგისტრაცია"}</div>
-
-                    <hr />
-
-                    <div className='alternative-login'>
-                        <div className='google' onClick={() => googleLogin()} />
+                    <div className='authorization-button' onClick={e => loginOption ? login(e) : standardRegistration(e)}>
+                        {loginOption ? "შესვლა" : "რეგისტრაცია"}
                     </div>
+
+                    { loginOption ? <hr /> : null }
+
+                    {
+                        loginOption ?
+                            <div className='alternative-login'>
+                                <div className='google' onClick={() => googleLogin()} />
+                            </div> : null
+                    }
                 </div>
             </div>
         </div>

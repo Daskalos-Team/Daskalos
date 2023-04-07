@@ -1,1 +1,1 @@
-export const formEndpoint = "http://localhost:8080/user/save";
+export const formEndpoint = "http://localhost:8080/user/";
