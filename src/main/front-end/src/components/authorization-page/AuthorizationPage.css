@@ -117,6 +117,7 @@ input:focus {
 
 input:hover {
     background-color: #ffffff;
+    box-shadow: 0 0.1em 0.1em rgb(156, 156, 156);
 }
 
 .role-div {
@@ -158,9 +159,8 @@ select:hover {
     height: 3rem;
     background-color: #ecf0ef;
     color: dimgrey;
-    font-size: 1rem;
+    font-size: 0.9em;
     border-radius: 2rem;
-    align-items: center;
     text-align: center;
 }
 
