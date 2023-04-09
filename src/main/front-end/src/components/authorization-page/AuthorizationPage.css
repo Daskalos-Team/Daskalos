@@ -80,7 +80,7 @@
     width: 100%;
     align-items: center;
     justify-content: center;
-    row-gap: 1em;
+    row-gap: 1rem;
 }
 
 .password-section {
@@ -99,7 +99,7 @@
 
 hr {
     height: 2px;
-    width:80%;
+    width: 80%;
     border-width: 0;
     color: lightsteelblue;
     background-color: lightsteelblue;
@@ -117,7 +117,7 @@ input {
     border: none;
     background-color: #ecf0ef;
     width: 80%;
-    height: 1em;
+    height: 1rem;
     border-radius: 0.75em;
     text-align: center;
     padding: 2em;
@@ -130,7 +130,6 @@ input:focus {
 
 input:hover {
     background-color: #ffffff;
-    box-shadow: 0 0.1em 0.1em rgb(156, 156, 156);
 }
 
 .role-div {
@@ -184,7 +183,7 @@ select:hover {
 
 .authorization-button {
     width: 40%;
-    height: 3rem;
+    height: 3em;
     background-color: #e9c89e;
     font-size: 1.15rem;
     display: flex;
@@ -229,11 +228,11 @@ select:hover {
 }
 
 .welcome-section:hover:before {
-    background-position: -50px;
+    background-position: -2em;
     opacity: .7;
 }
 
-.welcome-section div {
+.welcome-section .caption {
     z-index: 5;
     color: #fff;
     font-weight: lighter;
@@ -248,6 +247,10 @@ select:hover {
 
 .welcome-section div h1 {
     font-weight: lighter;
+}
+
+.welcome {
+    font-size: 1.5em;
 }
 
 .more-button {
@@ -265,47 +268,97 @@ select:hover {
 
 .more-button.button-ghost {
     color: #fff;
+    transition: 0.5s;
     background: transparent;
 }
 
-@media only screen and (min-device-width: 37em) {
-    .authorization-section {
-        font-size: 1em;
-    }
-
-    .authorization-form {
-        width: 60%;
-        height: 70%;
-    }
+.more-button.button-ghost:hover {
+    background-color: lightsteelblue;
+    transform: scale(1.25);
 }
 
 .switch-div {
     display: flex;
-    background-color: #ecf0ef;;
+    background-color: #ecf0ef;
+    font-size: 1.25em;
+    justify-content: center;
     align-items: center;
     border-radius: 2em;
-    width: max-content;
     height: 2em;
 }
 
-.switch-div > div {
+.switch-div div {
     width: 80%;
     height: 100%;
+    font-size: 1rem;
     display: flex;
     border-radius: 2rem;
     align-items: center;
     justify-content: center;
-    padding: 1rem 2rem;
+    padding: 1em 1em;
     cursor: pointer;
     transition: 0.3s ease;
 }
 
 .option-div {
     color: dimgrey;
-    font-size: 14px;
 }
 
-@media only screen and (min-device-width: 64em) {
+.daskalos-name {
+    position: relative;
+    text-decoration: none;
+    display: flex;
+    font-size: 3rem;
+    line-height: 2em;
+    letter-spacing: 1px;
+    color: transparent;
+    -webkit-text-stroke: 1px lightsalmon;
+}
+
+.daskalos-name::before {
+    content: attr(data-text);
+    position: absolute;
+    color: lightsalmon;
+    width: 0;
+    overflow: hidden;
+    transition: 0.7s;
+    border-right: 0.5rem solid #e9c89e;
+}
+
+.daskalos-name:hover::before {
+    width: 100%;
+    filter: drop-shadow(1em -2em 5em #e9c89e);
+}
+
+@media only screen and (min-width: 0) and (max-width: 64rem) {
+    .welcome-section {
+        display: none;
+    }
+}
+
+@media only screen and (min-height: 0) and (max-height: 50rem) {
+    .switch-div, .role-select, .role-label {
+        font-size: 0.7em;
+    }
+
+    .inputs {
+        row-gap: 0.7em;
+    }
+
+    .authorization-button {
+        font-size: 0.6em;
+    }
+
+    .alternative-login {
+        height: 2em;
+    }
+
+    input {
+        font-size: 0.5em;
+    }
+}
+
+@media only screen and (min-width: 64rem) {
     .authorization-section {
         font-size: 1.25em;
     }

@@ -45,8 +45,9 @@ export const AuthorizationPage = (): JSX.Element => {
         <div className="authorization-page">
             <div className="welcome-section">
                 <div className="caption">
-                    <h1>კეთილი იყოს თქვენი მობრძანება დასკალოსზე, იქ, სადაც მარტივია იპოვო სასურველი მოსწავლე ან მასწავლებელი</h1>
-                    <a href="#" className="more-button button-ghost">მეტი ჩვენს შესახებ</a>
+                    <div className="daskalos-name" data-text="&nbsp;დასკალოსი">&nbsp;დასკალოსი&nbsp;</div>
+                    <h1 className="welcome">კეთილი იყოს თქვენი მობრძანება დასკალოსზე, იქ, სადაც მარტივია იპოვო სასურველი მოსწავლე ან მასწავლებელი</h1>
+                    <a href="#" className="more-button button-ghost">მეტი ჩვენ შესახებ</a>
                 </div>
             </div>
             <div className='authorization-section'>
