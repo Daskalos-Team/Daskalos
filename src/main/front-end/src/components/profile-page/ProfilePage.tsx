@@ -1,5 +1,7 @@
 import React from "react";
 import styled from "styled-components";
+import {Experience} from "./experience/Experience";
+import {StudentComment} from "./student-comment/StudentComment";
 
 export const ProfilePage = (props: any) => {
 
@@ -74,8 +76,23 @@ export const ProfilePage = (props: any) => {
                 </AboutComponent>
             </LeftComponentGroup>
             <Calendar src="https://file.rendit.io/n/nW9w16yCUimarohagWmR.svg"/>
-            <ExperienceSection>Experience</ExperienceSection>
-            <CommentSection>comments section</CommentSection>
+            <ExperienceTitle>Experience</ExperienceTitle>
+            <ExperienceSection>
+                <Experience>
+                    Job Position: {"DEV"}
+                    Employer: {"TBC"}
+                    Job Duration: {"6 months"}
+                    Job Summary: {"bla bla bla bla bla"}
+                </Experience>
+            </ExperienceSection>
+            <CommentTitle>comments section</CommentTitle>
+            <StudentCommentSection>
+                <StudentComment>
+                    Name1: {"student name"}
+                    Rating: {"student rating"}
+                    SecondName: {"second name"}
+                </StudentComment>
+            </StudentCommentSection>
         </ProfilePageContainerRootRoot>
     );
 };
@@ -346,7 +363,7 @@ const Calendar = styled.img`
   align-self: flex-end;
   box-sizing: border-box;
 `;
-const ExperienceSection = styled.div`
+const ExperienceTitle = styled.div`
   color: #6a60a6;
   font-size: 1.5rem;
   max-width: 40rem;
@@ -357,16 +374,22 @@ const ExperienceSection = styled.div`
   text-transform: uppercase;
   box-sizing: border-box;
 `;
-const CommentSection = styled.div`
+const ExperienceSection = styled.div`
+    margin-left: 6.8em;
+`;
+const CommentTitle = styled.div`
   color: #6a60a6;
   font-size: 1.5rem;
   margin-left: 5rem;
   margin-top: 1em;
-  margin-bottom: 10em;
+  margin-bottom: 1em;
   max-width: 40rem;
   font-family: Abhaya Libre Medium;
   white-space: nowrap;
   letter-spacing: 2.6px;
   text-transform: uppercase;
   box-sizing: border-box;
+`;
+const StudentCommentSection = styled.div`
+  margin-left: 6.8em;
 `;
