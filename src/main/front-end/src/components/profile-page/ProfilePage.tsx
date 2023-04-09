@@ -15,61 +15,72 @@ export const ProfilePage = (props: any) => {
         <ProfilePageContainerRootRoot>
             <Header>
                 <WebsiteLogo src="https://file.rendit.io/n/ek3gDZei38I8w65o4fxE.png"/>
-                <ProfileNavigationButton
-                    onClick={(e) =>
-                        ProfileNavigationButtonFunction(e, "ProfileNavigationButton")
-                    }
-                />
-                <AccountNavigationButton
-                    onClick={(e) =>
-                        AccountNavigationButtonFunction(e, "AccountNavigationButton")
-                    }
-                />
+                <Buttons>
+                    <ProfileNavigationButton
+                        onClick={(e) =>
+                            ProfileNavigationButtonFunction(e, "ProfileNavigationButton")
+                        }
+                    />
+                    <AccountNavigationButton
+                        onClick={(e) =>
+                            AccountNavigationButtonFunction(e, "AccountNavigationButton")
+                        }
+                    />
+                </Buttons>
             </Header>
-            <Group>
+            <ImagePersonalInfoGroup>
                 <ProfileImage src="https://file.rendit.io/n/abZR5YgvmYE642DpW2Ce.svg"/>
-                <Group3>
+                <SubjectJobRatingGroup>
                     <SubjectsContainer>
-                        subjects: Subject1, cubject2, subject3
+                        subjects: Subject1, subject2, subject3
                     </SubjectsContainer>
-                    <CurrentOccupation>Current working place 1</CurrentOccupation>
-                    <PriorOccupation>
-                        Current working place 2<br/>
-                    </PriorOccupation>
-                    <PriorOccupation>average rating 5.0/5.0</PriorOccupation>
-                </Group3>
-            </Group>
-            <Group1>
+                    <CurrentWorkingPlaces>
+                        <CurrentOccupation1>
+                            Current working place 1
+                        </CurrentOccupation1>
+                        <CurrentOccupation2>
+                            Current working place 2<br/>
+                        </CurrentOccupation2>
+                    </CurrentWorkingPlaces>
+                    <AverageRating>
+                        average rating 5.0/5.0
+                    </AverageRating>
+                </SubjectJobRatingGroup>
+            </ImagePersonalInfoGroup>
+            <NameCityGroup>
                 <FullName>name / second name</FullName>
                 <Location1>Country, city</Location1>
-            </Group1>
-            <ProfileBio>personal info</ProfileBio>
-            <Group2>
-                <Group4>
-                    <ProfileInfoField>
-                        <PhoneNumberField>phone number: 0000000000000</PhoneNumberField>
-                        <AddressField>
-                            address : bla bla bla
-                            <br/>
-                        </AddressField>
-                    </ProfileInfoField>
+            </NameCityGroup>
+            <LeftComponentGroup>
+                <ProfileBio>personal info</ProfileBio>
+                <PersonalInfoCompGroup>
+                    <PhoneNumberField>
+                        phone number: 0000000000000
+                    </PhoneNumberField>
+                    <AddressField>
+                        address : bla bla bla
+                        <br/>
+                    </AddressField>
+                </PersonalInfoCompGroup>
+                <AboutComponent>
                     <AboutTitle>about</AboutTitle>
-                    <AboutContainer>
-                        <AboutContent>
-                            bla bla bla bla bla bla bla bla bla bla bla
-                        </AboutContent>
-                    </AboutContainer>
-                </Group4>
-                <Calendar src="https://file.rendit.io/n/nW9w16yCUimarohagWmR.svg"/>
-            </Group2>
+                    <AboutContent>
+                        bla bla bla bla bla bla bla bla bla bla bla
+                        <br/>
+                        bla bla bla bla bla bla bla bla bla bla bla
+                        <br/>
+                        bla bla bla bla bla bla bla bla bla bla bla
+                    </AboutContent>
+                </AboutComponent>
+            </LeftComponentGroup>
+            <Calendar src="https://file.rendit.io/n/nW9w16yCUimarohagWmR.svg"/>
             <ExperienceSection>Experience</ExperienceSection>
             <CommentSection>comments section</CommentSection>
         </ProfilePageContainerRootRoot>
     );
 };
 
-const PriorOccupation = styled.div`
-  font-size: 40px;
+const CurrentOccupation2 = styled.div`
   font-family: Abhaya Libre Medium;
   text-align: right;
   white-space: nowrap;
@@ -77,13 +88,22 @@ const PriorOccupation = styled.div`
   text-transform: uppercase;
   box-sizing: border-box;
 `;
+const AverageRating = styled.div`
+  font-size: 1.5em;
+  font-family: Abhaya Libre Medium;
+  text-align: right;
+  white-space: nowrap;
+  letter-spacing: 2.6px;
+  text-transform: uppercase;
+  box-sizing: border-box;
+`;
+
 const ProfilePageContainerRootRoot = styled.div`
-  gap: 32px;
+  gap: 3em;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  padding: 0px 0px 281px 0px;
   border-width: 1px;
   border-style: solid;
   border-color: #000000;
@@ -92,27 +112,29 @@ const ProfilePageContainerRootRoot = styled.div`
 `;
 const Header = styled.div`
   width: 100.1%;
-  gap: 56px;
+  max-height: 10em;
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
-  align-items: flex-start;
+  justify-content: space-between;
   margin: 0px 0px 122px -1px;
   padding: 7.7px 17px;
   box-sizing: border-box;
   background-color: #ffef9a;
 `;
+const Buttons = styled.div`
+
+`;
 const WebsiteLogo = styled.img`
-  min-width: 0px;
-  min-height: 0px;
-  margin: 0px 1013px 0.92px 0px;
+  max-width: 10em;
+  max-height: 10em;
+  margin-top: 0px; 
   box-sizing: border-box;
 `;
 const ProfileNavigationButton = styled.button`
-  width: 6.99%;
-  height: 124px;
-  margin: 42.3px 0px 0px 0px;
+  width: 5em;
+  height: 5em;
   padding: 0px;
+  margin-right: 1em;
   border-width: 0px;
   box-sizing: content-box;
   background-color: transparent;
@@ -125,9 +147,8 @@ const ProfileNavigationButton = styled.button`
   } ;
 `;
 const AccountNavigationButton = styled.button`
-  width: 6.99%;
-  height: 124px;
-  margin: 42.3px 0px 0px 0px;
+  width: 5em;
+  height: 5em;
   padding: 0px;
   border-width: 0px;
   box-sizing: content-box;
@@ -140,37 +161,47 @@ const AccountNavigationButton = styled.button`
     box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.3);
   } ;
 `;
-const Group = styled.div`
+const ImagePersonalInfoGroup = styled.div`
   width: 93.01%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-self: flex-end;
+  align-self: center;
   align-items: flex-start;
-  margin: 0px 63px 5px 0px;
   box-sizing: border-box;
 `;
 const ProfileImage = styled.img`
-  min-width: 0px;
-  min-height: 0px;
-  box-sizing: border-box;
-  mix-blend-mode: multiply;
+  width: 15em;
+  height: 15em;
+  margin-top: -7em;
+  box-sizing: initial;
+  mix-blend-mode: normal;
+  margin-left: 4em;
 `;
-const Group3 = styled.div`
+const SubjectJobRatingGroup = styled.div`
   width: 46.52%;
-  gap: 8px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-end;
-  margin: 14px 0px 0px 0px;
   box-sizing: border-box;
 `;
 const SubjectsContainer = styled.div`
   align-self: stretch;
-  margin: 0px 0px 40px 0px;
   color: #6a60a6;
-  font-size: 40px;
+  font-size: 2em;
+  margin-top: -2em;
+  margin-bottom: 2em;
+  font-family: Abhaya Libre Medium;
+  text-align: right;
+  white-space: nowrap;
+  text-transform: uppercase;
+  box-sizing: border-box;
+`;
+const CurrentWorkingPlaces = styled.div`
+    font-size: 1.5em;
+`;
+const CurrentOccupation1 = styled.div`
   font-family: Abhaya Libre Medium;
   text-align: right;
   white-space: nowrap;
@@ -178,36 +209,25 @@ const SubjectsContainer = styled.div`
   text-transform: uppercase;
   box-sizing: border-box;
 `;
-const CurrentOccupation = styled.div`
-  margin: 0px 0px 43px 0px;
-  font-size: 40px;
-  font-family: Abhaya Libre Medium;
+const NameCityGroup = styled.div`
   text-align: right;
-  white-space: nowrap;
-  letter-spacing: 2.6px;
-  text-transform: uppercase;
-  box-sizing: border-box;
-`;
-const Group1 = styled.div`
-  width: 701px;
   position: relative;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  align-items: flex-start;
-  margin: 0px 0px 0px 71px;
-  padding: 74px 0px 0px 0px;
+  margin-top: 2.5em;
   box-sizing: border-box;
 `;
 const FullName = styled.div`
-  width: 701px;
-  height: 76px;
-  left: 0px;
-  top: 0px;
+  width: 30rem;
+  height: 3rem;
+  margin-top: 2em;
+  margin-bottom: 2em;
+  margin-left: 0.5em;
   position: absolute;
   align-self: stretch;
   color: #695fa5;
-  font-size: 64px;
+  font-size: 2em;
   font-family: Abhaya Libre Medium;
   white-space: nowrap;
   letter-spacing: 4.16px;
@@ -217,7 +237,8 @@ const FullName = styled.div`
 const Location1 = styled.div`
   position: relative;
   color: #6a60a6;
-  font-size: 40px;
+  margin-left: 4.5rem;
+  font-size: 2em;
   font-family: Abhaya Libre Medium;
   white-space: nowrap;
   letter-spacing: 2.6px;
@@ -225,53 +246,44 @@ const Location1 = styled.div`
   box-sizing: border-box;
 `;
 const ProfileBio = styled.div`
-  margin: 0px 0px 13px 71px;
-  color: #6a60a6;
-  font-size: 40px;
+  color: #6a60a6;  
+  margin-top: 3rem;
+  margin-bottom: 2em;
+  margin-left: 3.4em;
+  align-self: flex-start;
+  font-size: 1.5em;
   font-family: Abhaya Libre Medium;
   white-space: nowrap;
   letter-spacing: 2.6px;
   text-transform: uppercase;
   box-sizing: border-box;
 `;
-const Group2 = styled.div`
-  width: 93.64%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin: 0px 0px 27px 59px;
-  box-sizing: border-box;
-`;
-const Group4 = styled.div`
-  width: 43.6%;
-  gap: 39px;
+const LeftComponentGroup = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  align-items: flex-start;
+  align-items: center;
   box-sizing: border-box;
 `;
-const ProfileInfoField = styled.div`
-  width: 780px;
+const PersonalInfoCompGroup = styled.div`
+  margin-left: -1.2em;
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  align-self: flex-end;
+  justify-content: center;
+  align-self: center;
   align-items: flex-start;
-  padding: 64px 26px 104px 26px;
   box-sizing: border-box;
   background-size: cover;
   background-image: url("https://file.rendit.io/n/mg4wuYLwYBWcGf9TVX0a.svg");
 `;
 const PhoneNumberField = styled.div`
-  width: 511px;
-  height: 38px;
-  left: 26px;
-  top: 130px;
+  width: 5em;
+  height: 2rem;
+  margin-left: 2rem;
+  margin-top: 3em;
   position: absolute;
-  font-size: 32px;
+  font-size: 1.5em;
   font-family: Abhaya Libre Medium;
   white-space: nowrap;
   letter-spacing: 2.08px;
@@ -279,67 +291,79 @@ const PhoneNumberField = styled.div`
   box-sizing: border-box;
 `;
 const AddressField = styled.div`
+  margin-top: 2rem;
+  margin-bottom: 100px;
+  margin-right: 150px;
+  margin-left: 2rem;
   position: relative;
-  font-size: 32px;
+  font-size: 1.5em;
   font-family: Abhaya Libre Medium;
   white-space: nowrap;
   letter-spacing: 2.08px;
   text-transform: uppercase;
   box-sizing: border-box;
 `;
+
+const AboutComponent = styled.div`
+    position: relative;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-self: center;
+    margin-top: 2em;
+    margin-left: 3em;
+`;
 const AboutTitle = styled.div`
-  margin: 0px 0px 8px 9px;
+  margin-bottom: 10rem;
+  margin-left: 2rem;    
+  margin-bottom: 2rem;
   color: #6a60a6;
-  font-size: 40px;
+  font-size: 1.5rem;
   font-family: Abhaya Libre Medium;
   white-space: nowrap;
   letter-spacing: 2.6px;
   text-transform: uppercase;
   box-sizing: border-box;
 `;
-const AboutContainer = styled.div`
-  width: 99.62%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  padding: 36px 27px 224px 27px;
-  box-sizing: border-box;
-  background-size: cover;
-  background-image: url("https://file.rendit.io/n/YyntBP1DcHb87vs13lmt.svg");
-`;
 const AboutContent = styled.div`
-  width: 624px;
-  font-size: 40px;
+  padding: 1em;
+  margin-left: 2.5em;
+  font-size: 1.5em;
   font-family: Abhaya Libre Medium;
-  letter-spacing: 2.6px;
   text-transform: uppercase;
   box-sizing: border-box;
+  border: #6A60A6 3.5px solid; 
+  background-color: #EBEAEA;
+  border-radius: 30px;
 `;
 const Calendar = styled.img`
-  width: 743px;
-  min-width: 0px;
-  height: 799px;
+  width: 30em;
+  height: 30em;
+  margin-top: -40rem;
+  margin-right: 5rem;
   min-height: 0px;
   flex-shrink: 0;
   align-self: flex-end;
-  margin: 5px 0px 0px 0px;
   box-sizing: border-box;
 `;
 const ExperienceSection = styled.div`
-  margin: 0px 0px 75px 71px;
   color: #6a60a6;
-  font-size: 40px;
+  font-size: 1.5rem;
+  max-width: 40rem;
+  margin-left: 5rem;
+  margin-top: 5em;
   font-family: Abhaya Libre Medium;
-  white-space: nowrap;
   letter-spacing: 2.6px;
   text-transform: uppercase;
   box-sizing: border-box;
 `;
 const CommentSection = styled.div`
-  margin: 0px 0px 0px 71px;
   color: #6a60a6;
-  font-size: 40px;
+  font-size: 1.5rem;
+  margin-left: 5rem;
+  margin-top: 1em;
+  margin-bottom: 10em;
+  max-width: 40rem;
   font-family: Abhaya Libre Medium;
   white-space: nowrap;
   letter-spacing: 2.6px;
