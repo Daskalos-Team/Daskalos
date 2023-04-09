@@ -1,1 +1,1 @@
-export const formEndpoint = "http://localhost:8080/user/";
+export const formEndpoint = "https://daskalos.herokuapp.com/user/";
