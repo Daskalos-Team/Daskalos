@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useGoogleLogin } from "@react-oauth/google";
 import {
-    existsWithMail,
+    checkAndSendConfirmation,
     isEmptyInput,
     loginWithGoogle,
     registration,
     standardLogin
 } from "../../service/login-page-service";
-import emailjs from "@emailjs/browser";
-import randomInteger from "random-int";
 import "./AuthorizationPage.css";
 
 export const AuthorizationPage = (): JSX.Element => {
@@ -22,7 +20,7 @@ export const AuthorizationPage = (): JSX.Element => {
     const [formState, setFormState] = useState("authorization-form");
     const [verifierState, setVerifierState] = useState("verifier-hide");
     const [inputCode, setInputCode] = useState("");
-    const [realCode, setRealCode] = useState("");
+    const [realCode, setRealCode] = useState("bad");
 
     useEffect(() => {
         if (user) {
@@ -49,26 +47,17 @@ export const AuthorizationPage = (): JSX.Element => {
         standardLogin(mail, password, false);
     };
 
-    const sendVerificationEmail = (e: any) => {
+    const sendVerificationEmail = async (e: any): Promise<void> => {
         if (isEmptyInput([mail, password, name, surname, userType])) {
             alert("გთხოვთ შეიყვანოთ ყველა მონაცემი");
             return;
         }
-        if (!existsWithMail(mail)) {
-            return;
+        const code = await checkAndSendConfirmation(mail, password, name);
+        if (code !== "bad") {
+            setRealCode(code);
+            setVerifierState("verifier-popup");
+            setFormState("form-hide");
         }
-        const code = randomInteger(10000, 1000000);
-        setRealCode(code + "");
-        const params = {
-            user_email: mail,
-            user_name: name,
-            user_code: code
-        };
-        emailjs.send("service_m92suca", "template_wcrd1ei", params, "CbmNbHyLjq1ERQzPU").then(function (res) {
-            console.log("success" + res.status);
-        });
-        setVerifierState("verifier-popup");
-        setFormState("form-hide");
     };
 
     const checkCode = (e: any) => {

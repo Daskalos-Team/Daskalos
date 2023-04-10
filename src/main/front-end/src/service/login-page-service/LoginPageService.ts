@@ -1,5 +1,7 @@
 import axios from "axios";
-import { formEndpoint } from "./LoginPageServiceConstants";
+import { formEndpoint, publicKey, serviceID, templateID } from "./LoginPageServiceConstants";
+import randomInteger from "random-int";
+import emailjs from "@emailjs/browser";
 
 export const loginWithGoogle = (user: any) => {
     axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
@@ -34,7 +36,7 @@ export const standardLogin = (mail: string, password: string, google: boolean) =
         });
 };
 
-export const existsWithMail = (mail: string): boolean => {
+export const checkAndSendConfirmation = async (mail: string, password: string, name: string): Promise<string> => {
     const userInfo = {
         mail
     };
@@ -42,11 +44,22 @@ export const existsWithMail = (mail: string): boolean => {
         headers: {
             "Content-type": "application/json; charset=UTF-8"
         }
+    }).then(response => {
+        const code = randomInteger(10000, 1000000); // generate private code
+        const params = {
+            user_email: mail,
+            user_name: name,
+            user_code: code
+        };
+        emailjs.send(serviceID, templateID, params, publicKey).then(function (res) {
+            console.log("success: " + res.status);
+        });
+        return code + "";
     }).catch((err) => {
         alert(err.response.data);
-        return false;
+        return "bad";
     });
-    return true;
+    return "bad";
 };
 
 export const registration = (mail: string, password: string, name: string, surname: string, userType: string) => {
