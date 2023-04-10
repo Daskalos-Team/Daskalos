@@ -1,33 +1,30 @@
 package com.freeuni.daskalos.dto;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import reactor.util.annotation.NonNull;
 
 import java.io.Serializable;
 
 @JsonAutoDetect
 public class UserDTO implements Serializable {
 
-    private boolean usingGoogle;
-
     private String mail;
 
     private String password;
 
+    private String name;
+
+    private String surname;
+
     private String userType;
 
-    public UserDTO(String mail, String password, @NonNull String userType) {
+    private boolean usingGoogle;
+
+    public UserDTO(String mail, String password, String name, String surname, String userType) {
         this.mail = mail;
+        this.name = name;
+        this.surname = surname;
         this.password = password;
         this.userType = userType;
-    }
-
-    public boolean isUsingGoogle() {
-        return usingGoogle;
-    }
-
-    public void setUsingGoogle(boolean usingGoogle) {
-        this.usingGoogle = usingGoogle;
     }
 
     public String getMail() {
@@ -46,11 +43,35 @@ public class UserDTO implements Serializable {
         this.password = password;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
     public String getUserType() {
         return userType;
     }
 
     public void setUserType(String userType) {
         this.userType = userType;
+    }
+
+    public boolean isUsingGoogle() {
+        return usingGoogle;
+    }
+
+    public void setUsingGoogle(boolean usingGoogle) {
+        this.usingGoogle = usingGoogle;
     }
 }

@@ -15,7 +15,7 @@ public abstract class User implements Serializable {
 
     private String name;
 
-    private String lastName;
+    private String surname;
 
     private String password;
 
@@ -33,7 +33,7 @@ public abstract class User implements Serializable {
 
     public User(Long ID,
                 @NonNull String name,
-                @NonNull String lastName,
+                @NonNull String surname,
                 @NonNull String password,
                 @NonNull String mail,
                 @NonNull UserType userType,
@@ -43,7 +43,7 @@ public abstract class User implements Serializable {
                 int priceMax) {
         this.ID = ID;
         this.name = name;
-        this.lastName = lastName;
+        this.surname = surname;
         this.password = password;
         this.mail = mail;
         this.userType = userType;
@@ -53,9 +53,16 @@ public abstract class User implements Serializable {
         this.priceMax = priceMax;
     }
 
-    public User(@NonNull String mail, @NonNull String password) {
+    public User(@NonNull String mail,
+                @NonNull String password,
+                @NonNull String name,
+                @NonNull String surname,
+                @NonNull UserType userType) {
         this.mail = mail;
         this.password = password;
+        this.name = name;
+        this.surname = surname;
+        this.userType = userType;
     }
 
     public User() {
@@ -78,12 +85,12 @@ public abstract class User implements Serializable {
         this.name = name;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getSurname() {
+        return surname;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setSurname(String lastName) {
+        this.surname = lastName;
     }
 
     public String getPassword() {

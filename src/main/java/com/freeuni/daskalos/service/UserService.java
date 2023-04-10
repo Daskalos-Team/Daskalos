@@ -18,21 +18,37 @@ public class UserService {
     @Autowired
     private UserRepository repository;
 
+    public String checkUserWithMail(String mail) {
+        Optional<User> currentUser = repository.findByMail(mail);
+
+        if (currentUser.isPresent()) {
+            return "User with this mail already exists";
+        }
+
+        return "Ok";
+    }
+
     public String addUser(UserDTO user) {
         Optional<User> currentUser = repository.findByMail(user.getMail());
-        if (user.isUsingGoogle()) {
-            if (currentUser.isEmpty()) {
-                repository.save(UserUtils.toUserEntity(user));
-                return "User registered successfully";
-            }
-        } else {
-            if (currentUser.isEmpty()) {
-                return "User with this mail not found";
-            } else if (!currentUser.get().getPassword().equals(user.getPassword())) {
-                return "Wrong password";
-            }
+
+        if (currentUser.isEmpty()) {
+            repository.save(UserUtils.toUserEntity(user));
+            return "User registered successfully";
         }
-        return "Successful authorization";
+
+        return "User with this mail already exists";
+    }
+
+    public String checkUser(UserDTO user) {
+        Optional<User> currentUser = repository.findByMail(user.getMail());
+
+        if (currentUser.isEmpty()) {
+            return "User with this mail not found";
+        } else if (!user.isUsingGoogle() && !currentUser.get().getPassword().equals(user.getPassword())) {
+            return "Wrong password";
+        }
+
+        return "Successful login";
     }
 
     public List<UserDTO> findAll() {
