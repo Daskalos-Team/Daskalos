@@ -22,7 +22,7 @@ public class UserController implements ErrorController {
         return userService.findAll();
     }
 
-    @GetMapping("/check")
+    @PostMapping("/check")
     public ResponseEntity<String> checkUserWithMail(@RequestBody UserDTO user) {
         String message = userService.checkUserWithMail(user.getMail());
         if (message.equals("User with this mail already exists")) {
