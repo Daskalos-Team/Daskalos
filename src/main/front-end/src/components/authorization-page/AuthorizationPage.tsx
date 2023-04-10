@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useGoogleLogin } from "@react-oauth/google";
+import randomInteger from "random-int";
 import {
     checkAndSendConfirmation,
     isEmptyInput,
@@ -11,7 +12,7 @@ import "./AuthorizationPage.css";
 
 export const AuthorizationPage = (): JSX.Element => {
     const [user, setUser]: any = useState(undefined);
-    const [userType, setUserType]: any = useState("Teacher");
+    const [userType, setUserType] = useState("Teacher");
     const [loginOption, setLoginOption] = useState(true);
     const [mail, setMail] = useState("");
     const [password, setPassword] = useState("");
@@ -21,6 +22,11 @@ export const AuthorizationPage = (): JSX.Element => {
     const [verifierState, setVerifierState] = useState("verifier-hide");
     const [inputCode, setInputCode] = useState("");
     const [realCode, setRealCode] = useState("bad");
+
+    useEffect(() => {
+        const code = randomInteger(10000, 1000000); // generate private code
+        setRealCode(code + "");
+    }, []);
 
     useEffect(() => {
         if (user) {
@@ -52,17 +58,15 @@ export const AuthorizationPage = (): JSX.Element => {
             alert("გთხოვთ შეიყვანოთ ყველა მონაცემი");
             return;
         }
-        const code = await checkAndSendConfirmation(mail, password, name);
-        if (code !== "bad") {
-            setRealCode(code);
+        await checkAndSendConfirmation(mail, password, name, realCode).then(response => {
             setVerifierState("verifier-popup");
             setFormState("form-hide");
-        }
+        });
     };
 
     const checkCode = (e: any) => {
         if (realCode !== inputCode) {
-            alert("incorrect code");
+            alert("არასწორი კოდი!");
             return;
         }
         registration(mail, password, name, surname, userType);
