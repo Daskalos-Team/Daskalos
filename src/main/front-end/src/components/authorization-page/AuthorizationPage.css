@@ -35,6 +35,71 @@
     background: lightsteelblue;
 }
 
+.verifier-hide {
+    position: absolute;
+    transform: scale(0);
+}
+
+.verifier-popup {
+    position: relative;
+    z-index: 10;
+    height: 10em;
+    width: 20em;
+    display: flex;
+    flex-direction: column;
+    row-gap: 1em;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2rem;
+    background-color: #f6f2f1;
+    color: dimgrey;
+    bottom: 0;
+    transform: scale(1);
+    transition: 1s;
+}
+
+.verifier-buttons {
+    display: flex;
+    flex-direction: row;
+    column-gap: 1em;
+    width: 80%;
+}
+
+.verifier-buttons > div {
+    padding: 1em;
+}
+
+.verifier-buttons > div:hover {
+    transform: scale(1.1);
+}
+
+.verifier-ok {
+    width: 100%;
+    height: 3em;
+    background-color: lightgreen;
+    font-size: 1em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.3s;
+    border-radius: 1em;
+    cursor: pointer;
+}
+
+.verifier-close {
+    width: 40%;
+    height: 3em;
+    background-color: lightcoral;
+    color: dimgrey;
+    font-size: 1em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.3s;
+    border-radius: 1em;
+    cursor: pointer;
+}
+
 .authorization-form {
     background-color: #f6f2f1;
     position: absolute;
@@ -44,6 +109,10 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-evenly;
+}
+
+.form-hide {
+    display: none;
 }
 
 .alternative-login {
@@ -344,7 +413,7 @@ select:hover {
 }
 
 @media only screen and (min-height: 0) and (max-height: 50rem) {
-    .switch-div, .role-select, .role-label {
+    .switch-div, .role-select, .role-label, .verifier-buttons > div {
         font-size: 0.7em;
     }
 
