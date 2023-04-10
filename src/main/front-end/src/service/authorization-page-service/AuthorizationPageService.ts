@@ -1,5 +1,5 @@
 import axios from "axios";
-import { formEndpoint, publicKey, serviceID, templateID } from "./LoginPageServiceConstants";
+import { formEndpoint, publicKey, serviceID, templateID } from "./AuthorizationPageServiceConstants";
 import emailjs from "@emailjs/browser";
 
 export const loginWithGoogle = (user: any) => {

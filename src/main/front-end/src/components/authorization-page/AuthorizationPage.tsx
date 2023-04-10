@@ -7,7 +7,7 @@ import {
     loginWithGoogle,
     registration,
     standardLogin
-} from "../../service/login-page-service";
+} from "../../service/authorization-page-service";
 import "./AuthorizationPage.css";
 
 export const AuthorizationPage = (): JSX.Element => {
