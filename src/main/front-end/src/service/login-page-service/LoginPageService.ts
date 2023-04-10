@@ -35,15 +35,16 @@ export const standardLogin = (mail: string, password: string, google: boolean) =
         });
 };
 
-export const checkAndSendConfirmation = async (mail: string, password: string, name: string, code: string): Promise<void> => {
+export const checkAndSendConfirmation = async (mail: string, password: string, name: string, code: string): Promise<boolean> => {
     const userInfo = {
         mail
     };
-    axios.post(formEndpoint + "check", userInfo, {
+    const promise = axios.post(formEndpoint + "check", userInfo, {
         headers: {
             "Content-type": "application/json; charset=UTF-8"
         }
-    }).then(response => {
+    });
+    return promise.then(response => {
         const params = {
             user_email: mail,
             user_name: name,
@@ -52,8 +53,10 @@ export const checkAndSendConfirmation = async (mail: string, password: string, n
         emailjs.send(serviceID, templateID, params, publicKey).then(function (res) {
             console.log("confirmation mail successfully sent, statusCode: " + res.status);
         });
+        return true;
     }).catch(err => {
         alert(err.response.data);
+        return false;
     });
 };
 

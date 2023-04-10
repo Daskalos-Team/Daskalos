@@ -58,11 +58,11 @@ export const AuthorizationPage = (): JSX.Element => {
             alert("გთხოვთ შეიყვანოთ ყველა მონაცემი");
             return;
         }
-        await checkAndSendConfirmation(mail, password, name, realCode).then(response => {
-            setVerifierState("verifier-popup");
-            setFormState("form-hide");
-        }).catch(err => {
-            console.log(err.response.data);
+        await checkAndSendConfirmation(mail, password, name, realCode).then(res => {
+            if (res) {
+                setVerifierState("verifier-popup");
+                setFormState("form-hide");
+            }
         });
     };
 
