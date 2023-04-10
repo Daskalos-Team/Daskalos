@@ -52,7 +52,7 @@ export const AuthorizationPage = (): JSX.Element => {
             user_name: name,
             user_code: code
         };
-        emailjs.send("service_m92suca", "template_wcrd1ei", params).then(function (res) {
+        emailjs.send("service_m92suca", "template_wcrd1ei", params, "CbmNbHyLjq1ERQzPU").then(function (res) {
             console.log("success" + res.status);
         });
         setVerifierState("verifier-popup");
