@@ -98,7 +98,7 @@
 }
 
 hr {
-    height: 2px;
+    height: 0.1rem;
     width: 80%;
     border-width: 0;
     color: lightsteelblue;
@@ -175,6 +175,9 @@ select:hover {
     font-size: 0.9em;
     border-radius: 2rem;
     text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .role-select > option {
@@ -333,6 +336,10 @@ select:hover {
 @media only screen and (min-width: 0) and (max-width: 64rem) {
     .welcome-section {
         display: none;
+    }
+
+    .authorization-form {
+        height: 70%;
     }
 }
 
