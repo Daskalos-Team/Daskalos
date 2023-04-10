@@ -18,6 +18,16 @@ public class UserService {
     @Autowired
     private UserRepository repository;
 
+    public String checkUserWithMail(String mail) {
+        Optional<User> currentUser = repository.findByMail(mail);
+
+        if (currentUser.isPresent()) {
+            return "User with this mail already exists";
+        }
+
+        return "Ok";
+    }
+
     public String addUser(UserDTO user) {
         Optional<User> currentUser = repository.findByMail(user.getMail());
 

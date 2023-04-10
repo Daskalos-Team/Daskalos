@@ -34,11 +34,22 @@ export const standardLogin = (mail: string, password: string, google: boolean) =
         });
 };
 
+export const existsWithMail = (mail: string): boolean => {
+    const userInfo = {
+        mail
+    };
+    axios.post(formEndpoint + "check", userInfo, {
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        }
+    }).catch((err) => {
+        alert(err.response.data);
+        return false;
+    });
+    return true;
+};
+
 export const registration = (mail: string, password: string, name: string, surname: string, userType: string) => {
-    if (isEmptyInput([mail, password, name, surname, userType])) {
-        alert("გთხოვთ შეიყვანოთ ყველა მონაცემი");
-        return;
-    }
     const userInfo = {
         mail,
         password,
@@ -58,7 +69,7 @@ export const registration = (mail: string, password: string, name: string, surna
         });
 };
 
-const isEmptyInput = (inputs: string[]): boolean => {
+export const isEmptyInput = (inputs: string[]): boolean => {
     let result = false;
     inputs.forEach(input => {
         result = result || !input || input === "";

@@ -22,6 +22,15 @@ public class UserController implements ErrorController {
         return userService.findAll();
     }
 
+    @GetMapping("/check")
+    public ResponseEntity<String> checkUserWithMail(@RequestBody UserDTO user) {
+        String message = userService.checkUserWithMail(user.getMail());
+        if (message.equals("User with this mail already exists")) {
+            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(message, HttpStatus.OK);
+    }
+
     @PostMapping("/register")
     public ResponseEntity<String> registerUser(@RequestBody UserDTO user) {
         String message = userService.addUser(user);

@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useGoogleLogin } from "@react-oauth/google";
-import { loginWithGoogle, standardLogin } from "../../service/login-page-service";
+import {
+    existsWithMail,
+    isEmptyInput,
+    loginWithGoogle,
+    registration,
+    standardLogin
+} from "../../service/login-page-service";
 import emailjs from "@emailjs/browser";
 import randomInteger from "random-int";
 import "./AuthorizationPage.css";
@@ -13,8 +19,10 @@ export const AuthorizationPage = (): JSX.Element => {
     const [password, setPassword] = useState("");
     const [name, setName] = useState("");
     const [surname, setSurname] = useState("");
-    const [verifierState, setVerifierState] = useState("verifier-hide");
     const [formState, setFormState] = useState("authorization-form");
+    const [verifierState, setVerifierState] = useState("verifier-hide");
+    const [inputCode, setInputCode] = useState("");
+    const [realCode, setRealCode] = useState("");
 
     useEffect(() => {
         if (user) {
@@ -23,17 +31,13 @@ export const AuthorizationPage = (): JSX.Element => {
     }, [user]);
 
     useEffect(() => {
-        console.log("changed");
+        console.log("");
     }, [loginOption]);
 
     const handleSwitchChange = (option: boolean) => {
         setName("");
         setSurname("");
         setLoginOption(option);
-    };
-
-    const check = (code: string) => {
-        return 1;
     };
 
     const googleLogin = useGoogleLogin({
@@ -46,7 +50,15 @@ export const AuthorizationPage = (): JSX.Element => {
     };
 
     const sendVerificationEmail = (e: any) => {
+        if (isEmptyInput([mail, password, name, surname, userType])) {
+            alert("გთხოვთ შეიყვანოთ ყველა მონაცემი");
+            return;
+        }
+        if (!existsWithMail(mail)) {
+            return;
+        }
         const code = randomInteger(10000, 1000000);
+        setRealCode(code + "");
         const params = {
             user_email: mail,
             user_name: name,
@@ -57,6 +69,20 @@ export const AuthorizationPage = (): JSX.Element => {
         });
         setVerifierState("verifier-popup");
         setFormState("form-hide");
+    };
+
+    const checkCode = (e: any) => {
+        if (realCode !== inputCode) {
+            alert("incorrect code");
+            return;
+        }
+        registration(mail, password, name, surname, userType);
+        hideVerifierPopup();
+    };
+
+    const hideVerifierPopup = () => {
+        setVerifierState("verifier-hide");
+        setFormState("authorization-form");
     };
 
     return (
@@ -70,14 +96,11 @@ export const AuthorizationPage = (): JSX.Element => {
             </div>
             <div className="authorization-section">
                 <div className={verifierState}>
-                    <input type="text" placeholder="მეილზე მიღებული კოდი" onInput={e => check(e.currentTarget.value)}/>
+                    <input type="text" placeholder="მეილზე მიღებული კოდი" onInput={e => setInputCode(e.currentTarget.value)}/>
                     <div className="verifier-buttons">
-                        <div className="verifier-ok">დადასტურება</div>
+                        <div className="verifier-ok" onClick={e => checkCode(e)}>დადასტურება</div>
                         <div className="verifier-close" onClick={() => {
-                            setVerifierState("verifier-hide");
-                            setFormState("authorization-form");
-                            setName("");
-                            setSurname("");
+                            hideVerifierPopup();
                         }}>დახურვა</div>
                     </div>
                 </div>
