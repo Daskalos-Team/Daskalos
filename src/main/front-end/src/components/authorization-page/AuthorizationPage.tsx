@@ -61,6 +61,8 @@ export const AuthorizationPage = (): JSX.Element => {
         await checkAndSendConfirmation(mail, password, name, realCode).then(response => {
             setVerifierState("verifier-popup");
             setFormState("form-hide");
+        }).catch(err => {
+            console.log(err.response.data);
         });
     };
 

@@ -8,7 +8,7 @@ export const loginWithGoogle = (user: any) => {
             Authorization: `Bearer ${user.access_token}`,
             Accept: "application/json"
         }
-    }).then((res) => {
+    }).then(res => {
         standardLogin(res.data.email, res.data.id, true);
     });
 };
@@ -29,7 +29,7 @@ export const standardLogin = (mail: string, password: string, google: boolean) =
         }
     })
         .then(response => alert(response.data))
-        .catch((err) => {
+        .catch(err => {
             alert(err.response.data);
             console.log(err);
         });
@@ -52,7 +52,7 @@ export const checkAndSendConfirmation = async (mail: string, password: string, n
         emailjs.send(serviceID, templateID, params, publicKey).then(function (res) {
             console.log("confirmation mail successfully sent, statusCode: " + res.status);
         });
-    }).catch((err) => {
+    }).catch(err => {
         alert(err.response.data);
     });
 };
@@ -71,7 +71,7 @@ export const registration = (mail: string, password: string, name: string, surna
         }
     })
         .then(response => alert(response.data))
-        .catch((err) => {
+        .catch(err => {
             alert(err.response.data);
             console.log(err);
         });
