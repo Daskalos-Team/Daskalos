@@ -62,10 +62,9 @@ export const changePassword = async (email: string, newPassword: string): Promis
         });
 };
 
-export const sendVerificationCode = (email: string, name: string, code: string) => {
+export const sendVerificationCode = (email: string, code: string) => {
     const params = {
         user_email: email,
-        user_name: name,
         user_code: code
     };
     emailjs.send(SERVICE_ID, TEMPLATE_ID, params, PUBLIC_KEY).then(function (res) {
@@ -90,7 +89,7 @@ export const checkUserWithEmail = async (email: string): Promise<boolean> => {
     });
 };
 
-export const checkAndSendConfirmation = async (email: string, password: string, name: string, code: string): Promise<boolean> => {
+export const checkAndSendConfirmation = async (email: string, password: string, code: string): Promise<boolean> => {
     const userInfo = {
         email,
         password
@@ -101,7 +100,7 @@ export const checkAndSendConfirmation = async (email: string, password: string, 
         }
     });
     return promise.then(response => {
-        sendVerificationCode(email, name, code);
+        sendVerificationCode(email, code);
         return true;
     }).catch(err => {
         alert(NOTIFICATION_MAP[err.response.data] || "");

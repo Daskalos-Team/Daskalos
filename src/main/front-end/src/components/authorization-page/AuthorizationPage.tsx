@@ -62,7 +62,7 @@ export const AuthorizationPage = (): JSX.Element => {
             alert("გთხოვთ შეიყვანოთ ყველა მონაცემი");
             return;
         }
-        await checkAndSendConfirmation(email, password, name, realCode).then(res => {
+        await checkAndSendConfirmation(email, password, realCode).then(res => {
             if (res) {
                 showVerifierPopup();
             }
@@ -89,7 +89,7 @@ export const AuthorizationPage = (): JSX.Element => {
         if (verifierContent === "email") {
             await checkUserWithEmail(email).then(res => {
                 if (res) {
-                    sendVerificationCode(email, "", realCode);
+                    sendVerificationCode(email, realCode);
                     setVerifierContent("password-code");
                 }
             });
