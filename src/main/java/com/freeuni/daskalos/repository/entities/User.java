@@ -19,7 +19,7 @@ public abstract class User implements Serializable {
 
     private String password;
 
-    private String mail;
+    private String email;
 
     private UserType userType;
 
@@ -35,7 +35,7 @@ public abstract class User implements Serializable {
                 @NonNull String name,
                 @NonNull String surname,
                 @NonNull String password,
-                @NonNull String mail,
+                @NonNull String email,
                 @NonNull UserType userType,
                 @NonNull String phoneNumber,
                 @NonNull String address,
@@ -45,7 +45,7 @@ public abstract class User implements Serializable {
         this.name = name;
         this.surname = surname;
         this.password = password;
-        this.mail = mail;
+        this.email = email;
         this.userType = userType;
         this.phoneNumber = phoneNumber;
         this.address = address;
@@ -53,12 +53,12 @@ public abstract class User implements Serializable {
         this.priceMax = priceMax;
     }
 
-    public User(@NonNull String mail,
+    public User(@NonNull String email,
                 @NonNull String password,
                 @NonNull String name,
                 @NonNull String surname,
                 @NonNull UserType userType) {
-        this.mail = mail;
+        this.email = email;
         this.password = password;
         this.name = name;
         this.surname = surname;
@@ -101,12 +101,12 @@ public abstract class User implements Serializable {
         this.password = password;
     }
 
-    public String getMail() {
-        return mail;
+    public String getEmail() {
+        return email;
     }
 
-    public void setMail(String mail) {
-        this.mail = mail;
+    public void setEmail(String mail) {
+        this.email = mail;
     }
 
     public UserType getUserType() {

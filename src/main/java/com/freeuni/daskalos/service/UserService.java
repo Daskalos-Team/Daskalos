@@ -3,6 +3,7 @@ package com.freeuni.daskalos.service;
 import com.freeuni.daskalos.dto.UserDTO;
 import com.freeuni.daskalos.repository.UserRepository;
 import com.freeuni.daskalos.repository.entities.User;
+import com.freeuni.daskalos.utils.AuthorizationStatus;
 import com.freeuni.daskalos.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,43 +17,47 @@ import java.util.stream.StreamSupport;
 public class UserService {
 
     @Autowired
-    private UserRepository repository;
+    private UserRepository userRepository;
 
-    public String checkUserWithMail(String mail) {
-        Optional<User> currentUser = repository.findByMail(mail);
+    public String checkUserWithEMailAndPassword(String mail, String password) {
+        Optional<User> currentUser = userRepository.findByEmail(mail);
 
         if (currentUser.isPresent()) {
-            return "User with this mail already exists";
+            return AuthorizationStatus.ALREADY_EXISTS.name();
         }
 
-        return "Ok";
+        if (!password.matches(UserUtils.PASSWORD_PATTERN_REGEX)) {
+            return AuthorizationStatus.ILLEGAL_PASSWORD.name();
+        }
+
+        return AuthorizationStatus.OK.name();
     }
 
     public String addUser(UserDTO user) {
-        Optional<User> currentUser = repository.findByMail(user.getMail());
+        Optional<User> currentUser = userRepository.findByEmail(user.getEmail());
 
         if (currentUser.isEmpty()) {
-            repository.save(UserUtils.toUserEntity(user));
-            return "User registered successfully";
+            userRepository.save(UserUtils.toUserEntity(user));
+            return AuthorizationStatus.SUCCESSFUL_REGISTRATION.name();
         }
 
-        return "User with this mail already exists";
+        return AuthorizationStatus.ALREADY_EXISTS.name();
     }
 
-    public String checkUser(UserDTO user) {
-        Optional<User> currentUser = repository.findByMail(user.getMail());
+    public String authorizeUser(UserDTO user) {
+        Optional<User> currentUser = userRepository.findByEmail(user.getEmail());
 
         if (currentUser.isEmpty()) {
-            return "User with this mail not found";
+            return AuthorizationStatus.EMAIL_NOT_FOUND.name();
         } else if (!user.isUsingGoogle() && !currentUser.get().getPassword().equals(user.getPassword())) {
-            return "Wrong password";
+            return AuthorizationStatus.WRONG_PASSWORD.name();
         }
 
-        return "Successful login";
+        return AuthorizationStatus.SUCCESSFUL_LOGIN.name();
     }
 
-    public List<UserDTO> findAll() {
-        Iterable<User> all = repository.findAll();
+    public List<UserDTO> getAllUsers() {
+        Iterable<User> all = userRepository.findAll();
         return StreamSupport.stream(all.spliterator(), false).map(UserUtils::toUserDao).collect(Collectors.toList());
     }
 }

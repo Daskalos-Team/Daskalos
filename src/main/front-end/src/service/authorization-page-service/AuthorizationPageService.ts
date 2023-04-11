@@ -1,5 +1,11 @@
 import axios from "axios";
-import { formEndpoint, publicKey, serviceID, templateID } from "./AuthorizationPageServiceConstants";
+import {
+    FORM_ENDPOINT,
+    NOTIFICATION_MAP,
+    PUBLIC_KEY,
+    SERVICE_ID,
+    TEMPLATE_ID
+} from "./AuthorizationPageServiceConstants";
 import emailjs from "@emailjs/browser";
 
 export const loginWithGoogle = (user: any) => {
@@ -23,23 +29,24 @@ export const standardLogin = (mail: string, password: string, google: boolean) =
         mail,
         password
     };
-    axios.post(formEndpoint + "login", userInfo, {
+    axios.post(FORM_ENDPOINT + "login", userInfo, {
         headers: {
             "Content-type": "application/json; charset=UTF-8"
         }
     })
-        .then(response => alert(response.data))
+        .then(response => alert(NOTIFICATION_MAP[response.data] || ""))
         .catch(err => {
-            alert(err.response.data);
+            alert(NOTIFICATION_MAP[err.response.data] || "");
             console.log(err);
         });
 };
 
 export const checkAndSendConfirmation = async (mail: string, password: string, name: string, code: string): Promise<boolean> => {
     const userInfo = {
-        mail
+        mail,
+        password
     };
-    const promise = axios.post(formEndpoint + "check", userInfo, {
+    const promise = axios.post(FORM_ENDPOINT + "check", userInfo, {
         headers: {
             "Content-type": "application/json; charset=UTF-8"
         }
@@ -50,12 +57,12 @@ export const checkAndSendConfirmation = async (mail: string, password: string, n
             user_name: name,
             user_code: code
         };
-        emailjs.send(serviceID, templateID, params, publicKey).then(function (res) {
+        emailjs.send(SERVICE_ID, TEMPLATE_ID, params, PUBLIC_KEY).then(function (res) {
             console.log("confirmation mail successfully sent, statusCode: " + res.status);
         });
         return true;
     }).catch(err => {
-        alert(err.response.data);
+        alert(NOTIFICATION_MAP[err.response.data] || "");
         return false;
     });
 };
@@ -68,14 +75,14 @@ export const registration = (mail: string, password: string, name: string, surna
         surname,
         userType
     };
-    axios.post(formEndpoint + "register", userInfo, {
+    axios.post(FORM_ENDPOINT + "register", userInfo, {
         headers: {
             "Content-type": "application/json; charset=UTF-8"
         }
     })
-        .then(response => alert(response.data))
+        .then(response => alert(NOTIFICATION_MAP[response.data] || ""))
         .catch(err => {
-            alert(err.response.data);
+            alert(NOTIFICATION_MAP[err.response.data] || "");
             console.log(err);
         });
 };

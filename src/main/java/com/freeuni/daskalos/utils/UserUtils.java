@@ -12,6 +12,8 @@ public class UserUtils {
 
     public static final String URL_DELIMITER = "|";
 
+    public static final String PASSWORD_PATTERN_REGEX = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}";
+
     public static List<String> getNetworkUrls(String networkUrls) {
         return Arrays.stream(networkUrls.split(URL_DELIMITER)).toList();
     }
@@ -21,13 +23,13 @@ public class UserUtils {
     }
 
     public static User toUserEntity(UserDTO userDTO) {
-        return userDTO.getUserType().equals("Teacher") ?
-                new Teacher(userDTO.getMail(), userDTO.getPassword(), userDTO.getName(), userDTO.getSurname(), UserType.fromName(userDTO.getUserType()))
+        return userDTO.getUserType().equals(UserType.TEACHER.name()) ?
+                new Teacher(userDTO.getEmail(), userDTO.getPassword(), userDTO.getName(), userDTO.getSurname(), UserType.fromName(userDTO.getUserType()))
                 :
-                new Student(userDTO.getMail(), userDTO.getPassword(), userDTO.getName(), userDTO.getSurname(), UserType.fromName(userDTO.getUserType()));
+                new Student(userDTO.getEmail(), userDTO.getPassword(), userDTO.getName(), userDTO.getSurname(), UserType.fromName(userDTO.getUserType()));
     }
 
     public static UserDTO toUserDao(User userEntity) {
-        return new UserDTO(userEntity.getMail(), userEntity.getPassword(), userEntity.getName(), userEntity.getSurname(), userEntity.getUserType().name());
+        return new UserDTO(userEntity.getEmail(), userEntity.getPassword(), userEntity.getName(), userEntity.getSurname(), userEntity.getUserType().name());
     }
 }

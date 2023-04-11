@@ -14,7 +14,7 @@ export const AuthorizationPage = (): JSX.Element => {
     const [user, setUser]: any = useState(undefined);
     const [userType, setUserType] = useState("Teacher");
     const [loginOption, setLoginOption] = useState(true);
-    const [mail, setMail] = useState("");
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [name, setName] = useState("");
     const [surname, setSurname] = useState("");
@@ -50,15 +50,15 @@ export const AuthorizationPage = (): JSX.Element => {
     });
 
     const login = (e: any) => {
-        standardLogin(mail, password, false);
+        standardLogin(email, password, false);
     };
 
     const sendVerificationEmail = async (e: any): Promise<void> => {
-        if (isEmptyInput([mail, password, name, surname, userType])) {
+        if (isEmptyInput([email, password, name, surname, userType])) {
             alert("გთხოვთ შეიყვანოთ ყველა მონაცემი");
             return;
         }
-        await checkAndSendConfirmation(mail, password, name, realCode).then(res => {
+        await checkAndSendConfirmation(email, password, name, realCode).then(res => {
             if (res) {
                 setVerifierState("verifier-popup");
                 setFormState("form-hide");
@@ -71,7 +71,7 @@ export const AuthorizationPage = (): JSX.Element => {
             alert("არასწორი კოდი!");
             return;
         }
-        registration(mail, password, name, surname, userType);
+        registration(email, password, name, surname, userType);
         hideVerifierPopup();
     };
 
@@ -128,7 +128,7 @@ export const AuthorizationPage = (): JSX.Element => {
                     </div>
 
                     <div className="inputs">
-                        <input type="text" placeholder="თქვენი მეილი" onInput={e => setMail(e.currentTarget.value)}/>
+                        <input type="text" placeholder="თქვენი მეილი" onInput={e => setEmail(e.currentTarget.value)}/>
                         <input type="password" placeholder="თქვენი პაროლი" onInput={e => setPassword(e.currentTarget.value)}/>
                         { !loginOption ? <input type="text" placeholder="თქვენი სახელი" onInput={e => setName(e.currentTarget.value)}/> : null}
                         { !loginOption ? <input type="text" placeholder="თქვენი გვარი" onInput={e => setSurname(e.currentTarget.value)}/> : null}

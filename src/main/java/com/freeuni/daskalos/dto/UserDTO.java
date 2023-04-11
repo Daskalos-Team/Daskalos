@@ -7,7 +7,7 @@ import java.io.Serializable;
 @JsonAutoDetect
 public class UserDTO implements Serializable {
 
-    private String mail;
+    private String email;
 
     private String password;
 
@@ -19,59 +19,69 @@ public class UserDTO implements Serializable {
 
     private boolean usingGoogle;
 
-    public UserDTO(String mail, String password, String name, String surname, String userType) {
-        this.mail = mail;
+    public UserDTO(String email, String password, String name, String surname, String userType) {
+        this.email = email;
         this.name = name;
         this.surname = surname;
         this.password = password;
         this.userType = userType;
     }
 
-    public String getMail() {
-        return mail;
+    public UserDTO() {
+
     }
 
-    public void setMail(String mail) {
-        this.mail = mail;
+    public String getEmail() {
+        return email;
+    }
+
+    public UserDTO setEmail(String email) {
+        this.email = email;
+        return this;
     }
 
     public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
+    public UserDTO setPassword(String password) {
         this.password = password;
+        return this;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public UserDTO setName(String name) {
         this.name = name;
+        return this;
     }
 
     public String getSurname() {
         return surname;
     }
 
-    public void setSurname(String surname) {
+    public UserDTO setSurname(String surname) {
         this.surname = surname;
+        return this;
     }
 
     public String getUserType() {
         return userType;
     }
 
-    public void setUserType(String userType) {
+    public UserDTO setUserType(String userType) {
         this.userType = userType;
+        return this;
     }
 
     public boolean isUsingGoogle() {
         return usingGoogle;
     }
 
-    public void setUsingGoogle(boolean usingGoogle) {
+    public UserDTO setUsingGoogle(boolean usingGoogle) {
         this.usingGoogle = usingGoogle;
+        return this;
     }
 }
