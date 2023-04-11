@@ -113,7 +113,6 @@ export const AuthorizationPage = (): JSX.Element => {
     };
 
     const hideVerifierPopup = () => {
-        setPassword("");
         setVerifierContent("standard-code");
         setVerifierState("verifier-hide");
         setFormState("authorization-form");
@@ -134,7 +133,7 @@ export const AuthorizationPage = (): JSX.Element => {
                     { verifierContent === "email" ? <input type="email" placeholder="თქვენი იმეილი" onInput={e => setEmail(e.currentTarget.value)}/> : null }
                     { verifierContent === "password" ?
                         <div className="renew-password">
-                            <input type="password" placeholder="თქვენი პაროლი" onInput={e => setPassword(e.currentTarget.value)}/>
+                            <input type="password" placeholder="ახალი პაროლი" onInput={e => setPassword(e.currentTarget.value)}/>
                             <input type="password" placeholder="გაიმეორეთ პაროლი" onInput={e => setRepeatedPassword(e.currentTarget.value)}/>
                         </div>: null
                     }
