@@ -113,6 +113,7 @@ export const AuthorizationPage = (): JSX.Element => {
     };
 
     const hideVerifierPopup = () => {
+        setPassword("");
         setVerifierContent("standard-code");
         setVerifierState("verifier-hide");
         setFormState("authorization-form");

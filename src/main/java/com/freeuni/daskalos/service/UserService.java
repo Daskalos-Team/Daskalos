@@ -21,9 +21,11 @@ public class UserService {
 
     public String checkUserWithEmail(String mail) {
         Optional<User> currentUser = userRepository.findByEmail(mail);
+
         if (currentUser.isPresent()) {
             return AuthorizationStatus.OK.name();
         }
+
         return AuthorizationStatus.EMAIL_NOT_FOUND.name();
     }
 
@@ -74,6 +76,7 @@ public class UserService {
             user.setPassword(password);
             userRepository.save(user);
         });
+
         return AuthorizationStatus.SUCCESSFUL_CHANGE.name();
     }
 

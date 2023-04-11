@@ -59,6 +59,26 @@ public class UserServiceIntegrationTest {
         Mockito.when(userRepository.findAll()).thenReturn(allUsers);
     }
 
+    // Test -----------------------checkUserWithEmail----------------------------------------------
+
+    @Test
+    public void whenExists() {
+        String expected = AuthorizationStatus.OK.name();
+        String result = userService.checkUserWithEmail("email1");
+
+        verifyFindByEMAILIsCalledOnce("email1");
+        assertThat(result).isEqualTo(expected);
+    }
+
+    @Test
+    public void whenNotFound() {
+        String expected = AuthorizationStatus.EMAIL_NOT_FOUND.name();
+        String result = userService.checkUserWithEmail("email3");
+
+        verifyFindByEMAILIsCalledOnce("email3");
+        assertThat(result).isEqualTo(expected);
+    }
+
     // Test -----------------------checkUserWithMailAndPassword------------------------------------
 
     @Test
@@ -137,6 +157,24 @@ public class UserServiceIntegrationTest {
     public void whenSuccessfulLogin() {
         String expected = AuthorizationStatus.SUCCESSFUL_LOGIN.name();
         String result = userService.authorizeUser(new UserDTO().setEmail("email1").setPassword("AtLeast^8"));
+
+        verifyFindByEMAILIsCalledOnce("email1");
+        assertThat(result).isEqualTo(expected);
+    }
+
+    // Test ----------------------------------------changePassword---------------------------------
+    @Test
+    public void whenPasswordIsIllegal() {
+        String expected = AuthorizationStatus.ILLEGAL_PASSWORD.name();
+        String result = userService.changePassword("email1", "password");
+
+        assertThat(result).isEqualTo(expected);
+    }
+
+    @Test
+    public void whenSuccessfulPasswordChange() {
+        String expected = AuthorizationStatus.SUCCESSFUL_CHANGE.name();
+        String result = userService.changePassword("email1", "Giorgi^501");
 
         verifyFindByEMAILIsCalledOnce("email1");
         assertThat(result).isEqualTo(expected);
