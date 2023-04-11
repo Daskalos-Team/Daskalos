@@ -19,12 +19,12 @@ public class UserController implements ErrorController {
     private UserService userService;
 
     @PostMapping("/check")
-    public ResponseEntity<String> checkUserWithEMail(@RequestBody UserDTO user) {
-        String message = userService.checkUserWithEMailAndPassword(user.getEmail(), user.getPassword());
-        if (message.equals(AuthorizationStatus.ALREADY_EXISTS.name())) {
-            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+    public ResponseEntity<String> checkEmailAndPassword(@RequestBody UserDTO user) {
+        String message = userService.checkUserWithEmailAndPassword(user.getEmail(), user.getPassword());
+        if (message.equals(AuthorizationStatus.OK.name())) {
+            return new ResponseEntity<>(message, HttpStatus.OK);
         }
-        return new ResponseEntity<>(message, HttpStatus.OK);
+        return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
     }
 
     @PostMapping("/register")
@@ -46,7 +46,7 @@ public class UserController implements ErrorController {
     }
 
     @GetMapping("/info")
-    public List<UserDTO> getAllUserInfo() {
+    public List<UserDTO> getAllUsersInfo() {
         return userService.getAllUsers();
     }
 }

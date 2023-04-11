@@ -64,7 +64,7 @@ public class UserServiceIntegrationTest {
     @Test
     public void whenAlreadyExists() {
         String expected = AuthorizationStatus.ALREADY_EXISTS.name();
-        String result = userService.checkUserWithEMailAndPassword("email1", "AtLeast^8");
+        String result = userService.checkUserWithEmailAndPassword("email1", "AtLeast^8");
 
         verifyFindByEMAILIsCalledOnce("email1");
         assertThat(result).isEqualTo(expected);
@@ -73,7 +73,7 @@ public class UserServiceIntegrationTest {
     @Test
     public void whenIllegalPassword() {
         String expected = AuthorizationStatus.ILLEGAL_PASSWORD.name();
-        String result = userService.checkUserWithEMailAndPassword("email3", "password");
+        String result = userService.checkUserWithEmailAndPassword("email3", "password");
 
         verifyFindByEMAILIsCalledOnce("email3");
         assertThat(result).isEqualTo(expected);
@@ -82,7 +82,7 @@ public class UserServiceIntegrationTest {
     @Test
     public void whenCheckOK() {
         String expected = AuthorizationStatus.OK.name();
-        String result = userService.checkUserWithEMailAndPassword("email3", "Giorgi^500");
+        String result = userService.checkUserWithEmailAndPassword("email3", "Giorgi^500");
 
         verifyFindByEMAILIsCalledOnce("email3");
         assertThat(result).isEqualTo(expected);

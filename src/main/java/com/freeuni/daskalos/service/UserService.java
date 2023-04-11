@@ -19,7 +19,7 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public String checkUserWithEMailAndPassword(String mail, String password) {
+    public String checkUserWithEmailAndPassword(String mail, String password) {
         Optional<User> currentUser = userRepository.findByEmail(mail);
 
         if (currentUser.isPresent()) {

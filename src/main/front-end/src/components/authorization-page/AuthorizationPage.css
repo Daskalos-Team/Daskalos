@@ -384,6 +384,7 @@ select:hover {
     line-height: 2em;
     letter-spacing: 1px;
     color: transparent;
+    cursor: pointer;
     -webkit-text-stroke: 1px lightsalmon;
 }
 
