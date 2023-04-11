@@ -19,6 +19,14 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    public String checkUserWithEmail(String mail) {
+        Optional<User> currentUser = userRepository.findByEmail(mail);
+        if (currentUser.isPresent()) {
+            return AuthorizationStatus.OK.name();
+        }
+        return AuthorizationStatus.EMAIL_NOT_FOUND.name();
+    }
+
     public String checkUserWithEmailAndPassword(String mail, String password) {
         Optional<User> currentUser = userRepository.findByEmail(mail);
 
@@ -54,6 +62,19 @@ public class UserService {
         }
 
         return AuthorizationStatus.SUCCESSFUL_LOGIN.name();
+    }
+
+    public String changePassword(String email, String password) {
+        if (!password.matches(UserUtils.PASSWORD_PATTERN_REGEX)) {
+            return AuthorizationStatus.ILLEGAL_PASSWORD.name();
+        }
+
+        Optional<User> currentUser = userRepository.findByEmail(email);
+        currentUser.ifPresent(user -> {
+            user.setPassword(password);
+            userRepository.save(user);
+        });
+        return AuthorizationStatus.SUCCESSFUL_CHANGE.name();
     }
 
     public List<UserDTO> getAllUsers() {

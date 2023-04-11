@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useGoogleLogin } from "@react-oauth/google";
 import randomInteger from "random-int";
 import {
+    changePassword,
     checkAndSendConfirmation,
+    checkUserWithEmail,
     isEmptyInput,
     loginWithGoogle,
-    registration,
+    registration, sendVerificationCode,
     standardLogin
 } from "../../service/authorization-page-service";
 import "./AuthorizationPage.css";
@@ -16,10 +18,12 @@ export const AuthorizationPage = (): JSX.Element => {
     const [loginOption, setLoginOption] = useState(true);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [repeatedPassword, setRepeatedPassword] = useState("");
     const [name, setName] = useState("");
     const [surname, setSurname] = useState("");
     const [formState, setFormState] = useState("authorization-form");
-    const [verifierState, setVerifierState] = useState("verifier-hide");
+    const [verifierState, setVerifierState] = useState("verifier-hide"); // verifier-hide, verifier-popup
+    const [verifierContent, setVerifierContent] = useState("standard-code"); // standard-code, password-code, email, password
     const [inputCode, setInputCode] = useState("");
     const [realCode, setRealCode] = useState("bad");
 
@@ -60,22 +64,56 @@ export const AuthorizationPage = (): JSX.Element => {
         }
         await checkAndSendConfirmation(email, password, name, realCode).then(res => {
             if (res) {
-                setVerifierState("verifier-popup");
-                setFormState("form-hide");
+                showVerifierPopup();
             }
         });
     };
 
-    const checkCode = (e: any) => {
+    const check = async (e: any) => {
+        if (verifierContent === "password") {
+            if (isEmptyInput([password, repeatedPassword])) {
+                alert("გთხოვთ შეიყვანოთ ორივე მონაცემი");
+                return false;
+            }
+            if (password !== repeatedPassword) {
+                alert("პაროლები არ ემთხვევა");
+                return;
+            }
+            await changePassword(email, password).then(res => {
+                if (res) {
+                    hideVerifierPopup();
+                }
+            });
+            return;
+        }
+        if (verifierContent === "email") {
+            await checkUserWithEmail(email).then(res => {
+                if (res) {
+                    sendVerificationCode(email, "", realCode);
+                    setVerifierContent("password-code");
+                }
+            });
+            return;
+        }
         if (realCode !== inputCode) {
-            alert("არასწორი კოდი!");
+            alert("არასწორი კოდი");
+            return;
+        }
+        if (verifierContent === "password-code") {
+            setVerifierContent("password");
             return;
         }
         registration(email, password, name, surname, userType);
         hideVerifierPopup();
     };
 
+    const showVerifierPopup = () => {
+        setVerifierState("verifier-popup");
+        setFormState("hide");
+    };
+
     const hideVerifierPopup = () => {
+        setVerifierContent("standard-code");
         setVerifierState("verifier-hide");
         setFormState("authorization-form");
     };
@@ -91,9 +129,16 @@ export const AuthorizationPage = (): JSX.Element => {
             </div>
             <div className="authorization-section">
                 <div className={verifierState}>
-                    <input type="text" placeholder="მეილზე მიღებული კოდი" onInput={e => setInputCode(e.currentTarget.value)}/>
+                    { verifierContent.match("^.*code.*$") ? <input type="text" placeholder="მეილზე მიღებული კოდი" onInput={e => setInputCode(e.currentTarget.value)}/> : null }
+                    { verifierContent === "email" ? <input type="email" placeholder="თქვენი იმეილი" onInput={e => setEmail(e.currentTarget.value)}/> : null }
+                    { verifierContent === "password" ?
+                        <div className="renew-password">
+                            <input type="password" placeholder="თქვენი პაროლი" onInput={e => setPassword(e.currentTarget.value)}/>
+                            <input type="password" placeholder="გაიმეორეთ პაროლი" onInput={e => setRepeatedPassword(e.currentTarget.value)}/>
+                        </div>: null
+                    }
                     <div className="verifier-buttons">
-                        <div className="verifier-ok" onClick={e => checkCode(e)}>დადასტურება</div>
+                        <div className="verifier-ok" onClick={e => check(e)}>დადასტურება</div>
                         <div className="verifier-close" onClick={() => {
                             hideVerifierPopup();
                         }}>დახურვა</div>
@@ -128,7 +173,7 @@ export const AuthorizationPage = (): JSX.Element => {
                     </div>
 
                     <div className="inputs">
-                        <input type="email" placeholder="თქვენი მეილი" onInput={e => setEmail(e.currentTarget.value)}/>
+                        <input type="email" placeholder="თქვენი იმეილი" onInput={e => setEmail(e.currentTarget.value)}/>
                         <input type="password" placeholder="თქვენი პაროლი" onInput={e => setPassword(e.currentTarget.value)}/>
                         { !loginOption ? <input type="text" placeholder="თქვენი სახელი" onInput={e => setName(e.currentTarget.value)}/> : null}
                         { !loginOption ? <input type="text" placeholder="თქვენი გვარი" onInput={e => setSurname(e.currentTarget.value)}/> : null}
@@ -145,7 +190,10 @@ export const AuthorizationPage = (): JSX.Element => {
                                 </select>
                             </div>
                             :
-                            <a className="forgot-password" href="">დაგავიწყდათ პაროლი?</a>
+                            <a className="forgot-password" href="javascript:void(0)" onClick={() => {
+                                setVerifierContent("email");
+                                showVerifierPopup();
+                            }}>დაგავიწყდათ პაროლი?</a>
                         }
                     </div>
 

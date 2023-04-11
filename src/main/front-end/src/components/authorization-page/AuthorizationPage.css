@@ -43,7 +43,8 @@
 .verifier-popup {
     position: relative;
     z-index: 10;
-    height: 10em;
+    height: auto;
+    padding: 1em 0;
     width: 20em;
     display: flex;
     flex-direction: column;
@@ -55,7 +56,7 @@
     color: dimgrey;
     bottom: 0;
     transform: scale(1);
-    transition: 1s;
+    transition: 0.5s;
 }
 
 .verifier-buttons {
@@ -111,7 +112,7 @@
     justify-content: space-evenly;
 }
 
-.form-hide {
+.hide {
     display: none;
 }
 
@@ -164,6 +165,14 @@
     font-size: 0.7em;
     display: flex;
     align-items: flex-start;
+}
+
+.renew-password {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    row-gap: 1em;
+    align-items: center;
 }
 
 hr {

@@ -41,6 +41,55 @@ export const standardLogin = (email: string, password: string, google: boolean) 
         });
 };
 
+export const changePassword = async (email: string, newPassword: string): Promise<boolean> => {
+    const userInfo = {
+        email,
+        password: newPassword
+    };
+    const promise = axios.post(FORM_ENDPOINT + "change", userInfo, {
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        }
+    });
+    return promise.then(response => {
+        alert(NOTIFICATION_MAP[response.data] || "");
+        return true;
+    })
+        .catch(err => {
+            alert(NOTIFICATION_MAP[err.response.data] || "");
+            console.log(err);
+            return false;
+        });
+};
+
+export const sendVerificationCode = (email: string, name: string, code: string) => {
+    const params = {
+        user_email: email,
+        user_name: name,
+        user_code: code
+    };
+    emailjs.send(SERVICE_ID, TEMPLATE_ID, params, PUBLIC_KEY).then(function (res) {
+        console.log("confirmation mail successfully sent, statusCode: " + res.status);
+    });
+};
+
+export const checkUserWithEmail = async (email: string): Promise<boolean> => {
+    const userInfo = {
+        email
+    };
+    const promise = axios.post(FORM_ENDPOINT + "exists", userInfo, {
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        }
+    });
+    return promise.then(response => {
+        return true;
+    }).catch(err => {
+        alert(NOTIFICATION_MAP[err.response.data] || "");
+        return false;
+    });
+};
+
 export const checkAndSendConfirmation = async (email: string, password: string, name: string, code: string): Promise<boolean> => {
     const userInfo = {
         email,
@@ -52,14 +101,7 @@ export const checkAndSendConfirmation = async (email: string, password: string, 
         }
     });
     return promise.then(response => {
-        const params = {
-            user_email: email,
-            user_name: name,
-            user_code: code
-        };
-        emailjs.send(SERVICE_ID, TEMPLATE_ID, params, PUBLIC_KEY).then(function (res) {
-            console.log("confirmation mail successfully sent, statusCode: " + res.status);
-        });
+        sendVerificationCode(email, name, code);
         return true;
     }).catch(err => {
         alert(NOTIFICATION_MAP[err.response.data] || "");

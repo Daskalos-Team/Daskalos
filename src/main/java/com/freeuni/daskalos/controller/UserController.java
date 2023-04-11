@@ -18,6 +18,15 @@ public class UserController implements ErrorController {
     @Autowired
     private UserService userService;
 
+    @PostMapping("/exists")
+    public ResponseEntity<String> checkUserWithEmail(@RequestBody UserDTO user) {
+        String message = userService.checkUserWithEmail(user.getEmail());
+        if (message.equals(AuthorizationStatus.OK.name())) {
+            return new ResponseEntity<>(message, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+    }
+
     @PostMapping("/check")
     public ResponseEntity<String> checkEmailAndPassword(@RequestBody UserDTO user) {
         String message = userService.checkUserWithEmailAndPassword(user.getEmail(), user.getPassword());
@@ -40,6 +49,15 @@ public class UserController implements ErrorController {
     public ResponseEntity<String> loginUser(@RequestBody UserDTO user) {
         String message = userService.authorizeUser(user);
         if (message.equals(AuthorizationStatus.SUCCESSFUL_LOGIN.name())) {
+            return new ResponseEntity<>(message, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+    }
+
+    @PostMapping("change")
+    public ResponseEntity<String> changePassword(@RequestBody UserDTO user) {
+        String message = userService.changePassword(user.getEmail(), user.getPassword());
+        if (message.equals(AuthorizationStatus.SUCCESSFUL_CHANGE.name())) {
             return new ResponseEntity<>(message, HttpStatus.OK);
         }
         return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
