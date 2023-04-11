@@ -186,7 +186,7 @@ input {
     border: none;
     background-color: #ecf0ef;
     width: 80%;
-    height: 1rem;
+    height: 0.5em;
     border-radius: 0.75em;
     text-align: center;
     padding: 2em;
@@ -239,6 +239,7 @@ select:hover {
 .role-select {
     width: 50%;
     height: 2em;
+    min-height: 2rem;
     background-color: #ecf0ef;
     color: dimgrey;
     font-size: 0.9em;
@@ -256,6 +257,7 @@ select:hover {
 .authorization-button {
     width: 40%;
     height: 3em;
+    min-height: 2rem;
     background-color: #e9c89e;
     font-size: 1.15rem;
     display: flex;
@@ -293,9 +295,6 @@ select:hover {
     height: 100vh;
     opacity: 0.5;
     background: url("../../../../resources/images/classroom.png") no-repeat 0;
-    -webkit-transition: all 1s ease;
-    -moz-transition: all 1s ease;
-    -o-transition: all 1s ease;
     transition: all 1s ease;
 }
 
@@ -403,39 +402,7 @@ select:hover {
     filter: drop-shadow(1em -2em 5em #e9c89e);
 }
 
-@media only screen and (min-width: 0) and (max-width: 64rem) {
-    .welcome-section {
-        display: none;
-    }
-
-    .authorization-form {
-        height: 70%;
-    }
-}
-
-@media only screen and (min-height: 0) and (max-height: 50rem) {
-    .switch-div, .role-select, .role-label, .verifier-buttons > div {
-        font-size: 0.7em;
-    }
-
-    .inputs {
-        row-gap: 0.7em;
-    }
-
-    .authorization-button {
-        font-size: 0.6em;
-    }
-
-    .alternative-login {
-        height: 2em;
-    }
-
-    input {
-        font-size: 0.5em;
-    }
-}
-
-@media only screen and (min-width: 64rem) {
+@media only screen and (min-width: 72rem) {
     .authorization-section {
         font-size: 1.25em;
     }
@@ -443,6 +410,44 @@ select:hover {
     .authorization-form {
         width: 25%;
         height: 65%;
+    }
+}
+
+@media only screen and (min-width: 0) and (max-width: 72rem) {
+    .welcome-section {
+        display: none;
+    }
+
+    .authorization-form {
+        height: 70%;
+    }
+
+    .forgot-password {
+        font-size: 0.9em;
+    }
+
+    .authorization-button {
+        font-size: 0.9rem;
+    }
+
+    .alternative-login {
+        font-size: 1.25rem;
+    }
+
+    input {
+        height: 1.1rem;
+        font-size: 0.9rem;
+    }
+}
+
+@media only screen and (min-height: 0) and (max-height: 50rem) {
+    .authorization-section {
+        font-size: 1em;
+    }
+
+    .authorization-form {
+        width: 30%;
+        height: 90%;
     }
 }
 

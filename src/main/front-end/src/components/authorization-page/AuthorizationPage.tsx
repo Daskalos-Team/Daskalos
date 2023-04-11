@@ -128,7 +128,7 @@ export const AuthorizationPage = (): JSX.Element => {
                     </div>
 
                     <div className="inputs">
-                        <input type="text" placeholder="თქვენი მეილი" onInput={e => setEmail(e.currentTarget.value)}/>
+                        <input type="email" placeholder="თქვენი მეილი" onInput={e => setEmail(e.currentTarget.value)}/>
                         <input type="password" placeholder="თქვენი პაროლი" onInput={e => setPassword(e.currentTarget.value)}/>
                         { !loginOption ? <input type="text" placeholder="თქვენი სახელი" onInput={e => setName(e.currentTarget.value)}/> : null}
                         { !loginOption ? <input type="text" placeholder="თქვენი გვარი" onInput={e => setSurname(e.currentTarget.value)}/> : null}
