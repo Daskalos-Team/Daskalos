@@ -38,13 +38,9 @@ https://www.fast.design/docs/integrations/react/
 
 ბაზების გამართვის ინსტრუქცია
 
-1. PostgreSQL ჩამოწერეთ საინსტალაციო და დააინსტალირეთ https://www.postgresql.org/download/windows/
-2. პრობლემების შემთხვევაში ნახეთ ვიდეო https://www.youtube.com/watch?v=MTRtusym-2s
-3. ბაზებთან სამუშაო ვიზუალური ინტერფეისისთვის ჩაიწერეთ DBeaver(pgadmin-იც შეიძლება) https://dbeaver.io/download/
-
--------------------------
-
-Postgre 15 ბაზებისთვის https://www.enterprisedb.com/downloads/postgres-postgresql-downloads
+1. ჩამოტვირთეთ შედარებით დიდი ზომის msi ინსტალერი ამ ლინკიდან: https://dev.mysql.com/downloads/installer/
+2. გაჰყევით ინსტალერს next-ებით და კარგად დაიმახსოვრეთ username / password რასაც შეიყვანთ (სასურველია root / admin)
+3. დაამატეთ ინტელიჯეიში MySQL database პანელზე და მასში დაამატეთ ახალი სქემა სახელად: daskalos
 
 -------------------------
 
@@ -60,7 +56,7 @@ Postgre 15 ბაზებისთვის https://www.enterprisedb.com/downlo
 
 ამისთვის სულ 1 დეტალის გამართვაა საჭირო პარამეტრებიდან:
 
-![img.png](img.png)
+![img.png](EslintSettings.png)
 
 ----------------------------------
 
