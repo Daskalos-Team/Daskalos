@@ -19,14 +19,14 @@ export const loginWithGoogle = (user: any) => {
     });
 };
 
-export const standardLogin = (mail: string, password: string, google: boolean) => {
-    if (isEmptyInput([mail, password])) {
+export const standardLogin = (email: string, password: string, google: boolean) => {
+    if (isEmptyInput([email, password])) {
         alert("გთხოვთ შეიყვანოთ ყველა მონაცემი");
         return;
     }
     const userInfo = {
         usingGoogle: google,
-        mail,
+        email,
         password
     };
     axios.post(FORM_ENDPOINT + "login", userInfo, {
@@ -41,9 +41,9 @@ export const standardLogin = (mail: string, password: string, google: boolean) =
         });
 };
 
-export const checkAndSendConfirmation = async (mail: string, password: string, name: string, code: string): Promise<boolean> => {
+export const checkAndSendConfirmation = async (email: string, password: string, name: string, code: string): Promise<boolean> => {
     const userInfo = {
-        mail,
+        email,
         password
     };
     const promise = axios.post(FORM_ENDPOINT + "check", userInfo, {
@@ -53,7 +53,7 @@ export const checkAndSendConfirmation = async (mail: string, password: string, n
     });
     return promise.then(response => {
         const params = {
-            user_email: mail,
+            user_email: email,
             user_name: name,
             user_code: code
         };
@@ -67,9 +67,9 @@ export const checkAndSendConfirmation = async (mail: string, password: string, n
     });
 };
 
-export const registration = (mail: string, password: string, name: string, surname: string, userType: string) => {
+export const registration = (email: string, password: string, name: string, surname: string, userType: string) => {
     const userInfo = {
-        mail,
+        email,
         password,
         name,
         surname,

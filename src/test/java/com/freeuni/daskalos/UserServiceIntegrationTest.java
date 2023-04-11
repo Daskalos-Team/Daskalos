@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class UserServiceIntegrationTests {
+public class UserServiceIntegrationTest {
 
     @TestConfiguration
     static class UserServiceIntegrationTestsContextConfiguration {
