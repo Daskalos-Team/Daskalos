@@ -1,5 +1,9 @@
 package com.freeuni.daskalos.repository.entities;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import org.apache.logging.log4j.util.Strings;
 import reactor.util.annotation.NonNull;
 import reactor.util.annotation.Nullable;
@@ -7,23 +11,22 @@ import reactor.util.annotation.Nullable;
 import java.util.Date;
 import java.util.Objects;
 
+@Entity
 public class Experience {
 
-    private int ID;
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Long ID;
 
-    @NonNull
     private String employer;
 
-    @NonNull
     private String jobDescription;
 
-    @NonNull
     private Date startDate;
 
-    @Nullable
     private Date endDate;
 
-    public Experience(int ID, @NonNull String employer, @Nullable String jobDescription, @NonNull Date startDate, @Nullable Date endDate) {
+    public Experience(Long ID, @NonNull String employer, @Nullable String jobDescription, @NonNull Date startDate, @Nullable Date endDate) {
         this.ID = ID;
         this.employer = employer;
         this.jobDescription = !Objects.isNull(jobDescription) ? jobDescription : Strings.EMPTY;
@@ -31,27 +34,51 @@ public class Experience {
         this.endDate = endDate;
     }
 
-    public int getID() {
-        return this.ID;
+    public Experience() {
+
+    }
+
+    public Long getID() {
+        return ID;
+    }
+
+    public void setID(Long ID) {
+        this.ID = ID;
     }
 
     @NonNull
     public String getEmployer() {
-        return this.employer;
+        return employer;
+    }
+
+    public void setEmployer(@NonNull String employer) {
+        this.employer = employer;
     }
 
     @NonNull
     public String getJobDescription() {
-        return this.jobDescription;
+        return jobDescription;
+    }
+
+    public void setJobDescription(@NonNull String jobDescription) {
+        this.jobDescription = jobDescription;
     }
 
     @NonNull
     public Date getStartDate() {
-        return this.startDate;
+        return startDate;
+    }
+
+    public void setStartDate(@NonNull Date startDate) {
+        this.startDate = startDate;
     }
 
     @Nullable
     public Date getEndDate() {
-        return this.endDate;
+        return endDate;
+    }
+
+    public void setEndDate(@Nullable Date endDate) {
+        this.endDate = endDate;
     }
 }

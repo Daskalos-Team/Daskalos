@@ -1,0 +1,11 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    dialect: org.hibernate.dialect.MySQL5Dialect
+  datasource:
+    url: "jdbc::mysql://eu-cdbr-west-03.cleardb.net:3306/heroku_600c13743e87757"
+    username: bb6e4e1faa0f21
+    password: a9729ace
+    hikari:
+      max-lifetime: 20000
