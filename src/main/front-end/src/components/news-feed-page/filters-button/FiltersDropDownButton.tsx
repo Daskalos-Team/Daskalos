@@ -1,9 +1,9 @@
-import React, {useReducer} from "react";
+import React, { useReducer } from "react";
 import "./FiltersDropDownButton.css";
 
 interface Props {
-    visibleFilters: "Visible" | "Invisible"
-    style: any
+    visibleFilters: "Visible" | "Invisible";
+    style: any;
 }
 
 export const FiltersDropDownButton = ({visibleFilters, style}: Props): JSX.Element => {

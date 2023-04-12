@@ -81,16 +81,15 @@ const NewsFeedPageRoot = styled.div`
 `;
 const Header = styled.div`
   width: 100%;
-  height: 170px;
+  height: 100px;
   position: relative;
   box-sizing: border-box;
   background-color: #ffef9a;
   overflow: hidden;
 `;
 const Logo = styled.img`
-  width: 240px;
-  height: 112px;
-  margin-left: 20px;
+  width: 180px;
+  margin-left: 40px;
   position: relative;
   top: 50%;
   transform: translateY(-50%);
@@ -99,7 +98,7 @@ const Logo = styled.img`
 const ProfileButton = styled.button`
   width: 62px;
   height: 62px;
-  top: 30%;
+  top: 50%;
   right: 110px;
   position: absolute;
   align-self: end;
@@ -121,7 +120,7 @@ const AccountButton = styled.button`
   width: 62px;
   height: 62px;
   right: 22px;
-  top: 30%;
+  top: 50%;
   position: absolute;
   flex-shrink: 0;
   vertical-align: center;
@@ -208,12 +207,21 @@ const Content = styled.div`
   height: 1000px;
   margin: 20px 20px 20px 0;
   display: flex;
+  justify-content: space-between;
 `;
 const LeftPanel = styled.div`
+  min-width: 220px;
+  max-width: 300px;
   margin-right: 30px;
   height: 100%;
-  flex-basis: 28%;
-  min-width: 220px;
+  flex-basis: 25%;
+  border-right: 2px solid #9c9c9c40;
+  border-top: 2px solid #9c9c9c40;
+  border-bottom: 2px solid #9c9c9c40;
+  border-top-right-radius: 30px;
+  border-bottom-right-radius: 50px;
+  padding-top: 5px;
+  padding-right: 10px;
 `;
 const Top10Label = styled.p`
   margin-top: 10px;
@@ -249,21 +257,19 @@ const TopTeacher = styled.div`
 `;
 const NewsFeed = styled.div`
   min-width: 500px;
+  flex-basis: 80%;
   display: flex;
   flex-wrap: wrap;
-  flex-basis: 72%;
-  align-content: start;
   justify-content: space-evenly;
   scroll-behavior: auto;
   overflow-y: scroll;
   padding: 5px;
-  margin-bottom: 10px;
   border-left: 2px solid #9c9c9c40;
   border-radius: 50px;
 `;
 const Footer = styled.div`
   width: 100%;
-  height: 200px;
+  height: 100px;
   position: relative;
   padding: 20.6px 196px 20.6px 89.2px;
   box-sizing: border-box;
@@ -271,21 +277,21 @@ const Footer = styled.div`
   overflow: hidden;
 `;
 const ContactInfo = styled.div`
-  width: 199%;
-  gap: 15.7px;
-  top: 0;
+  width: 100%;
+  gap: 5px;
+  top: 50%;
   position: relative;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-end;
-  margin: 15px 0 12px 0;
   box-sizing: border-box;
+  transform: translateY(-50%);
 `;
 const ContactInfoLabel = styled.div`
   width: 170px;
   align-self: stretch;
-  font-size: 15px;
+  font-size: 14px;
   font-family: Noto Serif Georgian;
   text-align: center;
   letter-spacing: 2px;
@@ -294,16 +300,16 @@ const ContactInfoLabel = styled.div`
 `;
 const ContactInfoData = styled.div`
   width: 100%;
+  gap: 5px;
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: space-evenly;
   align-self: stretch;
   box-sizing: border-box;
 `;
 const PhoneNumber = styled.div`
-  height: 41px;
-  font-size: 15px;
+  font-size: 14px;
   font-family: Noto Serif Georgian;
   white-space: nowrap;
   letter-spacing: 2px;
@@ -312,7 +318,7 @@ const PhoneNumber = styled.div`
   box-sizing: border-box;
 `;
 const Email = styled.div`
-  font-size: 15px;
+  font-size: 14px;
   font-family: Noto Serif Georgian;
   text-align: start;
   white-space: nowrap;
