@@ -1,14 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
-export const RecommendedTeacher = (props: any) => {
-    const FavouriteFunction = (e: any, name: any) => {
-        alert(`${name} was clicked`);
+interface Props {
+    isFavourite: boolean;
+}
+
+export const RecommendedTeacher = (props: Props) => {
+    const [imageSrc, setImageSrc] = useState(props.isFavourite ?
+        "/FavouriteSelected.png" : "/FavouriteUnselected.png");
+    const FavouriteFunction = () => {
+        setImageSrc(imageSrc == "/FavouriteUnselected.png" ?
+            "/FavouriteSelected.png" : "/FavouriteUnselected.png");
+    };
+    const TopFunction = () => {
+        alert("Teacher Recommendation was clicked");
     };
     return (
         <RecommendedTeacherRoot>
-            <RecommendedTeacherTop>
-                <ProfilePicture />
+            <RecommendedTeacherTop
+                onClick={() => TopFunction()}
+            >
+                <ProfilePicture/>
                 <RecommendedTeacherTopRight>
                     <Name>Name</Name>
                     <SubjectsLabel>Subjects</SubjectsLabel>
@@ -31,8 +43,8 @@ export const RecommendedTeacher = (props: any) => {
             <RecommendedTeacherBottom>
                 <PriceRangeLabel>Price Range:</PriceRangeLabel>
                 <PriceRangeValue>####-####</PriceRangeValue>
-                <Favourite onClick={(e: any) => FavouriteFunction(e, "Favourite")}
-                    src="/FavouriteUnselected.png" alt="Heart" />
+                <Favourite onClick={() => FavouriteFunction()}
+                    src={imageSrc} alt="Heart"/>
             </RecommendedTeacherBottom>
         </RecommendedTeacherRoot>
     );
