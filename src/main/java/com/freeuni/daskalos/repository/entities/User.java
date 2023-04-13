@@ -1,124 +1,151 @@
 package com.freeuni.daskalos.repository.entities;
 
-import com.freeuni.daskalos.utils.UserUtils;
+import com.freeuni.daskalos.utils.UserType;
+import jakarta.persistence.*;
 import reactor.util.annotation.NonNull;
-import reactor.util.annotation.Nullable;
 
 import java.io.Serializable;
-import java.util.List;
-import java.util.Objects;
 
+@Entity
 public abstract class User implements Serializable {
 
-    private int ID;
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Long ID;
 
-    @NonNull
     private String name;
 
-    @NonNull
-    private String secondName;
+    private String surname;
 
-    @NonNull
     private String password;
 
-    @NonNull
-    private String mail;
+    private String email;
 
-    @NonNull
     private UserType userType;
 
-    @NonNull
     private String phoneNumber;
+
+    private String address;
 
     private int priceMin;
 
     private int priceMax;
 
-    @NonNull
-    private String address;
-
-    @NonNull
-    private List<String> socialNetworkUrls;
-
-    public User(int ID, @NonNull String name, @NonNull String secondName, @NonNull String password, @NonNull String mail, @NonNull UserType userType,
-                @NonNull String phoneNumber, int priceMin, int priceMax, @NonNull String address, @Nullable List<String> socialNetworkUrls) {
+    public User(Long ID,
+                @NonNull String name,
+                @NonNull String surname,
+                @NonNull String password,
+                @NonNull String email,
+                @NonNull UserType userType,
+                @NonNull String phoneNumber,
+                @NonNull String address,
+                int priceMin,
+                int priceMax) {
         this.ID = ID;
         this.name = name;
-        this.secondName = secondName;
+        this.surname = surname;
         this.password = password;
-        this.mail = mail;
+        this.email = email;
         this.userType = userType;
         this.phoneNumber = phoneNumber;
+        this.address = address;
         this.priceMin = priceMin;
         this.priceMax = priceMax;
-        this.address = address;
-        this.socialNetworkUrls = !Objects.isNull(socialNetworkUrls) ? socialNetworkUrls : List.of();
     }
 
-    public User(int ID, @NonNull String name, @NonNull String secondName, @NonNull String password, @NonNull String mail, @NonNull UserType userType,
-                @NonNull String phoneNumber, int priceMin, int priceMax, @NonNull String address, @Nullable String socialNetworkUrls) {
-        this.ID = ID;
+    public User(@NonNull String email,
+                @NonNull String password,
+                @NonNull String name,
+                @NonNull String surname,
+                @NonNull UserType userType) {
+        this.email = email;
+        this.password = password;
         this.name = name;
-        this.secondName = secondName;
-        this.password = password;
-        this.mail = mail;
+        this.surname = surname;
         this.userType = userType;
-        this.phoneNumber = phoneNumber;
-        this.priceMin = priceMin;
-        this.priceMax = priceMax;
-        this.address = address;
-        this.socialNetworkUrls = !Objects.isNull(socialNetworkUrls) ? UserUtils.getNetworkUrls(socialNetworkUrls) : List.of();
     }
 
-    public int getID() {
-        return this.ID;
+    public User() {
+
     }
 
-    @NonNull
+    public Long getID() {
+        return ID;
+    }
+
+    public void setID(Long ID) {
+        this.ID = ID;
+    }
+
     public String getName() {
-        return this.name;
+        return name;
     }
 
-    @NonNull
-    public String getSecondName() {
-        return this.secondName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    @NonNull
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String lastName) {
+        this.surname = lastName;
+    }
+
     public String getPassword() {
-        return this.password;
+        return password;
     }
 
-    @NonNull
-    public String getMail() {
-        return this.mail;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    @NonNull
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String mail) {
+        this.email = mail;
+    }
+
     public UserType getUserType() {
-        return this.userType;
+        return userType;
     }
 
-    @NonNull
+    public void setUserType(UserType userType) {
+        this.userType = userType;
+    }
+
     public String getPhoneNumber() {
-        return this.phoneNumber;
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public int getPriceMin() {
-        return this.priceMin;
+        return priceMin;
+    }
+
+    public void setPriceMin(int priceMin) {
+        this.priceMin = priceMin;
     }
 
     public int getPriceMax() {
-        return this.priceMax;
+        return priceMax;
     }
 
-    @NonNull
-    public String getAddress() {
-        return this.address;
-    }
-
-    @NonNull
-    public List<String> getSocialNetworkUrls() {
-        return this.socialNetworkUrls;
+    public void setPriceMax(int priceMax) {
+        this.priceMax = priceMax;
     }
 }

@@ -1,16 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { RecommendedTeacher } from "./recommended-teacher";
+import {Filters} from "./filters-button";
 
-export const NewsFeedPage = (props: any) => {
+export const NewsFeedPage = () => {
+    const [open, setOpen] = useState(false);
+    let arrowSrc = "/DownArrow.png";
     const ProfileButtonFunction = (e: any, name: any) => {
         alert(`${name} was clicked`);
     };
     const AccountButtonFunction = (e: any, name: any) => {
         alert(`${name} was clicked`);
     };
-    const SearchButtonFunction = (e: any, name: any) => {
-        alert(`${name} was clicked`);
+    const SearchButtonFunction = () => {
+        setOpen(!open);
+        arrowSrc = open ? "/UpArrow.png" : "/DownArrow.png";
     };
     return (
         <NewsFeedPageRoot>
@@ -25,10 +29,11 @@ export const NewsFeedPage = (props: any) => {
             </Header>
             <BelowHeader>
                 <SearchButton
-                    onClick={(e: any) => SearchButtonFunction(e, "SearchButton")}
+                    onClick={() => SearchButtonFunction()}
                 >
                     <SearchLabel>ძებნა</SearchLabel>
-                    <DropDownArrow src="/DownArrow.png" alt="Drop down"/>
+                    <DropDownArrow src={arrowSrc} alt="Drop down"/>
+                    {open && (<Filters/>)}
                 </SearchButton>
                 <TeacherFeedLabel>თქვენთვის რეკომენდებული მასწავლებლები</TeacherFeedLabel>
             </BelowHeader>
@@ -49,14 +54,14 @@ export const NewsFeedPage = (props: any) => {
                     </Top10>
                 </LeftPanel>
                 <NewsFeed>
-                    <RecommendedTeacher/>
-                    <RecommendedTeacher/>
-                    <RecommendedTeacher/>
-                    <RecommendedTeacher/>
-                    <RecommendedTeacher/>
-                    <RecommendedTeacher/>
-                    <RecommendedTeacher/>
-                    <RecommendedTeacher/>
+                    <RecommendedTeacher isFavourite={true}/>
+                    <RecommendedTeacher isFavourite={true}/>
+                    <RecommendedTeacher isFavourite={false}/>
+                    <RecommendedTeacher isFavourite={false}/>
+                    <RecommendedTeacher isFavourite={true}/>
+                    <RecommendedTeacher isFavourite={false}/>
+                    <RecommendedTeacher isFavourite={false}/>
+                    <RecommendedTeacher isFavourite={true}/>
                 </NewsFeed>
             </Content>
             <Footer>
@@ -112,9 +117,11 @@ const ProfileButton = styled.button`
   background-image: url("/ProfileButton.png");
   cursor: pointer;
   transform: translateY(-50%);
+
   &:hover {
     box-shadow: inset 0 0 100px 100px #ffef9a30;
-  } ;
+  }
+;
 `;
 const AccountButton = styled.button`
   width: 62px;
@@ -133,9 +140,11 @@ const AccountButton = styled.button`
   background-image: url("/AccountButton.png");
   cursor: pointer;
   transform: translateY(-50%);
+
   &:hover {
     box-shadow: inset 0 0 100px 100px #ffef9a40;
-  } ;
+  }
+;
 `;
 const BelowHeader = styled.div`
   width: 100%;
@@ -159,7 +168,8 @@ const SearchButton = styled.button`
 
   &:hover {
     box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.3);
-  };
+  }
+;
 `;
 const SearchLabel = styled.div`
   width: 77.9%;

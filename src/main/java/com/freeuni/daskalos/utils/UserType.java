@@ -1,4 +1,4 @@
-package com.freeuni.daskalos.repository.entities;
+package com.freeuni.daskalos.utils;
 
 import jakarta.annotation.Nullable;
 
@@ -13,7 +13,7 @@ public enum UserType {
     TEACHER("Teacher"),
     STUDENT("Student");
 
-    private String name;
+    private final String name;
 
     UserType(String name) {
         this.name = name;
