@@ -72,6 +72,7 @@ const RecommendedTeacherTop = styled.div`
   align-items: flex-start;
   margin: 0 0 6px 2px;
   box-sizing: border-box;
+  cursor: pointer;
 `;
 const ProfilePicture = styled.div`
   width: 170px;

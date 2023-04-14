@@ -3,9 +3,17 @@ import styled from "styled-components";
 import { RecommendedTeacher } from "./recommended-teacher";
 import {Filters} from "./filters-button";
 
+interface DimmingProps {
+    opacity: number;
+    interactive: string;
+}
+
 export const NewsFeedPage = () => {
     const [open, setOpen] = useState(false);
-    let arrowSrc = "/DownArrow.png";
+    const [dimmingOpacity, setDimmingOpacity] = useState(0);
+    const [arrowSrc, setArrowSrc] = useState("/DownArrow.png");
+    const [dimmingInteractive, setDimmingInteractive] = useState("none");
+    const [dimmingZIndex, setDimmingZIndex] = useState(-1);
     const ProfileButtonFunction = (e: any, name: any) => {
         alert(`${name} was clicked`);
     };
@@ -14,10 +22,13 @@ export const NewsFeedPage = () => {
     };
     const SearchButtonFunction = () => {
         setOpen(!open);
-        arrowSrc = open ? "/UpArrow.png" : "/DownArrow.png";
+        setArrowSrc(open ? "/DownArrow.png" : "/UpArrow.png");
+        setDimmingOpacity(open ? 0 : 0.8);
+        setDimmingInteractive(dimmingInteractive == "none" ? "auto" : "none");
     };
     return (
         <NewsFeedPageRoot>
+            <Dimming opacity={dimmingOpacity} interactive={dimmingInteractive}/>
             <Header>
                 <Logo src="/Logo.png" alt="Logo"/>
                 <ProfileButton
@@ -33,8 +44,8 @@ export const NewsFeedPage = () => {
                 >
                     <SearchLabel>ძებნა</SearchLabel>
                     <DropDownArrow src={arrowSrc} alt="Drop down"/>
-                    {open && (<Filters/>)}
                 </SearchButton>
+                {open && (<Filters/>)}
                 <TeacherFeedLabel>თქვენთვის რეკომენდებული მასწავლებლები</TeacherFeedLabel>
             </BelowHeader>
             <Content>
@@ -83,6 +94,17 @@ const NewsFeedPageRoot = styled.div`
   gap: 12.6px;
   background-color: #ffffff;
   overflow: hidden;
+`;
+const Dimming = styled.div<DimmingProps>`
+  position: fixed;
+  width: 100%;
+  min-height: 100%;
+  background-color: black;
+  z-index: 1;
+  opacity: ${props => props.opacity};
+  transition-property: opacity;
+  transition-duration: 0.4s;
+  pointer-events: ${props => props.interactive};
 `;
 const Header = styled.div`
   width: 100%;
@@ -155,6 +177,7 @@ const BelowHeader = styled.div`
 const SearchButton = styled.button`
   width: 100px;
   left: 40px;
+  height: 0;
   top: 50%;
   position: relative;
   padding: 25px 60px 25px;
@@ -165,6 +188,7 @@ const SearchButton = styled.button`
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
   cursor: pointer;
   transform: translateY(-50%);
+  z-index: 2;
 
   &:hover {
     box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.3);
@@ -172,9 +196,9 @@ const SearchButton = styled.button`
 ;
 `;
 const SearchLabel = styled.div`
-  width: 77.9%;
+  width: 78%;
   height: 85%;
-  left: 23.891143798828125px;
+  left: 50%;
   top: 50%;
   position: absolute;
   display: flex;
@@ -188,7 +212,7 @@ const SearchLabel = styled.div`
   letter-spacing: 1.63px;
   text-transform: uppercase;
   box-sizing: border-box;
-  transform: translateY(-50%);
+  transform: translate(-50%, -50%);
 `;
 const DropDownArrow = styled.img`
   width: 25px;

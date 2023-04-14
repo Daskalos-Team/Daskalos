@@ -1,36 +1,111 @@
 import React from "react";
-import "./Filters.css";
+import styled from "styled-components";
 
 export const Filters = (): JSX.Element => {
     return (
-        <React.Fragment>
-            <div id="filters">
-                <p id="filters-label" className={"label"}>ფილტრები</p>
-                <div id="name-filter">
-                    <input id="name-filter-field" type={"text"} className={"text-field"}/>
-                    <p id="name-label" className={["label", "label-small"].join(" ")}>სახელი</p>
-                </div>
-                <div id="price-filter">
-                    <input id="min-price-input" type={"number"} className={"text-field"}/>
-                    <p id={"dash"} className={"label"}>-</p>
-                    <input id="max-price-input" type={"number"} className={"text-field"}/>
-                    <p id={"price-label"} className={["label", "label-small"].join(" ")}>ფასი</p>
-                </div>
-            </div>
-            <div id={"subject-filter"}>
-                <input id={"subject-filter-field"} type={"text"} className={"text-field"}/>
-                <p id={"subject-label"} className={["label", "label-small"].join(" ")}>საგანი</p>
-            </div>
-            <div id={"date-filter"}>
-                <p id={"date-label"} className={["label", "label-small"].join(" ")}>დროები</p>
-                <button id={"date-selection-button"} type={"button"}>აირჩიეთ დროები</button>
-            </div>
-            <div id={"location-filter"}>
-                <p id={"location-label"} className={["label", "label-small"].join(" ")}>ლოკაცია</p>
-                <button id={"location-selection-button"}>აირჩიეთ ლოკაცია</button>
-            </div>
-            <img id={"map-image"} alt={"map"}/>
-            <button id={"confirm-button"}>დადასტურება</button>
-        </React.Fragment>
+        <FiltersRoot>
+            <FilterContainer>
+                <FiltersTextField type="text"/>
+                <FiltersLabel>სახელი</FiltersLabel>
+            </FilterContainer>
+            <FilterContainer>
+                <FiltersTextField type="text"/>
+                <FiltersLabel>საგანი</FiltersLabel>
+            </FilterContainer>
+            <FilterContainer>
+                <FiltersNumberField type="number" min={0}/>
+                <FiltersLabel>–</FiltersLabel>
+                <FiltersNumberField type="number" min={0}/>
+                <FiltersLabel>ფასი</FiltersLabel>
+            </FilterContainer>
+            <FilterContainer>
+                <FilterButton>აირჩიეთ დროები</FilterButton>
+                <FiltersLabel>დროები</FiltersLabel>
+            </FilterContainer>
+            <FilterContainer>
+                <FilterButton>აირჩიეთ ლოკაცია</FilterButton>
+                <FiltersLabel>ლოკაცია</FiltersLabel>
+            </FilterContainer>
+            <Map src="/Map.png"/>
+            <FilterButton>დადასტურება</FilterButton>
+        </FiltersRoot>
     );
 };
+
+const FiltersRoot = styled.div`
+  width: max(360px, 55vw);
+  left: 40px;
+  position: absolute;
+  margin-top: 50px;
+  padding: 40px 10px 40px 10px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, auto));
+  grid-row-gap: 50px;
+  grid-column-gap: 30px;
+  justify-items: center;
+  border: 1px rgba(0, 0, 0, 0.2) solid;
+  border-radius: 30px;
+  background-color: #f6f6f6;
+  z-index: 2;
+`;
+const FilterContainer = styled.div`
+  width: 320px;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: space-between;
+`;
+const FilterButton = styled.div`
+  width: 180px;
+  height: 48px;
+  border-width: 0;
+  border-radius: 50px;
+  box-sizing: content-box;
+  background-color: #ece9e9;
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  font-size: 15px;
+  font-family: "Noto Serif Georgian";
+  text-align: center;
+  line-height: 48px;
+  max-lines: 1;
+
+  &:hover {
+    box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.3);
+  }
+;
+`;
+const FiltersInput = styled.input`
+  width: 200px;
+  max-height: 10px;
+  padding: 20px;
+  border-width: 0;
+  border-radius: 50px;
+  background-color: #ece9e9;
+  box-sizing: content-box;
+  font-size: 16px;
+  font-family: "Noto Serif Georgian";
+  text-align: center;
+  
+  &:hover {
+    background-color: #f0f0f0;;
+  }
+`;
+const FiltersTextField = styled(FiltersInput)`
+  width: 200px;
+`;
+const FiltersNumberField = styled(FiltersInput)`
+  width: 80px;
+`;
+const FiltersLabel = styled.p`
+  font-size: 16px;
+  font-family: "Noto Serif Georgian";
+  text-align: center;
+  line-height: 48px;
+`;
+const Map = styled.img`
+  width: 320px;
+  height: 150px;
+  grid-row: span 2;
+  cursor: pointer;
+`;
