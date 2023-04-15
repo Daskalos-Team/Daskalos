@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import styled, {keyframes} from "styled-components";
 
 export const Filters = (): JSX.Element => {
     return (
@@ -32,6 +32,12 @@ export const Filters = (): JSX.Element => {
     );
 };
 
+const slideDown = keyframes`
+  0% { opacity: 0; transform: translateY(-50%) }
+  50% { opacity: 0; transform: translateY(-5%) }
+  100% { opacity: 1; transform: translateY(0); }
+`;
+
 const FiltersRoot = styled.div`
   width: max(360px, 55vw);
   left: 40px;
@@ -47,6 +53,7 @@ const FiltersRoot = styled.div`
   border-radius: 30px;
   background-color: #f6f6f6;
   z-index: 2;
+  animation: ${slideDown} 400ms ease-in;
 `;
 const FilterContainer = styled.div`
   width: 320px;

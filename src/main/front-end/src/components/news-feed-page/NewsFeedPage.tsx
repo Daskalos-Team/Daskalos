@@ -1,29 +1,41 @@
 import React, { useState } from "react";
-import styled from "styled-components";
+import styled, { Keyframes, keyframes } from "styled-components";
 import { RecommendedTeacher } from "./recommended-teacher";
-import {Filters} from "./filters-button";
+import { Filters } from "./filters-button";
 
 interface DimmingProps {
     opacity: number;
     interactive: string;
 }
 
+interface AccountSettingsProps {
+    height: number;
+    borderWidth: number;
+    animation: Keyframes | null;
+}
+
 export const NewsFeedPage = () => {
-    const [open, setOpen] = useState(false);
+    const [filtersOpen, setFiltersOpen] = useState(false);
     const [dimmingOpacity, setDimmingOpacity] = useState(0);
     const [arrowSrc, setArrowSrc] = useState("/DownArrow.png");
     const [dimmingInteractive, setDimmingInteractive] = useState("none");
-    const [dimmingZIndex, setDimmingZIndex] = useState(-1);
+    const [accountOpen, setAccountOpen] = useState(false);
+    const [accountHeight, setAccountHeight] = useState(0);
+    const [accountBorderWidth, setAccountBorderWidth] = useState(0);
+    const [accountAnimation, setAccountAnimation] = useState<Keyframes | null>(null);
     const ProfileButtonFunction = (e: any, name: any) => {
         alert(`${name} was clicked`);
     };
-    const AccountButtonFunction = (e: any, name: any) => {
-        alert(`${name} was clicked`);
+    const AccountButtonFunction = () => {
+        setAccountOpen(!accountOpen);
+        setAccountHeight(accountOpen ? 0 : 190);
+        setAccountAnimation(accountOpen ? RollUp : RollDown);
+        setAccountBorderWidth(accountOpen? 0 : 2);
     };
     const SearchButtonFunction = () => {
-        setOpen(!open);
-        setArrowSrc(open ? "/DownArrow.png" : "/UpArrow.png");
-        setDimmingOpacity(open ? 0 : 0.8);
+        setFiltersOpen(!filtersOpen);
+        setArrowSrc(filtersOpen ? "/DownArrow.png" : "/UpArrow.png");
+        setDimmingOpacity(filtersOpen ? 0 : 0.8);
         setDimmingInteractive(dimmingInteractive == "none" ? "auto" : "none");
     };
     return (
@@ -35,8 +47,14 @@ export const NewsFeedPage = () => {
                     onClick={(e: any) => ProfileButtonFunction(e, "ProfileButton")}
                 />
                 <AccountButton
-                    onClick={(e: any) => AccountButtonFunction(e, "AccountButton")}
+                    onClick={() => AccountButtonFunction()}
                 />
+                <AccountSettings height={accountHeight} animation={accountAnimation}
+                    borderWidth={accountBorderWidth}>
+                    <AccountName>სახელი გვარი</AccountName>
+                    <AccountOption>ანგარიშის შეცვლა</AccountOption>
+                    <AccountOption>გამოსვლა</AccountOption>
+                </AccountSettings>
             </Header>
             <BelowHeader>
                 <SearchButton
@@ -45,7 +63,7 @@ export const NewsFeedPage = () => {
                     <SearchLabel>ძებნა</SearchLabel>
                     <DropDownArrow src={arrowSrc} alt="Drop down"/>
                 </SearchButton>
-                {open && (<Filters/>)}
+                {filtersOpen && (<Filters/>)}
                 <TeacherFeedLabel>თქვენთვის რეკომენდებული მასწავლებლები</TeacherFeedLabel>
             </BelowHeader>
             <Content>
@@ -89,6 +107,15 @@ export const NewsFeedPage = () => {
     );
 };
 
+const RollDown = keyframes`
+  0% { height: 0 }
+  100% { height: 190px }
+`;
+const RollUp = keyframes`
+  0% { height: 190px; border-width: 2px }
+  100% { height: 0; border-width: 2px }
+`;
+
 const NewsFeedPageRoot = styled.div`
   width: 100%;
   gap: 12.6px;
@@ -112,7 +139,6 @@ const Header = styled.div`
   position: relative;
   box-sizing: border-box;
   background-color: #ffef9a;
-  overflow: hidden;
 `;
 const Logo = styled.img`
   width: 180px;
@@ -167,6 +193,45 @@ const AccountButton = styled.button`
     box-shadow: inset 0 0 100px 100px #ffef9a40;
   }
 ;
+`;
+const AccountSettings = styled.div<AccountSettingsProps>`
+  width: 250px;
+  height: ${props => props.height}px;
+  right: 0;
+  margin-top: 10px;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  z-index: 1;
+  border: ${props => props.borderWidth}px #e0e0e0 solid;
+  overflow-y: hidden;
+  animation: ${props => props.animation} 300ms;
+`;
+const AccountName = styled.p`
+  width: 100%;
+  height: 90px;
+  text-align: center;
+  font-family: "Noto Serif Georgian";
+  font-weight: bold;
+  font-size: 16px;
+  border-bottom: 2px #e0e0e0 solid;
+  background-color: #f6f6f6;
+  line-height: 90px;
+`;
+const AccountOption = styled.button`
+  width: 100%;
+  height: 50px;
+  padding-left: 20px;
+  text-align: start;
+  border-width: 0;
+  background-color: #f6f6f6;
+  cursor: pointer;
+  transition-property: background-color;
+  transition-duration: 0.4s;
+  
+  &:hover {
+    background-color: #e0e0e0;
+  }
 `;
 const BelowHeader = styled.div`
   width: 100%;
