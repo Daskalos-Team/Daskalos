@@ -42,7 +42,7 @@ const FiltersRoot = styled.div`
   width: max(360px, 55vw);
   left: 40px;
   position: absolute;
-  margin-top: 50px;
+  margin-top: 520px;
   padding: 40px 10px 40px 10px;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(350px, auto));

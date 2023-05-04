@@ -2,15 +2,21 @@ import React, { useState } from "react";
 import styled, { Keyframes, keyframes } from "styled-components";
 import { RecommendedTeacher } from "./recommended-teacher";
 import { Filters } from "./filters-button";
+import { LeftPanelOption } from "./left-panel-option";
 
 interface DimmingProps {
     opacity: number;
     interactive: string;
 }
 
-interface AccountSettingsProps {
-    height: number;
-    borderWidth: number;
+interface LogoProps {
+    visible: boolean;
+    animation: Keyframes | null;
+}
+
+interface LeftPanelProps {
+    minWidth: number;
+    maxWidth: number;
     animation: Keyframes | null;
 }
 
@@ -19,18 +25,13 @@ export const NewsFeedPage = () => {
     const [dimmingOpacity, setDimmingOpacity] = useState(0);
     const [arrowSrc, setArrowSrc] = useState("/DownArrow.png");
     const [dimmingInteractive, setDimmingInteractive] = useState("none");
-    const [accountOpen, setAccountOpen] = useState(false);
-    const [accountHeight, setAccountHeight] = useState(0);
-    const [accountBorderWidth, setAccountBorderWidth] = useState(0);
-    const [accountAnimation, setAccountAnimation] = useState<Keyframes | null>(null);
+    const [selectedOptions, setSelectedOptions] = useState([true, false, false, false]);
+    const [logoVisible, setLogoVisible] = useState(true);
+    const [logoAnimation, setLogoAnimation] = useState<Keyframes | null>(null);
+    const [leftPanelWidths, setLeftPanelWidths] = useState([220, 300]);
+    const [leftPanelAnimation, setLeftPanelAnimation] = useState<Keyframes | null>(null);
     const ProfileButtonFunction = (e: any, name: any) => {
         alert(`${name} was clicked`);
-    };
-    const AccountButtonFunction = () => {
-        setAccountOpen(!accountOpen);
-        setAccountHeight(accountOpen ? 0 : 190);
-        setAccountAnimation(accountOpen ? RollUp : RollDown);
-        setAccountBorderWidth(accountOpen? 0 : 2);
     };
     const SearchButtonFunction = () => {
         setFiltersOpen(!filtersOpen);
@@ -38,25 +39,23 @@ export const NewsFeedPage = () => {
         setDimmingOpacity(filtersOpen ? 0 : 0.8);
         setDimmingInteractive(dimmingInteractive == "none" ? "auto" : "none");
     };
+    const SetOptionSelected = (option_id: number) => {
+        const newSelectedOptions = [false, false, false, false];
+        newSelectedOptions[option_id] = true;
+        setSelectedOptions(newSelectedOptions);
+    };
+    const ToggleMenu = () => {
+        setLogoVisible(!logoVisible);
+        setLogoAnimation(logoVisible ? ShrinkLogo : GrowLogo);
+        setLeftPanelWidths(logoVisible ? [85, 85] : [220, 300]);
+        setLeftPanelAnimation(logoVisible ? ShrinkLeftPanel : GrowLeftPanel);
+    };
     return (
         <NewsFeedPageRoot>
             <Dimming opacity={dimmingOpacity} interactive={dimmingInteractive}/>
             <Header>
-                <Logo src="/Logo.png" alt="Logo"/>
-                <ProfileButton
-                    onClick={(e: any) => ProfileButtonFunction(e, "ProfileButton")}
-                />
-                <AccountButton
-                    onClick={() => AccountButtonFunction()}
-                />
-                <AccountSettings height={accountHeight} animation={accountAnimation}
-                    borderWidth={accountBorderWidth}>
-                    <AccountName>სახელი გვარი</AccountName>
-                    <AccountOption>ანგარიშის შეცვლა</AccountOption>
-                    <AccountOption>გამოსვლა</AccountOption>
-                </AccountSettings>
-            </Header>
-            <BelowHeader>
+                <Logo src="/Logo.png" alt="Logo" visible={logoVisible} animation={logoAnimation}/>
+                <ShowMenuButton onClick={() => ToggleMenu()}/>
                 <SearchButton
                     onClick={() => SearchButtonFunction()}
                 >
@@ -64,56 +63,63 @@ export const NewsFeedPage = () => {
                     <DropDownArrow src={arrowSrc} alt="Drop down"/>
                 </SearchButton>
                 {filtersOpen && (<Filters/>)}
-                <TeacherFeedLabel>თქვენთვის რეკომენდებული მასწავლებლები</TeacherFeedLabel>
-            </BelowHeader>
+                <ProfileButton
+                    onClick={(e) => ProfileButtonFunction(e, "Profile Button")}
+                />
+            </Header>
             <Content>
-                <LeftPanel>
-                    <Top10Label>Top 10</Top10Label>
-                    <Top10>
-                        <TopTeacher/>
-                        <TopTeacher/>
-                        <TopTeacher/>
-                        <TopTeacher/>
-                        <TopTeacher/>
-                        <TopTeacher/>
-                        <TopTeacher/>
-                        <TopTeacher/>
-                        <TopTeacher/>
-                        <TopTeacher/>
-                    </Top10>
+                <LeftPanel minWidth={leftPanelWidths[0]} maxWidth={leftPanelWidths[1]}
+                    animation={leftPanelAnimation}>
+                    <div onClick={() => SetOptionSelected(0)}>
+                        <LeftPanelOption isSelected={selectedOptions[0]} imageSrc="/TeachersLogo.png"
+                            labelText="მასწავლებლები"/>
+                    </div>
+                    <div onClick={() => SetOptionSelected(1)}>
+                        <LeftPanelOption isSelected={selectedOptions[1]} imageSrc="/FavouritesLogo.png"
+                            labelText="ფავორიტები"/>
+                    </div>
+                    <div onClick={() => SetOptionSelected(2)}>
+                        <LeftPanelOption isSelected={selectedOptions[2]} imageSrc="/LogOut.png"
+                            labelText="ანგარიში"/>
+                    </div>
+                    <div onClick={() => SetOptionSelected(3)}>
+                        <LeftPanelOption isSelected={selectedOptions[3]} imageSrc="/Settings.png"
+                            labelText="პარამეტრები"/>
+                    </div>
                 </LeftPanel>
-                <NewsFeed>
-                    <RecommendedTeacher isFavourite={true}/>
-                    <RecommendedTeacher isFavourite={true}/>
-                    <RecommendedTeacher isFavourite={false}/>
-                    <RecommendedTeacher isFavourite={false}/>
-                    <RecommendedTeacher isFavourite={true}/>
-                    <RecommendedTeacher isFavourite={false}/>
-                    <RecommendedTeacher isFavourite={false}/>
-                    <RecommendedTeacher isFavourite={true}/>
-                </NewsFeed>
+                <MainContentContainer>
+                    <TeacherFeedLabel>თქვენთვის რეკომენდებული მასწავლებლები</TeacherFeedLabel>
+                    <NewsFeed>
+                        <RecommendedTeacher isFavourite={true}/>
+                        <RecommendedTeacher isFavourite={true}/>
+                        <RecommendedTeacher isFavourite={false}/>
+                        <RecommendedTeacher isFavourite={false}/>
+                        <RecommendedTeacher isFavourite={true}/>
+                        <RecommendedTeacher isFavourite={false}/>
+                        <RecommendedTeacher isFavourite={false}/>
+                        <RecommendedTeacher isFavourite={true}/>
+                    </NewsFeed>
+                </MainContentContainer>
             </Content>
-            <Footer>
-                <ContactInfo>
-                    <ContactInfoLabel>საკონაქტო ინფორმაცია</ContactInfoLabel>
-                    <ContactInfoData>
-                        <PhoneNumber>ტელ:5** ** ** **</PhoneNumber>
-                        <Email>e-mail:***@***.***</Email>
-                    </ContactInfoData>
-                </ContactInfo>
-                <DaskalosLabel>Daskalos</DaskalosLabel>
-            </Footer>
         </NewsFeedPageRoot>
     );
 };
 
-const RollDown = keyframes`
-  0% { height: 0 }
-  100% { height: 190px }
+const ShrinkLogo = keyframes`
+  0% { width: 240px }
+  100% { width: 0 }
 `;
-const RollUp = keyframes`
-  0% { height: 190px; border-width: 2px }
-  100% { height: 0; border-width: 2px }
+const GrowLogo = keyframes`
+  0% { width: 0 }
+  100% { width: 240px }
+`;
+const ShrinkLeftPanel = keyframes`
+  0% { min-width: 220px; max-width: 300px}
+  100% { min-width: 85px; max-width: 85px }
+`;
+const GrowLeftPanel = keyframes`
+  0% { min-width: 85px; max-width: 85px}
+  100% { min-width: 220px; max-width: 300px }
 `;
 
 const NewsFeedPageRoot = styled.div`
@@ -139,41 +145,20 @@ const Header = styled.div`
   position: relative;
   box-sizing: border-box;
   background-color: #ffef9a;
+  display: flex;
+  align-items: center;
 `;
-const Logo = styled.img`
-  width: 180px;
-  margin-left: 40px;
+const Logo = styled.img<LogoProps>`
+  width: ${props => props.visible ? 240 : 0}px;
+  top: 10px;
+  margin: 0 ${props => props.visible ? 40 : 0}px 0 ${props => props.visible ? 30 : 0}px;
   position: relative;
-  top: 50%;
-  transform: translateY(-50%);
   box-sizing: border-box;
+  animation: ${props => props.animation} 300ms;
 `;
 const ProfileButton = styled.button`
-  width: 62px;
-  height: 62px;
-  top: 50%;
-  right: 110px;
-  position: absolute;
-  align-self: end;
-  flex-shrink: 0;
-  padding: 0;
-  border-width: 0;
-  box-sizing: content-box;
-  background-color: transparent;
-  background-position: center;
-  background-size: cover;
-  background-image: url("/ProfileButton.png");
-  cursor: pointer;
-  transform: translateY(-50%);
-
-  &:hover {
-    box-shadow: inset 0 0 100px 100px #ffef9a30;
-  }
-;
-`;
-const AccountButton = styled.button`
-  width: 62px;
-  height: 62px;
+  width: 70px;
+  height: 70px;
   right: 22px;
   top: 50%;
   position: absolute;
@@ -185,74 +170,36 @@ const AccountButton = styled.button`
   background-color: transparent;
   background-position: center;
   background-size: cover;
-  background-image: url("/AccountButton.png");
+  background-image: url("/MyProfile.png");
   cursor: pointer;
   transform: translateY(-50%);
 
   &:hover {
     box-shadow: inset 0 0 100px 100px #ffef9a40;
-  }
-;
+  };
 `;
-const AccountSettings = styled.div<AccountSettingsProps>`
-  width: 250px;
-  height: ${props => props.height}px;
-  right: 0;
-  margin-top: 10px;
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  z-index: 1;
-  border: ${props => props.borderWidth}px #e0e0e0 solid;
-  overflow-y: hidden;
-  animation: ${props => props.animation} 300ms;
-`;
-const AccountName = styled.p`
-  width: 100%;
-  height: 90px;
-  text-align: center;
-  font-family: "Noto Serif Georgian";
-  font-weight: bold;
-  font-size: 16px;
-  border-bottom: 2px #e0e0e0 solid;
-  background-color: #f6f6f6;
-  line-height: 90px;
-`;
-const AccountOption = styled.button`
-  width: 100%;
-  height: 50px;
-  padding-left: 20px;
-  text-align: start;
-  border-width: 0;
-  background-color: #f6f6f6;
+const ShowMenuButton = styled.button`
+  width: 60px;
+  height: 60px;
+  margin-left: 20px;
+  background-color: transparent;
+  background-size: cover;
+  border: none;
+  background-image: url("/ShowMenuLogo.png");
   cursor: pointer;
-  transition-property: background-color;
-  transition-duration: 0.4s;
-  
-  &:hover {
-    background-color: #e0e0e0;
-  }
-`;
-const BelowHeader = styled.div`
-  width: 100%;
-  height: 100px;
-  position: relative;
-  border-bottom: #00000010 solid 2px;
 `;
 const SearchButton = styled.button`
   width: 100px;
   left: 40px;
   height: 0;
-  top: 50%;
   position: relative;
-  padding: 25px 60px 25px;
+  padding: 25px 40px 25px;
   border-width: 0;
   border-radius: 50px;
   box-sizing: content-box;
   background-color: #ece9e9;
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
   cursor: pointer;
-  transform: translateY(-50%);
   z-index: 2;
 
   &:hover {
@@ -287,76 +234,47 @@ const DropDownArrow = styled.img`
   box-sizing: border-box;
   transform: translateY(-50%);
 `;
+const Content = styled.div`
+  height: 1000px;
+  margin: 0 20px 0 0;
+  display: flex;
+`;
+const LeftPanel = styled.div<LeftPanelProps>`
+  min-width: ${props => props.minWidth}px;
+  max-width: ${props => props.maxWidth}px;
+  margin-right: 30px;
+  height: 100%;
+  flex-basis: 25%;
+  display: flex;
+  flex-direction: column;
+  padding-top: 100px;
+  background-color: #ffef9a;
+  border: none;
+  animation: ${props => props.animation} 300ms;
+`;
+const MainContentContainer = styled.div`
+  flex-basis: 80%;
+  flex-grow: 1;
+  min-width: 500px;
+  margin-bottom: 100px;
+`;
 const TeacherFeedLabel = styled.p`
   font-family: "Noto Serif Georgian";
   font-weight: bold;
   font-size: 27px;
   text-align: center;
-  position: absolute;
-  top: 50%;
   left: max(30%, 270px);
-  width: max(75%, 500px);
+  width: max(100%, 500px);
+  margin: 20px 0 20px 0;
   max-height: 80px;
-  padding-right: 50px;
   overflow-x: hidden;
   overflow-y: hidden;
-  transform: translateY(-50%);
-`;
-const Content = styled.div`
-  height: 1000px;
-  margin: 20px 20px 20px 0;
-  display: flex;
-  justify-content: space-between;
-`;
-const LeftPanel = styled.div`
-  min-width: 220px;
-  max-width: 300px;
-  margin-right: 30px;
-  height: 100%;
-  flex-basis: 25%;
-  border-right: 2px solid #9c9c9c40;
-  border-top: 2px solid #9c9c9c40;
-  border-bottom: 2px solid #9c9c9c40;
-  border-top-right-radius: 30px;
-  border-bottom-right-radius: 50px;
-  padding-top: 5px;
-  padding-right: 10px;
-`;
-const Top10Label = styled.p`
-  margin-top: 10px;
-  margin-bottom: 10px;
-  padding: 5px;
-  align-self: center;
-  font-size: 30px;
-  font-family: Archivo Black;
-  font-weight: bold;
-  text-align: center;
-  white-space: nowrap;
-  box-sizing: border-box;
-  border: red 2px solid;
-  border-radius: 20px;
-  background-color: #ff000070;
-`;
-const Top10 = styled.div`
-  position: relative;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-`;
-const TopTeacher = styled.div`
-  margin-top: 5px;
-  margin-bottom: 5px;
-  width: 100%;
-  height: 50px;
-  align-self: flex-end;
-  border-radius: 40px;
-  box-sizing: border-box;
-  background-color: #f7f6f6;
 `;
 const NewsFeed = styled.div`
-  min-width: 500px;
-  flex-basis: 80%;
+  top: 20%;
+  margin: 20px 0 20px 0;
+  height: 100%;
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
@@ -365,81 +283,4 @@ const NewsFeed = styled.div`
   padding: 5px;
   border-left: 2px solid #9c9c9c40;
   border-radius: 50px;
-`;
-const Footer = styled.div`
-  width: 100%;
-  height: 100px;
-  position: relative;
-  padding: 20.6px 196px 20.6px 89.2px;
-  box-sizing: border-box;
-  background-color: #ffef9a;
-  overflow: hidden;
-`;
-const ContactInfo = styled.div`
-  width: 100%;
-  gap: 5px;
-  top: 50%;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-end;
-  box-sizing: border-box;
-  transform: translateY(-50%);
-`;
-const ContactInfoLabel = styled.div`
-  width: 170px;
-  align-self: stretch;
-  font-size: 14px;
-  font-family: Noto Serif Georgian;
-  text-align: center;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  box-sizing: border-box;
-`;
-const ContactInfoData = styled.div`
-  width: 100%;
-  gap: 5px;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-self: stretch;
-  box-sizing: border-box;
-`;
-const PhoneNumber = styled.div`
-  font-size: 14px;
-  font-family: Noto Serif Georgian;
-  white-space: nowrap;
-  letter-spacing: 2px;
-  text-align: start;
-  text-transform: uppercase;
-  box-sizing: border-box;
-`;
-const Email = styled.div`
-  font-size: 14px;
-  font-family: Noto Serif Georgian;
-  text-align: start;
-  white-space: nowrap;
-  letter-spacing: 1.95px;
-  text-transform: uppercase;
-  box-sizing: border-box;
-`;
-const DaskalosLabel = styled.div`
-  left: max(30%, 300px);
-  top: 50%;
-  position: absolute;
-  color: #626262;
-  font-size: 90px;
-  font-family: Inika;
-  -webkit-text-stroke-color: transparent;
-  -webkit-text-stroke-width: 6px;
-  text-align: center;
-  white-space: nowrap;
-  letter-spacing: 44.2px;
-  text-transform: uppercase;
-  -webkit-background-clip: text;
-  box-sizing: border-box;
-  background-image: linear-gradient(180deg, #000000 0%, #000000 100%);
-  transform: translateY(-50%);
 `;
