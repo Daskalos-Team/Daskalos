@@ -1,43 +1,67 @@
 package com.freeuni.daskalos.repository.entities;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import org.apache.logging.log4j.util.Strings;
-import reactor.util.annotation.NonNull;
 import reactor.util.annotation.Nullable;
 
 import java.util.Objects;
 
+@Entity
 public class TeacherRating {
 
-    private int ID;
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Long ID;
 
     private int studentID;
 
-    @NonNull
     private String studentComment;
 
     private int rating;
 
-    public TeacherRating(int ID, int studentID, @Nullable String studentComment, int rating) {
+    public TeacherRating(Long ID, int studentID, @Nullable String studentComment, int rating) {
         this.ID = ID;
         this.studentID = studentID;
         this.studentComment = !Objects.isNull(studentComment) ? studentComment : Strings.EMPTY;
         this.rating = rating;
     }
 
-    public int getID() {
-        return this.ID;
+    public TeacherRating() {
+
+    }
+
+    public Long getID() {
+        return ID;
+    }
+
+    public void setID(Long ID) {
+        this.ID = ID;
     }
 
     public int getStudentID() {
-        return this.studentID;
+        return studentID;
     }
 
-    @NonNull
+    public void setStudentID(int studentID) {
+        this.studentID = studentID;
+    }
+
     public String getStudentComment() {
-        return this.studentComment;
+        return studentComment;
+    }
+
+    public void setStudentComment(String studentComment) {
+        this.studentComment = studentComment;
     }
 
     public int getRating() {
-        return this.rating;
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
     }
 }
