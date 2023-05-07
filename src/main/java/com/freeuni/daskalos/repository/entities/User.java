@@ -58,11 +58,13 @@ public abstract class User implements Serializable {
                 @NonNull String password,
                 @NonNull String name,
                 @NonNull String surname,
+                @NonNull UserAddress address,
                 @NonNull UserType userType) {
         this.email = email;
         this.password = password;
         this.name = name;
         this.surname = surname;
+        this.address = address;
         this.userType = userType;
     }
 

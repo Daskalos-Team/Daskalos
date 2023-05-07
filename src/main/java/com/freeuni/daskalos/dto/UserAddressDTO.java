@@ -13,6 +13,11 @@ public class UserAddressDTO {
 
     private double longitude;
 
+    public UserAddressDTO(double latitude, double longitude) {
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
+
     public String getCountry() {
         return country;
     }

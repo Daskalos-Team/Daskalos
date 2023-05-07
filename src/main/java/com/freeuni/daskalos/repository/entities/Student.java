@@ -34,8 +34,9 @@ public class Student extends User {
                    @NonNull String password,
                    @NonNull String name,
                    @NonNull String surname,
+                   @NonNull UserAddress address,
                    @NonNull UserType userType) {
-        super(mail, password, name, surname, userType);
+        super(mail, password, name, surname, address, userType);
     }
 
     public Student() {

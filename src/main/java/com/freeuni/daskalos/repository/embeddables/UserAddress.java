@@ -13,6 +13,15 @@ public class UserAddress {
 
     private double longitude;
 
+    public UserAddress(double latitude, double longitude) {
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
+
+    public UserAddress() {
+
+    }
+
     public String getCountry() {
         return country;
     }

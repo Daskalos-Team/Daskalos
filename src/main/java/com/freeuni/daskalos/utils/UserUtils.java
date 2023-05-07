@@ -14,7 +14,7 @@ public class UserUtils {
 
     public static final String URL_DELIMITER = "|";
 
-    public static final double SEARCH_RADIUS = 2; // (in kms) TODO REMOVE HARDCODED IN FUTURE
+    public static final double SEARCH_RADIUS = 2; // TODO Remove HARD-CODED 2 kilometers in future
 
     public static final double EARTH_RADIUS = 6371;
 
@@ -30,9 +30,9 @@ public class UserUtils {
 
     public static User toUserEntity(UserDTO userDTO) {
         return userDTO.getUserType().equals(UserType.TEACHER.name()) ?
-                new Teacher(userDTO.getEmail(), userDTO.getPassword(), userDTO.getName(), userDTO.getSurname(), UserType.fromName(userDTO.getUserType()))
+                new Teacher(userDTO.getEmail(), userDTO.getPassword(), userDTO.getName(), userDTO.getSurname(), userDTO.getAddress(), UserType.fromName(userDTO.getUserType()))
                 :
-                new Student(userDTO.getEmail(), userDTO.getPassword(), userDTO.getName(), userDTO.getSurname(), UserType.fromName(userDTO.getUserType()));
+                new Student(userDTO.getEmail(), userDTO.getPassword(), userDTO.getName(), userDTO.getSurname(), userDTO.getAddress(), UserType.fromName(userDTO.getUserType()));
     }
 
     public static UserDTO toUserDao(User userEntity) {
