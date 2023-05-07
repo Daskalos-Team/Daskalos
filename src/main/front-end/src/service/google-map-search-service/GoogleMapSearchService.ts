@@ -6,11 +6,12 @@ import { USER_ENDPOINT } from "../common-service";
 export const addressToCoordinates = async (address: string): Promise<any> => {
     const promise = Geocode.fromAddress(address);
     return promise.then(
-        (response: any) => {
+        (response) => {
             return response.results[0].geometry.location;
         },
-        (error: any) => {
-            console.error("error occurred during coordinates service", error);
+        (error) => {
+            alert("ასეთი მისამართი ვერ მოიძებნა");
+            console.log(error);
         }
     );
 };

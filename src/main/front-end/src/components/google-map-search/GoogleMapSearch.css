@@ -202,3 +202,13 @@ a {
     column-gap: 1em;
     align-items: center;
 }
+
+.marker-label {
+    background: lightgrey;
+    font-size: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 1rem;
+    position: absolute;
+    top: -25px;
+    left: -20px;
+}

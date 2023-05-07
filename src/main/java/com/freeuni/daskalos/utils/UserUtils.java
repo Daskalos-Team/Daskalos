@@ -14,7 +14,7 @@ public class UserUtils {
 
     public static final String URL_DELIMITER = "|";
 
-    public static final double SEARCH_RADIUS = 20; // TODO REMOVE HARDCODED IN FUTURE
+    public static final double SEARCH_RADIUS = 2; // (in kms) TODO REMOVE HARDCODED IN FUTURE
 
     public static final double EARTH_RADIUS = 6371;
 
