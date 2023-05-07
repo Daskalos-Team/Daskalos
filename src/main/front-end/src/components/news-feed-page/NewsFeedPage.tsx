@@ -133,7 +133,7 @@ const Dimming = styled.div<DimmingProps>`
   width: 100%;
   min-height: 100%;
   background-color: black;
-  z-index: 1;
+  z-index: 2;
   opacity: ${props => props.opacity};
   transition-property: opacity;
   transition-duration: 0.4s;
@@ -155,6 +155,7 @@ const Logo = styled.img<LogoProps>`
   position: relative;
   box-sizing: border-box;
   animation: ${props => props.animation} 300ms;
+  z-index: 1;
 `;
 const ProfileButton = styled.button`
   width: 70px;
@@ -200,7 +201,7 @@ const SearchButton = styled.button`
   background-color: #ece9e9;
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
   cursor: pointer;
-  z-index: 2;
+  z-index: 3;
 
   &:hover {
     box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.3);
@@ -251,6 +252,19 @@ const LeftPanel = styled.div<LeftPanelProps>`
   background-color: #ffef9a;
   border: none;
   animation: ${props => props.animation} 300ms;
+  position: relative;
+  &:before {
+    background-color: transparent;
+    content: "";
+    height: 60px;
+    width: 60px;
+    top: 0;
+    right: -60px;
+    position: absolute;
+    border-top-left-radius: 30px;
+    box-shadow: -15px -15px 0 #ffef9a;
+    pointer-events: none;
+  };
 `;
 const MainContentContainer = styled.div`
   flex-basis: 80%;
