@@ -9,6 +9,7 @@ import com.freeuni.daskalos.repository.entities.Teacher;
 import com.freeuni.daskalos.repository.entities.User;
 import com.freeuni.daskalos.service.UserService;
 import com.freeuni.daskalos.utils.AuthorizationStatus;
+import com.freeuni.daskalos.repository.embeddables.UserAddress;
 import com.freeuni.daskalos.utils.UserType;
 import org.junit.Before;
 import org.junit.Test;
@@ -113,7 +114,7 @@ public class UserServiceIntegrationTest {
     @Test
     public void whenUserAlreadyExists() {
         String expected = AuthorizationStatus.ALREADY_EXISTS.name();
-        String result = userService.addUser(new UserDTO("email1", "AtLeast^8", "Giorgi", "Adikashviili", UserType.STUDENT.name()));
+        String result = userService.addUser(new UserDTO("email1", "AtLeast^8", "Giorgi", "Adikashviili", new UserAddress(), UserType.STUDENT.name()));
 
         verifyFindByEMAILIsCalledOnce("email1");
         assertThat(result).isEqualTo(expected);
@@ -123,10 +124,10 @@ public class UserServiceIntegrationTest {
     public void whenSuccessfulRegistration() {
         String expected = AuthorizationStatus.SUCCESSFUL_REGISTRATION.name();
 
-        String result1 = userService.addUser(new UserDTO("email4", "AtLeast^8", "Shota", "Ghvinepadze", UserType.TEACHER.name()));
+        String result1 = userService.addUser(new UserDTO("email4", "AtLeast^8", "Shota", "Ghvinepadze", new UserAddress(), UserType.TEACHER.name()));
         verifyFindByEMAILIsCalledOnce("email4");
 
-        String result2 = userService.addUser(new UserDTO("email3", "AtLeast^8", "Nika", "Nargizashvili", UserType.STUDENT.name()));
+        String result2 = userService.addUser(new UserDTO("email3", "AtLeast^8", "Nika", "Nargizashvili", new UserAddress(), UserType.STUDENT.name()));
         verifyFindByEMAILIsCalledOnce("email3");
 
         assertThat(result1).isEqualTo(expected);

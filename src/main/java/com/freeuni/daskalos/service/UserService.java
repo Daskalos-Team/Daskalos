@@ -1,5 +1,6 @@
 package com.freeuni.daskalos.service;
 
+import com.freeuni.daskalos.dto.UserAddressDTO;
 import com.freeuni.daskalos.dto.UserDTO;
 import com.freeuni.daskalos.repository.UserRepository;
 import com.freeuni.daskalos.repository.entities.User;
@@ -78,6 +79,14 @@ public class UserService {
         });
 
         return AuthorizationStatus.SUCCESSFUL_CHANGE.name();
+    }
+
+    public List<UserDTO> getAllTeachersInRadius(UserAddressDTO address) {
+        Iterable<User> all = userRepository.findAll();
+        return StreamSupport.stream(all.spliterator(), false)
+                .map(UserUtils::toUserDao)
+                .filter(userDTO -> UserUtils.isInRadius(userDTO.getAddress(), address, UserUtils.SEARCH_RADIUS))
+                .collect(Collectors.toList());
     }
 
     public List<UserDTO> getAllUsers() {

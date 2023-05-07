@@ -1,4 +1,6 @@
 import Geocode from "react-geocode";
+import axios from "axios";
+import { USER_ENDPOINT } from "../common-service";
 
 // returns {lat, lng} coordinates from address
 export const addressToCoordinates = async (address: string): Promise<any> => {
@@ -11,4 +13,25 @@ export const addressToCoordinates = async (address: string): Promise<any> => {
             console.error("error occurred during coordinates service", error);
         }
     );
+};
+
+// returns teachers in search radius (in kilometers)
+export const getTeachersInRadius = async (coordinates: any): Promise<any> => {
+    const addressInfo = {
+        latitude: coordinates.lat,
+        longitude: coordinates.lng
+    };
+
+    const promise = axios.post(USER_ENDPOINT + "address_info", addressInfo, {
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        }
+    });
+
+    return promise.then(res => {
+        return res;
+    }).catch(error => {
+        alert("მასწავლებლები ამ რადიუსში ვერ მოიძებნა");
+        console.log(error);
+    });
 };

@@ -1,5 +1,6 @@
 package com.freeuni.daskalos.repository.entities;
 
+import com.freeuni.daskalos.repository.embeddables.UserAddress;
 import com.freeuni.daskalos.utils.UserType;
 import jakarta.persistence.*;
 import reactor.util.annotation.NonNull;
@@ -25,7 +26,7 @@ public abstract class User implements Serializable {
 
     private String phoneNumber;
 
-    private String address;
+    private UserAddress address;
 
     private int priceMin;
 
@@ -38,7 +39,7 @@ public abstract class User implements Serializable {
                 @NonNull String email,
                 @NonNull UserType userType,
                 @NonNull String phoneNumber,
-                @NonNull String address,
+                @NonNull UserAddress address,
                 int priceMin,
                 int priceMax) {
         this.ID = ID;
@@ -125,11 +126,12 @@ public abstract class User implements Serializable {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getAddress() {
+    @Embedded
+    public UserAddress getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
+    public void setAddress(UserAddress address) {
         this.address = address;
     }
 

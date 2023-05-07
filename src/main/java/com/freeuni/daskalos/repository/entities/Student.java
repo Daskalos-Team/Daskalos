@@ -1,6 +1,7 @@
 package com.freeuni.daskalos.repository.entities;
 
-import com.freeuni.daskalos.utils.UserType;
+import com.freeuni.daskalos.repository.embeddables.UserAddress;
+import com.freeuni.daskalos.utils.*;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
 import reactor.util.annotation.NonNull;
@@ -21,11 +22,11 @@ public class Student extends User {
                    @NonNull String mail,
                    @NonNull UserType userType,
                    @NonNull String phoneNumber,
-                   @NonNull String address,
+                   @NonNull UserAddress address,
                    int priceMin,
                    int priceMax,
                    List<Teacher> favouriteTeachers) {
-        super(ID, name, secondName, password, mail, userType, address, phoneNumber, priceMin, priceMax);
+        super(ID, name, secondName, password, mail, userType, phoneNumber, address, priceMin, priceMax);
         this.favouriteTeachers = !Objects.isNull(favouriteTeachers) ? favouriteTeachers : List.of();
     }
 

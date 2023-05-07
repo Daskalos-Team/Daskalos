@@ -1,6 +1,11 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { GoogleMapsProvider } from "@ubilabs/google-maps-react-hooks";
-import { API_KEY, MAP_ID } from "../../service/google-map-search-service";
+import {
+    addressToCoordinates,
+    getTeachersInRadius,
+    MAP_API_KEY,
+    MAP_ID
+} from "../../service/google-map-search-service";
 import Geocode from "react-geocode";
 import "./GoogleMapSearch.css";
 
@@ -18,7 +23,7 @@ export const GoogleMapSearch = (): JSX.Element => {
     });
 
     useEffect(() => {
-        Geocode.setApiKey(API_KEY); // need Google API KEY for usage
+        Geocode.setApiKey(MAP_API_KEY); // need Google maps API KEY for usage
     }, []);
 
     function addCurrentMarker (map: any) {
@@ -30,12 +35,17 @@ export const GoogleMapSearch = (): JSX.Element => {
     }
 
     const addTeachersMarkers = async (e: any): Promise<void> => {
-        // await fetching teachers in 10km radius
+        const coordinates = await addressToCoordinates(address);
+        console.log(coordinates);
+        // await fetching teachers in 20km radius
+        await getTeachersInRadius(coordinates).then(teachers => {
+            console.log(teachers);
+        });
     };
 
     return (
         <GoogleMapsProvider
-            googleMapsAPIKey={API_KEY}
+            googleMapsAPIKey={MAP_API_KEY}
             mapOptions={mapOptions}
             mapContainer={mapContainer}
             onLoadMap={onMapLoad}

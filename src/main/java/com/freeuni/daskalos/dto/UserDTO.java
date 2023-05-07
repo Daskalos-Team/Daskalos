@@ -1,6 +1,7 @@
 package com.freeuni.daskalos.dto;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.freeuni.daskalos.repository.embeddables.UserAddress;
 
 import java.io.Serializable;
 
@@ -15,15 +16,18 @@ public class UserDTO implements Serializable {
 
     private String surname;
 
+    private UserAddress address;
+
     private String userType;
 
     private boolean usingGoogle;
 
-    public UserDTO(String email, String password, String name, String surname, String userType) {
+    public UserDTO(String email, String password, String name, String surname, UserAddress address, String userType) {
         this.email = email;
+        this.password = password;
         this.name = name;
         this.surname = surname;
-        this.password = password;
+        this.address = address;
         this.userType = userType;
     }
 
@@ -65,6 +69,14 @@ public class UserDTO implements Serializable {
     public UserDTO setSurname(String surname) {
         this.surname = surname;
         return this;
+    }
+
+    public UserAddress getAddress() {
+        return address;
+    }
+
+    public void setAddress(UserAddress address) {
+        this.address = address;
     }
 
     public String getUserType() {
