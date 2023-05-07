@@ -18,6 +18,10 @@
     border-radius: 10px;
     border: 1px solid #959494;
 }
+.profile-container:hover {
+    transform: scale(1.025);
+    transition: all 0.2s ease-in-out;
+}
 .profile-container-inner{
     padding: 0 4% 10px;
 }
@@ -27,6 +31,10 @@
     margin-top: -75px;
     padding: 5px;
     background: #fff;
+}
+.profile-pic:hover {
+    transform: scale(1.1);
+    transition: all 0.2s ease-in-out;
 }
 .profile-container h1{
     font-size: 28px;
@@ -43,16 +51,6 @@
     color: #045be6;
     font-weight: 500;
 }
-.mutual-connection{
-    display: flex;
-    align-items: center;
-    margin: 20px 0;
-}
-.mutual-connection img{
-    width: 30px;
-    border-radius: 50%;
-    margin-right: 5px;
-}
 .profile-btn a{
     display: inline-flex;
     align-items: center;
@@ -68,6 +66,10 @@
     max-width: 80%;
     border-radius: 10px;
     border: 1px solid #959494;
+}
+.profile-description:hover {
+    transform: scale(1.025);
+    transition: all 0.2s ease-in-out;
 }
 .profile-description h2{
     color: #333;

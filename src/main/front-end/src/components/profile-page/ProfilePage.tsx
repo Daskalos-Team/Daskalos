@@ -15,7 +15,7 @@ export const ProfilePage = (props: any) => {
         <div className="container">
             <div className="profile-main">
                 <div className="profile-container">
-                    <img src="cover-pic.png" width="100%" alt={"cover pic"}/>
+                    <img src="background.png" width="100%" alt={"cover pic"}/>
                     <div className="profile-container-inner">
                         <img src="profile-pic.png" width="100%" className={"profile-pic"} alt={"profile pic"}/>
                         <h1>Ryan Walton</h1>
