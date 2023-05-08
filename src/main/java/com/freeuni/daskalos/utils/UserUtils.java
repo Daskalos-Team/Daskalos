@@ -35,7 +35,7 @@ public class UserUtils {
                 new Student(userDTO.getEmail(), userDTO.getPassword(), userDTO.getName(), userDTO.getSurname(), userDTO.getAddress(), UserType.fromName(userDTO.getUserType()));
     }
 
-    public static UserDTO toUserDao(User userEntity) {
+    public static UserDTO toUserDTO(User userEntity) {
         return new UserDTO(userEntity.getEmail(), userEntity.getPassword(), userEntity.getName(), userEntity.getSurname(), userEntity.getAddress(), userEntity.getUserType().name());
     }
 

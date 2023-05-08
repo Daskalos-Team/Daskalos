@@ -85,13 +85,13 @@ public class UserService {
     public List<UserDTO> getAllTeachersInRadius(UserAddressDTO address) {
         Iterable<User> all = userRepository.findAll();
         return StreamSupport.stream(all.spliterator(), false)
-                .map(UserUtils::toUserDao)
+                .map(UserUtils::toUserDTO)
                 .filter(userDTO -> userDTO.getUserType().equals(UserType.TEACHER.name()) && UserUtils.isInRadius(userDTO.getAddress(), address, UserUtils.SEARCH_RADIUS))
                 .collect(Collectors.toList());
     }
 
     public List<UserDTO> getAllUsers() {
         Iterable<User> all = userRepository.findAll();
-        return StreamSupport.stream(all.spliterator(), false).map(UserUtils::toUserDao).collect(Collectors.toList());
+        return StreamSupport.stream(all.spliterator(), false).map(UserUtils::toUserDTO).collect(Collectors.toList());
     }
 }

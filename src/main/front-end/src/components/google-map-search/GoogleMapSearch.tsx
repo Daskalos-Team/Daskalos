@@ -1,11 +1,13 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { GoogleMapsProvider } from "@ubilabs/google-maps-react-hooks";
 import {
+    ICON_SIZE,
+    MAP_API_KEY,
     addressToCoordinates,
     circleOptions,
+    defaultCenter,
     getTeachersInRadius,
-    MAP_API_KEY,
-    MAP_ID
+    mapDefaultOptions
 } from "../../service/google-map-search-service";
 import Geocode from "react-geocode";
 import "./GoogleMapSearch.css";
@@ -13,10 +15,10 @@ import "./GoogleMapSearch.css";
 export const GoogleMapSearch = (): JSX.Element => {
     const [map, setMap]: any = useState(null);
     const [mapContainer, setMapContainer] = useState(null);
-    const [center, setCenter] = useState({ lat: 41.699389, lng: 44.875089 });
+    const [center, setCenter] = useState(defaultCenter);
     const [radius, setRadius] = useState(2000); // 2 km by default
     const [address, setAddress]: any = useState("");
-    const [marker, setMarker]: any = useState(undefined);
+    const [centerMarker, setCenterMarker]: any = useState(undefined);
     const [teachersMarkers, setTeachersMarkers]: any = useState(undefined);
     const [circle, setCircle]: any = useState(undefined);
 
@@ -26,7 +28,7 @@ export const GoogleMapSearch = (): JSX.Element => {
 
     const onMapLoad = useCallback((map: any) => {
         setMap(map); // save map
-        setMarker(new google.maps.Marker({ // save initial marker
+        setCenterMarker(new google.maps.Marker({ // save initial centerMarker
             position: new window.google.maps.LatLng(center),
             animation: window.google.maps.Animation.BOUNCE,
             map,
@@ -42,14 +44,16 @@ export const GoogleMapSearch = (): JSX.Element => {
 
     const addTeachersMarkers = async (e: any): Promise<void> => {
         const coordinates = await addressToCoordinates(address);
-        updateCenter(coordinates);
-        marker.setPosition(center);
-        circle.setCenter(center);
-        map && map.setOptions(center);
+        setCenter(() => ({ lat: coordinates.lat, lng: coordinates.lng }));
+        centerMarker.setPosition({ lat: coordinates.lat, lng: coordinates.lng });
+        circle.setCenter({ lat: coordinates.lat, lng: coordinates.lng });
+        map && map.setOptions({
+            center: { lat: coordinates.lat, lng: coordinates.lng }
+        });
 
         const teachers = await getTeachersInRadius(coordinates);
         removeTeachersMarkers(teachersMarkers);
-        const markers = teachers.data.forEach((teacher: any) => {
+        const markers = teachers.data.map((teacher: any) => {
             const marker = new google.maps.Marker({
                 position: new window.google.maps.LatLng({
                     lat: teacher["address"]["latitude"],
@@ -57,7 +61,7 @@ export const GoogleMapSearch = (): JSX.Element => {
                 }),
                 icon: {
                     url: "ado.png",
-                    scaledSize: new google.maps.Size(70, 70)
+                    scaledSize: new google.maps.Size(ICON_SIZE, ICON_SIZE)
                 },
                 animation: window.google.maps.Animation.DROP,
                 map,
@@ -79,22 +83,12 @@ export const GoogleMapSearch = (): JSX.Element => {
 
             return marker;
         });
-        updateTeachersMarkers(markers);
+        setTeachersMarkers(() => markers);
     };
 
-    const updateCenter = (coordinates: any) => {
-        setCenter({ lat: coordinates.lat, lng: coordinates.lng });
-    };
-
-    const updateTeachersMarkers = (markers: any) => {
-        setTeachersMarkers(markers);
-    };
-
-    // TODO
     const removeTeachersMarkers = (markers: any) => {
         if (markers) {
             markers.forEach((marker: any) => {
-                console.log(marker);
                 marker.setMap(null);
             });
         }
@@ -103,16 +97,7 @@ export const GoogleMapSearch = (): JSX.Element => {
     return (
         <GoogleMapsProvider
             googleMapsAPIKey={MAP_API_KEY}
-            mapOptions={
-                { // Varketili by default
-                    center,
-                    disableDefaultUI: true,
-                    heading: 25,
-                    mapId: MAP_ID,
-                    tilt: 50,
-                    zoom: 15
-                }
-            }
+            mapOptions={mapDefaultOptions}
             mapContainer={mapContainer}
             onLoadMap={onMapLoad}
         >
