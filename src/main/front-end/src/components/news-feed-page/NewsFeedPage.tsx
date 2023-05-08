@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useLayoutEffect } from "react";
 import styled, { Keyframes, keyframes } from "styled-components";
 import { RecommendedTeacher } from "./recommended-teacher";
 import { Filters } from "./filters-button";
@@ -24,6 +24,7 @@ const mainColor = "rgba(1,157,209,1)";
 const secondaryColor = "#f0f6f7";
 
 export const NewsFeedPage = () => {
+    const maxMenuOnWindowWidth = 1180;
     const [filtersOpen, setFiltersOpen] = useState(false);
     const [dimmingOpacity, setDimmingOpacity] = useState(0);
     const [arrowSrc, setArrowSrc] = useState("/DownArrow.png");
@@ -33,6 +34,8 @@ export const NewsFeedPage = () => {
     const [logoAnimation, setLogoAnimation] = useState<Keyframes | null>(null);
     const [leftPanelWidths, setLeftPanelWidths] = useState([220, 300]);
     const [leftPanelAnimation, setLeftPanelAnimation] = useState<Keyframes | null>(null);
+    const [menuButtonDisabled, setMenuButtonDisabled] = useState(document.body.offsetWidth
+        < maxMenuOnWindowWidth);
     const ProfileButtonFunction = (e: any, name: any) => {
         alert(`${name} was clicked`);
     };
@@ -47,18 +50,31 @@ export const NewsFeedPage = () => {
         newSelectedOptions[option_id] = true;
         setSelectedOptions(newSelectedOptions);
     };
-    const ToggleMenu = () => {
-        setLogoVisible(!logoVisible);
+    const ToggleMenu = (on: boolean) => {
+        setLogoVisible(on);
         setLogoAnimation(logoVisible ? ShrinkLogo : GrowLogo);
-        setLeftPanelWidths(logoVisible ? [85, 85] : [220, 300]);
         setLeftPanelAnimation(logoVisible ? ShrinkLeftPanel : GrowLeftPanel);
+        setLeftPanelWidths(logoVisible ? [85, 85] : [220, 300]);
     };
+    useLayoutEffect(() => {
+        function CheckForMenuResize() {
+            if (document.body.offsetWidth >= maxMenuOnWindowWidth) {
+                setMenuButtonDisabled(false);
+                return;
+            }
+            setMenuButtonDisabled(true);
+            ToggleMenu(false);
+        }
+        window.addEventListener("resize", CheckForMenuResize);
+        CheckForMenuResize();
+        return () => window.removeEventListener("resize", CheckForMenuResize);
+    }, []);
     return (
         <NewsFeedPageRoot>
             <Dimming opacity={dimmingOpacity} interactive={dimmingInteractive}/>
             <Header>
                 <Logo src="/Logo.png" alt="Logo" visible={logoVisible} animation={logoAnimation}/>
-                <ShowMenuButton onClick={() => ToggleMenu()}/>
+                <ShowMenuButton disabled={menuButtonDisabled} onClick={() => ToggleMenu(!logoVisible)}/>
                 <SearchButton
                     onClick={() => SearchButtonFunction()}
                 >
@@ -152,7 +168,7 @@ const Header = styled.div`
   height: 100px;
   position: relative;
   box-sizing: border-box;
-  background: linear-gradient(90deg, ${mainColor} 0%, ${mainColor} 20%, rgba(14, 99, 161, 1) 100%);
+  background: linear-gradient(90deg, ${mainColor} 0%, ${mainColor} 300px, rgba(14, 99, 161, 1) 100%);
   display: flex;
   align-items: center;
 `;
