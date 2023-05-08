@@ -20,6 +20,9 @@ interface LeftPanelProps {
     animation: Keyframes | null;
 }
 
+const mainColor = "rgba(1,157,209,1)";
+const secondaryColor = "#f0f6f7";
+
 export const NewsFeedPage = () => {
     const [filtersOpen, setFiltersOpen] = useState(false);
     const [dimmingOpacity, setDimmingOpacity] = useState(0);
@@ -72,32 +75,32 @@ export const NewsFeedPage = () => {
                     animation={leftPanelAnimation}>
                     <div onClick={() => SetOptionSelected(0)}>
                         <LeftPanelOption isSelected={selectedOptions[0]} imageSrc="/TeachersLogo.png"
-                            labelText="მასწავლებლები"/>
+                            labelText="მასწავლებლები" mainColor={mainColor} secondaryColor={secondaryColor}/>
                     </div>
                     <div onClick={() => SetOptionSelected(1)}>
                         <LeftPanelOption isSelected={selectedOptions[1]} imageSrc="/FavouritesLogo.png"
-                            labelText="ფავორიტები"/>
+                            labelText="ფავორიტები" mainColor={mainColor} secondaryColor={secondaryColor}/>
                     </div>
                     <div onClick={() => SetOptionSelected(2)}>
                         <LeftPanelOption isSelected={selectedOptions[2]} imageSrc="/LogOut.png"
-                            labelText="ანგარიში"/>
+                            labelText="ანგარიში" mainColor={mainColor} secondaryColor={secondaryColor}/>
                     </div>
                     <div onClick={() => SetOptionSelected(3)}>
                         <LeftPanelOption isSelected={selectedOptions[3]} imageSrc="/Settings.png"
-                            labelText="პარამეტრები"/>
+                            labelText="პარამეტრები" mainColor={mainColor} secondaryColor={secondaryColor}/>
                     </div>
                 </LeftPanel>
                 <MainContentContainer>
                     <TeacherFeedLabel>თქვენთვის რეკომენდებული მასწავლებლები</TeacherFeedLabel>
                     <NewsFeed>
-                        <RecommendedTeacher isFavourite={true}/>
-                        <RecommendedTeacher isFavourite={true}/>
-                        <RecommendedTeacher isFavourite={false}/>
-                        <RecommendedTeacher isFavourite={false}/>
-                        <RecommendedTeacher isFavourite={true}/>
-                        <RecommendedTeacher isFavourite={false}/>
-                        <RecommendedTeacher isFavourite={false}/>
-                        <RecommendedTeacher isFavourite={true}/>
+                        <RecommendedTeacher isFavourite={true} color={secondaryColor}/>
+                        <RecommendedTeacher isFavourite={true} color={secondaryColor}/>
+                        <RecommendedTeacher isFavourite={false} color={secondaryColor}/>
+                        <RecommendedTeacher isFavourite={false} color={secondaryColor}/>
+                        <RecommendedTeacher isFavourite={true} color={secondaryColor}/>
+                        <RecommendedTeacher isFavourite={false} color={secondaryColor}/>
+                        <RecommendedTeacher isFavourite={false} color={secondaryColor}/>
+                        <RecommendedTeacher isFavourite={true} color={secondaryColor}/>
                     </NewsFeed>
                 </MainContentContainer>
             </Content>
@@ -121,11 +124,16 @@ const GrowLeftPanel = keyframes`
   0% { min-width: 85px; max-width: 85px}
   100% { min-width: 220px; max-width: 300px }
 `;
+const Shimmer = keyframes`
+  0% {left: -200px}
+  40% {left: 100%}
+  100% {left: 100%}
+`;
 
 const NewsFeedPageRoot = styled.div`
   width: 100%;
   gap: 12.6px;
-  background-color: #ffffff;
+  background: ${secondaryColor};
   overflow: hidden;
 `;
 const Dimming = styled.div<DimmingProps>`
@@ -144,7 +152,7 @@ const Header = styled.div`
   height: 100px;
   position: relative;
   box-sizing: border-box;
-  background-color: #ffef9a;
+  background: linear-gradient(90deg, ${mainColor} 0%, ${mainColor} 20%, rgba(14, 99, 161, 1) 100%);
   display: flex;
   align-items: center;
 `;
@@ -249,7 +257,7 @@ const LeftPanel = styled.div<LeftPanelProps>`
   display: flex;
   flex-direction: column;
   padding-top: 100px;
-  background-color: #ffef9a;
+  background: ${mainColor};
   border: none;
   animation: ${props => props.animation} 300ms;
   position: relative;
@@ -262,7 +270,7 @@ const LeftPanel = styled.div<LeftPanelProps>`
     right: -60px;
     position: absolute;
     border-top-left-radius: 30px;
-    box-shadow: -15px -15px 0 #ffef9a;
+    box-shadow: -15px -15px 0 ${mainColor};
     pointer-events: none;
   };
 `;
@@ -274,18 +282,39 @@ const MainContentContainer = styled.div`
 `;
 const TeacherFeedLabel = styled.p`
   font-family: "Noto Serif Georgian";
-  font-weight: bold;
+  font-weight: 800;
+  letter-spacing: 1px;
   font-size: 27px;
   text-align: center;
-  left: max(30%, 270px);
-  width: max(100%, 500px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: fit-content;
   margin: 20px 0 20px 0;
   max-height: 80px;
   overflow-x: hidden;
   overflow-y: hidden;
+  transition-property: color, scale;
+  transition-duration: 0.3s;
+  cursor: default;
+  position: relative;
+  transform-origin: left;
+  &:hover {
+    transition-property: color, scale;
+    transition-duration: 0.3s;
+    scale: 1.07;
+    color: lightskyblue;
+  };
+  &:before {
+    background: linear-gradient(100deg, #00000000 20%, ${secondaryColor + "80"} 50%, #00000000 80%);
+    position: absolute;
+    content: "";
+    display: block;
+    width: 200px;
+    height: 100%;
+    animation: ${Shimmer} 4.5s infinite linear;
+  };
 `;
 const NewsFeed = styled.div`
-  top: 20%;
   margin: 20px 0 20px 0;
   height: 100%;
   width: 100%;
@@ -297,4 +326,5 @@ const NewsFeed = styled.div`
   padding: 5px;
   border-left: 2px solid #9c9c9c40;
   border-radius: 50px;
+  position: relative;
 `;

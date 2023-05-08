@@ -5,13 +5,23 @@ interface Props {
     isSelected: boolean;
     imageSrc: string;
     labelText: string;
+    mainColor: string;
+    secondaryColor: string;
+}
+
+interface OuterContainerProps {
+    isSelected: boolean;
+    color: string;
+}
+
+interface InnerContainerProps {
+    color: string;
 }
 
 export const LeftPanelOption = (props: Props) => {
     return (
-        <OptionOuterContainer isSelected={props.isSelected} imageSrc={props.imageSrc}
-            labelText={props.labelText}>
-            <OptionInnerContainer>
+        <OptionOuterContainer isSelected={props.isSelected} color={props.secondaryColor}>
+            <OptionInnerContainer color={props.mainColor}>
                 <OptionImg src={props.imageSrc}/>
                 <OptionLabel>{props.labelText}</OptionLabel>
             </OptionInnerContainer>
@@ -19,31 +29,31 @@ export const LeftPanelOption = (props: Props) => {
     );
 };
 
-const OptionOuterContainer = styled.div<Props>`
+const OptionOuterContainer = styled.div<OuterContainerProps>`
   width: 100%;
   height: 80px;
   padding: 0 5px 0 5px;
   margin-left: 5px;
-  background-color: transparent;
+  background: transparent;
   display: flex;
   align-items: center;
   border-radius: 50px 0 0 50px;
   cursor: pointer;
   &:hover{
-    color: limegreen;
+    color: ${props => props.color};
   }
   ${props => props.isSelected && `
-    background-color: white;
-    color: limegreen;
+    background: ${props.color};
+    color: ${props.color};
   `}
 `;
-const OptionInnerContainer = styled.div`
+const OptionInnerContainer = styled.div<InnerContainerProps>`
   width: 100%;
   height: 70px;
   display: flex;
   flex-direction: row;
   align-items: center;
-  background-color: #ffef9a;
+  background: ${props => props.color};
   border-radius: 50px;
   overflow: hidden;
 `;

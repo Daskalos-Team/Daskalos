@@ -3,6 +3,11 @@ import styled from "styled-components";
 
 interface Props {
     isFavourite: boolean;
+    color: string;
+}
+
+interface RootProps {
+    color: string;
 }
 
 export const RecommendedTeacher = (props: Props) => {
@@ -16,7 +21,7 @@ export const RecommendedTeacher = (props: Props) => {
         alert("Teacher Recommendation was clicked");
     };
     return (
-        <RecommendedTeacherRoot>
+        <RecommendedTeacherRoot color={props.color}>
             <RecommendedTeacherTop
                 onClick={() => TopFunction()}
             >
@@ -50,7 +55,7 @@ export const RecommendedTeacher = (props: Props) => {
     );
 };
 
-const RecommendedTeacherRoot = styled.div`
+const RecommendedTeacherRoot = styled.div<RootProps>`
   width: 450px;
   height: 350px;
   padding: 21px 19px 26px 19px;
@@ -60,7 +65,7 @@ const RecommendedTeacherRoot = styled.div`
   border-style: solid;
   border-color: rgba(0, 0, 0, 0.2);
   box-sizing: border-box;
-  background-color: #f6f6f6;
+  background-color: ${props => props.color};
   overflow: hidden;
 `;
 const RecommendedTeacherTop = styled.div`
