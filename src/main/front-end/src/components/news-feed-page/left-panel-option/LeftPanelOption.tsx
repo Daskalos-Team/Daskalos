@@ -4,7 +4,7 @@ import {
     LeftPanelOptionProps,
     OptionInnerContainerProps,
     OptionOuterContainerProps
-} from "../news_feed_page_service/NewsFeedPageOptionsConstants";
+} from "../news-feed-page-service/NewsFeedPageOptionsConstants";
 
 export const LeftPanelOption = (props: LeftPanelOptionProps) => {
     return (

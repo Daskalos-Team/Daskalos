@@ -3,15 +3,15 @@ import styled from "styled-components";
 import {
     RecommendedTeacherProps,
     RecommendedTeacherRootProps
-} from "../news_feed_page_service/NewsFeedPageOptionsConstants";
+} from "../news-feed-page-service/NewsFeedPageOptionsConstants";
 
 export const RecommendedTeacher = (props: RecommendedTeacherProps) => {
     const [imageSrc, setImageSrc] = useState(props.isFavourite ?
-        "/images/news_feed_page/FavouriteSelected.png" : "/images/news_feed_page/FavouriteUnselected.png");
+        "/images/news-feed-page/FavouriteSelected.png" : "/images/news-feed-page/FavouriteUnselected.png");
     const FavouriteFunction = () => {
-        setImageSrc(imageSrc == "/images/news_feed_page/FavouriteUnselected.png" ?
-            "images/news_feed_page//FavouriteSelected.png" :
-            "/images/news_feed_page/FavouriteUnselected.png");
+        setImageSrc(imageSrc == "/images/news-feed-page/FavouriteUnselected.png" ?
+            "images/news-feed-page//FavouriteSelected.png" :
+            "/images/news-feed-page/FavouriteUnselected.png");
     };
     const TopFunction = () => {
         alert("Teacher Recommendation was clicked");

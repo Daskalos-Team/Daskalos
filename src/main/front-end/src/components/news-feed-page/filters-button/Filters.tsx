@@ -26,7 +26,7 @@ export const Filters = (): JSX.Element => {
                 <FilterButton>აირჩიეთ ლოკაცია</FilterButton>
                 <FiltersLabel>ლოკაცია</FiltersLabel>
             </FilterContainer>
-            <Map src="/images/news_feed_page/Map.png"/>
+            <Map src="/images/news-feed-page/Map.png"/>
             <FilterButton>დადასტურება</FilterButton>
         </FiltersRoot>
     );

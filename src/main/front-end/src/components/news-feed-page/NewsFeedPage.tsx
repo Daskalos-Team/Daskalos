@@ -8,7 +8,7 @@ import {
     IconCreditsProps,
     LeftPanelProps,
     LogoProps
-} from "./news_feed_page_service/NewsFeedPageOptionsConstants";
+} from "./news-feed-page-service/NewsFeedPageOptionsConstants";
 
 const mainColor = "rgba(1,157,209,1)";
 const secondaryColor = "#f0f6f7";
@@ -17,7 +17,7 @@ export const NewsFeedPage = () => {
     const maxMenuOnWindowWidth = 1180;
     const [filtersOpen, setFiltersOpen] = useState(false);
     const [dimmingOpacity, setDimmingOpacity] = useState(0);
-    const [arrowSrc, setArrowSrc] = useState("/images/news_feed_page/DownArrow.png");
+    const [arrowSrc, setArrowSrc] = useState("/images/news-feed-page/DownArrow.png");
     const [dimmingInteractive, setDimmingInteractive] = useState("none");
     const [selectedOptions, setSelectedOptions] = useState([true, false, false, false]);
     const [logoVisible, setLogoVisible] = useState(true);
@@ -33,7 +33,7 @@ export const NewsFeedPage = () => {
     };
     const SearchButtonFunction = () => {
         setFiltersOpen(!filtersOpen);
-        setArrowSrc(filtersOpen ? "/images/news_feed_page/DownArrow.png" : "/images/news_feed_page/UpArrow.png");
+        setArrowSrc(filtersOpen ? "/images/news-feed-page/DownArrow.png" : "/images/news-feed-page/UpArrow.png");
         setDimmingOpacity(filtersOpen ? 0 : 0.8);
         setDimmingInteractive(dimmingInteractive == "none" ? "auto" : "none");
     };
@@ -67,7 +67,7 @@ export const NewsFeedPage = () => {
         <NewsFeedPageRoot>
             <Dimming opacity={dimmingOpacity} interactive={dimmingInteractive}/>
             <Header>
-                <Logo src="/images/news_feed_page/Logo.png" alt="Logo" visible={logoVisible} animation={logoAnimation}/>
+                <Logo src="/images/news-feed-page/Logo.png" alt="Logo" visible={logoVisible} animation={logoAnimation}/>
                 <ShowMenuButton disabled={menuButtonDisabled} onClick={() => ToggleMenu(!logoVisible)}/>
                 <SearchButton
                     onClick={() => SearchButtonFunction()}
@@ -85,22 +85,22 @@ export const NewsFeedPage = () => {
                     animation={leftPanelAnimation}>
                     <div onClick={() => SetOptionSelected(0)}>
                         <LeftPanelOption isSelected={selectedOptions[0]}
-                            imageSrc="/images/news_feed_page/TeachersIcon.png"
+                            imageSrc="/images/news-feed-page/TeachersIcon.png"
                             labelText="მასწავლებლები" mainColor={mainColor} secondaryColor={secondaryColor}/>
                     </div>
                     <div onClick={() => SetOptionSelected(1)}>
                         <LeftPanelOption isSelected={selectedOptions[1]}
-                            imageSrc="/images/news_feed_page/FavouritesIcon.png"
+                            imageSrc="/images/news-feed-page/FavouritesIcon.png"
                             labelText="ფავორიტები" mainColor={mainColor} secondaryColor={secondaryColor}/>
                     </div>
                     <div onClick={() => SetOptionSelected(2)}>
                         <LeftPanelOption isSelected={selectedOptions[2]}
-                            imageSrc="/images/news_feed_page/AccountIcon.png"
+                            imageSrc="/images/news-feed-page/AccountIcon.png"
                             labelText="ანგარიში" mainColor={mainColor} secondaryColor={secondaryColor}/>
                     </div>
                     <div onClick={() => SetOptionSelected(3)}>
                         <LeftPanelOption isSelected={selectedOptions[3]}
-                            imageSrc="/images/news_feed_page/SettingsIcon.png"
+                            imageSrc="/images/news-feed-page/SettingsIcon.png"
                             labelText="პარამეტრები" mainColor={mainColor} secondaryColor={secondaryColor}/>
                     </div>
                     <IconCredits visible={creditsVisible} animation={creditsAnimation}>
@@ -222,7 +222,7 @@ const ProfileButton = styled.button`
   background-color: transparent;
   background-position: center;
   background-size: cover;
-  background-image: url("/images/news_feed_page/MyProfile.png");
+  background-image: url("/images/news-feed-page/MyProfile.png");
   cursor: pointer;
   transform: translateY(-50%);
   border-radius: 50%;
@@ -249,7 +249,7 @@ const ShowMenuButton = styled.button`
   background-color: transparent;
   background-size: cover;
   border: none;
-  background-image: url("/images/news_feed_page/ShowMenuLogo.png");
+  background-image: url("/images/news-feed-page/ShowMenuLogo.png");
   cursor: pointer;
 `;
 
