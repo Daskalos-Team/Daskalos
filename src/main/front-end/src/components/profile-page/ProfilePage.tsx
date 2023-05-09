@@ -18,13 +18,20 @@ export const ProfilePage = (props: any) => {
                     <img src="background.png" width="100%" alt={"cover pic"}/>
                     <div className="profile-container-inner">
                         <img src="profile-pic.png" width="100%" className={"profile-pic"} alt={"profile pic"}/>
-                        <h1>Ryan Walton</h1>
-                        <div className="average-rating-subject">
-                            <span>Average Rating 5.0/5.0</span>
-                            <p>Subjects: Maths, Biology</p>
+
+                        <div className="teacher-data">
+                            <div className="name-city">
+                                <h1>Ryan Walton</h1>
+                                <p>San Francisco, United States</p>
+                            </div>
+
+                            <div className="average-rating-subject">
+                                <span>Average Rating 5.0/5.0</span>
+                                <p>Subjects: Maths, Biology</p>
+                                <b>Web Developer at Microsoft | Former Developer at Amazon</b>
+                            </div>
                         </div>
-                        <b>Web Developer at Microsoft | Former Developer at Amazon</b>
-                        <p>San Francisco, United States</p>
+
                     </div>
                 </div>
                 <div className="profile-description">

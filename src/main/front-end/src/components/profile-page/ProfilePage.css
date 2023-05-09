@@ -1,15 +1,18 @@
 .profile-main{
     flex-basis: 73%;
 }
+
 .profile-main{
     background: rgba(139, 122, 122, 0.22);
 }
+
 .profile-sidebar{
     flex-basis: 25%;
     align-self: flex-start;
     position: sticky;
     top: 73%;
 }
+
 .profile-container{
     background: #fff;
     max-width: 80%;
@@ -18,39 +21,65 @@
     border-radius: 10px;
     border: 1px solid #959494;
 }
+
 .profile-container:hover {
     transform: scale(1.025);
     transition: all 0.2s ease-in-out;
 }
+
 .profile-container-inner{
     padding: 0 4% 10px;
 }
+
 .profile-pic{
-    width: 14%;
+    object-fit: cover;
+    width: 30%;
     border-radius: 50%;
     margin-top: -75px;
     padding: 5px;
-    background: #fff;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    background: #a5a0a0;
 }
+
 .profile-pic:hover {
     transform: scale(1.1);
     transition: all 0.2s ease-in-out;
 }
-.profile-container h1{
+
+.name-city h1{
     font-size: 28px;
     font-weight: 600;
     color: #222;
 }
+
+.teacher-data{
+    margin-top: -5%;
+    margin-bottom: 2%;
+}
+
 .profile-container b{
     font-weight: 500;
 }
-.profile-container p{
+
+.name-city p{
     margin-top: 5px;
 }
+
+.average-rating-subject{
+    /*padding-right: 4%;*/
+}
+
+.average-rating-subject p{
+    margin-top: 5px;
+}
+
 .profile-container p a{
     color: #045be6;
     font-weight: 500;
 }
+
 .profile-btn a{
     display: inline-flex;
     align-items: center;
@@ -59,6 +88,7 @@
     border-radius: 4px;
     margin-right: 10px;
 }
+
 .profile-description{
     background: #fff;
     padding: 20px 4% 30px;
@@ -67,42 +97,51 @@
     border-radius: 10px;
     border: 1px solid #959494;
 }
+
 .profile-description:hover {
     transform: scale(1.025);
     transition: all 0.2s ease-in-out;
 }
+
 .profile-description h2{
     color: #333;
     margin: 10px 0 20px;
     font-weight: 600;
     width: 73%;
 }
+
 .profile-desc-row{
     display: flex;
     align-items: flex-start;
     margin: 30px 0;
 }
+
 .profile-desc-row img{
     width: 50px;
     margin-right: 25px;
     margin-top: 5px
 }
+
 .profile-desc-row div{
     width: 100%;
 }
+
 .profile-desc-row h3{
     font-size: 18px;
     font-weight: 600;
     color: #333;
 }
+
 .profile-desc-row b{
     display: block;
     font-weight: 500;
     font-size: 15px;
 }
+
 .profile-desc-row p{
     margin-top: 15px;
 }
+
 .profile-desc-row hr{
     border: 0;
     border-bottom: 1px solid #999;
