@@ -1,131 +1,231 @@
-import React, { useState } from "react";
-import styled from "styled-components";
+import React, { useState, useLayoutEffect } from "react";
+import styled, { Keyframes, keyframes } from "styled-components";
 import { RecommendedTeacher } from "./recommended-teacher";
-import {Filters} from "./filters-button";
+import { Filters } from "./filters-button";
+import { LeftPanelOption } from "./left-panel-option";
+
+interface DimmingProps {
+    opacity: number;
+    interactive: string;
+}
+
+interface LogoProps {
+    visible: boolean;
+    animation: Keyframes | null;
+}
+
+interface LeftPanelProps {
+    minWidth: number;
+    maxWidth: number;
+    animation: Keyframes | null;
+}
+
+interface IconCreditsProps {
+    visible: boolean;
+    animation: Keyframes | null;
+}
+
+const mainColor = "rgba(1,157,209,1)";
+const secondaryColor = "#f0f6f7";
 
 export const NewsFeedPage = () => {
-    const [open, setOpen] = useState(false);
-    let arrowSrc = "/DownArrow.png";
+    const maxMenuOnWindowWidth = 1180;
+    const [filtersOpen, setFiltersOpen] = useState(false);
+    const [dimmingOpacity, setDimmingOpacity] = useState(0);
+    const [arrowSrc, setArrowSrc] = useState("/images/news_feed_page/DownArrow.png");
+    const [dimmingInteractive, setDimmingInteractive] = useState("none");
+    const [selectedOptions, setSelectedOptions] = useState([true, false, false, false]);
+    const [logoVisible, setLogoVisible] = useState(true);
+    const [logoAnimation, setLogoAnimation] = useState<Keyframes | null>(null);
+    const [leftPanelWidths, setLeftPanelWidths] = useState([220, 300]);
+    const [leftPanelAnimation, setLeftPanelAnimation] = useState<Keyframes | null>(null);
+    const [menuButtonDisabled, setMenuButtonDisabled] = useState(document.body.offsetWidth
+        < maxMenuOnWindowWidth);
+    const [creditsVisible, setCreditsVisible] = useState(!menuButtonDisabled);
+    const [creditsAnimation, setCreditsAnimation] = useState<Keyframes | null>(null);
     const ProfileButtonFunction = (e: any, name: any) => {
         alert(`${name} was clicked`);
     };
-    const AccountButtonFunction = (e: any, name: any) => {
-        alert(`${name} was clicked`);
-    };
     const SearchButtonFunction = () => {
-        setOpen(!open);
-        arrowSrc = open ? "/UpArrow.png" : "/DownArrow.png";
+        setFiltersOpen(!filtersOpen);
+        setArrowSrc(filtersOpen ? "/images/news_feed_page/DownArrow.png" : "/images/news_feed_page/UpArrow.png");
+        setDimmingOpacity(filtersOpen ? 0 : 0.8);
+        setDimmingInteractive(dimmingInteractive == "none" ? "auto" : "none");
     };
+    const SetOptionSelected = (option_id: number) => {
+        const newSelectedOptions = [false, false, false, false];
+        newSelectedOptions[option_id] = true;
+        setSelectedOptions(newSelectedOptions);
+    };
+    const ToggleMenu = (on: boolean) => {
+        setLogoVisible(on);
+        setLogoAnimation(logoVisible ? ShrinkLogo : GrowLogo);
+        setLeftPanelAnimation(logoVisible ? ShrinkLeftPanel : GrowLeftPanel);
+        setCreditsAnimation(logoVisible ? CollapseIconCredits : RestoreIconCredits);
+        setLeftPanelWidths(logoVisible ? [85, 85] : [220, 300]);
+        setCreditsVisible(!logoVisible);
+    };
+    useLayoutEffect(() => {
+        function CheckForMenuResize() {
+            if (document.body.offsetWidth >= maxMenuOnWindowWidth) {
+                setMenuButtonDisabled(false);
+                return;
+            }
+            setMenuButtonDisabled(true);
+            ToggleMenu(false);
+        }
+        window.addEventListener("resize", CheckForMenuResize);
+        CheckForMenuResize();
+        return () => window.removeEventListener("resize", CheckForMenuResize);
+    }, []);
     return (
         <NewsFeedPageRoot>
+            <Dimming opacity={dimmingOpacity} interactive={dimmingInteractive}/>
             <Header>
-                <Logo src="/Logo.png" alt="Logo"/>
-                <ProfileButton
-                    onClick={(e: any) => ProfileButtonFunction(e, "ProfileButton")}
-                />
-                <AccountButton
-                    onClick={(e: any) => AccountButtonFunction(e, "AccountButton")}
-                />
-            </Header>
-            <BelowHeader>
+                <Logo src="/images/news_feed_page/Logo.png" alt="Logo" visible={logoVisible} animation={logoAnimation}/>
+                <ShowMenuButton disabled={menuButtonDisabled} onClick={() => ToggleMenu(!logoVisible)}/>
                 <SearchButton
                     onClick={() => SearchButtonFunction()}
                 >
                     <SearchLabel>ძებნა</SearchLabel>
                     <DropDownArrow src={arrowSrc} alt="Drop down"/>
-                    {open && (<Filters/>)}
                 </SearchButton>
-                <TeacherFeedLabel>თქვენთვის რეკომენდებული მასწავლებლები</TeacherFeedLabel>
-            </BelowHeader>
+                {filtersOpen && (<Filters/>)}
+                <ProfileButton
+                    onClick={(e) => ProfileButtonFunction(e, "Profile Button")}
+                />
+            </Header>
             <Content>
-                <LeftPanel>
-                    <Top10Label>Top 10</Top10Label>
-                    <Top10>
-                        <TopTeacher/>
-                        <TopTeacher/>
-                        <TopTeacher/>
-                        <TopTeacher/>
-                        <TopTeacher/>
-                        <TopTeacher/>
-                        <TopTeacher/>
-                        <TopTeacher/>
-                        <TopTeacher/>
-                        <TopTeacher/>
-                    </Top10>
+                <LeftPanel minWidth={leftPanelWidths[0]} maxWidth={leftPanelWidths[1]}
+                    animation={leftPanelAnimation}>
+                    <div onClick={() => SetOptionSelected(0)}>
+                        <LeftPanelOption isSelected={selectedOptions[0]}
+                            imageSrc="/images/news_feed_page/TeachersIcon.png"
+                            labelText="მასწავლებლები" mainColor={mainColor} secondaryColor={secondaryColor}/>
+                    </div>
+                    <div onClick={() => SetOptionSelected(1)}>
+                        <LeftPanelOption isSelected={selectedOptions[1]}
+                            imageSrc="/images/news_feed_page/FavouritesIcon.png"
+                            labelText="ფავორიტები" mainColor={mainColor} secondaryColor={secondaryColor}/>
+                    </div>
+                    <div onClick={() => SetOptionSelected(2)}>
+                        <LeftPanelOption isSelected={selectedOptions[2]}
+                            imageSrc="/images/news_feed_page/AccountIcon.png"
+                            labelText="ანგარიში" mainColor={mainColor} secondaryColor={secondaryColor}/>
+                    </div>
+                    <div onClick={() => SetOptionSelected(3)}>
+                        <LeftPanelOption isSelected={selectedOptions[3]}
+                            imageSrc="/images/news_feed_page/SettingsIcon.png"
+                            labelText="პარამეტრები" mainColor={mainColor} secondaryColor={secondaryColor}/>
+                    </div>
+                    <IconCredits visible={creditsVisible} animation={creditsAnimation}>
+                        <p>
+                            Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik
+                            </a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
+                        </p>
+                        <p>
+                            Icons made by <a href="https://www.flaticon.com/authors/laisa-islam-ani" title="Laisa Islam Ani">
+                            Laisa Islam Ani</a> from <a href="https://www.flaticon.com/" title="Flaticon">
+                            www.flaticon.com</a>
+                        </p>
+                    </IconCredits>
                 </LeftPanel>
-                <NewsFeed>
-                    <RecommendedTeacher isFavourite={true}/>
-                    <RecommendedTeacher isFavourite={true}/>
-                    <RecommendedTeacher isFavourite={false}/>
-                    <RecommendedTeacher isFavourite={false}/>
-                    <RecommendedTeacher isFavourite={true}/>
-                    <RecommendedTeacher isFavourite={false}/>
-                    <RecommendedTeacher isFavourite={false}/>
-                    <RecommendedTeacher isFavourite={true}/>
-                </NewsFeed>
+                <MainContentContainer>
+                    <TeacherFeedLabel>თქვენთვის რეკომენდებული მასწავლებლები</TeacherFeedLabel>
+                    <NewsFeed>
+                        <RecommendedTeacher isFavourite={true} color={secondaryColor}/>
+                        <RecommendedTeacher isFavourite={true} color={secondaryColor}/>
+                        <RecommendedTeacher isFavourite={false} color={secondaryColor}/>
+                        <RecommendedTeacher isFavourite={false} color={secondaryColor}/>
+                        <RecommendedTeacher isFavourite={true} color={secondaryColor}/>
+                        <RecommendedTeacher isFavourite={false} color={secondaryColor}/>
+                        <RecommendedTeacher isFavourite={false} color={secondaryColor}/>
+                        <RecommendedTeacher isFavourite={true} color={secondaryColor}/>
+                    </NewsFeed>
+                </MainContentContainer>
             </Content>
-            <Footer>
-                <ContactInfo>
-                    <ContactInfoLabel>საკონაქტო ინფორმაცია</ContactInfoLabel>
-                    <ContactInfoData>
-                        <PhoneNumber>ტელ:5** ** ** **</PhoneNumber>
-                        <Email>e-mail:***@***.***</Email>
-                    </ContactInfoData>
-                </ContactInfo>
-                <DaskalosLabel>Daskalos</DaskalosLabel>
-            </Footer>
         </NewsFeedPageRoot>
     );
 };
 
+const ShrinkLogo = keyframes`
+  0% { width: 240px }
+  100% { width: 0 }
+`;
+
+const GrowLogo = keyframes`
+  0% { width: 0 }
+  100% { width: 240px }
+`;
+
+const ShrinkLeftPanel = keyframes`
+  0% { min-width: 220px; max-width: 300px}
+  100% { min-width: 85px; max-width: 85px }
+`;
+
+const GrowLeftPanel = keyframes`
+  0% { min-width: 85px; max-width: 85px}
+  100% { min-width: 220px; max-width: 300px }
+`;
+
+const Shimmer = keyframes`
+  0% {left: -200px}
+  40% {left: 100%}
+  100% {left: 100%}
+`;
+
+const CollapseIconCredits = keyframes`
+  0% {font-size: 12px}
+  100% {font-size: 0}
+`;
+
+const RestoreIconCredits = keyframes`
+  0% {font-size: 0}
+  100% {font-size: 12px}
+`;
+
 const NewsFeedPageRoot = styled.div`
   width: 100%;
   gap: 12.6px;
-  background-color: #ffffff;
+  background: ${secondaryColor};
   overflow: hidden;
 `;
+
+const Dimming = styled.div<DimmingProps>`
+  position: fixed;
+  width: 100%;
+  min-height: 100%;
+  background-color: black;
+  z-index: 2;
+  opacity: ${props => props.opacity};
+  transition-property: opacity;
+  transition-duration: 0.4s;
+  pointer-events: ${props => props.interactive};
+`;
+
 const Header = styled.div`
   width: 100%;
   height: 100px;
   position: relative;
   box-sizing: border-box;
-  background-color: #ffef9a;
-  overflow: hidden;
+  background: linear-gradient(90deg, ${mainColor} 0%, ${mainColor} 300px, rgba(14, 99, 161, 1) 100%);
+  display: flex;
+  align-items: center;
 `;
-const Logo = styled.img`
-  width: 180px;
-  margin-left: 40px;
-  position: relative;
-  top: 50%;
-  transform: translateY(-50%);
-  box-sizing: border-box;
-`;
-const ProfileButton = styled.button`
-  width: 62px;
-  height: 62px;
-  top: 50%;
-  right: 110px;
-  position: absolute;
-  align-self: end;
-  flex-shrink: 0;
-  padding: 0;
-  border-width: 0;
-  box-sizing: content-box;
-  background-color: transparent;
-  background-position: center;
-  background-size: cover;
-  background-image: url("/ProfileButton.png");
-  cursor: pointer;
-  transform: translateY(-50%);
 
-  &:hover {
-    box-shadow: inset 0 0 100px 100px #ffef9a30;
-  }
-;
+const Logo = styled.img<LogoProps>`
+  width: ${props => props.visible ? 240 : 0}px;
+  top: 10px;
+  margin: 0 ${props => props.visible ? 40 : 0}px 0 ${props => props.visible ? 30 : 0}px;
+  position: relative;
+  box-sizing: border-box;
+  animation: ${props => props.animation} 300ms;
+  z-index: 1;
 `;
-const AccountButton = styled.button`
-  width: 62px;
-  height: 62px;
+
+const ProfileButton = styled.button`
+  width: 70px;
+  height: 70px;
   right: 22px;
   top: 50%;
   position: absolute;
@@ -137,44 +237,61 @@ const AccountButton = styled.button`
   background-color: transparent;
   background-position: center;
   background-size: cover;
-  background-image: url("/AccountButton.png");
+  background-image: url("/images/news_feed_page/MyProfile.png");
   cursor: pointer;
   transform: translateY(-50%);
+  border-radius: 50%;
 
   &:hover {
-    box-shadow: inset 0 0 100px 100px #ffef9a40;
+    &:before {
+      content: "";
+      left: 0;
+      top: 0;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(${secondaryColor + "20"} 0%, ${secondaryColor + "00"} 65%);
+    }
+  ;
   }
 ;
 `;
-const BelowHeader = styled.div`
-  width: 100%;
-  height: 100px;
-  position: relative;
-  border-bottom: #00000010 solid 2px;
+
+const ShowMenuButton = styled.button`
+  width: 60px;
+  height: 60px;
+  margin-left: 20px;
+  background-color: transparent;
+  background-size: cover;
+  border: none;
+  background-image: url("/images/news_feed_page/ShowMenuLogo.png");
+  cursor: pointer;
 `;
+
 const SearchButton = styled.button`
   width: 100px;
   left: 40px;
-  top: 50%;
+  height: 0;
   position: relative;
-  padding: 25px 60px 25px;
+  padding: 25px 40px 25px;
   border-width: 0;
   border-radius: 50px;
   box-sizing: content-box;
   background-color: #ece9e9;
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
   cursor: pointer;
-  transform: translateY(-50%);
+  z-index: 3;
 
   &:hover {
     box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.3);
   }
 ;
 `;
+
 const SearchLabel = styled.div`
-  width: 77.9%;
+  width: 78%;
   height: 85%;
-  left: 23.891143798828125px;
+  left: 50%;
   top: 50%;
   position: absolute;
   display: flex;
@@ -188,8 +305,9 @@ const SearchLabel = styled.div`
   letter-spacing: 1.63px;
   text-transform: uppercase;
   box-sizing: border-box;
-  transform: translateY(-50%);
+  transform: translate(-50%, -50%);
 `;
+
 const DropDownArrow = styled.img`
   width: 25px;
   top: 50%;
@@ -198,76 +316,97 @@ const DropDownArrow = styled.img`
   box-sizing: border-box;
   transform: translateY(-50%);
 `;
-const TeacherFeedLabel = styled.p`
-  font-family: "Noto Serif Georgian";
-  font-weight: bold;
-  font-size: 27px;
-  text-align: center;
-  position: absolute;
-  top: 50%;
-  left: max(30%, 270px);
-  width: max(75%, 500px);
-  max-height: 80px;
-  padding-right: 50px;
-  overflow-x: hidden;
-  overflow-y: hidden;
-  transform: translateY(-50%);
-`;
+
 const Content = styled.div`
   height: 1000px;
-  margin: 20px 20px 20px 0;
+  margin: 0 20px 0 0;
   display: flex;
-  justify-content: space-between;
 `;
-const LeftPanel = styled.div`
-  min-width: 220px;
-  max-width: 300px;
+
+const LeftPanel = styled.div<LeftPanelProps>`
+  min-width: ${props => props.minWidth}px;
+  max-width: ${props => props.maxWidth}px;
   margin-right: 30px;
   height: 100%;
   flex-basis: 25%;
-  border-right: 2px solid #9c9c9c40;
-  border-top: 2px solid #9c9c9c40;
-  border-bottom: 2px solid #9c9c9c40;
-  border-top-right-radius: 30px;
-  border-bottom-right-radius: 50px;
-  padding-top: 5px;
-  padding-right: 10px;
-`;
-const Top10Label = styled.p`
-  margin-top: 10px;
-  margin-bottom: 10px;
-  padding: 5px;
-  align-self: center;
-  font-size: 30px;
-  font-family: Archivo Black;
-  font-weight: bold;
-  text-align: center;
-  white-space: nowrap;
-  box-sizing: border-box;
-  border: red 2px solid;
-  border-radius: 20px;
-  background-color: #ff000070;
-`;
-const Top10 = styled.div`
-  position: relative;
-  height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  padding-top: 100px;
+  background: ${mainColor};
+  border: none;
+  animation: ${props => props.animation} 300ms;
+  position: relative;
+  &:before {
+    background-color: transparent;
+    content: "";
+    height: 60px;
+    width: 60px;
+    top: 0;
+    right: -60px;
+    position: absolute;
+    border-top-left-radius: 30px;
+    box-shadow: -15px -15px 0 ${mainColor};
+    pointer-events: none;
+  };
 `;
-const TopTeacher = styled.div`
-  margin-top: 5px;
-  margin-bottom: 5px;
-  width: 100%;
-  height: 50px;
-  align-self: flex-end;
-  border-radius: 40px;
-  box-sizing: border-box;
-  background-color: #f7f6f6;
+
+const IconCredits = styled.div<IconCreditsProps>`
+  position: absolute;
+  bottom: 50px;
+  margin: 0 20px 0 20px;
+  font-size: ${props => props.visible ? 12 : 0}px;
+  font-weight: 700;
+  text-align: center;
+  color: darkblue;
+  animation: ${props => props.animation} 300ms;
 `;
-const NewsFeed = styled.div`
-  min-width: 500px;
+
+const MainContentContainer = styled.div`
   flex-basis: 80%;
+  flex-grow: 1;
+  min-width: 500px;
+  margin-bottom: 100px;
+`;
+
+const TeacherFeedLabel = styled.p`
+  font-family: "Noto Serif Georgian";
+  font-weight: 800;
+  letter-spacing: 1px;
+  font-size: 27px;
+  text-align: center;
+  left: 50%;
+  transform: translateX(-50%);
+  width: fit-content;
+  margin: 20px 0 20px 0;
+  max-height: 80px;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  transition-property: color, scale;
+  transition-duration: 0.3s;
+  cursor: default;
+  position: relative;
+  transform-origin: left;
+  &:hover {
+    transition-property: color, scale;
+    transition-duration: 0.3s;
+    scale: 1.07;
+    color: lightskyblue;
+  };
+  &:before {
+    background: linear-gradient(100deg, #00000000 20%, ${secondaryColor + "80"} 50%, #00000000 80%);
+    position: absolute;
+    content: "";
+    display: block;
+    width: 200px;
+    height: 100%;
+    animation: ${Shimmer} 4.5s infinite linear;
+  };
+`;
+
+const NewsFeed = styled.div`
+  margin: 20px 0 20px 0;
+  height: 100%;
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
@@ -276,81 +415,5 @@ const NewsFeed = styled.div`
   padding: 5px;
   border-left: 2px solid #9c9c9c40;
   border-radius: 50px;
-`;
-const Footer = styled.div`
-  width: 100%;
-  height: 100px;
   position: relative;
-  padding: 20.6px 196px 20.6px 89.2px;
-  box-sizing: border-box;
-  background-color: #ffef9a;
-  overflow: hidden;
-`;
-const ContactInfo = styled.div`
-  width: 100%;
-  gap: 5px;
-  top: 50%;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-end;
-  box-sizing: border-box;
-  transform: translateY(-50%);
-`;
-const ContactInfoLabel = styled.div`
-  width: 170px;
-  align-self: stretch;
-  font-size: 14px;
-  font-family: Noto Serif Georgian;
-  text-align: center;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  box-sizing: border-box;
-`;
-const ContactInfoData = styled.div`
-  width: 100%;
-  gap: 5px;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-self: stretch;
-  box-sizing: border-box;
-`;
-const PhoneNumber = styled.div`
-  font-size: 14px;
-  font-family: Noto Serif Georgian;
-  white-space: nowrap;
-  letter-spacing: 2px;
-  text-align: start;
-  text-transform: uppercase;
-  box-sizing: border-box;
-`;
-const Email = styled.div`
-  font-size: 14px;
-  font-family: Noto Serif Georgian;
-  text-align: start;
-  white-space: nowrap;
-  letter-spacing: 1.95px;
-  text-transform: uppercase;
-  box-sizing: border-box;
-`;
-const DaskalosLabel = styled.div`
-  left: max(30%, 300px);
-  top: 50%;
-  position: absolute;
-  color: #626262;
-  font-size: 90px;
-  font-family: Inika;
-  -webkit-text-stroke-color: transparent;
-  -webkit-text-stroke-width: 6px;
-  text-align: center;
-  white-space: nowrap;
-  letter-spacing: 44.2px;
-  text-transform: uppercase;
-  -webkit-background-clip: text;
-  box-sizing: border-box;
-  background-image: linear-gradient(180deg, #000000 0%, #000000 100%);
-  transform: translateY(-50%);
 `;

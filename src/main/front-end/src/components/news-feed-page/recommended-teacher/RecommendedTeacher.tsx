@@ -3,20 +3,26 @@ import styled from "styled-components";
 
 interface Props {
     isFavourite: boolean;
+    color: string;
+}
+
+interface RootProps {
+    color: string;
 }
 
 export const RecommendedTeacher = (props: Props) => {
     const [imageSrc, setImageSrc] = useState(props.isFavourite ?
-        "/FavouriteSelected.png" : "/FavouriteUnselected.png");
+        "/images/news_feed_page/FavouriteSelected.png" : "/images/news_feed_page/FavouriteUnselected.png");
     const FavouriteFunction = () => {
-        setImageSrc(imageSrc == "/FavouriteUnselected.png" ?
-            "/FavouriteSelected.png" : "/FavouriteUnselected.png");
+        setImageSrc(imageSrc == "/images/news_feed_page/FavouriteUnselected.png" ?
+            "images/news_feed_page//FavouriteSelected.png" :
+            "/images/news_feed_page/FavouriteUnselected.png");
     };
     const TopFunction = () => {
         alert("Teacher Recommendation was clicked");
     };
     return (
-        <RecommendedTeacherRoot>
+        <RecommendedTeacherRoot color={props.color}>
             <RecommendedTeacherTop
                 onClick={() => TopFunction()}
             >
@@ -50,7 +56,7 @@ export const RecommendedTeacher = (props: Props) => {
     );
 };
 
-const RecommendedTeacherRoot = styled.div`
+const RecommendedTeacherRoot = styled.div<RootProps>`
   width: 450px;
   height: 350px;
   padding: 21px 19px 26px 19px;
@@ -60,9 +66,10 @@ const RecommendedTeacherRoot = styled.div`
   border-style: solid;
   border-color: rgba(0, 0, 0, 0.2);
   box-sizing: border-box;
-  background-color: #f6f6f6;
+  background-color: ${props => props.color};
   overflow: hidden;
 `;
+
 const RecommendedTeacherTop = styled.div`
   width: 100%;
   gap: 40px;
@@ -72,13 +79,16 @@ const RecommendedTeacherTop = styled.div`
   align-items: flex-start;
   margin: 0 0 6px 2px;
   box-sizing: border-box;
+  cursor: pointer;
 `;
+
 const ProfilePicture = styled.div`
   width: 170px;
   height: 150px;
   border-radius: 30px;
   background-color: #d9d9d9;
 `;
+
 const RecommendedTeacherTopRight = styled.div`
   width: 56%;
   gap: 10px;
@@ -88,6 +98,7 @@ const RecommendedTeacherTopRight = styled.div`
   align-items: flex-end;
   box-sizing: border-box;
 `;
+
 const Name = styled.p`
   width: 100%;
   height: 24%;
@@ -97,6 +108,7 @@ const Name = styled.p`
   text-transform: uppercase;
   box-sizing: border-box;
 `;
+
 const SubjectsLabel = styled.p`
   width: 100%;
   height: 18%;
@@ -106,15 +118,18 @@ const SubjectsLabel = styled.p`
   text-transform: uppercase;
   box-sizing: border-box;
 `;
+
 const SubjectList = styled.div`
   width: 100%;
   height: 75px;
   overflow-y: auto;
   box-sizing: border-box;
 `;
+
 const Subject = styled.p`
   font-size: 16px;
 `;
+
 const DescriptionLabel = styled.div`
   width: 52%;
   height: 8%;
@@ -130,6 +145,7 @@ const DescriptionLabel = styled.div`
   text-transform: uppercase;
   box-sizing: border-box;
 `;
+
 const DescriptionTextfield = styled.p`
   width: 100%;
   height: 33%;
@@ -143,12 +159,14 @@ const DescriptionTextfield = styled.p`
   border-radius: 10px;
   box-sizing: border-box;
 `;
+
 const RecommendedTeacherBottom = styled.div`
   width: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
 `;
+
 const PriceRangeLabel = styled.p`
   width: 80px;
   max-lines: 1;
@@ -159,6 +177,7 @@ const PriceRangeLabel = styled.p`
   font-family: Inter;
   box-sizing: border-box;
 `;
+
 const PriceRangeValue = styled.p`
   width: 80px;
   max-lines: 1;
@@ -169,6 +188,7 @@ const PriceRangeValue = styled.p`
   text-transform: uppercase;
   box-sizing: border-box;
 `;
+
 const Favourite = styled.img`
   width: 23px;
   margin-left: auto;
