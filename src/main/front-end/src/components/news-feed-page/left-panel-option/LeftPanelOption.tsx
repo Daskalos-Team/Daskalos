@@ -58,8 +58,8 @@ const OptionInnerContainer = styled.div<InnerContainerProps>`
   overflow: hidden;
 `;
 const OptionImg = styled.img`
-  margin: 30px 50px 30px 18px;
-  width: 40px;
+  margin: 30px 50px 30px 15px;
+  width: 45px;
   height: auto;
 `;
 const OptionLabel = styled.p`

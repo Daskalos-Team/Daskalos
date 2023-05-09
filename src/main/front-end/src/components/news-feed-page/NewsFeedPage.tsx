@@ -20,6 +20,11 @@ interface LeftPanelProps {
     animation: Keyframes | null;
 }
 
+interface IconCreditsProps {
+    visible: boolean;
+    animation: Keyframes | null;
+}
+
 const mainColor = "rgba(1,157,209,1)";
 const secondaryColor = "#f0f6f7";
 
@@ -36,6 +41,8 @@ export const NewsFeedPage = () => {
     const [leftPanelAnimation, setLeftPanelAnimation] = useState<Keyframes | null>(null);
     const [menuButtonDisabled, setMenuButtonDisabled] = useState(document.body.offsetWidth
         < maxMenuOnWindowWidth);
+    const [creditsVisible, setCreditsVisible] = useState(!menuButtonDisabled);
+    const [creditsAnimation, setCreditsAnimation] = useState<Keyframes | null>(null);
     const ProfileButtonFunction = (e: any, name: any) => {
         alert(`${name} was clicked`);
     };
@@ -54,7 +61,9 @@ export const NewsFeedPage = () => {
         setLogoVisible(on);
         setLogoAnimation(logoVisible ? ShrinkLogo : GrowLogo);
         setLeftPanelAnimation(logoVisible ? ShrinkLeftPanel : GrowLeftPanel);
+        setCreditsAnimation(logoVisible ? CollapseIconCredits : RestoreIconCredits);
         setLeftPanelWidths(logoVisible ? [85, 85] : [220, 300]);
+        setCreditsVisible(!logoVisible);
     };
     useLayoutEffect(() => {
         function CheckForMenuResize() {
@@ -90,21 +99,32 @@ export const NewsFeedPage = () => {
                 <LeftPanel minWidth={leftPanelWidths[0]} maxWidth={leftPanelWidths[1]}
                     animation={leftPanelAnimation}>
                     <div onClick={() => SetOptionSelected(0)}>
-                        <LeftPanelOption isSelected={selectedOptions[0]} imageSrc="/TeachersLogo.png"
+                        <LeftPanelOption isSelected={selectedOptions[0]} imageSrc="/TeachersIcon.png"
                             labelText="მასწავლებლები" mainColor={mainColor} secondaryColor={secondaryColor}/>
                     </div>
                     <div onClick={() => SetOptionSelected(1)}>
-                        <LeftPanelOption isSelected={selectedOptions[1]} imageSrc="/FavouritesLogo.png"
+                        <LeftPanelOption isSelected={selectedOptions[1]} imageSrc="/FavouritesIcon.png"
                             labelText="ფავორიტები" mainColor={mainColor} secondaryColor={secondaryColor}/>
                     </div>
                     <div onClick={() => SetOptionSelected(2)}>
-                        <LeftPanelOption isSelected={selectedOptions[2]} imageSrc="/LogOut.png"
+                        <LeftPanelOption isSelected={selectedOptions[2]} imageSrc="/AccountIcon.png"
                             labelText="ანგარიში" mainColor={mainColor} secondaryColor={secondaryColor}/>
                     </div>
                     <div onClick={() => SetOptionSelected(3)}>
-                        <LeftPanelOption isSelected={selectedOptions[3]} imageSrc="/Settings.png"
+                        <LeftPanelOption isSelected={selectedOptions[3]} imageSrc="/SettingsIcon.png"
                             labelText="პარამეტრები" mainColor={mainColor} secondaryColor={secondaryColor}/>
                     </div>
+                    <IconCredits visible={creditsVisible} animation={creditsAnimation}>
+                        <p>
+                            Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik
+                            </a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
+                        </p>
+                        <p>
+                            Icons made by <a href="https://www.flaticon.com/authors/laisa-islam-ani" title="Laisa Islam Ani">
+                            Laisa Islam Ani</a> from <a href="https://www.flaticon.com/" title="Flaticon">
+                            www.flaticon.com</a>
+                        </p>
+                    </IconCredits>
                 </LeftPanel>
                 <MainContentContainer>
                     <TeacherFeedLabel>თქვენთვის რეკომენდებული მასწავლებლები</TeacherFeedLabel>
@@ -144,6 +164,14 @@ const Shimmer = keyframes`
   0% {left: -200px}
   40% {left: 100%}
   100% {left: 100%}
+`;
+const CollapseIconCredits = keyframes`
+  0% {font-size: 12px}
+  100% {font-size: 0}
+`;
+const RestoreIconCredits = keyframes`
+  0% {font-size: 0}
+  100% {font-size: 12px}
 `;
 
 const NewsFeedPageRoot = styled.div`
@@ -198,9 +226,17 @@ const ProfileButton = styled.button`
   background-image: url("/MyProfile.png");
   cursor: pointer;
   transform: translateY(-50%);
-
+  border-radius: 50%;
   &:hover {
-    box-shadow: inset 0 0 100px 100px #ffef9a40;
+    &:before {
+      content: "";
+      left: 0;
+      top: 0;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(${secondaryColor + "20"} 0%, ${secondaryColor + "00"} 65%);
+    };
   };
 `;
 const ShowMenuButton = styled.button`
@@ -289,6 +325,16 @@ const LeftPanel = styled.div<LeftPanelProps>`
     box-shadow: -15px -15px 0 ${mainColor};
     pointer-events: none;
   };
+`;
+const IconCredits = styled.div<IconCreditsProps>`
+  position: absolute;
+  bottom: 50px;
+  margin: 0 20px 0 20px;
+  font-size: ${props => props.visible ? 12 : 0}px;
+  font-weight: 700;
+  text-align: center;
+  color: darkblue;
+  animation: ${props => props.animation} 300ms;
 `;
 const MainContentContainer = styled.div`
   flex-basis: 80%;
