@@ -47,6 +47,7 @@ const OptionOuterContainer = styled.div<OuterContainerProps>`
     color: ${props.color};
   `}
 `;
+
 const OptionInnerContainer = styled.div<InnerContainerProps>`
   width: 100%;
   height: 70px;
@@ -57,11 +58,13 @@ const OptionInnerContainer = styled.div<InnerContainerProps>`
   border-radius: 50px;
   overflow: hidden;
 `;
+
 const OptionImg = styled.img`
   margin: 30px 50px 30px 15px;
   width: 45px;
   height: auto;
 `;
+
 const OptionLabel = styled.p`
   font-family: "Noto Serif Georgian";
   width: 120px;

@@ -32,7 +32,7 @@ export const NewsFeedPage = () => {
     const maxMenuOnWindowWidth = 1180;
     const [filtersOpen, setFiltersOpen] = useState(false);
     const [dimmingOpacity, setDimmingOpacity] = useState(0);
-    const [arrowSrc, setArrowSrc] = useState("/DownArrow.png");
+    const [arrowSrc, setArrowSrc] = useState("/images/news_feed_page/DownArrow.png");
     const [dimmingInteractive, setDimmingInteractive] = useState("none");
     const [selectedOptions, setSelectedOptions] = useState([true, false, false, false]);
     const [logoVisible, setLogoVisible] = useState(true);
@@ -48,7 +48,7 @@ export const NewsFeedPage = () => {
     };
     const SearchButtonFunction = () => {
         setFiltersOpen(!filtersOpen);
-        setArrowSrc(filtersOpen ? "/DownArrow.png" : "/UpArrow.png");
+        setArrowSrc(filtersOpen ? "/images/news_feed_page/DownArrow.png" : "/images/news_feed_page/UpArrow.png");
         setDimmingOpacity(filtersOpen ? 0 : 0.8);
         setDimmingInteractive(dimmingInteractive == "none" ? "auto" : "none");
     };
@@ -82,7 +82,7 @@ export const NewsFeedPage = () => {
         <NewsFeedPageRoot>
             <Dimming opacity={dimmingOpacity} interactive={dimmingInteractive}/>
             <Header>
-                <Logo src="/Logo.png" alt="Logo" visible={logoVisible} animation={logoAnimation}/>
+                <Logo src="/images/news_feed_page/Logo.png" alt="Logo" visible={logoVisible} animation={logoAnimation}/>
                 <ShowMenuButton disabled={menuButtonDisabled} onClick={() => ToggleMenu(!logoVisible)}/>
                 <SearchButton
                     onClick={() => SearchButtonFunction()}
@@ -99,19 +99,23 @@ export const NewsFeedPage = () => {
                 <LeftPanel minWidth={leftPanelWidths[0]} maxWidth={leftPanelWidths[1]}
                     animation={leftPanelAnimation}>
                     <div onClick={() => SetOptionSelected(0)}>
-                        <LeftPanelOption isSelected={selectedOptions[0]} imageSrc="/TeachersIcon.png"
+                        <LeftPanelOption isSelected={selectedOptions[0]}
+                            imageSrc="/images/news_feed_page/TeachersIcon.png"
                             labelText="მასწავლებლები" mainColor={mainColor} secondaryColor={secondaryColor}/>
                     </div>
                     <div onClick={() => SetOptionSelected(1)}>
-                        <LeftPanelOption isSelected={selectedOptions[1]} imageSrc="/FavouritesIcon.png"
+                        <LeftPanelOption isSelected={selectedOptions[1]}
+                            imageSrc="/images/news_feed_page/FavouritesIcon.png"
                             labelText="ფავორიტები" mainColor={mainColor} secondaryColor={secondaryColor}/>
                     </div>
                     <div onClick={() => SetOptionSelected(2)}>
-                        <LeftPanelOption isSelected={selectedOptions[2]} imageSrc="/AccountIcon.png"
+                        <LeftPanelOption isSelected={selectedOptions[2]}
+                            imageSrc="/images/news_feed_page/AccountIcon.png"
                             labelText="ანგარიში" mainColor={mainColor} secondaryColor={secondaryColor}/>
                     </div>
                     <div onClick={() => SetOptionSelected(3)}>
-                        <LeftPanelOption isSelected={selectedOptions[3]} imageSrc="/SettingsIcon.png"
+                        <LeftPanelOption isSelected={selectedOptions[3]}
+                            imageSrc="/images/news_feed_page/SettingsIcon.png"
                             labelText="პარამეტრები" mainColor={mainColor} secondaryColor={secondaryColor}/>
                     </div>
                     <IconCredits visible={creditsVisible} animation={creditsAnimation}>
@@ -148,27 +152,33 @@ const ShrinkLogo = keyframes`
   0% { width: 240px }
   100% { width: 0 }
 `;
+
 const GrowLogo = keyframes`
   0% { width: 0 }
   100% { width: 240px }
 `;
+
 const ShrinkLeftPanel = keyframes`
   0% { min-width: 220px; max-width: 300px}
   100% { min-width: 85px; max-width: 85px }
 `;
+
 const GrowLeftPanel = keyframes`
   0% { min-width: 85px; max-width: 85px}
   100% { min-width: 220px; max-width: 300px }
 `;
+
 const Shimmer = keyframes`
   0% {left: -200px}
   40% {left: 100%}
   100% {left: 100%}
 `;
+
 const CollapseIconCredits = keyframes`
   0% {font-size: 12px}
   100% {font-size: 0}
 `;
+
 const RestoreIconCredits = keyframes`
   0% {font-size: 0}
   100% {font-size: 12px}
@@ -180,6 +190,7 @@ const NewsFeedPageRoot = styled.div`
   background: ${secondaryColor};
   overflow: hidden;
 `;
+
 const Dimming = styled.div<DimmingProps>`
   position: fixed;
   width: 100%;
@@ -191,6 +202,7 @@ const Dimming = styled.div<DimmingProps>`
   transition-duration: 0.4s;
   pointer-events: ${props => props.interactive};
 `;
+
 const Header = styled.div`
   width: 100%;
   height: 100px;
@@ -200,6 +212,7 @@ const Header = styled.div`
   display: flex;
   align-items: center;
 `;
+
 const Logo = styled.img<LogoProps>`
   width: ${props => props.visible ? 240 : 0}px;
   top: 10px;
@@ -209,6 +222,7 @@ const Logo = styled.img<LogoProps>`
   animation: ${props => props.animation} 300ms;
   z-index: 1;
 `;
+
 const ProfileButton = styled.button`
   width: 70px;
   height: 70px;
@@ -223,10 +237,11 @@ const ProfileButton = styled.button`
   background-color: transparent;
   background-position: center;
   background-size: cover;
-  background-image: url("/MyProfile.png");
+  background-image: url("/images/news_feed_page/MyProfile.png");
   cursor: pointer;
   transform: translateY(-50%);
   border-radius: 50%;
+
   &:hover {
     &:before {
       content: "";
@@ -236,9 +251,12 @@ const ProfileButton = styled.button`
       width: 100%;
       height: 100%;
       background: radial-gradient(${secondaryColor + "20"} 0%, ${secondaryColor + "00"} 65%);
-    };
-  };
+    }
+  ;
+  }
+;
 `;
+
 const ShowMenuButton = styled.button`
   width: 60px;
   height: 60px;
@@ -246,9 +264,10 @@ const ShowMenuButton = styled.button`
   background-color: transparent;
   background-size: cover;
   border: none;
-  background-image: url("/ShowMenuLogo.png");
+  background-image: url("/images/news_feed_page/ShowMenuLogo.png");
   cursor: pointer;
 `;
+
 const SearchButton = styled.button`
   width: 100px;
   left: 40px;
@@ -268,6 +287,7 @@ const SearchButton = styled.button`
   }
 ;
 `;
+
 const SearchLabel = styled.div`
   width: 78%;
   height: 85%;
@@ -287,6 +307,7 @@ const SearchLabel = styled.div`
   box-sizing: border-box;
   transform: translate(-50%, -50%);
 `;
+
 const DropDownArrow = styled.img`
   width: 25px;
   top: 50%;
@@ -295,11 +316,13 @@ const DropDownArrow = styled.img`
   box-sizing: border-box;
   transform: translateY(-50%);
 `;
+
 const Content = styled.div`
   height: 1000px;
   margin: 0 20px 0 0;
   display: flex;
 `;
+
 const LeftPanel = styled.div<LeftPanelProps>`
   min-width: ${props => props.minWidth}px;
   max-width: ${props => props.maxWidth}px;
@@ -326,6 +349,7 @@ const LeftPanel = styled.div<LeftPanelProps>`
     pointer-events: none;
   };
 `;
+
 const IconCredits = styled.div<IconCreditsProps>`
   position: absolute;
   bottom: 50px;
@@ -336,12 +360,14 @@ const IconCredits = styled.div<IconCreditsProps>`
   color: darkblue;
   animation: ${props => props.animation} 300ms;
 `;
+
 const MainContentContainer = styled.div`
   flex-basis: 80%;
   flex-grow: 1;
   min-width: 500px;
   margin-bottom: 100px;
 `;
+
 const TeacherFeedLabel = styled.p`
   font-family: "Noto Serif Georgian";
   font-weight: 800;
@@ -376,6 +402,7 @@ const TeacherFeedLabel = styled.p`
     animation: ${Shimmer} 4.5s infinite linear;
   };
 `;
+
 const NewsFeed = styled.div`
   margin: 20px 0 20px 0;
   height: 100%;

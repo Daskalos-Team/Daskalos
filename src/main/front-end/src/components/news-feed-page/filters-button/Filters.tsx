@@ -26,7 +26,7 @@ export const Filters = (): JSX.Element => {
                 <FilterButton>აირჩიეთ ლოკაცია</FilterButton>
                 <FiltersLabel>ლოკაცია</FiltersLabel>
             </FilterContainer>
-            <Map src="/Map.png"/>
+            <Map src="/images/news_feed_page/Map.png"/>
             <FilterButton>დადასტურება</FilterButton>
         </FiltersRoot>
     );
@@ -55,6 +55,7 @@ const FiltersRoot = styled.div`
   z-index: 2;
   animation: ${slideDown} 400ms ease-in;
 `;
+
 const FilterContainer = styled.div`
   width: 320px;
   display: flex;
@@ -62,6 +63,7 @@ const FilterContainer = styled.div`
   align-content: center;
   justify-content: space-between;
 `;
+
 const FilterButton = styled.div`
   width: 180px;
   height: 48px;
@@ -82,6 +84,7 @@ const FilterButton = styled.div`
   }
 ;
 `;
+
 const FiltersInput = styled.input`
   width: 200px;
   max-height: 10px;
@@ -98,18 +101,22 @@ const FiltersInput = styled.input`
     background-color: #f0f0f0;;
   }
 `;
+
 const FiltersTextField = styled(FiltersInput)`
   width: 200px;
 `;
+
 const FiltersNumberField = styled(FiltersInput)`
   width: 80px;
 `;
+
 const FiltersLabel = styled.p`
   font-size: 16px;
   font-family: "Noto Serif Georgian";
   text-align: center;
   line-height: 48px;
 `;
+
 const Map = styled.img`
   width: 320px;
   height: 150px;
