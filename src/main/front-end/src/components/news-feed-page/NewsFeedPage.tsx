@@ -3,27 +3,12 @@ import styled, { Keyframes, keyframes } from "styled-components";
 import { RecommendedTeacher } from "./recommended-teacher";
 import { Filters } from "./filters-button";
 import { LeftPanelOption } from "./left-panel-option";
-
-interface DimmingProps {
-    opacity: number;
-    interactive: string;
-}
-
-interface LogoProps {
-    visible: boolean;
-    animation: Keyframes | null;
-}
-
-interface LeftPanelProps {
-    minWidth: number;
-    maxWidth: number;
-    animation: Keyframes | null;
-}
-
-interface IconCreditsProps {
-    visible: boolean;
-    animation: Keyframes | null;
-}
+import {
+    DimmingProps,
+    IconCreditsProps,
+    LeftPanelProps,
+    LogoProps
+} from "./news_feed_page_service/NewsFeedPageOptionsConstants";
 
 const mainColor = "rgba(1,157,209,1)";
 const secondaryColor = "#f0f6f7";

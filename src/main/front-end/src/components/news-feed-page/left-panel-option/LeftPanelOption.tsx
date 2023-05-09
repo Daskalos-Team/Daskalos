@@ -1,24 +1,12 @@
 import React from "react";
 import styled from "styled-components";
+import {
+    LeftPanelOptionProps,
+    OptionInnerContainerProps,
+    OptionOuterContainerProps
+} from "../news_feed_page_service/NewsFeedPageOptionsConstants";
 
-interface Props {
-    isSelected: boolean;
-    imageSrc: string;
-    labelText: string;
-    mainColor: string;
-    secondaryColor: string;
-}
-
-interface OuterContainerProps {
-    isSelected: boolean;
-    color: string;
-}
-
-interface InnerContainerProps {
-    color: string;
-}
-
-export const LeftPanelOption = (props: Props) => {
+export const LeftPanelOption = (props: LeftPanelOptionProps) => {
     return (
         <OptionOuterContainer isSelected={props.isSelected} color={props.secondaryColor}>
             <OptionInnerContainer color={props.mainColor}>
@@ -29,7 +17,7 @@ export const LeftPanelOption = (props: Props) => {
     );
 };
 
-const OptionOuterContainer = styled.div<OuterContainerProps>`
+const OptionOuterContainer = styled.div<OptionOuterContainerProps>`
   width: 100%;
   height: 80px;
   padding: 0 5px 0 5px;
@@ -48,7 +36,7 @@ const OptionOuterContainer = styled.div<OuterContainerProps>`
   `}
 `;
 
-const OptionInnerContainer = styled.div<InnerContainerProps>`
+const OptionInnerContainer = styled.div<OptionInnerContainerProps>`
   width: 100%;
   height: 70px;
   display: flex;

@@ -1,16 +1,11 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import {
+    RecommendedTeacherProps,
+    RecommendedTeacherRootProps
+} from "../news_feed_page_service/NewsFeedPageOptionsConstants";
 
-interface Props {
-    isFavourite: boolean;
-    color: string;
-}
-
-interface RootProps {
-    color: string;
-}
-
-export const RecommendedTeacher = (props: Props) => {
+export const RecommendedTeacher = (props: RecommendedTeacherProps) => {
     const [imageSrc, setImageSrc] = useState(props.isFavourite ?
         "/images/news_feed_page/FavouriteSelected.png" : "/images/news_feed_page/FavouriteUnselected.png");
     const FavouriteFunction = () => {
@@ -56,7 +51,7 @@ export const RecommendedTeacher = (props: Props) => {
     );
 };
 
-const RecommendedTeacherRoot = styled.div<RootProps>`
+const RecommendedTeacherRoot = styled.div<RecommendedTeacherRootProps>`
   width: 450px;
   height: 350px;
   padding: 21px 19px 26px 19px;
