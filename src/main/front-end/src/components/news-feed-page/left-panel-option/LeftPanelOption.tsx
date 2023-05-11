@@ -1,15 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 import {
-    LeftPanelOptionProps,
-    OptionInnerContainerProps,
+    LeftPanelOptionProps, NewsFeedPageColorPalette,
     OptionOuterContainerProps
 } from "../news-feed-page-service/NewsFeedPageOptionsConstants";
 
 export const LeftPanelOption = (props: LeftPanelOptionProps) => {
     return (
-        <OptionOuterContainer isSelected={props.isSelected} color={props.secondaryColor}>
-            <OptionInnerContainer color={props.mainColor}>
+        <OptionOuterContainer isSelected={props.isSelected}>
+            <OptionInnerContainer>
                 <OptionImg src={props.imageSrc}/>
                 <OptionLabel>{props.labelText}</OptionLabel>
             </OptionInnerContainer>
@@ -28,21 +27,21 @@ const OptionOuterContainer = styled.div<OptionOuterContainerProps>`
   border-radius: 50px 0 0 50px;
   cursor: pointer;
   &:hover{
-    color: ${props => props.color};
+    color: ${NewsFeedPageColorPalette.secondaryColor};
   }
   ${props => props.isSelected && `
-    background: ${props.color};
-    color: ${props.color};
+    background: ${NewsFeedPageColorPalette.secondaryColor};
+    color: ${NewsFeedPageColorPalette.secondaryColor};
   `}
 `;
 
-const OptionInnerContainer = styled.div<OptionInnerContainerProps>`
+const OptionInnerContainer = styled.div`
   width: 100%;
   height: 70px;
   display: flex;
   flex-direction: row;
   align-items: center;
-  background: ${props => props.color};
+  background: ${NewsFeedPageColorPalette.mainColor};
   border-radius: 50px;
   overflow: hidden;
 `;

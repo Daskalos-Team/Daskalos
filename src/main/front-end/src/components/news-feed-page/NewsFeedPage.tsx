@@ -7,11 +7,9 @@ import {
     DimmingProps,
     IconCreditsProps,
     LeftPanelProps,
-    LogoProps
+    LogoProps,
+    NewsFeedPageColorPalette
 } from "./news-feed-page-service/NewsFeedPageOptionsConstants";
-
-const mainColor = "rgba(1,157,209,1)";
-const secondaryColor = "#f0f6f7";
 
 export const NewsFeedPage = () => {
     const maxMenuOnWindowWidth = 1180;
@@ -86,22 +84,22 @@ export const NewsFeedPage = () => {
                     <div onClick={() => SetOptionSelected(0)}>
                         <LeftPanelOption isSelected={selectedOptions[0]}
                             imageSrc="/images/news-feed-page/TeachersIcon.png"
-                            labelText="მასწავლებლები" mainColor={mainColor} secondaryColor={secondaryColor}/>
+                            labelText="მასწავლებლები"/>
                     </div>
                     <div onClick={() => SetOptionSelected(1)}>
                         <LeftPanelOption isSelected={selectedOptions[1]}
                             imageSrc="/images/news-feed-page/FavouritesIcon.png"
-                            labelText="ფავორიტები" mainColor={mainColor} secondaryColor={secondaryColor}/>
+                            labelText="ფავორიტები"/>
                     </div>
                     <div onClick={() => SetOptionSelected(2)}>
                         <LeftPanelOption isSelected={selectedOptions[2]}
                             imageSrc="/images/news-feed-page/AccountIcon.png"
-                            labelText="ანგარიში" mainColor={mainColor} secondaryColor={secondaryColor}/>
+                            labelText="ანგარიში"/>
                     </div>
                     <div onClick={() => SetOptionSelected(3)}>
                         <LeftPanelOption isSelected={selectedOptions[3]}
                             imageSrc="/images/news-feed-page/SettingsIcon.png"
-                            labelText="პარამეტრები" mainColor={mainColor} secondaryColor={secondaryColor}/>
+                            labelText="პარამეტრები"/>
                     </div>
                     <IconCredits visible={creditsVisible} animation={creditsAnimation}>
                         <p>
@@ -118,14 +116,14 @@ export const NewsFeedPage = () => {
                 <MainContentContainer>
                     <TeacherFeedLabel>თქვენთვის რეკომენდებული მასწავლებლები</TeacherFeedLabel>
                     <NewsFeed>
-                        <RecommendedTeacher isFavourite={true} color={secondaryColor}/>
-                        <RecommendedTeacher isFavourite={true} color={secondaryColor}/>
-                        <RecommendedTeacher isFavourite={false} color={secondaryColor}/>
-                        <RecommendedTeacher isFavourite={false} color={secondaryColor}/>
-                        <RecommendedTeacher isFavourite={true} color={secondaryColor}/>
-                        <RecommendedTeacher isFavourite={false} color={secondaryColor}/>
-                        <RecommendedTeacher isFavourite={false} color={secondaryColor}/>
-                        <RecommendedTeacher isFavourite={true} color={secondaryColor}/>
+                        <RecommendedTeacher isFavourite={true}/>
+                        <RecommendedTeacher isFavourite={true}/>
+                        <RecommendedTeacher isFavourite={false}/>
+                        <RecommendedTeacher isFavourite={false}/>
+                        <RecommendedTeacher isFavourite={true}/>
+                        <RecommendedTeacher isFavourite={false}/>
+                        <RecommendedTeacher isFavourite={false}/>
+                        <RecommendedTeacher isFavourite={true}/>
                     </NewsFeed>
                 </MainContentContainer>
             </Content>
@@ -172,7 +170,7 @@ const RestoreIconCredits = keyframes`
 const NewsFeedPageRoot = styled.div`
   width: 100%;
   gap: 12.6px;
-  background: ${secondaryColor};
+  background: ${NewsFeedPageColorPalette.secondaryColor};
   overflow: hidden;
 `;
 
@@ -193,7 +191,7 @@ const Header = styled.div`
   height: 100px;
   position: relative;
   box-sizing: border-box;
-  background: linear-gradient(90deg, ${mainColor} 0%, ${mainColor} 300px, rgba(14, 99, 161, 1) 100%);
+  background: ${NewsFeedPageColorPalette.headerBG};
   display: flex;
   align-items: center;
 `;
@@ -235,7 +233,7 @@ const ProfileButton = styled.button`
       position: absolute;
       width: 100%;
       height: 100%;
-      background: radial-gradient(${secondaryColor + "20"} 0%, ${secondaryColor + "00"} 65%);
+      background: ${NewsFeedPageColorPalette.profileButtonBeforeBG};
     }
   ;
   }
@@ -262,8 +260,8 @@ const SearchButton = styled.button`
   border-width: 0;
   border-radius: 50px;
   box-sizing: content-box;
-  background-color: #ece9e9;
-  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+  background-color: ${NewsFeedPageColorPalette.searchButtonBG};
+  box-shadow: 0 4px 4px 0 ${NewsFeedPageColorPalette.searchButtonShadow};
   cursor: pointer;
   z-index: 3;
 
@@ -317,7 +315,7 @@ const LeftPanel = styled.div<LeftPanelProps>`
   display: flex;
   flex-direction: column;
   padding-top: 100px;
-  background: ${mainColor};
+  background: ${NewsFeedPageColorPalette.mainColor};
   border: none;
   animation: ${props => props.animation} 300ms;
   position: relative;
@@ -330,7 +328,7 @@ const LeftPanel = styled.div<LeftPanelProps>`
     right: -60px;
     position: absolute;
     border-top-left-radius: 30px;
-    box-shadow: -15px -15px 0 ${mainColor};
+    box-shadow: -15px -15px 0 ${NewsFeedPageColorPalette.mainColor};
     pointer-events: none;
   };
 `;
@@ -372,13 +370,11 @@ const TeacherFeedLabel = styled.p`
   position: relative;
   transform-origin: left;
   &:hover {
-    transition-property: color, scale;
-    transition-duration: 0.3s;
     scale: 1.07;
     color: lightskyblue;
   };
   &:before {
-    background: linear-gradient(100deg, #00000000 20%, ${secondaryColor + "80"} 50%, #00000000 80%);
+    background: ${NewsFeedPageColorPalette.shimmerBG};
     position: absolute;
     content: "";
     display: block;
@@ -396,9 +392,17 @@ const NewsFeed = styled.div`
   flex-wrap: wrap;
   justify-content: space-evenly;
   scroll-behavior: auto;
-  overflow-y: scroll;
+  overflow-y: auto;
   padding: 5px;
-  border-left: 2px solid #9c9c9c40;
-  border-radius: 50px;
+  border-left: 2px solid ${NewsFeedPageColorPalette.border};
+  border-top-left-radius: 50px;
+  border-bottom-left-radius: 50px;
   position: relative;
+  background: ${NewsFeedPageColorPalette.newsFeedBG};
+  &::-webkit-scrollbar {
+    width: .8rem;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: ${NewsFeedPageColorPalette.scrollbarThumbBG};
+  }
 `;
