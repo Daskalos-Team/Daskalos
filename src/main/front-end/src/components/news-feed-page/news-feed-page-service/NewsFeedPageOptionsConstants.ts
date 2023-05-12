@@ -1,5 +1,9 @@
 import { Keyframes } from "styled-components";
 
+export interface RootScaleProps {
+    scale: number;
+}
+
 export interface DimmingProps {
     opacity: number;
     interactive: string;
@@ -23,6 +27,11 @@ export interface IconCreditsProps {
 
 export interface RecommendedTeacherProps {
     isFavourite: boolean;
+    rootScale: number;
+}
+
+export interface RecommendedTeacherScaleProps {
+    rootScale: number;
 }
 
 export interface LeftPanelOptionProps {

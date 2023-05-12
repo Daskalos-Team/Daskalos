@@ -8,11 +8,13 @@ import {
     IconCreditsProps,
     LeftPanelProps,
     LogoProps,
-    NewsFeedPageColorPalette
+    NewsFeedPageColorPalette, RootScaleProps
 } from "./news-feed-page-service/NewsFeedPageOptionsConstants";
 
 export const NewsFeedPage = () => {
     const maxMenuOnWindowWidth = 1180;
+    const maxUnscaledRootWidth = 700;
+
     const [filtersOpen, setFiltersOpen] = useState(false);
     const [dimmingOpacity, setDimmingOpacity] = useState(0);
     const [arrowSrc, setArrowSrc] = useState("/images/news-feed-page/DownArrow.png");
@@ -26,20 +28,25 @@ export const NewsFeedPage = () => {
         < maxMenuOnWindowWidth);
     const [creditsVisible, setCreditsVisible] = useState(!menuButtonDisabled);
     const [creditsAnimation, setCreditsAnimation] = useState<Keyframes | null>(null);
+    const [rootScale, setRootScale] = useState(1);
+
     const ProfileButtonFunction = (e: any, name: any) => {
         alert(`${name} was clicked`);
     };
+
     const SearchButtonFunction = () => {
         setFiltersOpen(!filtersOpen);
         setArrowSrc(filtersOpen ? "/images/news-feed-page/DownArrow.png" : "/images/news-feed-page/UpArrow.png");
         setDimmingOpacity(filtersOpen ? 0 : 0.8);
         setDimmingInteractive(dimmingInteractive == "none" ? "auto" : "none");
     };
+
     const SetOptionSelected = (option_id: number) => {
         const newSelectedOptions = [false, false, false, false];
         newSelectedOptions[option_id] = true;
         setSelectedOptions(newSelectedOptions);
     };
+
     const ToggleMenu = (on: boolean) => {
         setLogoVisible(on);
         setLogoAnimation(logoVisible ? ShrinkLogo : GrowLogo);
@@ -48,21 +55,30 @@ export const NewsFeedPage = () => {
         setLeftPanelWidths(logoVisible ? [110, 110] : [250, 330]);
         setCreditsVisible(!logoVisible);
     };
+
     useLayoutEffect(() => {
         function CheckForMenuResize() {
-            if (document.body.offsetWidth >= maxMenuOnWindowWidth) {
+            const currWidth = document.body.offsetWidth;
+            if (currWidth < maxUnscaledRootWidth) {
+                setRootScale(currWidth / maxUnscaledRootWidth);
+            } else {
+                setRootScale(1);
+            }
+            if (currWidth >= maxMenuOnWindowWidth) {
                 setMenuButtonDisabled(false);
                 return;
             }
             setMenuButtonDisabled(true);
             ToggleMenu(false);
         }
+
         window.addEventListener("resize", CheckForMenuResize);
         CheckForMenuResize();
         return () => window.removeEventListener("resize", CheckForMenuResize);
     }, []);
+
     return (
-        <NewsFeedPageRoot>
+        <NewsFeedPageRoot scale={rootScale}>
             <Dimming opacity={dimmingOpacity} interactive={dimmingInteractive}/>
             <Header>
                 <Logo src="/images/news-feed-page/Logo.png" alt="Logo" visible={logoVisible} animation={logoAnimation}/>
@@ -78,7 +94,7 @@ export const NewsFeedPage = () => {
                     onClick={(e) => ProfileButtonFunction(e, "Profile Button")}
                 />
             </Header>
-            <Content>
+            <Content scale={rootScale}>
                 <LeftPanel minWidth={leftPanelWidths[0]} maxWidth={leftPanelWidths[1]}
                     animation={leftPanelAnimation}>
                     <div onClick={() => SetOptionSelected(0)}>
@@ -116,14 +132,14 @@ export const NewsFeedPage = () => {
                 <MainContentContainer>
                     <TeacherFeedLabel>თქვენთვის რეკომენდებული მასწავლებლები</TeacherFeedLabel>
                     <NewsFeed>
-                        <RecommendedTeacher isFavourite={true}/>
-                        <RecommendedTeacher isFavourite={true}/>
-                        <RecommendedTeacher isFavourite={false}/>
-                        <RecommendedTeacher isFavourite={false}/>
-                        <RecommendedTeacher isFavourite={true}/>
-                        <RecommendedTeacher isFavourite={false}/>
-                        <RecommendedTeacher isFavourite={false}/>
-                        <RecommendedTeacher isFavourite={true}/>
+                        <RecommendedTeacher isFavourite={true} rootScale={rootScale}/>
+                        <RecommendedTeacher isFavourite={true} rootScale={rootScale}/>
+                        <RecommendedTeacher isFavourite={false} rootScale={rootScale}/>
+                        <RecommendedTeacher isFavourite={false} rootScale={rootScale}/>
+                        <RecommendedTeacher isFavourite={true} rootScale={rootScale}/>
+                        <RecommendedTeacher isFavourite={false} rootScale={rootScale}/>
+                        <RecommendedTeacher isFavourite={false} rootScale={rootScale}/>
+                        <RecommendedTeacher isFavourite={true} rootScale={rootScale}/>
                     </NewsFeed>
                 </MainContentContainer>
             </Content>
@@ -167,11 +183,13 @@ const RestoreIconCredits = keyframes`
   100% {font-size: 12px}
 `;
 
-const NewsFeedPageRoot = styled.div`
-  width: 100%;
+const NewsFeedPageRoot = styled.div<RootScaleProps>`
+  width: ${props => 100 / props.scale}%;
   gap: 12.6px;
   background: ${NewsFeedPageColorPalette.secondaryColor};
   overflow: hidden;
+  transform-origin: top left;
+  scale: ${props => props.scale};
 `;
 
 const Dimming = styled.div<DimmingProps>`
@@ -300,8 +318,8 @@ const DropDownArrow = styled.img`
   transform: translateY(-50%);
 `;
 
-const Content = styled.div`
-  height: 1000px;
+const Content = styled.div<RootScaleProps>`
+  height: ${props => 1000 / props.scale}px;
   margin: 0 20px 0 0;
   display: flex;
 `;
@@ -310,23 +328,22 @@ const LeftPanel = styled.div<LeftPanelProps>`
   min-width: ${props => props.minWidth}px;
   max-width: ${props => props.maxWidth}px;
   margin-right: 30px;
-  height: 100%;
+  height: calc(100% + 2px);
+  top: -2px;
   flex-basis: 25%;
   display: flex;
   flex-direction: column;
   padding-top: 100px;
   background: ${NewsFeedPageColorPalette.menuBG};
-  border: none;
   animation: ${props => props.animation} 300ms;
   position: relative;
   &:before {
-    background-color: transparent;
     background-color: ${NewsFeedPageColorPalette.secondaryColor};
     content: "";
     height: 100%;
-    width: 31px;
-    top: 0;
-    right: -1px;
+    width: 32px;
+    top: 2px;
+    right: -2px;
     position: absolute;
     border-top-left-radius: 30px;
     pointer-events: none;

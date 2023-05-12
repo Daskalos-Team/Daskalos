@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import {
     NewsFeedPageColorPalette,
-    RecommendedTeacherProps
+    RecommendedTeacherProps, RecommendedTeacherScaleProps
 } from "../news-feed-page-service/NewsFeedPageOptionsConstants";
 
 export const RecommendedTeacher = (props: RecommendedTeacherProps) => {
@@ -17,7 +17,7 @@ export const RecommendedTeacher = (props: RecommendedTeacherProps) => {
         alert("Teacher Recommendation was clicked");
     };
     return (
-        <RecommendedTeacherRoot>
+        <RecommendedTeacherRoot rootScale={props.rootScale}>
             <RecommendedTeacherTop
                 onClick={() => TopFunction()}
             >
@@ -38,10 +38,10 @@ export const RecommendedTeacher = (props: RecommendedTeacherProps) => {
                 </RecommendedTeacherTopRight>
             </RecommendedTeacherTop>
             <DescriptionLabel>Description</DescriptionLabel>
-            <DescriptionTextfield>
+            <DescriptionTextfield rootScale={props.rootScale}>
                 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
             </DescriptionTextfield>
-            <RecommendedTeacherBottom>
+            <RecommendedTeacherBottom rootScale={props.rootScale}>
                 <PriceRangeLabel>Price Range:</PriceRangeLabel>
                 <PriceRangeValue>####-####</PriceRangeValue>
                 <Favourite onClick={() => FavouriteFunction()}
@@ -67,9 +67,9 @@ const CustomScrollbarComponent = styled.div`
   }
 `;
 
-const RecommendedTeacherRoot = styled.div`
+const RecommendedTeacherRoot = styled.div<RecommendedTeacherScaleProps>`
   width: 450px;
-  height: 360px;
+  height: ${props => 360 / Math.pow(props.rootScale, 0.38)}px;
   padding: 21px 19px 26px 19px;
   margin: 10px;
   border-width: 1px;
@@ -164,12 +164,12 @@ const DescriptionLabel = styled.div`
   box-sizing: border-box;
 `;
 
-const DescriptionTextfield = styled(CustomScrollbarComponent)`
+const DescriptionTextfield = styled(CustomScrollbarComponent)<RecommendedTeacherScaleProps>`
   width: 100%;
-  height: 90px;
+  height: ${props => 90 / props.rootScale}px;
   margin: 5px 0 5px 0;
   padding: 5px;
-  font-size: 13px;
+  font-size: ${props => 1 / Math.pow(props.rootScale, 0.55)}rem;
   font-family: Inter;
   overflow-y: auto;
   word-wrap: break-word;
@@ -179,34 +179,31 @@ const DescriptionTextfield = styled(CustomScrollbarComponent)`
   background: ${NewsFeedPageColorPalette.recommendedTeacherDescriptionBG};
 `;
 
-const RecommendedTeacherBottom = styled.div`
+const RecommendedTeacherBottom = styled.div<RecommendedTeacherScaleProps>`
   width: 100%;
   margin-top: 15px;
   padding-left: 5px;
   display: flex;
   flex-direction: row;
   align-items: center;
+  font-size: ${props => .8 / Math.pow(props.rootScale, 0.2)}rem;
   font-weight: 600;
 `;
 
 const PriceRangeLabel = styled.p`
-  width: 80px;
-  max-lines: 1;
+  width: 100px;
   margin-right: 10px;
   overflow-y: hidden;
   text-wrap: normal;
   height: 100%;
-  font-size: 13px;
   font-style: italic;
   box-sizing: border-box;
 `;
 
 const PriceRangeValue = styled.p`
-  width: 80px;
-  max-lines: 1;
+  width: 120px;
   height: 100%;
   text-align: start;
-  font-size: 13px;
   text-transform: uppercase;
   box-sizing: border-box;
 `;

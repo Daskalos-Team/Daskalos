@@ -37,7 +37,7 @@ const OptionContainer = styled.div<OptionContainerProps>`
         content: "";
         width: 50%;
         height: 80px;
-        right: -5px;
+        right: -6px;
         transform: translateZ(-1px);
         position: absolute;
         background: ${NewsFeedPageColorPalette.secondaryColor};
