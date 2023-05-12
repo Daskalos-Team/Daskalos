@@ -20,7 +20,7 @@ export const NewsFeedPage = () => {
     const [selectedOptions, setSelectedOptions] = useState([true, false, false, false]);
     const [logoVisible, setLogoVisible] = useState(true);
     const [logoAnimation, setLogoAnimation] = useState<Keyframes | null>(null);
-    const [leftPanelWidths, setLeftPanelWidths] = useState([220, 300]);
+    const [leftPanelWidths, setLeftPanelWidths] = useState([250, 330]);
     const [leftPanelAnimation, setLeftPanelAnimation] = useState<Keyframes | null>(null);
     const [menuButtonDisabled, setMenuButtonDisabled] = useState(document.body.offsetWidth
         < maxMenuOnWindowWidth);
@@ -45,7 +45,7 @@ export const NewsFeedPage = () => {
         setLogoAnimation(logoVisible ? ShrinkLogo : GrowLogo);
         setLeftPanelAnimation(logoVisible ? ShrinkLeftPanel : GrowLeftPanel);
         setCreditsAnimation(logoVisible ? CollapseIconCredits : RestoreIconCredits);
-        setLeftPanelWidths(logoVisible ? [85, 85] : [220, 300]);
+        setLeftPanelWidths(logoVisible ? [110, 110] : [250, 330]);
         setCreditsVisible(!logoVisible);
     };
     useLayoutEffect(() => {
@@ -66,7 +66,7 @@ export const NewsFeedPage = () => {
             <Dimming opacity={dimmingOpacity} interactive={dimmingInteractive}/>
             <Header>
                 <Logo src="/images/news-feed-page/Logo.png" alt="Logo" visible={logoVisible} animation={logoAnimation}/>
-                <ShowMenuButton disabled={menuButtonDisabled} onClick={() => ToggleMenu(!logoVisible)}/>
+                {!menuButtonDisabled && <ShowMenuButton onClick={() => ToggleMenu(!logoVisible)}/>}
                 <SearchButton
                     onClick={() => SearchButtonFunction()}
                 >
@@ -142,13 +142,13 @@ const GrowLogo = keyframes`
 `;
 
 const ShrinkLeftPanel = keyframes`
-  0% { min-width: 220px; max-width: 300px}
-  100% { min-width: 85px; max-width: 85px }
+  0% { min-width: 250px; max-width: 330px}
+  100% { min-width: 110px; max-width: 110px }
 `;
 
 const GrowLeftPanel = keyframes`
-  0% { min-width: 85px; max-width: 85px}
-  100% { min-width: 220px; max-width: 300px }
+  0% { min-width: 110px; max-width: 110px}
+  100% { min-width: 250px; max-width: 330px }
 `;
 
 const Shimmer = keyframes`
@@ -191,7 +191,7 @@ const Header = styled.div`
   height: 100px;
   position: relative;
   box-sizing: border-box;
-  background: ${NewsFeedPageColorPalette.headerBG};
+  background: ${NewsFeedPageColorPalette.menuBG};
   display: flex;
   align-items: center;
 `;
@@ -315,20 +315,20 @@ const LeftPanel = styled.div<LeftPanelProps>`
   display: flex;
   flex-direction: column;
   padding-top: 100px;
-  background: ${NewsFeedPageColorPalette.mainColor};
+  background: ${NewsFeedPageColorPalette.menuBG};
   border: none;
   animation: ${props => props.animation} 300ms;
   position: relative;
   &:before {
     background-color: transparent;
+    background-color: ${NewsFeedPageColorPalette.secondaryColor};
     content: "";
-    height: 60px;
-    width: 60px;
+    height: 100%;
+    width: 31px;
     top: 0;
-    right: -60px;
+    right: -1px;
     position: absolute;
     border-top-left-radius: 30px;
-    box-shadow: -15px -15px 0 ${NewsFeedPageColorPalette.mainColor};
     pointer-events: none;
   };
 `;
@@ -336,7 +336,7 @@ const LeftPanel = styled.div<LeftPanelProps>`
 const IconCredits = styled.div<IconCreditsProps>`
   position: absolute;
   bottom: 50px;
-  margin: 0 20px 0 20px;
+  margin: 0 40px 0 10px;
   font-size: ${props => props.visible ? 12 : 0}px;
   font-weight: 700;
   text-align: center;

@@ -2,52 +2,51 @@ import React from "react";
 import styled from "styled-components";
 import {
     LeftPanelOptionProps, NewsFeedPageColorPalette,
-    OptionOuterContainerProps
+    OptionContainerProps
 } from "../news-feed-page-service/NewsFeedPageOptionsConstants";
 
 export const LeftPanelOption = (props: LeftPanelOptionProps) => {
     return (
-        <OptionOuterContainer isSelected={props.isSelected}>
-            <OptionInnerContainer>
-                <OptionImg src={props.imageSrc}/>
-                <OptionLabel>{props.labelText}</OptionLabel>
-            </OptionInnerContainer>
-        </OptionOuterContainer>
+        <OptionContainer isSelected={props.isSelected}>
+            <OptionImg src={props.imageSrc}/>
+            <OptionLabel>{props.labelText}</OptionLabel>
+        </OptionContainer>
     );
 };
 
-const OptionOuterContainer = styled.div<OptionOuterContainerProps>`
-  width: 100%;
+const OptionContainer = styled.div<OptionContainerProps>`
+  width: calc(100% - 30px);
   height: 80px;
-  padding: 0 5px 0 5px;
-  margin-left: 5px;
-  background: transparent;
-  display: flex;
-  align-items: center;
-  border-radius: 50px 0 0 50px;
-  cursor: pointer;
-  &:hover{
-    color: ${NewsFeedPageColorPalette.secondaryColor};
-  }
-  ${props => props.isSelected && `
-    background: ${NewsFeedPageColorPalette.secondaryColor};
-    color: ${NewsFeedPageColorPalette.secondaryColor};
-  `}
-`;
-
-const OptionInnerContainer = styled.div`
-  width: 100%;
-  height: 70px;
   display: flex;
   flex-direction: row;
   align-items: center;
-  background: ${NewsFeedPageColorPalette.mainColor};
+  background: ${NewsFeedPageColorPalette.menuBG};
+  border: 5px solid transparent;
   border-radius: 50px;
+  margin-block: 10px;
+  background-clip: padding-box;
   overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  ${props => props.isSelected && `
+    border: 5px solid ${NewsFeedPageColorPalette.secondaryColor};
+    color: ${NewsFeedPageColorPalette.secondaryColor};
+    overflow: visible;
+    &:before {
+        content: "";
+        width: 50%;
+        height: 80px;
+        right: -5px;
+        transform: translateZ(-1px);
+        position: absolute;
+        background: ${NewsFeedPageColorPalette.secondaryColor};
+    };
+  `}
 `;
 
 const OptionImg = styled.img`
-  margin: 30px 50px 30px 15px;
+  margin: 30px 40px 30px 12.5px;
   width: 45px;
   height: auto;
 `;

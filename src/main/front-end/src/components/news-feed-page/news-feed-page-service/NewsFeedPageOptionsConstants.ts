@@ -31,7 +31,7 @@ export interface LeftPanelOptionProps {
     labelText: string;
 }
 
-export interface OptionOuterContainerProps {
+export interface OptionContainerProps {
     isSelected: boolean;
 }
 
@@ -39,7 +39,7 @@ export const NewsFeedPageColorPalette = {
     mainColor: "rgba(1,157,209,1)",
     secondaryColor: "#f0f6f7",
     border: "#9c9c9c40",
-    headerBG: "linear-gradient(130deg, rgba(1,157,209,1) 0%, rgba(1,157,209,1) 300px, rgba(14, 99, 161, 1) 100%)",
+    menuBG: "linear-gradient(90deg, rgba(50,157,255,1) 0, rgba(130,187,245,1) 15rem, rgba(130,187,245,1) 35rem, rgba(130,187,245,1) 55rem, rgba(1,127,245,1) 100%)",
     profileButtonBeforeBG: "radial-gradient(#f0f6f720 0%, #f0f6f700 65%)",
     shimmerBG: "linear-gradient(100deg, #00000000 20%, #f0f6f780 50%, #00000000 80%)",
     newsFeedBG: "linear-gradient(130deg, #87cefa20 0%, #a7feff90 40%, #87cefa50 100%)",
