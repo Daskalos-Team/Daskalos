@@ -1,21 +1,18 @@
 package com.freeuni.daskalos.service.teacher;
 
 import com.freeuni.daskalos.dto.ExperienceDTO;
+import com.freeuni.daskalos.dto.SubjectDTO;
 import com.freeuni.daskalos.dto.TeacherDTO;
-import com.freeuni.daskalos.repository.*;
-import com.freeuni.daskalos.repository.entities.Experience;
+import com.freeuni.daskalos.dto.TeacherRatingDTO;
+import com.freeuni.daskalos.repository.TeacherRepository;
 import com.freeuni.daskalos.repository.entities.Teacher;
-import com.freeuni.daskalos.repository.entities.TeacherToExperience;
 import com.freeuni.daskalos.service.experience.ExperienceService;
 import com.freeuni.daskalos.service.rating.RatingService;
 import com.freeuni.daskalos.service.subject.SubjectService;
 import com.freeuni.daskalos.utils.exceptions.UserNotExistException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
-
 
 @RequiredArgsConstructor
 public class TeacherServiceImpl implements TeacherService {
@@ -53,7 +50,37 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public TeacherDTO updateTeacher(TeacherDTO teacherDTO) {
-        return new TeacherDTO();
+    public void updateTeacher(TeacherDTO teacherDTO) {
+
+    }
+
+    @Override
+    public void addExperience(Long teacherID, ExperienceDTO experience) {
+        experienceService.addTeacherExperience(teacherID, experience);
+    }
+
+    @Override
+    public void removeExperience(ExperienceDTO experience) {
+        experienceService.removeTeacherExperience(experience);
+    }
+
+    @Override
+    public void addRating(Long teacherID, TeacherRatingDTO teacherRating) {
+        ratingService.addTeacherRating(teacherID, teacherRating);
+    }
+
+    @Override
+    public void removeRating(TeacherRatingDTO teacherRating) {
+        ratingService.removeTeacherRating(teacherRating);
+    }
+
+    @Override
+    public void addSubject(Long teacherID, SubjectDTO subject) {
+        subjectService.addTeacherSubject(teacherID, subject);
+    }
+
+    @Override
+    public void removeSubject(Long teacherID, SubjectDTO subject) {
+        subjectService.deleteTeacherSubject(teacherID, subject);
     }
 }

@@ -5,9 +5,8 @@ import com.freeuni.daskalos.repository.SubjectRepository;
 import com.freeuni.daskalos.repository.TeacherToSubjectRepository;
 import com.freeuni.daskalos.repository.entities.Subject;
 import com.freeuni.daskalos.repository.entities.TeacherToSubject;
-import com.freeuni.daskalos.utils.EntityToDtoUtils;
+import com.freeuni.daskalos.utils.DaoDtoConversionUtils;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,7 +24,7 @@ public class SubjectServiceImpl implements SubjectService {
         List<Subject> teachersSubjects = subjectRepository.findAllById(teacherToSubjects.stream().map(TeacherToSubject::getSubjectID).collect(Collectors.toList()));
         return teachersSubjects.
                 stream().
-                map(EntityToDtoUtils::toSubjectDTO).
+                map(DaoDtoConversionUtils::toSubjectDTO).
                 toList();
     }
 
@@ -37,10 +36,12 @@ public class SubjectServiceImpl implements SubjectService {
 
     @Override
     public void addTeacherSubject(Long teacherID, SubjectDTO subject) {
-        subjectRepository.save(EntityToDtoUtils.toSubject(subject));
-        TeacherToSubject teacherToSubject = new TeacherToSubject();
-        teacherToSubject.setTeacherID(teacherID);
-        teacherToSubject.setSubjectID(subject.getID());
+        Subject addedSubject = subjectRepository.save(DaoDtoConversionUtils.toSubject(subject));
+        TeacherToSubject teacherToSubject = new TeacherToSubject().
+                toBuilder().
+                teacherID(teacherID).
+                subjectID(addedSubject.getID()).
+                build();
         teacherToSubjectRepository.save(teacherToSubject);
     }
 }

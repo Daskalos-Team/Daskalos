@@ -10,30 +10,30 @@ import java.util.Date;
 @AllArgsConstructor
 @Getter
 @Setter
-@Table(name="experience", schema = "daskalos")
+@Table(name = "experience", schema = "daskalos")
+@Builder
 @Entity
 public class Experience {
 
     @Id()
-    @Column(name="ID")
-    @SequenceGenerator(name = "idGenerator", schema="daskalos", sequenceName = "experience_seq", allocationSize = 1)
+    @Column(name = "ID")
+    @SequenceGenerator(name = "idGenerator", schema = "daskalos", sequenceName = "experience_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "idGenerator")
     private Long ID;
 
     @Basic
-    @Column(name="employer")
+    @Column(name = "employer")
     private String employer;
 
     @Basic
-    @Column(name="job_description")
+    @Column(name = "job_description")
     private String jobDescription;
 
     @Basic
-    @Column(name="start_date")
+    @Column(name = "start_date")
     private Date startDate;
 
     @Basic
-    @Column(name="end_date")
+    @Column(name = "end_date")
     private Date endDate;
-
 }

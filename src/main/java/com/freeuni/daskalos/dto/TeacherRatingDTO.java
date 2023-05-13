@@ -11,8 +11,10 @@ import lombok.*;
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
 @JsonAutoDetect
 public class TeacherRatingDTO {
+
     private Long ID;
 
     private int studentID;

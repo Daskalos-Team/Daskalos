@@ -8,4 +8,3 @@ import org.springframework.stereotype.Repository;
 public interface TeacherRepository extends CrudRepository<Teacher, Long> {
 
 }
-

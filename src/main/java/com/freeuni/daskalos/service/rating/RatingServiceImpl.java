@@ -5,10 +5,12 @@ import com.freeuni.daskalos.repository.TeacherRatingRepository;
 import com.freeuni.daskalos.repository.TeacherToRatingRepository;
 import com.freeuni.daskalos.repository.entities.TeacherRating;
 import com.freeuni.daskalos.repository.entities.TeacherToRating;
-import com.freeuni.daskalos.utils.EntityToDtoUtils;
+import com.freeuni.daskalos.utils.DaoDtoConversionUtils;
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
+@RequiredArgsConstructor
 public class RatingServiceImpl implements RatingService {
 
     private TeacherRatingRepository teacherRatingRepository;
@@ -21,19 +23,24 @@ public class RatingServiceImpl implements RatingService {
         List<TeacherRating> teachersRatingList = teacherRatingRepository.findAllById(teacherToRatingList.stream().map(TeacherToRating::getRatingID).toList());
         return teachersRatingList.
                 stream().
-                map(EntityToDtoUtils::toTeacherRatingDTO).
+                map(DaoDtoConversionUtils::toTeacherRatingDTO).
                 toList();
     }
 
     @Override
-    public boolean removeTeacherRating(Long teacherID, TeacherRatingDTO teacherRating) {
-        // TO DO
-        return false;
+    public void removeTeacherRating(TeacherRatingDTO teacherRating) {
+        teacherRatingRepository.delete(DaoDtoConversionUtils.toTeacherRating(teacherRating));
+        teacherToRatingRepository.deleteByRatingID(teacherRating.getID());
     }
 
     @Override
-    public TeacherRatingDTO addTeacherRating(Long teacherID, TeacherRatingDTO teacherRating) {
-        // TO DO
-        return null;
+    public void addTeacherRating(Long teacherID, TeacherRatingDTO teacherRating) {
+        TeacherRating addedRating = teacherRatingRepository.save(DaoDtoConversionUtils.toTeacherRating(teacherRating));
+        TeacherToRating teacherToRating = TeacherToRating.
+                builder().
+                teacherID(teacherID).
+                ratingID(addedRating.getID()).
+                build();
+        teacherToRatingRepository.save(teacherToRating);
     }
 }

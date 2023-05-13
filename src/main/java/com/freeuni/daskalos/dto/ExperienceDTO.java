@@ -14,14 +14,18 @@ import java.util.Date;
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
 @JsonAutoDetect
 public class ExperienceDTO implements Serializable {
 
     private long ID;
-    private String employer;
-    private String jobDescription;
-    private Date startDate;
-    private Date endDate;
 
+    private String employer;
+
+    private String jobDescription;
+
+    private Date startDate;
+
+    private Date endDate;
 }
 

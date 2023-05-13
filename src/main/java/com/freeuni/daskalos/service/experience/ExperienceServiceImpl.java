@@ -5,14 +5,12 @@ import com.freeuni.daskalos.repository.ExperienceRepository;
 import com.freeuni.daskalos.repository.TeacherToExperienceRepository;
 import com.freeuni.daskalos.repository.entities.Experience;
 import com.freeuni.daskalos.repository.entities.TeacherToExperience;
-import com.freeuni.daskalos.utils.EntityToDtoUtils;
+import com.freeuni.daskalos.utils.DaoDtoConversionUtils;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @RequiredArgsConstructor
-@Service
 public class ExperienceServiceImpl implements ExperienceService {
 
     private ExperienceRepository experienceRepository;
@@ -25,19 +23,24 @@ public class ExperienceServiceImpl implements ExperienceService {
         List<Experience> teachersExperience = experienceRepository.findAllById(teacherToExperienceList.stream().map(TeacherToExperience::getExperienceID).toList());
         return teachersExperience.
                 stream().
-                map(EntityToDtoUtils::toExperienceDTO).
+                map(DaoDtoConversionUtils::toExperienceDTO).
                 toList();
     }
 
     @Override
-    public boolean removeTeacherExperience(Long teacherID, ExperienceDTO experience) {
-        // TO DO
-        return false;
+    public void removeTeacherExperience(ExperienceDTO experience) {
+        experienceRepository.delete(DaoDtoConversionUtils.toExperience(experience));
+        teacherToExperienceRepository.deleteByExperienceID(experience.getID());
     }
 
     @Override
-    public ExperienceDTO addTeacherExperience(Long teacherID, ExperienceDTO experience) {
-        // TO DO
-        return null;
+    public void addTeacherExperience(Long teacherID, ExperienceDTO experience) {
+        Experience addedExperience = experienceRepository.save(DaoDtoConversionUtils.toExperience(experience));
+        TeacherToExperience teacherToExperience = new TeacherToExperience()
+                .toBuilder()
+                .experienceID(addedExperience.getID())
+                .teacherID(teacherID)
+                .build();
+        teacherToExperienceRepository.save(teacherToExperience);
     }
 }

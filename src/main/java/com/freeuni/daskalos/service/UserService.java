@@ -4,6 +4,7 @@ import com.freeuni.daskalos.dto.UserDTO;
 import com.freeuni.daskalos.repository.UserRepository;
 import com.freeuni.daskalos.repository.entities.User;
 import com.freeuni.daskalos.utils.AuthorizationStatus;
+import com.freeuni.daskalos.utils.DaoDtoConversionUtils;
 import com.freeuni.daskalos.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,7 +48,7 @@ public class UserService {
         Optional<User> currentUser = userRepository.findByEmail(user.getEmail());
 
         if (currentUser.isEmpty()) {
-            userRepository.save(UserUtils.toUserEntity(user));
+            userRepository.save(DaoDtoConversionUtils.toUserEntity(user));
             return AuthorizationStatus.SUCCESSFUL_REGISTRATION.name();
         }
 
@@ -82,6 +83,6 @@ public class UserService {
 
     public List<UserDTO> getAllUsers() {
         Iterable<User> all = userRepository.findAll();
-        return StreamSupport.stream(all.spliterator(), false).map(UserUtils::toUserDao).collect(Collectors.toList());
+        return StreamSupport.stream(all.spliterator(), false).map(DaoDtoConversionUtils::toUserDao).collect(Collectors.toList());
     }
 }

@@ -1,7 +1,7 @@
 package com.freeuni.daskalos.repository.entities;
 
 import com.freeuni.daskalos.utils.UserType;
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
 import reactor.util.annotation.NonNull;
 
 @Entity

@@ -8,5 +8,8 @@ import java.util.List;
 
 @Repository
 public interface TeacherToRatingRepository extends JpaRepository<TeacherToRating, Long> {
+
     public List<TeacherToRating> findAllByTeacherID(Long teacherID);
+
+    public void deleteByRatingID(Long teacherRatingID);
 }

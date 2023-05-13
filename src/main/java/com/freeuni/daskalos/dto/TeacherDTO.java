@@ -2,9 +2,6 @@ package com.freeuni.daskalos.dto;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.freeuni.daskalos.repository.entities.Experience;
-import com.freeuni.daskalos.repository.entities.Subject;
-import com.freeuni.daskalos.repository.entities.TeacherRating;
 import com.freeuni.daskalos.utils.UserType;
 import lombok.*;
 
@@ -17,6 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
 @JsonAutoDetect
 public class TeacherDTO {
 
@@ -45,5 +43,4 @@ public class TeacherDTO {
     private List<TeacherRatingDTO> teacherRatings;
 
     private List<SubjectDTO> teacherSubjects;
-
 }
