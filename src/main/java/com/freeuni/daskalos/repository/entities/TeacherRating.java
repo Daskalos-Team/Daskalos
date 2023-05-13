@@ -1,67 +1,34 @@
 package com.freeuni.daskalos.repository.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import org.apache.logging.log4j.util.Strings;
-import reactor.util.annotation.Nullable;
+import jakarta.persistence.*;
+import lombok.*;
 
-import java.util.Objects;
 
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 @Entity
+@Table(name="teacher_rating", schema = "daskalos")
 public class TeacherRating {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Id()
+    @Column(name="ID")
+    @SequenceGenerator(name = "idGenerator", schema="daskalos", sequenceName = "teacher_rating_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "idGenerator")
     private Long ID;
 
+    @Basic
+    @Column(name="student_id")
     private int studentID;
 
+    @Basic
+    @Column(name="student_comment")
     private String studentComment;
 
+    @Basic
+    @Column(name="rating")
     private int rating;
 
-    public TeacherRating(Long ID, int studentID, @Nullable String studentComment, int rating) {
-        this.ID = ID;
-        this.studentID = studentID;
-        this.studentComment = !Objects.isNull(studentComment) ? studentComment : Strings.EMPTY;
-        this.rating = rating;
-    }
-
-    public TeacherRating() {
-
-    }
-
-    public Long getID() {
-        return ID;
-    }
-
-    public void setID(Long ID) {
-        this.ID = ID;
-    }
-
-    public int getStudentID() {
-        return studentID;
-    }
-
-    public void setStudentID(int studentID) {
-        this.studentID = studentID;
-    }
-
-    public String getStudentComment() {
-        return studentComment;
-    }
-
-    public void setStudentComment(String studentComment) {
-        this.studentComment = studentComment;
-    }
-
-    public int getRating() {
-        return rating;
-    }
-
-    public void setRating(int rating) {
-        this.rating = rating;
-    }
 }
