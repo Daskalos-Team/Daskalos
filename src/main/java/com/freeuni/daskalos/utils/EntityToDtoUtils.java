@@ -28,4 +28,9 @@ public class EntityToDtoUtils {
                 teacherRating.getStudentComment(),
                 teacherRating.getRating());
     }
+
+    public static Subject toSubject(SubjectDTO subjectDTO) {
+        return new Subject(subjectDTO.getID(),
+                subjectDTO.getName());
+    }
 }

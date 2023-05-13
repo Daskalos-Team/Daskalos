@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
-@Service
 public class SubjectServiceImpl implements SubjectService {
 
     private SubjectRepository subjectRepository;
@@ -31,14 +30,17 @@ public class SubjectServiceImpl implements SubjectService {
     }
 
     @Override
-    public boolean deleteTeacherSubject(Long teacherID, SubjectDTO subject) {
-        // TO DO
-        return false;
+    public void deleteTeacherSubject(Long teacherID, SubjectDTO subject) {
+        subjectRepository.deleteById(subject.getID());
+        teacherToSubjectRepository.deleteBySubjectIDAndTeacherID(teacherID, subject.getID());
     }
 
     @Override
-    public SubjectDTO addTeacherSubject(Long teacherID, SubjectDTO subject) {
-        // TO DO
-        return null;
+    public void addTeacherSubject(Long teacherID, SubjectDTO subject) {
+        subjectRepository.save(EntityToDtoUtils.toSubject(subject));
+        TeacherToSubject teacherToSubject = new TeacherToSubject();
+        teacherToSubject.setTeacherID(teacherID);
+        teacherToSubject.setSubjectID(subject.getID());
+        teacherToSubjectRepository.save(teacherToSubject);
     }
 }
