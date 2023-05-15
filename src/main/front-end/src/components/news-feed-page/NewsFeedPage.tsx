@@ -20,7 +20,7 @@ export const NewsFeedPage = () => {
     const [dimmingOpacity, setDimmingOpacity] = useState(0);
     const [arrowSrc, setArrowSrc] = useState("/images/news-feed-page/DownArrow.png");
     const [dimmingInteractive, setDimmingInteractive] = useState("none");
-    const [selectedOptions, setSelectedOptions] = useState([true, false, false, false]);
+    const [selectedOptions, setSelectedOptions] = useState([true, false]);
     const [logoVisible, setLogoVisible] = useState(true);
     const [logoAnimation, setLogoAnimation] = useState<Keyframes | null>(null);
     const [leftPanelWidths, setLeftPanelWidths] = useState([250, 330]);
@@ -47,7 +47,7 @@ export const NewsFeedPage = () => {
         if (selectedOptions[option_id]) {
             return;
         }
-        const newSelectedOptions = [false, false, false, false];
+        const newSelectedOptions = [false, false];
         newSelectedOptions[option_id] = true;
         setTabAnimation(TabSwitch);
         setTimeout(() => setSelectedOptions(newSelectedOptions), 250);
@@ -111,16 +111,6 @@ export const NewsFeedPage = () => {
                     </div>
                     <div onClick={() => SetOptionSelected(1)}>
                         <LeftPanelOption isSelected={selectedOptions[1]}
-                            imageSrc="/images/news-feed-page/FavouritesIcon.png"
-                            labelText="ფავორიტები"/>
-                    </div>
-                    <div onClick={() => SetOptionSelected(2)}>
-                        <LeftPanelOption isSelected={selectedOptions[2]}
-                            imageSrc="/images/news-feed-page/AccountIcon.png"
-                            labelText="ანგარიში"/>
-                    </div>
-                    <div onClick={() => SetOptionSelected(3)}>
-                        <LeftPanelOption isSelected={selectedOptions[3]}
                             imageSrc="/images/news-feed-page/SettingsIcon.png"
                             labelText="პარამეტრები"/>
                     </div>
@@ -154,20 +144,6 @@ export const NewsFeedPage = () => {
                             </React.Fragment>
                         )}
                         {selectedOptions[1] && (
-                            <React.Fragment>
-                                <TabTitle>ფავორიტები</TabTitle>
-                                <TabContent>
-                                </TabContent>
-                            </React.Fragment>
-                        )}
-                        {selectedOptions[2] && (
-                            <React.Fragment>
-                                <TabTitle>ანგარიში</TabTitle>
-                                <TabContent>
-                                </TabContent>
-                            </React.Fragment>
-                        )}
-                        {selectedOptions[3] && (
                             <React.Fragment>
                                 <TabTitle>პარამეტრები</TabTitle>
                                 <TabContent>
@@ -219,7 +195,7 @@ const RestoreIconCredits = keyframes`
 `;
 
 const TabSwitch = keyframes`
-  0% {transform: translateX(0); scale: 1; opacity: 1; pointer-events: auto}
+  0% {transform: translateX(0); scale: 1; opacity: 1; pointer-events: none}
   45% {transform: translateX(0); scale: 0.8; opacity: 0; pointer-events: none}
   55% {transform: translateX(100%); scale: 1; opacity: 0; pointer-events: none}
   100% {transform: translateX(0); scale: 1; opacity: 1; pointer-events: auto}
@@ -375,7 +351,7 @@ const LeftPanel = styled.div<LeftPanelProps>`
   flex-basis: 25%;
   display: flex;
   flex-direction: column;
-  padding-top: 100px;
+  padding-top: 130px;
   background: ${NewsFeedPageColorPalette.menuBG};
   animation: ${props => props.animation} 300ms;
   position: relative;
@@ -388,7 +364,6 @@ const LeftPanel = styled.div<LeftPanelProps>`
     right: -2px;
     position: absolute;
     border-top-left-radius: 30px;
-    pointer-events: none;
   };
 `;
 
