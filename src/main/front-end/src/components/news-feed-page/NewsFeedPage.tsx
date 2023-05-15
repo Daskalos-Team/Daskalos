@@ -10,6 +10,7 @@ import {
     LogoProps,
     NewsFeedPageColorPalette, RootScaleProps
 } from "./news-feed-page-service/NewsFeedPageOptionsConstants";
+import { SettingsTab } from "./settings-tab";
 
 export const NewsFeedPage = () => {
     const maxMenuOnWindowWidth = 1180;
@@ -130,17 +131,43 @@ export const NewsFeedPage = () => {
                     </IconCredits>
                 </LeftPanel>
                 <MainContentContainer>
-                    <TeacherFeedLabel>თქვენთვის რეკომენდებული მასწავლებლები</TeacherFeedLabel>
-                    <NewsFeed>
-                        <RecommendedTeacher isFavourite={true} rootScale={rootScale}/>
-                        <RecommendedTeacher isFavourite={true} rootScale={rootScale}/>
-                        <RecommendedTeacher isFavourite={false} rootScale={rootScale}/>
-                        <RecommendedTeacher isFavourite={false} rootScale={rootScale}/>
-                        <RecommendedTeacher isFavourite={true} rootScale={rootScale}/>
-                        <RecommendedTeacher isFavourite={false} rootScale={rootScale}/>
-                        <RecommendedTeacher isFavourite={false} rootScale={rootScale}/>
-                        <RecommendedTeacher isFavourite={true} rootScale={rootScale}/>
-                    </NewsFeed>
+                    {selectedOptions[0] && (
+                        <React.Fragment>
+                            <TeacherFeedLabel>თქვენთვის რეკომენდებული მასწავლებლები</TeacherFeedLabel>
+                            <NewsFeed>
+                                <RecommendedTeacher isFavourite={true} rootScale={rootScale}/>
+                                <RecommendedTeacher isFavourite={true} rootScale={rootScale}/>
+                                <RecommendedTeacher isFavourite={false} rootScale={rootScale}/>
+                                <RecommendedTeacher isFavourite={false} rootScale={rootScale}/>
+                                <RecommendedTeacher isFavourite={true} rootScale={rootScale}/>
+                                <RecommendedTeacher isFavourite={false} rootScale={rootScale}/>
+                                <RecommendedTeacher isFavourite={false} rootScale={rootScale}/>
+                                <RecommendedTeacher isFavourite={true} rootScale={rootScale}/>
+                            </NewsFeed>
+                        </React.Fragment>
+                    )}
+                    {selectedOptions[1] && (
+                        <React.Fragment>
+                            <TeacherFeedLabel>ფავორიტები</TeacherFeedLabel>
+                            <NewsFeed>
+                            </NewsFeed>
+                        </React.Fragment>
+                    )}
+                    {selectedOptions[2] && (
+                        <React.Fragment>
+                            <TeacherFeedLabel>ანგარიში</TeacherFeedLabel>
+                            <NewsFeed>
+                            </NewsFeed>
+                        </React.Fragment>
+                    )}
+                    {selectedOptions[3] && (
+                        <React.Fragment>
+                            <TeacherFeedLabel>პარამეტრები</TeacherFeedLabel>
+                            <NewsFeed>
+                                <SettingsTab/>
+                            </NewsFeed>
+                        </React.Fragment>
+                    )}
                 </MainContentContainer>
             </Content>
         </NewsFeedPageRoot>

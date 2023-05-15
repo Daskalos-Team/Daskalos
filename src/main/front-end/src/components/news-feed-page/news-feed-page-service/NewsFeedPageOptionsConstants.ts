@@ -44,6 +44,20 @@ export interface OptionContainerProps {
     isSelected: boolean;
 }
 
+export interface SettingOptionsProps {
+    open: boolean;
+    animation: Keyframes | null;
+}
+
+export interface SettingArrowProps {
+    rotation: number;
+    rotationDirection: number;
+}
+
+export interface CheckboxProps {
+    checked: boolean;
+}
+
 export const NewsFeedPageColorPalette = {
     mainColor: "rgba(1,157,209,1)",
     secondaryColor: "#f0f6f7",
@@ -58,5 +72,8 @@ export const NewsFeedPageColorPalette = {
     recommendedTeacherPictureShadow: "powderblue",
     recommendedTeacherDescriptionBG: "transparent",
     scrollbarTrackBG: "#f0f6f7",
-    scrollbarThumbBG: "rgba(1,157,255,0.6)"
+    scrollbarThumbBG: "rgba(1,157,255,0.6)",
+    settingBG: "linear-gradient(130deg, rgba(70,207,255,0.3) 0%, rgba(130,187,255,0.3) 40%, rgba(50,157,255,0.3) 100%)",
+    checkboxCheckedBorder: "lightgreen",
+    checkboxUncheckedBorder: "skyblue"
 };
