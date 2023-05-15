@@ -8,7 +8,7 @@ import {
     IconCreditsProps,
     LeftPanelProps,
     LogoProps,
-    NewsFeedPageColorPalette, RootScaleProps
+    NewsFeedPageColorPalette, RootScaleProps, TabProps
 } from "./news-feed-page-service/NewsFeedPageOptionsConstants";
 import { SettingsTab } from "./settings-tab";
 
@@ -30,6 +30,7 @@ export const NewsFeedPage = () => {
     const [creditsVisible, setCreditsVisible] = useState(!menuButtonDisabled);
     const [creditsAnimation, setCreditsAnimation] = useState<Keyframes | null>(null);
     const [rootScale, setRootScale] = useState(1);
+    const [tabAnimation, setTabAnimation] = useState<Keyframes | null>(null);
 
     const ProfileButtonFunction = (e: any, name: any) => {
         alert(`${name} was clicked`);
@@ -43,9 +44,14 @@ export const NewsFeedPage = () => {
     };
 
     const SetOptionSelected = (option_id: number) => {
+        if (selectedOptions[option_id]) {
+            return;
+        }
         const newSelectedOptions = [false, false, false, false];
         newSelectedOptions[option_id] = true;
-        setSelectedOptions(newSelectedOptions);
+        setTabAnimation(TabSwitch);
+        setTimeout(() => setSelectedOptions(newSelectedOptions), 250);
+        setTimeout(() => setTabAnimation(null), 500);
     };
 
     const ToggleMenu = (on: boolean) => {
@@ -131,43 +137,45 @@ export const NewsFeedPage = () => {
                     </IconCredits>
                 </LeftPanel>
                 <MainContentContainer>
-                    {selectedOptions[0] && (
-                        <React.Fragment>
-                            <TeacherFeedLabel>თქვენთვის რეკომენდებული მასწავლებლები</TeacherFeedLabel>
-                            <NewsFeed>
-                                <RecommendedTeacher isFavourite={true} rootScale={rootScale}/>
-                                <RecommendedTeacher isFavourite={true} rootScale={rootScale}/>
-                                <RecommendedTeacher isFavourite={false} rootScale={rootScale}/>
-                                <RecommendedTeacher isFavourite={false} rootScale={rootScale}/>
-                                <RecommendedTeacher isFavourite={true} rootScale={rootScale}/>
-                                <RecommendedTeacher isFavourite={false} rootScale={rootScale}/>
-                                <RecommendedTeacher isFavourite={false} rootScale={rootScale}/>
-                                <RecommendedTeacher isFavourite={true} rootScale={rootScale}/>
-                            </NewsFeed>
-                        </React.Fragment>
-                    )}
-                    {selectedOptions[1] && (
-                        <React.Fragment>
-                            <TeacherFeedLabel>ფავორიტები</TeacherFeedLabel>
-                            <NewsFeed>
-                            </NewsFeed>
-                        </React.Fragment>
-                    )}
-                    {selectedOptions[2] && (
-                        <React.Fragment>
-                            <TeacherFeedLabel>ანგარიში</TeacherFeedLabel>
-                            <NewsFeed>
-                            </NewsFeed>
-                        </React.Fragment>
-                    )}
-                    {selectedOptions[3] && (
-                        <React.Fragment>
-                            <TeacherFeedLabel>პარამეტრები</TeacherFeedLabel>
-                            <NewsFeed>
-                                <SettingsTab/>
-                            </NewsFeed>
-                        </React.Fragment>
-                    )}
+                    <TabContainer animation={tabAnimation}>
+                        {selectedOptions[0] && (
+                            <React.Fragment>
+                                <TabTitle>თქვენთვის რეკომენდებული მასწავლებლები</TabTitle>
+                                <TabContent>
+                                    <RecommendedTeacher isFavourite={true} rootScale={rootScale}/>
+                                    <RecommendedTeacher isFavourite={true} rootScale={rootScale}/>
+                                    <RecommendedTeacher isFavourite={false} rootScale={rootScale}/>
+                                    <RecommendedTeacher isFavourite={false} rootScale={rootScale}/>
+                                    <RecommendedTeacher isFavourite={true} rootScale={rootScale}/>
+                                    <RecommendedTeacher isFavourite={false} rootScale={rootScale}/>
+                                    <RecommendedTeacher isFavourite={false} rootScale={rootScale}/>
+                                    <RecommendedTeacher isFavourite={true} rootScale={rootScale}/>
+                                </TabContent>
+                            </React.Fragment>
+                        )}
+                        {selectedOptions[1] && (
+                            <React.Fragment>
+                                <TabTitle>ფავორიტები</TabTitle>
+                                <TabContent>
+                                </TabContent>
+                            </React.Fragment>
+                        )}
+                        {selectedOptions[2] && (
+                            <React.Fragment>
+                                <TabTitle>ანგარიში</TabTitle>
+                                <TabContent>
+                                </TabContent>
+                            </React.Fragment>
+                        )}
+                        {selectedOptions[3] && (
+                            <React.Fragment>
+                                <TabTitle>პარამეტრები</TabTitle>
+                                <TabContent>
+                                    <SettingsTab/>
+                                </TabContent>
+                            </React.Fragment>
+                        )}
+                    </TabContainer>
                 </MainContentContainer>
             </Content>
         </NewsFeedPageRoot>
@@ -208,6 +216,13 @@ const CollapseIconCredits = keyframes`
 const RestoreIconCredits = keyframes`
   0% {font-size: 0}
   100% {font-size: 12px}
+`;
+
+const TabSwitch = keyframes`
+  0% {transform: translateX(0); scale: 1; opacity: 1; pointer-events: auto}
+  45% {transform: translateX(0); scale: 0.8; opacity: 0; pointer-events: none}
+  55% {transform: translateX(100%); scale: 1; opacity: 0; pointer-events: none}
+  100% {transform: translateX(0); scale: 1; opacity: 1; pointer-events: auto}
 `;
 
 const NewsFeedPageRoot = styled.div<RootScaleProps>`
@@ -395,7 +410,12 @@ const MainContentContainer = styled.div`
   margin-bottom: 100px;
 `;
 
-const TeacherFeedLabel = styled.p`
+const TabContainer = styled.div<TabProps>`
+  height: 100%;
+  animation: ${props => props.animation} 500ms;
+`;
+
+const TabTitle = styled.p`
   font-family: "Noto Serif Georgian";
   font-weight: 800;
   letter-spacing: 1px;
@@ -428,7 +448,7 @@ const TeacherFeedLabel = styled.p`
   };
 `;
 
-const NewsFeed = styled.div`
+const TabContent = styled.div`
   margin: 20px 0 20px 0;
   height: 100%;
   width: 100%;

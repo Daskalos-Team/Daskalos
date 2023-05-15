@@ -58,6 +58,10 @@ export interface CheckboxProps {
     checked: boolean;
 }
 
+export interface TabProps {
+    animation: Keyframes | null;
+}
+
 export const NewsFeedPageColorPalette = {
     mainColor: "rgba(1,157,209,1)",
     secondaryColor: "#f0f6f7",
