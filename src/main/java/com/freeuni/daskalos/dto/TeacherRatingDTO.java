@@ -17,7 +17,7 @@ public class TeacherRatingDTO {
 
     private Long ID;
 
-    private int studentID;
+    private Long studentID;
 
     private String studentComment;
 

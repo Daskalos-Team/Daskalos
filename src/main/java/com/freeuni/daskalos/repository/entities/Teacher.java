@@ -1,12 +1,16 @@
 package com.freeuni.daskalos.repository.entities;
 
 import com.freeuni.daskalos.utils.UserType;
+import jakarta.persistence.Basic;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import reactor.util.annotation.NonNull;
 
 @Entity
 public class Teacher extends User {
 
+    @Basic
+    @Column(name="on_place")
     private boolean onPlace;
 
     public Teacher(Long ID,

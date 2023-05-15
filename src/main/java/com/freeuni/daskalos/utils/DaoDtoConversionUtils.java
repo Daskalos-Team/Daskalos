@@ -1,10 +1,9 @@
 package com.freeuni.daskalos.utils;
 
-import com.freeuni.daskalos.dto.ExperienceDTO;
-import com.freeuni.daskalos.dto.SubjectDTO;
-import com.freeuni.daskalos.dto.TeacherRatingDTO;
-import com.freeuni.daskalos.dto.UserDTO;
+import com.freeuni.daskalos.dto.*;
 import com.freeuni.daskalos.repository.entities.*;
+
+import java.util.List;
 
 public class DaoDtoConversionUtils {
 
@@ -68,4 +67,38 @@ public class DaoDtoConversionUtils {
         return new Subject(subjectDTO.getID(),
                 subjectDTO.getName());
     }
+
+    public static Teacher toTeacher(TeacherDTO teacherDTO) {
+        return new Teacher(teacherDTO.getID(),
+                teacherDTO.getName(),
+                teacherDTO.getSurname(),
+                teacherDTO.getPassword(),
+                teacherDTO.getEmail(),
+                teacherDTO.getUserType(),
+                teacherDTO.getPhoneNumber(),
+                teacherDTO.getAddress(),
+                teacherDTO.isOnPlace(),
+                teacherDTO.getPriceMin(),
+                teacherDTO.getPriceMax());
+    }
+
+    public static TeacherDTO toTeacherDTO(Teacher teacher, List<ExperienceDTO> experience, List<TeacherRatingDTO> ratings, List<SubjectDTO> subjects) {
+        return TeacherDTO.builder().
+                ID(teacher.getID()).
+                name(teacher.getName()).
+                surname(teacher.getSurname()).
+                password(teacher.getPassword()).
+                email(teacher.getEmail()).
+                userType(teacher.getUserType()).
+                phoneNumber(teacher.getPhoneNumber()).
+                address(teacher.getAddress()).
+                isOnPlace(teacher.isOnPlace()).
+                priceMin(teacher.getPriceMin()).
+                priceMax(teacher.getPriceMax()).
+                teachersExperience(experience).
+                teacherRatings(ratings).
+                teacherSubjects(subjects).
+                build();
+    }
+
 }

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 @Service
 public interface TeacherService {
 
-    public TeacherDTO getTeacher(Long id);
+    public TeacherDTO getTeacherDTO(Long id);
 
     public void updateTeacher(TeacherDTO teacherDTO);
 

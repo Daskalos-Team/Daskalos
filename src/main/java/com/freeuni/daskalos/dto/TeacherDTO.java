@@ -34,6 +34,8 @@ public class TeacherDTO {
 
     private String address;
 
+    private boolean isOnPlace;
+
     private int priceMin;
 
     private int priceMax;

@@ -2,10 +2,12 @@ package com.freeuni.daskalos.repository.entities;
 
 import com.freeuni.daskalos.utils.UserType;
 import jakarta.persistence.*;
+import lombok.NoArgsConstructor;
 import reactor.util.annotation.NonNull;
 
 import java.io.Serializable;
 
+@NoArgsConstructor
 @Entity
 public abstract class User implements Serializable {
 
@@ -63,10 +65,6 @@ public abstract class User implements Serializable {
         this.name = name;
         this.surname = surname;
         this.userType = userType;
-    }
-
-    public User() {
-
     }
 
     public Long getID() {

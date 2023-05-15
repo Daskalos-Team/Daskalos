@@ -21,7 +21,7 @@ public class TeacherRating {
 
     @Basic
     @Column(name = "student_id")
-    private int studentID;
+    private Long studentID;
 
     @Basic
     @Column(name = "student_comment")

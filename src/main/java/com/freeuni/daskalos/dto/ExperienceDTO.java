@@ -28,4 +28,3 @@ public class ExperienceDTO implements Serializable {
 
     private Date endDate;
 }
-

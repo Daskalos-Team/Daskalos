@@ -9,6 +9,7 @@ import com.freeuni.daskalos.repository.entities.Teacher;
 import com.freeuni.daskalos.service.experience.ExperienceService;
 import com.freeuni.daskalos.service.rating.RatingService;
 import com.freeuni.daskalos.service.subject.SubjectService;
+import com.freeuni.daskalos.utils.DaoDtoConversionUtils;
 import com.freeuni.daskalos.utils.exceptions.UserNotExistException;
 import lombok.RequiredArgsConstructor;
 
@@ -26,21 +27,11 @@ public class TeacherServiceImpl implements TeacherService {
     private ExperienceService experienceService;
 
     @Override
-    public TeacherDTO getTeacher(Long ID) throws UserNotExistException {
-        Optional<Teacher> teacher = teacherRepository.findById(ID);
-        if (teacher.isPresent()) {
-            Teacher t = teacher.get();
-
-            return new TeacherDTO(t.getID(),
-                    t.getName(),
-                    t.getSurname(),
-                    t.getPassword(),
-                    t.getEmail(),
-                    t.getUserType(),
-                    t.getPhoneNumber(),
-                    t.getAddress(),
-                    t.getPriceMin(),
-                    t.getPriceMax(),
+    public TeacherDTO getTeacherDTO(Long ID) throws UserNotExistException {
+        Optional<Teacher> teacherOptional = teacherRepository.findById(ID);
+        if (teacherOptional.isPresent()) {
+            Teacher teacher = teacherOptional.get();
+            return DaoDtoConversionUtils.toTeacherDTO(teacher,
                     experienceService.getTeachersExperience(ID),
                     ratingService.getTeacherRating(ID),
                     subjectService.getTeachersSubjects(ID));
@@ -51,7 +42,21 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public void updateTeacher(TeacherDTO teacherDTO) {
-
+        Teacher updatedTeacherData = DaoDtoConversionUtils.toTeacher(
+                TeacherDTO.builder().
+                        ID(teacherDTO.getID()).
+                        name(teacherDTO.getName()).
+                        surname(teacherDTO.getSurname()).
+                        password(teacherDTO.getPassword()).
+                        email(teacherDTO.getEmail()).
+                        userType(teacherDTO.getUserType()).
+                        phoneNumber(teacherDTO.getPhoneNumber()).
+                        address(teacherDTO.getAddress()).
+                        isOnPlace(teacherDTO.isOnPlace()).
+                        priceMin(teacherDTO.getPriceMin()).
+                        priceMax(teacherDTO.getPriceMax()).
+                        build());
+        teacherRepository.save(updatedTeacherData);
     }
 
     @Override
