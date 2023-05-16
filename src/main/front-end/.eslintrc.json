@@ -27,8 +27,7 @@
   "plugins": [
     "react",
     "@typescript-eslint",
-    "unused-imports",
-    "jest"
+    "unused-imports"
   ],
   "rules": {
     "@typescript-eslint/no-non-null-assertion": [
