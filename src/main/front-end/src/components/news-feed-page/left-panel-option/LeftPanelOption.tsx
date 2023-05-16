@@ -46,7 +46,7 @@ const OptionContainer = styled.div<OptionContainerProps>`
 `;
 
 const OptionImg = styled.img`
-  margin: 30px 40px 30px 12.5px;
+  margin: 30px 35px 30px 12.5px;
   width: 45px;
   height: auto;
 `;

@@ -13,17 +13,16 @@ export const RecommendedTeacher = (props: RecommendedTeacherProps) => {
             "images/news-feed-page/FavouriteSelected.png" :
             "/images/news-feed-page/FavouriteUnselected.png");
     };
-    const TopFunction = () => {
+    const SelectTeacher = () => {
         alert("Teacher Recommendation was clicked");
     };
     return (
         <RecommendedTeacherRoot rootScale={props.rootScale}>
-            <RecommendedTeacherTop
-                onClick={() => TopFunction()}
-            >
-                <ProfilePicture src="/images/news-feed-page/TeachersIcon.png"/>
+            <RecommendedTeacherTop>
+                <ProfilePicture src="/images/news-feed-page/TeachersIcon.png"
+                    onClick={() => SelectTeacher()}/>
                 <RecommendedTeacherTopRight>
-                    <Name>Name</Name>
+                    <Name onClick={() => SelectTeacher()}>Name</Name>
                     <SubjectsLabel>Subjects</SubjectsLabel>
                     <SubjectList>
                         <Subject>subject 1</Subject>
@@ -91,7 +90,6 @@ const RecommendedTeacherTop = styled.div`
   align-items: flex-start;
   margin-right: 2px;
   box-sizing: border-box;
-  cursor: pointer;
 `;
 
 const ProfilePicture = styled.img`
@@ -100,6 +98,7 @@ const ProfilePicture = styled.img`
   border: 5px solid skyblue;
   border-radius: 50%;
   box-shadow: 0 0 70px 10px ${NewsFeedPageColorPalette.recommendedTeacherPictureShadow};
+  cursor: pointer;
 `;
 
 const RecommendedTeacherTopRight = styled.div`
@@ -125,6 +124,7 @@ const Name = styled.p`
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow-y: hidden;
+  cursor: pointer;
 `;
 
 const SubjectsLabel = styled.p`
@@ -135,6 +135,7 @@ const SubjectsLabel = styled.p`
   font-family: Inter;
   text-transform: uppercase;
   box-sizing: border-box;
+  cursor: default;
 `;
 
 const SubjectList = styled(CustomScrollbarComponent)`
@@ -146,6 +147,7 @@ const SubjectList = styled(CustomScrollbarComponent)`
 
 const Subject = styled.p`
   font-size: 16px;
+  cursor: default;
 `;
 
 const DescriptionLabel = styled.div`
@@ -162,6 +164,7 @@ const DescriptionLabel = styled.div`
   font-family: Inter;
   text-transform: uppercase;
   box-sizing: border-box;
+  cursor: default;
 `;
 
 const DescriptionTextfield = styled(CustomScrollbarComponent)<RecommendedTeacherScaleProps>`
@@ -198,14 +201,15 @@ const PriceRangeLabel = styled.p`
   height: 100%;
   font-style: italic;
   box-sizing: border-box;
+  cursor: default;
 `;
 
 const PriceRangeValue = styled.p`
   width: 120px;
   height: 100%;
   text-align: start;
-  text-transform: uppercase;
   box-sizing: border-box;
+  cursor: default;
 `;
 
 const Favourite = styled.img`

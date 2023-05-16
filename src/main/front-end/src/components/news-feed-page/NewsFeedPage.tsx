@@ -8,7 +8,7 @@ import {
     IconCreditsProps,
     LeftPanelProps,
     LogoProps,
-    NewsFeedPageColorPalette, RootScaleProps, TabProps
+    NewsFeedPageColorPalette, ProfileButtonMenuProps, RootScaleProps, TabProps
 } from "./news-feed-page-service/NewsFeedPageOptionsConstants";
 import { SettingsTab } from "./settings-tab";
 
@@ -31,10 +31,8 @@ export const NewsFeedPage = () => {
     const [creditsAnimation, setCreditsAnimation] = useState<Keyframes | null>(null);
     const [rootScale, setRootScale] = useState(1);
     const [tabAnimation, setTabAnimation] = useState<Keyframes | null>(null);
-
-    const ProfileButtonFunction = (e: any, name: any) => {
-        alert(`${name} was clicked`);
-    };
+    const [profileButtonMenuOpen, setProfileButtonMenuOpen] = useState(false);
+    const [profileButtonMenuAnimation, setProfileButtonMenuAnimation] = useState<Keyframes | null>(null);
 
     const SearchButtonFunction = () => {
         setFiltersOpen(!filtersOpen);
@@ -61,6 +59,11 @@ export const NewsFeedPage = () => {
         setCreditsAnimation(logoVisible ? CollapseIconCredits : RestoreIconCredits);
         setLeftPanelWidths(logoVisible ? [110, 110] : [250, 330]);
         setCreditsVisible(!logoVisible);
+    };
+
+    const ToggleProfileButtonMenu = () => {
+        setProfileButtonMenuAnimation(profileButtonMenuOpen ? FadeUp : FadeDown);
+        setProfileButtonMenuOpen(!profileButtonMenuOpen);
     };
 
     useLayoutEffect(() => {
@@ -98,8 +101,17 @@ export const NewsFeedPage = () => {
                 </SearchButton>
                 {filtersOpen && (<Filters/>)}
                 <ProfileButton
-                    onClick={(e) => ProfileButtonFunction(e, "Profile Button")}
+                    onClick={() => ToggleProfileButtonMenu()}
                 />
+                <ProfileButtonMenu open={profileButtonMenuOpen} animation={profileButtonMenuAnimation}>
+                    <ProfileButtonMenuTop>
+                        <ProfilePicture src="/images/news-feed-page/AccountIcon.png" alt="Profile Picture"/>
+                        <UserName>სახელი გვარი</UserName>
+                    </ProfileButtonMenuTop>
+                    <ProfileButtonMenuOption>ჩემი პროფილი</ProfileButtonMenuOption>
+                    <ProfileButtonMenuOption>ანგარიშის შეცვლა</ProfileButtonMenuOption>
+                    <ProfileButtonMenuOption>ანგარიშიდან გამოსვლა</ProfileButtonMenuOption>
+                </ProfileButtonMenu>
             </Header>
             <Content scale={rootScale}>
                 <LeftPanel minWidth={leftPanelWidths[0]} maxWidth={leftPanelWidths[1]}
@@ -201,6 +213,17 @@ const TabSwitch = keyframes`
   100% {transform: translateX(0); scale: 1; opacity: 1; pointer-events: auto}
 `;
 
+const FadeDown = keyframes`
+  0% {opacity: 0; transform: translateY(-40%);}
+  100% {opacity: 1; transform: translateY(0)}
+`;
+
+const FadeUp = keyframes`
+  0% {opacity: 1; transform: translateY(0)}
+  70% {opacity: 0}
+  100% {opacity: 0; transform: translateY(-40%)}
+`;
+
 const NewsFeedPageRoot = styled.div<RootScaleProps>`
   width: ${props => 100 / props.scale}%;
   gap: 12.6px;
@@ -243,8 +266,8 @@ const Logo = styled.img<LogoProps>`
 `;
 
 const ProfileButton = styled.button`
-  width: 70px;
-  height: 70px;
+  width: 60px;
+  height: 60px;
   right: 22px;
   top: 50%;
   position: absolute;
@@ -256,12 +279,15 @@ const ProfileButton = styled.button`
   background-color: transparent;
   background-position: center;
   background-size: cover;
-  background-image: url("/images/news-feed-page/MyProfile.png");
+  background-image: url("/images/news-feed-page/AccountIcon.png");
   cursor: pointer;
   transform: translateY(-50%);
   border-radius: 50%;
-
+  transform-origin: top;
+  transition-property: scale;
+  transition-duration: 200ms;
   &:hover {
+    scale: 1.07;
     &:before {
       content: "";
       left: 0;
@@ -274,6 +300,69 @@ const ProfileButton = styled.button`
   ;
   }
 ;
+`;
+
+const ProfileButtonMenu = styled.div<ProfileButtonMenuProps>`
+  width: 400px;
+  opacity: ${props => props.open ? 1 : 0};
+  pointer-events: ${props => props.open ? "auto" : "none"};
+  height: 300px;
+  animation: ${props => props.animation} 300ms;
+  background: ${NewsFeedPageColorPalette.profileButtonMenuBG};
+  z-index: 1;
+  position: absolute;
+  right: 20px;
+  top: 90px;
+  border: 4px solid ${NewsFeedPageColorPalette.profileButtonMenuBorder};
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  font-family: "Noto Serif Georgian";
+`;
+
+const ProfileButtonMenuTop = styled.div`
+  margin-left: 10px;
+  width: 100%;
+  height: 40%;
+  display: flex;
+  flex-direction: row;
+`;
+
+const ProfilePicture = styled.img`
+  width: 120px;
+  height: 120px;
+  padding: 14px;
+`;
+
+const UserName = styled.p`
+  width: 260px;
+  margin-right: auto;
+  font-weight: 800;
+  text-align: center;
+  font-size: 1.4rem;
+  margin-block: auto;
+  border-radius: 50%;
+  padding-inline: 10px;
+`;
+
+const ProfileButtonMenuOption = styled.p`
+  width: 100%;
+  height: 20%;
+  line-height: 52px;
+  padding-left: 30px;
+  text-align: start;
+  justify-self: end;
+  border-block: 4px solid transparent;
+  box-sizing: content-box;
+  font-weight: 550;
+  transition-property: border-color;
+  transition-duration: 100ms;
+  cursor: pointer;
+  &:hover {
+    border-color: ${NewsFeedPageColorPalette.profileButtonMenuBorder};
+  }
 `;
 
 const ShowMenuButton = styled.button`
