@@ -22,7 +22,12 @@ public class UserDTO implements Serializable {
 
     private boolean usingGoogle;
 
-    public UserDTO(String email, String password, String name, String surname, UserAddress address, String userType) {
+    public UserDTO(String email,
+                   String password,
+                   String name,
+                   String surname,
+                   UserAddress address,
+                   String userType) {
         this.email = email;
         this.password = password;
         this.name = name;
