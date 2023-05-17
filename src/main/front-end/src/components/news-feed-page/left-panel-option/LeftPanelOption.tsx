@@ -7,12 +7,19 @@ import {
 
 export const LeftPanelOption = (props: LeftPanelOptionProps) => {
     return (
-        <OptionContainer isSelected={props.isSelected}>
-            <OptionImg src={props.imageSrc}/>
-            <OptionLabel>{props.labelText}</OptionLabel>
-        </OptionContainer>
+        <OptionRoot>
+            <OptionContainer isSelected={props.isSelected}>
+                <OptionImg src={props.imageSrc}/>
+                <OptionLabel>{props.labelText}</OptionLabel>
+            </OptionContainer>
+            {props.isSelected && <SelectedEnd/>}
+        </OptionRoot>
     );
 };
+
+const OptionRoot = styled.div`
+  position: relative;
+`;
 
 const OptionContainer = styled.div<OptionContainerProps>`
   width: calc(100% - 30px);
@@ -28,21 +35,23 @@ const OptionContainer = styled.div<OptionContainerProps>`
   overflow: hidden;
   position: relative;
   cursor: pointer;
-  transform-style: preserve-3d;
   ${props => props.isSelected && `
     border: 5px solid ${NewsFeedPageColorPalette.secondaryColor};
     color: ${NewsFeedPageColorPalette.secondaryColor};
-    overflow: visible;
-    &:before {
-        content: "";
-        width: 50%;
-        height: 80px;
-        right: -6px;
-        transform: translateZ(-1px);
-        position: absolute;
-        background: ${NewsFeedPageColorPalette.secondaryColor};
-    };
   `}
+  &:hover {
+    color: ${NewsFeedPageColorPalette.secondaryColor};
+  }
+  z-index: 1;
+`;
+
+const SelectedEnd = styled.div`
+  top: 0;
+  width: calc((100% - 31px) / 2);
+  height: 80px;
+  right: 29px;
+  position: absolute;
+  background: ${NewsFeedPageColorPalette.secondaryColor};
 `;
 
 const OptionImg = styled.img`

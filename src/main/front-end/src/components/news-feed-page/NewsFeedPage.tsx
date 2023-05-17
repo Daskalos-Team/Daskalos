@@ -226,11 +226,14 @@ const FadeUp = keyframes`
 
 const NewsFeedPageRoot = styled.div<RootScaleProps>`
   width: ${props => 100 / props.scale}%;
+  height: ${props => 1100 / props.scale}px;
   gap: 12.6px;
   background: ${NewsFeedPageColorPalette.secondaryColor};
   overflow: hidden;
   transform-origin: top left;
   scale: ${props => props.scale};
+  color: black;
+  position: absolute;
 `;
 
 const Dimming = styled.div<DimmingProps>`
@@ -389,6 +392,7 @@ const SearchButton = styled.button`
   box-shadow: 0 4px 4px 0 ${NewsFeedPageColorPalette.searchButtonShadow};
   cursor: pointer;
   z-index: 3;
+  color: black;
 
   &:hover {
     box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.3);
@@ -426,8 +430,8 @@ const DropDownArrow = styled.img`
 `;
 
 const Content = styled.div<RootScaleProps>`
-  height: ${props => 1000 / props.scale}px;
-  margin: 0 20px 0 0;
+  height: ${props => (1000 + 100 * (1 - props.scale)) / props.scale}px;
+  margin-right: 20px;
   display: flex;
 `;
 
@@ -490,8 +494,7 @@ const TabTitle = styled.p`
   width: fit-content;
   margin: 20px 0 20px 0;
   max-height: 80px;
-  overflow-x: hidden;
-  overflow-y: hidden;
+  overflow: hidden;
   transition-property: color, scale;
   transition-duration: 0.3s;
   cursor: default;
