@@ -7,36 +7,42 @@ import com.freeuni.daskalos.dto.TeacherRatingDTO;
 import com.freeuni.daskalos.repository.*;
 import com.freeuni.daskalos.repository.entities.Student;
 import com.freeuni.daskalos.repository.entities.Teacher;
-import com.freeuni.daskalos.repository.entities.TeacherToExperience;
 import com.freeuni.daskalos.service.experience.ExperienceService;
+import com.freeuni.daskalos.service.experience.ExperienceServiceImpl;
 import com.freeuni.daskalos.service.rating.RatingService;
+import com.freeuni.daskalos.service.rating.RatingServiceImpl;
 import com.freeuni.daskalos.service.subject.SubjectService;
+import com.freeuni.daskalos.service.subject.SubjectServiceImpl;
 import com.freeuni.daskalos.service.teacher.TeacherService;
 import com.freeuni.daskalos.service.teacher.TeacherServiceImpl;
 import com.freeuni.daskalos.utils.UserType;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.junit.Assert.assertEquals;
 
+
+
+@DataJpaTest
+@AutoConfigureTestDatabase(connection =  EmbeddedDatabaseConnection.H2)
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@TestPropertySource(locations = "/application-test.properties")
 public class TeacherServiceIntegrationTest {
 
     @TestConfiguration
@@ -46,42 +52,58 @@ public class TeacherServiceIntegrationTest {
         public TeacherService teacherService() {
             return new TeacherServiceImpl();
         }
+
+        @Bean
+        public ExperienceService experienceService() {
+            return new ExperienceServiceImpl();
+        }
+
+        @Bean
+        public RatingService ratingService() {
+            return new RatingServiceImpl();
+        }
+
+        @Bean
+        public SubjectService subjectService() {
+            return new SubjectServiceImpl();
+        }
     }
 
-    @MockBean
-    private TeacherService teacherService;
 
-    @MockBean
+    @Autowired
     private TeacherRepository teacherRepository;
 
-    @MockBean
-    private ExperienceService experienceService;
-
-    @MockBean
+    @Autowired
     private ExperienceRepository experienceRepository;
 
-    @MockBean
+    @Autowired
     private TeacherToExperienceRepository teacherToExperienceRepository;
 
-    @MockBean
-    private RatingService ratingService;
-
-    @MockBean
+    @Autowired
     private TeacherRatingRepository teacherRatingRepository;
 
-    @MockBean
+    @Autowired
     private TeacherToRatingRepository teacherToRatingRepository;
 
-    @MockBean
-    private SubjectService subjectService;
-
-    @MockBean
+    @Autowired
     private SubjectRepository subjectRepository;
 
-    @MockBean
+    @Autowired
     private TeacherToSubjectRepository teacherToSubjectRepository;
 
-    @MockBean
+    @Autowired
+    private RatingService ratingService;
+
+    @Autowired
+    private SubjectService subjectService;
+
+    @Autowired
+    private ExperienceService experienceService;
+
+    @Autowired
+    private TeacherService teacherService;
+
+    @Autowired
     private UserRepository userRepository;
 
     private Teacher teacher1;
@@ -104,10 +126,8 @@ public class TeacherServiceIntegrationTest {
     public void setup() {
         teacher1 = new Teacher(10L, "Luka", "Kalandadze", "AtLeast^8", "email2",
                 UserType.TEACHER, "55555555", "Tbilisi", true, 100, 150);
-        Mockito.when(userRepository.findById(teacher1.getID())).thenReturn(Optional.ofNullable(teacher1));
         student1 = new Student("email1", "AtLeast^8", "Giorgi", "Adikashviili", UserType.STUDENT);
         student1.setID(11L);
-        Mockito.when(userRepository.findById(student1.getID())).thenReturn(Optional.ofNullable(student1));
 
         experienceDTO1 = ExperienceDTO.builder().
                 ID(1000L).
@@ -153,7 +173,7 @@ public class TeacherServiceIntegrationTest {
 
     @Test
     public void testAddRemoveExperience() {
-        Teacher t = (Teacher) userRepository.findById(teacher1.getID()).get();
+        Teacher t = userRepository.save(teacher1);
         teacherService.addExperience(t.getID(), experienceDTO1);
         List<ExperienceDTO> teachersExperience = teacherService.getTeacherDTO(teacher1.getID()).getTeachersExperience();
         assertEquals(1, teachersExperience.size());
