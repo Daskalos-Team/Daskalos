@@ -3,7 +3,7 @@ import styled from "styled-components";
 import {
     LeftPanelOptionProps, NewsFeedPageColorPalette,
     OptionContainerProps
-} from "../news-feed-page-service/NewsFeedPageOptionsConstants";
+} from "../../../service/news-feed-page-service";
 
 export const LeftPanelOption = (props: LeftPanelOptionProps) => {
     return (

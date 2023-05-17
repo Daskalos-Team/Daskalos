@@ -5,7 +5,7 @@ import {
     NewsFeedPageColorPalette,
     SettingArrowProps,
     SettingOptionsProps
-} from "../news-feed-page-service/NewsFeedPageOptionsConstants";
+} from "../../../service/news-feed-page-service";
 
 export const SettingsTab = () => {
     const [settingOptionsOpen, setSettingOptionsOpen] = useState([false, false, false]);

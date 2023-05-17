@@ -3,7 +3,7 @@ import styled from "styled-components";
 import {
     NewsFeedPageColorPalette,
     RecommendedTeacherProps, RecommendedTeacherScaleProps
-} from "../news-feed-page-service/NewsFeedPageOptionsConstants";
+} from "../../../service/news-feed-page-service";
 
 export const RecommendedTeacher = (props: RecommendedTeacherProps) => {
     const [imageSrc, setImageSrc] = useState(props.isFavourite ?

@@ -9,7 +9,7 @@ import {
     LeftPanelProps,
     LogoProps,
     NewsFeedPageColorPalette, ProfileButtonMenuProps, RootScaleProps, TabProps
-} from "./news-feed-page-service/NewsFeedPageOptionsConstants";
+} from "../../service/news-feed-page-service";
 import { SettingsTab } from "./settings-tab";
 
 export const NewsFeedPage = () => {
