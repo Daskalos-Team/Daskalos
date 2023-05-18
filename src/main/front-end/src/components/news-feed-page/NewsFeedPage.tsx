@@ -12,7 +12,7 @@ import {
 } from "../../service/news-feed-page-service";
 import { SettingsTab } from "./settings-tab";
 
-export const NewsFeedPage = () => {
+export const NewsFeedPage = (): React.JSX.Element => {
     const maxMenuOnWindowWidth = 1180;
     const maxUnscaledRootWidth = 700;
 

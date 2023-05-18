@@ -5,7 +5,7 @@ import {
     OptionContainerProps
 } from "../../../service/news-feed-page-service";
 
-export const LeftPanelOption = (props: LeftPanelOptionProps) => {
+export const LeftPanelOption = (props: LeftPanelOptionProps): React.JSX.Element => {
     return (
         <OptionRoot>
             <OptionContainer isSelected={props.isSelected}>

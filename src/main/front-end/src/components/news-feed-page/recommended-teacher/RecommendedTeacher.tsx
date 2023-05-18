@@ -5,7 +5,7 @@ import {
     RecommendedTeacherProps, RecommendedTeacherScaleProps
 } from "../../../service/news-feed-page-service";
 
-export const RecommendedTeacher = (props: RecommendedTeacherProps) => {
+export const RecommendedTeacher = (props: RecommendedTeacherProps): React.JSX.Element => {
     const [imageSrc, setImageSrc] = useState(props.isFavourite ?
         "/images/news-feed-page/FavouriteSelected.png" : "/images/news-feed-page/FavouriteUnselected.png");
     const FavouriteFunction = () => {

@@ -7,7 +7,7 @@ import {
     SettingOptionsProps
 } from "../../../service/news-feed-page-service";
 
-export const SettingsTab = () => {
+export const SettingsTab = (): React.JSX.Element => {
     const [settingOptionsOpen, setSettingOptionsOpen] = useState([false, false, false]);
     const [settingOptionsAnimations, setSettingOptionsAnimations] = useState<(Keyframes | null)[]>([null, null]);
     const [arrowRotations, setArrowRotations] = useState([0, 0, 0]);
