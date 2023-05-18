@@ -1,29 +1,28 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import {
-    RecommendedTeacherProps,
-    RecommendedTeacherRootProps
-} from "../news-feed-page-service/NewsFeedPageOptionsConstants";
+    NewsFeedPageColorPalette,
+    RecommendedTeacherProps, RecommendedTeacherScaleProps
+} from "../../../service/news-feed-page-service";
 
-export const RecommendedTeacher = (props: RecommendedTeacherProps) => {
+export const RecommendedTeacher = (props: RecommendedTeacherProps): React.JSX.Element => {
     const [imageSrc, setImageSrc] = useState(props.isFavourite ?
         "/images/news-feed-page/FavouriteSelected.png" : "/images/news-feed-page/FavouriteUnselected.png");
     const FavouriteFunction = () => {
         setImageSrc(imageSrc == "/images/news-feed-page/FavouriteUnselected.png" ?
-            "images/news-feed-page//FavouriteSelected.png" :
+            "images/news-feed-page/FavouriteSelected.png" :
             "/images/news-feed-page/FavouriteUnselected.png");
     };
-    const TopFunction = () => {
+    const SelectTeacher = () => {
         alert("Teacher Recommendation was clicked");
     };
     return (
-        <RecommendedTeacherRoot color={props.color}>
-            <RecommendedTeacherTop
-                onClick={() => TopFunction()}
-            >
-                <ProfilePicture/>
+        <RecommendedTeacherRoot rootScale={props.rootScale}>
+            <RecommendedTeacherTop>
+                <ProfilePicture src="/images/news-feed-page/TeachersIcon.png"
+                    onClick={() => SelectTeacher()}/>
                 <RecommendedTeacherTopRight>
-                    <Name>Name</Name>
+                    <Name onClick={() => SelectTeacher()}>Name</Name>
                     <SubjectsLabel>Subjects</SubjectsLabel>
                     <SubjectList>
                         <Subject>subject 1</Subject>
@@ -38,10 +37,10 @@ export const RecommendedTeacher = (props: RecommendedTeacherProps) => {
                 </RecommendedTeacherTopRight>
             </RecommendedTeacherTop>
             <DescriptionLabel>Description</DescriptionLabel>
-            <DescriptionTextfield>
+            <DescriptionTextfield rootScale={props.rootScale}>
                 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
             </DescriptionTextfield>
-            <RecommendedTeacherBottom>
+            <RecommendedTeacherBottom rootScale={props.rootScale}>
                 <PriceRangeLabel>Price Range:</PriceRangeLabel>
                 <PriceRangeValue>####-####</PriceRangeValue>
                 <Favourite onClick={() => FavouriteFunction()}
@@ -51,18 +50,35 @@ export const RecommendedTeacher = (props: RecommendedTeacherProps) => {
     );
 };
 
-const RecommendedTeacherRoot = styled.div<RecommendedTeacherRootProps>`
+const CustomScrollbarComponent = styled.div`
+  &::-webkit-scrollbar {
+    width: .8rem;
+  }
+  &::-webkit-scrollbar-track {
+    background: ${NewsFeedPageColorPalette.scrollbarTrackBG};
+    border-radius: 20px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: ${NewsFeedPageColorPalette.scrollbarThumbBG};
+    background-clip: padding-box;
+    border: .08rem solid transparent;
+    border-radius: 20px;
+  }
+`;
+
+const RecommendedTeacherRoot = styled.div<RecommendedTeacherScaleProps>`
   width: 450px;
-  height: 350px;
+  height: ${props => 360 / Math.pow(props.rootScale, 0.38)}px;
   padding: 21px 19px 26px 19px;
   margin: 10px;
   border-width: 1px;
   border-radius: 30px;
   border-style: solid;
-  border-color: rgba(0, 0, 0, 0.2);
+  border-color: ${NewsFeedPageColorPalette.border};
   box-sizing: border-box;
-  background-color: ${props => props.color};
+  background: ${NewsFeedPageColorPalette.recommendedTeacherRootBG};
   overflow: hidden;
+  color: darkblue;
 `;
 
 const RecommendedTeacherTop = styled.div`
@@ -72,16 +88,17 @@ const RecommendedTeacherTop = styled.div`
   flex-direction: row;
   justify-content: flex-start;
   align-items: flex-start;
-  margin: 0 0 6px 2px;
+  margin-right: 2px;
   box-sizing: border-box;
-  cursor: pointer;
 `;
 
-const ProfilePicture = styled.div`
+const ProfilePicture = styled.img`
   width: 170px;
   height: 150px;
-  border-radius: 30px;
-  background-color: #d9d9d9;
+  border: 5px solid skyblue;
+  border-radius: 50%;
+  box-shadow: 0 0 70px 10px ${NewsFeedPageColorPalette.recommendedTeacherPictureShadow};
+  cursor: pointer;
 `;
 
 const RecommendedTeacherTopRight = styled.div`
@@ -96,12 +113,18 @@ const RecommendedTeacherTopRight = styled.div`
 
 const Name = styled.p`
   width: 100%;
-  height: 24%;
+  height: 65px;
   font-size: 22px;
-  font-weight: 700;
-  font-family: Inter;
-  text-transform: uppercase;
+  font-weight: 800;
+  font-style: italic;
+  text-decoration: black underline;
+  line-height: normal;
   box-sizing: border-box;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow-y: hidden;
+  cursor: pointer;
 `;
 
 const SubjectsLabel = styled.p`
@@ -112,17 +135,19 @@ const SubjectsLabel = styled.p`
   font-family: Inter;
   text-transform: uppercase;
   box-sizing: border-box;
+  cursor: default;
 `;
 
-const SubjectList = styled.div`
+const SubjectList = styled(CustomScrollbarComponent)`
   width: 100%;
-  height: 75px;
+  height: 55px;
   overflow-y: auto;
   box-sizing: border-box;
 `;
 
 const Subject = styled.p`
   font-size: 16px;
+  cursor: default;
 `;
 
 const DescriptionLabel = styled.div`
@@ -133,59 +158,62 @@ const DescriptionLabel = styled.div`
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
-  margin: 10px 0 0 2px;
+  margin-left: 2px;
   font-size: 16px;
   font-weight: 600;
   font-family: Inter;
   text-transform: uppercase;
   box-sizing: border-box;
+  cursor: default;
 `;
 
-const DescriptionTextfield = styled.p`
+const DescriptionTextfield = styled(CustomScrollbarComponent)<RecommendedTeacherScaleProps>`
   width: 100%;
-  height: 33%;
+  height: ${props => 90 / props.rootScale}px;
   margin: 5px 0 5px 0;
   padding: 5px;
-  font-size: 13px;
+  font-size: ${props => 1 / Math.pow(props.rootScale, 0.55)}rem;
   font-family: Inter;
   overflow-y: auto;
   word-wrap: break-word;
-  border-left: 2px solid #9c9c9c40;
+  border-left: 2px solid ${NewsFeedPageColorPalette.border};
   border-radius: 10px;
   box-sizing: border-box;
+  background: ${NewsFeedPageColorPalette.recommendedTeacherDescriptionBG};
 `;
 
-const RecommendedTeacherBottom = styled.div`
+const RecommendedTeacherBottom = styled.div<RecommendedTeacherScaleProps>`
   width: 100%;
+  margin-top: 15px;
+  padding-left: 5px;
   display: flex;
   flex-direction: row;
   align-items: center;
+  font-size: ${props => .8 / Math.pow(props.rootScale, 0.2)}rem;
+  font-weight: 600;
 `;
 
 const PriceRangeLabel = styled.p`
-  width: 80px;
-  max-lines: 1;
+  width: 100px;
+  margin-right: 10px;
   overflow-y: hidden;
   text-wrap: normal;
   height: 100%;
-  font-size: 13px;
-  font-family: Inter;
+  font-style: italic;
   box-sizing: border-box;
+  cursor: default;
 `;
 
 const PriceRangeValue = styled.p`
-  width: 80px;
-  max-lines: 1;
+  width: 120px;
   height: 100%;
   text-align: start;
-  font-size: 13px;
-  font-family: Inter;
-  text-transform: uppercase;
   box-sizing: border-box;
+  cursor: default;
 `;
 
 const Favourite = styled.img`
-  width: 23px;
+  width: 27px;
   margin-left: auto;
   box-sizing: border-box;
   cursor: pointer;

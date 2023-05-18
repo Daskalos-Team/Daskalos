@@ -1,5 +1,6 @@
 package com.freeuni.daskalos.repository.entities;
 
+import com.freeuni.daskalos.repository.embeddables.UserAddress;
 import com.freeuni.daskalos.utils.UserType;
 import jakarta.persistence.*;
 import reactor.util.annotation.NonNull;
@@ -29,14 +30,14 @@ public class Teacher extends User {
                    @NonNull String mail,
                    @NonNull UserType userType,
                    @NonNull String phoneNumber,
-                   @NonNull String address,
+                   @NonNull UserAddress address,
                    @Nullable List<Experience> teachersExperience,
                    @Nullable List<TeacherRating> teacherRatings,
                    @Nullable List<Subject> teacherSubjects,
                    boolean onPlace,
                    int priceMin,
                    int priceMax) {
-        super(ID, name, secondName, password, mail, userType, address, phoneNumber, priceMin, priceMax);
+        super(ID, name, secondName, password, mail, userType, phoneNumber, address, priceMin, priceMax);
         this.teachersExperience = !Objects.isNull(teachersExperience) ? teachersExperience : List.of();
         this.teacherRatings = !Objects.isNull(teacherRatings) ? teacherRatings : List.of();
         this.onPlace = onPlace;
@@ -47,8 +48,9 @@ public class Teacher extends User {
                    @NonNull String password,
                    @NonNull String name,
                    @NonNull String surname,
+                   @NonNull UserAddress address,
                    @NonNull UserType userType) {
-        super(mail, password, name, surname, userType);
+        super(mail, password, name, surname, address, userType);
     }
 
     public Teacher() {
