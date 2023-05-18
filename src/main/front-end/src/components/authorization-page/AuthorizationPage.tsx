@@ -12,7 +12,7 @@ import {
 } from "../../service/authorization-page-service";
 import "./AuthorizationPage.css";
 
-export const AuthorizationPage = (): JSX.Element => {
+export const AuthorizationPage = (): React.JSX.Element => {
     const [user, setUser]: any = useState(undefined);
     const [userType, setUserType] = useState("Teacher");
     const [loginOption, setLoginOption] = useState(true);

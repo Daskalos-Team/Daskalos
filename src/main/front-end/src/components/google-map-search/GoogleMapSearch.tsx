@@ -12,7 +12,7 @@ import {
 import Geocode from "react-geocode";
 import "./GoogleMapSearch.css";
 
-export const GoogleMapSearch = (): JSX.Element => {
+export const GoogleMapSearch = (): React.JSX.Element => {
     const [map, setMap]: any = useState(null);
     const [mapContainer, setMapContainer] = useState(null);
     const [center, setCenter] = useState(defaultCenter);
