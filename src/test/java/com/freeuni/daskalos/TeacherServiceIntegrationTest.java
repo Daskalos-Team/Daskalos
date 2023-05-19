@@ -4,6 +4,7 @@ import com.freeuni.daskalos.dto.ExperienceDTO;
 import com.freeuni.daskalos.dto.SubjectDTO;
 import com.freeuni.daskalos.dto.TeacherRatingDTO;
 import com.freeuni.daskalos.repository.*;
+import com.freeuni.daskalos.repository.embeddables.UserAddress;
 import com.freeuni.daskalos.repository.entities.Student;
 import com.freeuni.daskalos.repository.entities.Teacher;
 import com.freeuni.daskalos.service.experience.ExperienceServiceImpl;
@@ -121,8 +122,8 @@ public class TeacherServiceIntegrationTest {
     @Before
     public void setup() {
         teacher1 = new Teacher(10L, "Luka", "Kalandadze", "AtLeast^8", "email2",
-                UserType.TEACHER, "55555555", "Tbilisi", true, 100, 150);
-        student1 = new Student("email1", "AtLeast^8", "Giorgi", "Adikashviili", UserType.STUDENT);
+                UserType.TEACHER, "55555555", new UserAddress(11.0, 20.0), true, 100, 150);
+        student1 = new Student("email1", "AtLeast^8", "Giorgi", "Adikashviili", new UserAddress(1, 2), UserType.STUDENT);
         student1.setID(11L);
 
         experienceDTO1 = ExperienceDTO.builder().

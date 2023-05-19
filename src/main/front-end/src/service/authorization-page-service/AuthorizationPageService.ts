@@ -1,12 +1,12 @@
 import axios from "axios";
 import {
-    FORM_ENDPOINT,
-    NOTIFICATION_MAP,
+    USER_ENDPOINT,
     PUBLIC_KEY,
     SERVICE_ID,
     TEMPLATE_ID
-} from "./AuthorizationPageServiceConstants";
+} from "../common-service";
 import emailjs from "@emailjs/browser";
+import { NOTIFICATION_MAP } from "./AuthorizationPageServiceConstants";
 
 export const loginWithGoogle = (user: any) => {
     axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
@@ -29,7 +29,7 @@ export const standardLogin = (email: string, password: string, google: boolean) 
         email,
         password
     };
-    axios.post(FORM_ENDPOINT + "login", userInfo, {
+    axios.post(USER_ENDPOINT + "login", userInfo, {
         headers: {
             "Content-type": "application/json; charset=UTF-8"
         }
@@ -46,7 +46,7 @@ export const changePassword = async (email: string, newPassword: string): Promis
         email,
         password: newPassword
     };
-    const promise = axios.post(FORM_ENDPOINT + "change", userInfo, {
+    const promise = axios.post(USER_ENDPOINT + "change", userInfo, {
         headers: {
             "Content-type": "application/json; charset=UTF-8"
         }
@@ -76,7 +76,7 @@ export const checkUserWithEmail = async (email: string): Promise<boolean> => {
     const userInfo = {
         email
     };
-    const promise = axios.post(FORM_ENDPOINT + "exists", userInfo, {
+    const promise = axios.post(USER_ENDPOINT + "exists", userInfo, {
         headers: {
             "Content-type": "application/json; charset=UTF-8"
         }
@@ -94,7 +94,7 @@ export const checkAndSendConfirmation = async (email: string, password: string, 
         email,
         password
     };
-    const promise = axios.post(FORM_ENDPOINT + "check", userInfo, {
+    const promise = axios.post(USER_ENDPOINT + "check", userInfo, {
         headers: {
             "Content-type": "application/json; charset=UTF-8"
         }
@@ -116,7 +116,7 @@ export const registration = (email: string, password: string, name: string, surn
         surname,
         userType
     };
-    axios.post(FORM_ENDPOINT + "register", userInfo, {
+    axios.post(USER_ENDPOINT + "register", userInfo, {
         headers: {
             "Content-type": "application/json; charset=UTF-8"
         }

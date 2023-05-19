@@ -1,10 +1,12 @@
 package com.freeuni.daskalos.service;
 
+import com.freeuni.daskalos.dto.UserAddressDTO;
 import com.freeuni.daskalos.dto.UserDTO;
 import com.freeuni.daskalos.repository.UserRepository;
 import com.freeuni.daskalos.repository.entities.User;
 import com.freeuni.daskalos.utils.AuthorizationStatus;
 import com.freeuni.daskalos.utils.DaoDtoConversionUtils;
+import com.freeuni.daskalos.utils.UserType;
 import com.freeuni.daskalos.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -81,8 +83,16 @@ public class UserService {
         return AuthorizationStatus.SUCCESSFUL_CHANGE.name();
     }
 
+    public List<UserDTO> getAllTeachersInRadius(UserAddressDTO address) {
+        Iterable<User> all = userRepository.findAll();
+        return StreamSupport.stream(all.spliterator(), false)
+                .map(DaoDtoConversionUtils::toUserDTO)
+                .filter(userDTO -> userDTO.getUserType().equals(UserType.TEACHER.name()) && UserUtils.isInRadius(userDTO.getAddress(), address, UserUtils.SEARCH_RADIUS))
+                .collect(Collectors.toList());
+    }
+
     public List<UserDTO> getAllUsers() {
         Iterable<User> all = userRepository.findAll();
-        return StreamSupport.stream(all.spliterator(), false).map(DaoDtoConversionUtils::toUserDao).collect(Collectors.toList());
+        return StreamSupport.stream(all.spliterator(), false).map(DaoDtoConversionUtils::toUserDTO).collect(Collectors.toList());
     }
 }

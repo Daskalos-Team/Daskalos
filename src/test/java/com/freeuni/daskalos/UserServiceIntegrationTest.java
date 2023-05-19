@@ -2,6 +2,7 @@ package com.freeuni.daskalos;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.freeuni.daskalos.dto.UserAddressDTO;
 import com.freeuni.daskalos.dto.UserDTO;
 import com.freeuni.daskalos.repository.UserRepository;
 import com.freeuni.daskalos.repository.entities.Student;
@@ -9,6 +10,7 @@ import com.freeuni.daskalos.repository.entities.Teacher;
 import com.freeuni.daskalos.repository.entities.User;
 import com.freeuni.daskalos.service.UserService;
 import com.freeuni.daskalos.utils.AuthorizationStatus;
+import com.freeuni.daskalos.repository.embeddables.UserAddress;
 import com.freeuni.daskalos.utils.UserType;
 import org.junit.Before;
 import org.junit.Test;
@@ -48,9 +50,9 @@ public class UserServiceIntegrationTest {
 
     @Before
     public void setUp() {
-        Student student = new Student("email1", "AtLeast^8", "Giorgi", "Adikashviili", UserType.STUDENT);
+        Student student = new Student("email1", "AtLeast^8", "Giorgi", "Adikashviili", new UserAddress(41.700858, 44.871817), UserType.STUDENT);
         student.setID(10L);
-        Teacher teacher = new Teacher("email2", "AtLeast^8", "Luka", "Kalandadze", UserType.TEACHER);
+        Teacher teacher = new Teacher("email2", "AtLeast^8", "Luka", "Kalandadze", new UserAddress(41.701219, 44.868266), UserType.TEACHER);
 
         List<User> allUsers = Arrays.asList(student, teacher);
 
@@ -113,7 +115,7 @@ public class UserServiceIntegrationTest {
     @Test
     public void whenUserAlreadyExists() {
         String expected = AuthorizationStatus.ALREADY_EXISTS.name();
-        String result = userService.addUser(new UserDTO("email1", "AtLeast^8", "Giorgi", "Adikashviili", UserType.STUDENT.name()));
+        String result = userService.addUser(new UserDTO("email1", "AtLeast^8", "Giorgi", "Adikashviili", new UserAddress(41.739191, 44.779635), UserType.STUDENT.name()));
 
         verifyFindByEMAILIsCalledOnce("email1");
         assertThat(result).isEqualTo(expected);
@@ -123,10 +125,10 @@ public class UserServiceIntegrationTest {
     public void whenSuccessfulRegistration() {
         String expected = AuthorizationStatus.SUCCESSFUL_REGISTRATION.name();
 
-        String result1 = userService.addUser(new UserDTO("email4", "AtLeast^8", "Shota", "Ghvinepadze", UserType.TEACHER.name()));
+        String result1 = userService.addUser(new UserDTO("email4", "AtLeast^8", "Shota", "Ghvinepadze", new UserAddress(41.739191, 44.779635), UserType.TEACHER.name()));
         verifyFindByEMAILIsCalledOnce("email4");
 
-        String result2 = userService.addUser(new UserDTO("email3", "AtLeast^8", "Nika", "Nargizashvili", UserType.STUDENT.name()));
+        String result2 = userService.addUser(new UserDTO("email3", "AtLeast^8", "Nika", "Nargizashvili", new UserAddress(41.739191, 44.779635), UserType.STUDENT.name()));
         verifyFindByEMAILIsCalledOnce("email3");
 
         assertThat(result1).isEqualTo(expected);
@@ -163,6 +165,7 @@ public class UserServiceIntegrationTest {
     }
 
     // Test ----------------------------------------changePassword---------------------------------
+
     @Test
     public void whenPasswordIsIllegal() {
         String expected = AuthorizationStatus.ILLEGAL_PASSWORD.name();
@@ -177,6 +180,16 @@ public class UserServiceIntegrationTest {
         String result = userService.changePassword("email1", "Giorgi^501");
 
         verifyFindByEMAILIsCalledOnce("email1");
+        assertThat(result).isEqualTo(expected);
+    }
+
+    // Test ----------------------------------------getAllTeachersInRadius-------------------------
+
+    @Test
+    public void whenFoundAllTeachersInRadius() {
+        List<String> expected = List.of("email2");
+        List<String> result = userService.getAllTeachersInRadius(new UserAddressDTO(41.699389, 44.875089)).stream().map(UserDTO::getEmail).collect(Collectors.toList());
+
         assertThat(result).isEqualTo(expected);
     }
 

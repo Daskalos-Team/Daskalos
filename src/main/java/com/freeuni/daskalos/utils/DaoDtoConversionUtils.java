@@ -1,6 +1,7 @@
 package com.freeuni.daskalos.utils;
 
 import com.freeuni.daskalos.dto.*;
+import com.freeuni.daskalos.repository.embeddables.UserAddress;
 import com.freeuni.daskalos.repository.entities.*;
 
 import java.util.List;
@@ -9,13 +10,13 @@ public class DaoDtoConversionUtils {
 
     public static User toUserEntity(UserDTO userDTO) {
         return userDTO.getUserType().equals(UserType.TEACHER.name()) ?
-                new Teacher(userDTO.getEmail(), userDTO.getPassword(), userDTO.getName(), userDTO.getSurname(), UserType.fromName(userDTO.getUserType()))
+                new Teacher(userDTO.getEmail(), userDTO.getPassword(), userDTO.getName(), userDTO.getSurname(), userDTO.getAddress(), UserType.fromName(userDTO.getUserType()))
                 :
-                new Student(userDTO.getEmail(), userDTO.getPassword(), userDTO.getName(), userDTO.getSurname(), UserType.fromName(userDTO.getUserType()));
+                new Student(userDTO.getEmail(), userDTO.getPassword(), userDTO.getName(), userDTO.getSurname(), userDTO.getAddress(), UserType.fromName(userDTO.getUserType()));
     }
 
-    public static UserDTO toUserDao(User userEntity) {
-        return new UserDTO(userEntity.getEmail(), userEntity.getPassword(), userEntity.getName(), userEntity.getSurname(), userEntity.getUserType().name());
+    public static UserDTO toUserDTO(User userEntity) {
+        return new UserDTO(userEntity.getEmail(), userEntity.getPassword(), userEntity.getName(), userEntity.getSurname(), userEntity.getAddress(), userEntity.getUserType().name());
     }
 
     public static ExperienceDTO toExperienceDTO(Experience experience) {
@@ -68,6 +69,14 @@ public class DaoDtoConversionUtils {
                 subjectDTO.getName());
     }
 
+    public static UserAddressDTO toUserAddressDTO(UserAddress userAddress) {
+        return new UserAddressDTO(userAddress.getLatitude(), userAddress.getLongitude());
+    }
+
+    public static UserAddress toUserAddress(UserAddressDTO userAddress) {
+        return new UserAddress(userAddress.getLatitude(), userAddress.getLongitude());
+    }
+
     public static Teacher toTeacher(TeacherDTO teacherDTO) {
         return new Teacher(teacherDTO.getID(),
                 teacherDTO.getName(),
@@ -76,7 +85,7 @@ public class DaoDtoConversionUtils {
                 teacherDTO.getEmail(),
                 teacherDTO.getUserType(),
                 teacherDTO.getPhoneNumber(),
-                teacherDTO.getAddress(),
+                toUserAddress(teacherDTO.getAddress()),
                 teacherDTO.isOnPlace(),
                 teacherDTO.getPriceMin(),
                 teacherDTO.getPriceMax());
@@ -91,7 +100,7 @@ public class DaoDtoConversionUtils {
                 email(teacher.getEmail()).
                 userType(teacher.getUserType()).
                 phoneNumber(teacher.getPhoneNumber()).
-                address(teacher.getAddress()).
+                address(toUserAddressDTO(teacher.getAddress())).
                 isOnPlace(teacher.isOnPlace()).
                 priceMin(teacher.getPriceMin()).
                 priceMax(teacher.getPriceMax()).
@@ -100,5 +109,4 @@ public class DaoDtoConversionUtils {
                 teacherSubjects(subjects).
                 build();
     }
-
 }

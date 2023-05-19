@@ -1,5 +1,6 @@
 package com.freeuni.daskalos.repository.entities;
 
+import com.freeuni.daskalos.repository.embeddables.UserAddress;
 import com.freeuni.daskalos.utils.UserType;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
@@ -20,11 +21,11 @@ public class Teacher extends User {
                    @NonNull String mail,
                    @NonNull UserType userType,
                    @NonNull String phoneNumber,
-                   @NonNull String address,
+                   @NonNull UserAddress address,
                    boolean onPlace,
                    int priceMin,
                    int priceMax) {
-        super(ID, name, secondName, password, mail, userType, address, phoneNumber, priceMin, priceMax);
+        super(ID, name, secondName, password, mail, userType, phoneNumber, address, priceMin, priceMax);
         this.onPlace = onPlace;
     }
 
@@ -32,8 +33,9 @@ public class Teacher extends User {
                    @NonNull String password,
                    @NonNull String name,
                    @NonNull String surname,
+                   @NonNull UserAddress address,
                    @NonNull UserType userType) {
-        super(mail, password, name, surname, userType);
+        super(mail, password, name, surname, address, userType);
     }
 
     public Teacher() {

@@ -32,7 +32,7 @@ public class TeacherDTO {
 
     private String phoneNumber;
 
-    private String address;
+    private UserAddressDTO address;
 
     private boolean isOnPlace;
 
