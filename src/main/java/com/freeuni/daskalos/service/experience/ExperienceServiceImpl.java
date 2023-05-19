@@ -6,15 +6,14 @@ import com.freeuni.daskalos.repository.TeacherToExperienceRepository;
 import com.freeuni.daskalos.repository.entities.Experience;
 import com.freeuni.daskalos.repository.entities.TeacherToExperience;
 import com.freeuni.daskalos.utils.DaoDtoConversionUtils;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-@RequiredArgsConstructor
 public class ExperienceServiceImpl implements ExperienceService {
-
+    @Autowired
     private ExperienceRepository experienceRepository;
-
+    @Autowired
     private TeacherToExperienceRepository teacherToExperienceRepository;
 
     @Override
@@ -34,7 +33,7 @@ public class ExperienceServiceImpl implements ExperienceService {
     }
 
     @Override
-    public void addTeacherExperience(Long teacherID, ExperienceDTO experience) {
+    public ExperienceDTO addTeacherExperience(Long teacherID, ExperienceDTO experience) {
         Experience addedExperience = experienceRepository.save(DaoDtoConversionUtils.toExperience(experience));
         TeacherToExperience teacherToExperience = new TeacherToExperience()
                 .toBuilder()
@@ -42,5 +41,6 @@ public class ExperienceServiceImpl implements ExperienceService {
                 .teacherID(teacherID)
                 .build();
         teacherToExperienceRepository.save(teacherToExperience);
+        return DaoDtoConversionUtils.toExperienceDTO(addedExperience);
     }
 }

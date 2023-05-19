@@ -12,5 +12,5 @@ public interface SubjectService {
 
     public void deleteTeacherSubject(Long teacherID, SubjectDTO subject);
 
-    public void addTeacherSubject(Long teacherID, SubjectDTO subject);
+    public SubjectDTO addTeacherSubject(Long teacherID, SubjectDTO subject);
 }

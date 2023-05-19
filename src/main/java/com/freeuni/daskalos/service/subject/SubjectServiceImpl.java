@@ -6,16 +6,16 @@ import com.freeuni.daskalos.repository.TeacherToSubjectRepository;
 import com.freeuni.daskalos.repository.entities.Subject;
 import com.freeuni.daskalos.repository.entities.TeacherToSubject;
 import com.freeuni.daskalos.utils.DaoDtoConversionUtils;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@RequiredArgsConstructor
 public class SubjectServiceImpl implements SubjectService {
 
+    @Autowired
     private SubjectRepository subjectRepository;
-
+    @Autowired
     private TeacherToSubjectRepository teacherToSubjectRepository;
 
     @Override
@@ -35,7 +35,7 @@ public class SubjectServiceImpl implements SubjectService {
     }
 
     @Override
-    public void addTeacherSubject(Long teacherID, SubjectDTO subject) {
+    public SubjectDTO addTeacherSubject(Long teacherID, SubjectDTO subject) {
         Subject addedSubject = subjectRepository.save(DaoDtoConversionUtils.toSubject(subject));
         TeacherToSubject teacherToSubject = new TeacherToSubject().
                 toBuilder().
@@ -43,5 +43,6 @@ public class SubjectServiceImpl implements SubjectService {
                 subjectID(addedSubject.getID()).
                 build();
         teacherToSubjectRepository.save(teacherToSubject);
+        return DaoDtoConversionUtils.toSubjectDTO(addedSubject);
     }
 }

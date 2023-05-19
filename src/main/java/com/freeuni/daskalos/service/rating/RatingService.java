@@ -12,5 +12,5 @@ public interface RatingService {
 
     public void removeTeacherRating(TeacherRatingDTO teacherRating);
 
-    public void addTeacherRating(Long teacherID, TeacherRatingDTO teacherRating);
+    public TeacherRatingDTO addTeacherRating(Long teacherID, TeacherRatingDTO teacherRating);
 }

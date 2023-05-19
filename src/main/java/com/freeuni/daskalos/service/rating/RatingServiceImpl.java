@@ -6,15 +6,14 @@ import com.freeuni.daskalos.repository.TeacherToRatingRepository;
 import com.freeuni.daskalos.repository.entities.TeacherRating;
 import com.freeuni.daskalos.repository.entities.TeacherToRating;
 import com.freeuni.daskalos.utils.DaoDtoConversionUtils;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-@RequiredArgsConstructor
 public class RatingServiceImpl implements RatingService {
-
+    @Autowired
     private TeacherRatingRepository teacherRatingRepository;
-
+    @Autowired
     private TeacherToRatingRepository teacherToRatingRepository;
 
     @Override
@@ -34,7 +33,7 @@ public class RatingServiceImpl implements RatingService {
     }
 
     @Override
-    public void addTeacherRating(Long teacherID, TeacherRatingDTO teacherRating) {
+    public TeacherRatingDTO addTeacherRating(Long teacherID, TeacherRatingDTO teacherRating) {
         TeacherRating addedRating = teacherRatingRepository.save(DaoDtoConversionUtils.toTeacherRating(teacherRating));
         TeacherToRating teacherToRating = TeacherToRating.
                 builder().
@@ -42,5 +41,6 @@ public class RatingServiceImpl implements RatingService {
                 ratingID(addedRating.getID()).
                 build();
         teacherToRatingRepository.save(teacherToRating);
+        return DaoDtoConversionUtils.toTeacherRatingDTO(addedRating);
     }
 }

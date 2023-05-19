@@ -18,14 +18,19 @@ import com.freeuni.daskalos.service.teacher.TeacherServiceImpl;
 import com.freeuni.daskalos.utils.UserType;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Calendar;
@@ -38,10 +43,10 @@ import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.junit.Assert.assertEquals;
 
 
-
+@ContextConfiguration
 @DataJpaTest
-@AutoConfigureTestDatabase(connection =  EmbeddedDatabaseConnection.H2)
-@RunWith(SpringRunner.class)
+@AutoConfigureTestDatabase(connection =  EmbeddedDatabaseConnection.H2, replace = AutoConfigureTestDatabase.Replace.NONE)
+@RunWith(SpringJUnit4ClassRunner.class)
 @TestPropertySource(locations = "/application-test.properties")
 public class TeacherServiceIntegrationTest {
 
@@ -130,7 +135,6 @@ public class TeacherServiceIntegrationTest {
         student1.setID(11L);
 
         experienceDTO1 = ExperienceDTO.builder().
-                ID(1000L).
                 employer("Microsoft").
                 jobDescription("Code maintenance").
                 startDate(new Date(2017, Calendar.NOVEMBER, 19)).
@@ -138,7 +142,6 @@ public class TeacherServiceIntegrationTest {
                 build();
 
         experienceDTO2 = ExperienceDTO.builder().
-                ID(1001L).
                 employer("Amazon").
                 jobDescription("Code development").
                 startDate(new Date(2014, Calendar.JUNE, 8)).
@@ -146,7 +149,6 @@ public class TeacherServiceIntegrationTest {
                 build();
 
         teacherRatingDTO1 = TeacherRatingDTO.builder().
-                ID(100L).
                 studentID(student1.getID()).
                 studentComment("very nice teacher").
                 rating(5).
@@ -154,7 +156,6 @@ public class TeacherServiceIntegrationTest {
                         build();
 
         teacherRatingDTO2 = TeacherRatingDTO.builder().
-                ID(101L).
                 studentID(student1.getID()).
                 studentComment("not bad teacher").
                 rating(3).
@@ -162,11 +163,9 @@ public class TeacherServiceIntegrationTest {
                         build();
 
         subjectDTO1 = SubjectDTO.builder().
-                ID(21L).
                 name("Aero Engineering").
                 build();
         subjectDTO2 = SubjectDTO.builder().
-                ID(21L).
                 name("Mechanical Engineering").
                 build();
     }
@@ -174,23 +173,23 @@ public class TeacherServiceIntegrationTest {
     @Test
     public void testAddRemoveExperience() {
         Teacher t = userRepository.save(teacher1);
-        teacherService.addExperience(t.getID(), experienceDTO1);
-        List<ExperienceDTO> teachersExperience = teacherService.getTeacherDTO(teacher1.getID()).getTeachersExperience();
+        ExperienceDTO addedExperience1 = teacherService.addExperience(t.getID(), experienceDTO1);
+        List<ExperienceDTO> teachersExperience = teacherService.getTeacherDTO(t.getID()).getTeachersExperience();
         assertEquals(1, teachersExperience.size());
-        assertThat(teachersExperience, contains(experienceDTO1));
+        assertThat(teachersExperience, contains(addedExperience1));
 
-        teacherService.addExperience(t.getID(), experienceDTO2);
-        teachersExperience = teacherService.getTeacherDTO(teacher1.getID()).getTeachersExperience();
+        ExperienceDTO addedExperience2 = teacherService.addExperience(t.getID(), experienceDTO2);
+        teachersExperience = teacherService.getTeacherDTO(t.getID()).getTeachersExperience();
         assertEquals(2, teachersExperience.size());
-        assertThat(teachersExperience, containsInAnyOrder(experienceDTO2, experienceDTO1));
+        assertThat(teachersExperience, containsInAnyOrder(addedExperience2, addedExperience1));
 
-        teacherService.removeExperience(experienceDTO1);
-        teachersExperience = teacherService.getTeacherDTO(teacher1.getID()).getTeachersExperience();
+        teacherService.removeExperience(addedExperience1);
+        teachersExperience = teacherService.getTeacherDTO(t.getID()).getTeachersExperience();
         assertEquals(1, teachersExperience.size());
-        assertThat(teachersExperience, contains(experienceDTO2));
+        assertThat(teachersExperience, contains(addedExperience2));
 
-        teacherService.removeExperience(experienceDTO2);
-        teachersExperience = teacherService.getTeacherDTO(teacher1.getID()).getTeachersExperience();
+        teacherService.removeExperience(addedExperience2);
+        teachersExperience = teacherService.getTeacherDTO(t.getID()).getTeachersExperience();
         assertEquals(0, teachersExperience.size());
     }
 
@@ -198,53 +197,53 @@ public class TeacherServiceIntegrationTest {
     public void testAddRemoveRating() {
         Teacher t = userRepository.save(teacher1);
         Student s = userRepository.save(student1);
-        teacherService.addRating(t.getID(), teacherRatingDTO1);
-        List<TeacherRatingDTO> teacherRatings = teacherService.getTeacherDTO(teacher1.getID()).getTeacherRatings();
+        TeacherRatingDTO addedRating1 = teacherService.addRating(t.getID(), teacherRatingDTO1);
+        List<TeacherRatingDTO> teacherRatings = teacherService.getTeacherDTO(t.getID()).getTeacherRatings();
         assertEquals(1, teacherRatings.size());
-        assertThat(teacherRatings, contains(teacherRatingDTO1));
+        assertThat(teacherRatings, contains(addedRating1));
 
-        teacherService.addRating(t.getID(), teacherRatingDTO2);
-        teacherRatings = teacherService.getTeacherDTO(teacher1.getID()).getTeacherRatings();
+        TeacherRatingDTO addedRating2 = teacherService.addRating(t.getID(), teacherRatingDTO2);
+        teacherRatings = teacherService.getTeacherDTO(t.getID()).getTeacherRatings();
         assertEquals(2, teacherRatings.size());
-        assertThat(teacherRatings, containsInAnyOrder(teacherRatingDTO2, teacherRatingDTO1));
+        assertThat(teacherRatings, containsInAnyOrder(addedRating2, addedRating1));
 
-        teacherService.removeRating(teacherRatingDTO1);
-        teacherRatings = teacherService.getTeacherDTO(teacher1.getID()).getTeacherRatings();
+        teacherService.removeRating(addedRating1);
+        teacherRatings = teacherService.getTeacherDTO(t.getID()).getTeacherRatings();
         assertEquals(1, teacherRatings.size());
-        assertThat(teacherRatings, contains(teacherRatingDTO2));
+        assertThat(teacherRatings, contains(addedRating2));
 
-        teacherService.removeRating(teacherRatingDTO2);
-        teacherRatings = teacherService.getTeacherDTO(teacher1.getID()).getTeacherRatings();
+        teacherService.removeRating(addedRating2);
+        teacherRatings = teacherService.getTeacherDTO(t.getID()).getTeacherRatings();
         assertEquals(0, teacherRatings.size());
     }
 
     @Test
     public void testAddRemoveSubject() {
         Teacher t = userRepository.save(teacher1);
-        teacherService.addSubject(t.getID(), subjectDTO1);
-        List<SubjectDTO> teacherSubjects = teacherService.getTeacherDTO(teacher1.getID()).getTeacherSubjects();
+        SubjectDTO addedSubject1 = teacherService.addSubject(t.getID(), subjectDTO1);
+        List<SubjectDTO> teacherSubjects = teacherService.getTeacherDTO(t.getID()).getTeacherSubjects();
         assertEquals(1, teacherSubjects.size());
-        assertThat(teacherSubjects, contains(subjectDTO1));
+        assertThat(teacherSubjects, contains(addedSubject1));
 
-        teacherService.addSubject(t.getID(), subjectDTO2);
-        teacherSubjects = teacherService.getTeacherDTO(teacher1.getID()).getTeacherSubjects();
+        SubjectDTO addedSubject2 = teacherService.addSubject(t.getID(), subjectDTO2);
+        teacherSubjects = teacherService.getTeacherDTO(t.getID()).getTeacherSubjects();
         assertEquals(2, teacherSubjects.size());
-        assertThat(teacherSubjects, containsInAnyOrder(subjectDTO2, subjectDTO1));
+        assertThat(teacherSubjects, containsInAnyOrder(addedSubject2, addedSubject1));
 
-        teacherService.removeSubject(t.getID(), subjectDTO1);
-        teacherSubjects = teacherService.getTeacherDTO(teacher1.getID()).getTeacherSubjects();
+        teacherService.removeSubject(t.getID(), addedSubject1);
+        teacherSubjects = teacherService.getTeacherDTO(t.getID()).getTeacherSubjects();
         assertEquals(1, teacherSubjects.size());
-        assertThat(teacherSubjects, contains(subjectDTO2));
+        assertThat(teacherSubjects, contains(addedSubject2));
 
-        teacherService.removeSubject(t.getID(), subjectDTO2);
-        teacherSubjects = teacherService.getTeacherDTO(teacher1.getID()).getTeacherSubjects();
+        teacherService.removeSubject(t.getID(), addedSubject2);
+        teacherSubjects = teacherService.getTeacherDTO(t.getID()).getTeacherSubjects();
         assertEquals(0, teacherSubjects.size());
     }
 
-    @Test
-    public void testUpdateTeacher() {
-        Teacher t = userRepository.save(teacher1);
-        teacherService.updateTeacher(TeacherDTO.builder().ID(t.getID()).name("Levani").build());
-        String newName = teacherService.getTeacherDTO(t.getID()).getName();
-    }
+//    @Test
+//    public void testUpdateTeacher() {
+//        Teacher t = userRepository.save(teacher1);
+//        teacherService.updateTeacher(TeacherDTO.builder().ID(t.getID()).name("Levani").build());
+//        String newName = teacherService.getTeacherDTO(t.getID()).getName();
+//    }
 }

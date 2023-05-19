@@ -12,5 +12,5 @@ public interface ExperienceService {
 
     public void removeTeacherExperience(ExperienceDTO experience);
 
-    public void addTeacherExperience(Long teacherID, ExperienceDTO experience);
+    public ExperienceDTO addTeacherExperience(Long teacherID, ExperienceDTO experience);
 }

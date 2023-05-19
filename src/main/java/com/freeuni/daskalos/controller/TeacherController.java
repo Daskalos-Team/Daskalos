@@ -5,7 +5,6 @@ import com.freeuni.daskalos.dto.SubjectDTO;
 import com.freeuni.daskalos.dto.TeacherDTO;
 import com.freeuni.daskalos.dto.TeacherRatingDTO;
 import com.freeuni.daskalos.service.teacher.TeacherService;
-import com.freeuni.daskalos.service.teacher.TeacherServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;
@@ -42,9 +41,9 @@ public class TeacherController implements ErrorController {
     }
 
     @PostMapping("/add_experience/{id}")
-    public ResponseEntity<HttpStatus> addExperience(@PathVariable long id, @RequestBody ExperienceDTO experienceDTO) {
+    public ResponseEntity<HttpStatus> addExperience(@PathVariable long id, @RequestBody ExperienceDTO experience) {
         try {
-            teacherService.addExperience(id, experienceDTO);
+            ExperienceDTO experienceDTO = teacherService.addExperience(id, experience);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
@@ -66,7 +65,7 @@ public class TeacherController implements ErrorController {
     @PostMapping("/add_rating/{id}")
     public ResponseEntity<TeacherDTO> addTeacherRating(@PathVariable long id, @RequestBody TeacherRatingDTO teacherRating) {
         try {
-            teacherService.addRating(id, teacherRating);
+            TeacherRatingDTO teacherRatingDTO = teacherService.addRating(id, teacherRating);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
@@ -88,7 +87,7 @@ public class TeacherController implements ErrorController {
     @PostMapping("/add_subject/{id}")
     public ResponseEntity<TeacherDTO> addTeacherSubject(@PathVariable long id, @RequestBody SubjectDTO subject) {
         try {
-            teacherService.addSubject(id, subject);
+            SubjectDTO subjectDTO = teacherService.addSubject(id, subject);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();

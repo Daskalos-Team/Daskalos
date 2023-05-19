@@ -11,19 +11,19 @@ import com.freeuni.daskalos.service.rating.RatingService;
 import com.freeuni.daskalos.service.subject.SubjectService;
 import com.freeuni.daskalos.utils.DaoDtoConversionUtils;
 import com.freeuni.daskalos.utils.exceptions.UserNotExistException;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Optional;
 
-@RequiredArgsConstructor
 public class TeacherServiceImpl implements TeacherService {
 
+    @Autowired
     private TeacherRepository teacherRepository;
-
+    @Autowired
     private SubjectService subjectService;
-
+    @Autowired
     private RatingService ratingService;
-
+    @Autowired
     private ExperienceService experienceService;
 
     @Override
@@ -60,8 +60,8 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public void addExperience(Long teacherID, ExperienceDTO experience) {
-        experienceService.addTeacherExperience(teacherID, experience);
+    public ExperienceDTO addExperience(Long teacherID, ExperienceDTO experience) {
+        return experienceService.addTeacherExperience(teacherID, experience);
     }
 
     @Override
@@ -70,8 +70,8 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public void addRating(Long teacherID, TeacherRatingDTO teacherRating) {
-        ratingService.addTeacherRating(teacherID, teacherRating);
+    public TeacherRatingDTO addRating(Long teacherID, TeacherRatingDTO teacherRating) {
+        return ratingService.addTeacherRating(teacherID, teacherRating);
     }
 
     @Override
@@ -80,8 +80,8 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public void addSubject(Long teacherID, SubjectDTO subject) {
-        subjectService.addTeacherSubject(teacherID, subject);
+    public SubjectDTO addSubject(Long teacherID, SubjectDTO subject) {
+        return subjectService.addTeacherSubject(teacherID, subject);
     }
 
     @Override

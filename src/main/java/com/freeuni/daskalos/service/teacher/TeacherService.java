@@ -13,15 +13,15 @@ public interface TeacherService {
 
     public void updateTeacher(TeacherDTO teacherDTO);
 
-    public void addExperience(Long teacherID, ExperienceDTO experience);
+    public ExperienceDTO addExperience(Long teacherID, ExperienceDTO experience);
 
     public void removeExperience(ExperienceDTO experience);
 
-    public void addRating(Long teacherID, TeacherRatingDTO teacherRating);
+    public TeacherRatingDTO addRating(Long teacherID, TeacherRatingDTO teacherRating);
 
     public void removeRating(TeacherRatingDTO teacherRating);
 
-    public void addSubject(Long teacherID, SubjectDTO subject);
+    public SubjectDTO addSubject(Long teacherID, SubjectDTO subject);
 
     public void removeSubject(Long teacherID, SubjectDTO subject);
 }
