@@ -4,7 +4,7 @@ import com.freeuni.daskalos.dto.ExperienceDTO;
 import com.freeuni.daskalos.dto.SubjectDTO;
 import com.freeuni.daskalos.dto.TeacherDTO;
 import com.freeuni.daskalos.dto.TeacherRatingDTO;
-import com.freeuni.daskalos.service.teacher.TeacherService;
+import com.freeuni.daskalos.service.teacher.TeacherServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 public class TeacherController implements ErrorController {
 
     @Autowired
-    private TeacherService teacherService;
+    private TeacherServiceImpl teacherService;
 
     @PostMapping("/{id}")
     public ResponseEntity<TeacherDTO> getTeacherData(@PathVariable long id) {

@@ -2,36 +2,27 @@ package com.freeuni.daskalos;
 
 import com.freeuni.daskalos.dto.ExperienceDTO;
 import com.freeuni.daskalos.dto.SubjectDTO;
-import com.freeuni.daskalos.dto.TeacherDTO;
 import com.freeuni.daskalos.dto.TeacherRatingDTO;
 import com.freeuni.daskalos.repository.*;
 import com.freeuni.daskalos.repository.entities.Student;
 import com.freeuni.daskalos.repository.entities.Teacher;
-import com.freeuni.daskalos.service.experience.ExperienceService;
 import com.freeuni.daskalos.service.experience.ExperienceServiceImpl;
-import com.freeuni.daskalos.service.rating.RatingService;
 import com.freeuni.daskalos.service.rating.RatingServiceImpl;
-import com.freeuni.daskalos.service.subject.SubjectService;
 import com.freeuni.daskalos.service.subject.SubjectServiceImpl;
-import com.freeuni.daskalos.service.teacher.TeacherService;
 import com.freeuni.daskalos.service.teacher.TeacherServiceImpl;
 import com.freeuni.daskalos.utils.UserType;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -54,22 +45,22 @@ public class TeacherServiceIntegrationTest {
     static class TeacherServiceIntegrationTestsContextConfiguration {
 
         @Bean
-        public TeacherService teacherService() {
+        public TeacherServiceImpl teacherService() {
             return new TeacherServiceImpl();
         }
 
         @Bean
-        public ExperienceService experienceService() {
+        public ExperienceServiceImpl experienceService() {
             return new ExperienceServiceImpl();
         }
 
         @Bean
-        public RatingService ratingService() {
+        public RatingServiceImpl ratingService() {
             return new RatingServiceImpl();
         }
 
         @Bean
-        public SubjectService subjectService() {
+        public SubjectServiceImpl subjectService() {
             return new SubjectServiceImpl();
         }
     }
@@ -97,16 +88,16 @@ public class TeacherServiceIntegrationTest {
     private TeacherToSubjectRepository teacherToSubjectRepository;
 
     @Autowired
-    private RatingService ratingService;
+    private RatingServiceImpl ratingService;
 
     @Autowired
-    private SubjectService subjectService;
+    private SubjectServiceImpl subjectService;
 
     @Autowired
-    private ExperienceService experienceService;
+    private ExperienceServiceImpl experienceService;
 
     @Autowired
-    private TeacherService teacherService;
+    private TeacherServiceImpl teacherService;
 
     @Autowired
     private UserRepository userRepository;

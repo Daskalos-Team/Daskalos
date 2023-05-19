@@ -7,16 +7,19 @@ import com.freeuni.daskalos.repository.entities.Experience;
 import com.freeuni.daskalos.repository.entities.TeacherToExperience;
 import com.freeuni.daskalos.utils.DaoDtoConversionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-public class ExperienceServiceImpl implements ExperienceService {
+@Service
+public class ExperienceServiceImpl {
+
     @Autowired
     private ExperienceRepository experienceRepository;
+
     @Autowired
     private TeacherToExperienceRepository teacherToExperienceRepository;
 
-    @Override
     public List<ExperienceDTO> getTeachersExperience(Long teacherID) {
         List<TeacherToExperience> teacherToExperienceList = teacherToExperienceRepository.findAllByTeacherID(teacherID);
         List<Experience> teachersExperience = experienceRepository.findAllById(teacherToExperienceList.stream().map(TeacherToExperience::getExperienceID).toList());
@@ -26,13 +29,11 @@ public class ExperienceServiceImpl implements ExperienceService {
                 toList();
     }
 
-    @Override
     public void removeTeacherExperience(ExperienceDTO experience) {
         experienceRepository.delete(DaoDtoConversionUtils.toExperience(experience));
         teacherToExperienceRepository.deleteByExperienceID(experience.getID());
     }
 
-    @Override
     public ExperienceDTO addTeacherExperience(Long teacherID, ExperienceDTO experience) {
         Experience addedExperience = experienceRepository.save(DaoDtoConversionUtils.toExperience(experience));
         TeacherToExperience teacherToExperience = new TeacherToExperience()

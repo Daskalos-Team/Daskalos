@@ -7,16 +7,17 @@ import com.freeuni.daskalos.repository.entities.TeacherRating;
 import com.freeuni.daskalos.repository.entities.TeacherToRating;
 import com.freeuni.daskalos.utils.DaoDtoConversionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-public class RatingServiceImpl implements RatingService {
+@Service
+public class RatingServiceImpl {
     @Autowired
     private TeacherRatingRepository teacherRatingRepository;
     @Autowired
     private TeacherToRatingRepository teacherToRatingRepository;
 
-    @Override
     public List<TeacherRatingDTO> getTeacherRating(Long teacherID) {
         List<TeacherToRating> teacherToRatingList = teacherToRatingRepository.findAllByTeacherID(teacherID);
         List<TeacherRating> teachersRatingList = teacherRatingRepository.findAllById(teacherToRatingList.stream().map(TeacherToRating::getRatingID).toList());
@@ -26,13 +27,11 @@ public class RatingServiceImpl implements RatingService {
                 toList();
     }
 
-    @Override
     public void removeTeacherRating(TeacherRatingDTO teacherRating) {
         teacherRatingRepository.delete(DaoDtoConversionUtils.toTeacherRating(teacherRating));
         teacherToRatingRepository.deleteByRatingID(teacherRating.getID());
     }
 
-    @Override
     public TeacherRatingDTO addTeacherRating(Long teacherID, TeacherRatingDTO teacherRating) {
         TeacherRating addedRating = teacherRatingRepository.save(DaoDtoConversionUtils.toTeacherRating(teacherRating));
         TeacherToRating teacherToRating = TeacherToRating.
