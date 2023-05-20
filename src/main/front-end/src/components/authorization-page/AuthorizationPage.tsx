@@ -13,7 +13,7 @@ import {
 import "./AuthorizationPage.css";
 
 export const AuthorizationPage = (): React.JSX.Element => {
-    const [user, setUser]: any = useState(undefined);
+    const [user, setUser] = useState<any>(undefined);
     const [userType, setUserType] = useState("Teacher");
     const [loginOption, setLoginOption] = useState(true);
     const [email, setEmail] = useState("");

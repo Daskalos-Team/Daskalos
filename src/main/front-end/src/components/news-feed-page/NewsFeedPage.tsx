@@ -1,21 +1,22 @@
 import React, { useState, useLayoutEffect } from "react";
 import styled, { Keyframes, keyframes } from "styled-components";
 import { RecommendedTeacher } from "./recommended-teacher";
-import { Filters } from "./filters-button";
+import { SearchComponent } from "./search-component";
 import { LeftPanelOption } from "./left-panel-option";
 import {
     DimmingProps,
     IconCreditsProps,
     LeftPanelProps,
-    LogoProps
-} from "./news-feed-page-service/NewsFeedPageOptionsConstants";
-
-const mainColor = "rgba(1,157,209,1)";
-const secondaryColor = "#f0f6f7";
+    LogoProps,
+    MAX_MENU_ON_WINDOW_WIDTH,
+    mainColor,
+    secondaryColor
+} from "../../service/news-feed-page-service";
+import "./NewsFeedHelperStyles.css";
 
 export const NewsFeedPage = () => {
-    const maxMenuOnWindowWidth = 1180;
     const [filtersOpen, setFiltersOpen] = useState(false);
+    const [searchState, setSearchState] = useState("search-hide");
     const [dimmingOpacity, setDimmingOpacity] = useState(0);
     const [arrowSrc, setArrowSrc] = useState("/images/news-feed-page/DownArrow.png");
     const [dimmingInteractive, setDimmingInteractive] = useState("none");
@@ -24,24 +25,32 @@ export const NewsFeedPage = () => {
     const [logoAnimation, setLogoAnimation] = useState<Keyframes | null>(null);
     const [leftPanelWidths, setLeftPanelWidths] = useState([220, 300]);
     const [leftPanelAnimation, setLeftPanelAnimation] = useState<Keyframes | null>(null);
-    const [menuButtonDisabled, setMenuButtonDisabled] = useState(document.body.offsetWidth
-        < maxMenuOnWindowWidth);
+    const [menuButtonDisabled, setMenuButtonDisabled] = useState(document.body.offsetWidth < MAX_MENU_ON_WINDOW_WIDTH);
     const [creditsVisible, setCreditsVisible] = useState(!menuButtonDisabled);
     const [creditsAnimation, setCreditsAnimation] = useState<Keyframes | null>(null);
+
     const ProfileButtonFunction = (e: any, name: any) => {
         alert(`${name} was clicked`);
     };
+
     const SearchButtonFunction = () => {
+        if (filtersOpen) {
+            setSearchState("search-hide");
+        } else {
+            setSearchState("search-show");
+        }
         setFiltersOpen(!filtersOpen);
         setArrowSrc(filtersOpen ? "/images/news-feed-page/DownArrow.png" : "/images/news-feed-page/UpArrow.png");
-        setDimmingOpacity(filtersOpen ? 0 : 0.8);
+        setDimmingOpacity(filtersOpen ? 0 : 0.95);
         setDimmingInteractive(dimmingInteractive == "none" ? "auto" : "none");
     };
+
     const SetOptionSelected = (option_id: number) => {
         const newSelectedOptions = [false, false, false, false];
         newSelectedOptions[option_id] = true;
         setSelectedOptions(newSelectedOptions);
     };
+
     const ToggleMenu = (on: boolean) => {
         setLogoVisible(on);
         setLogoAnimation(logoVisible ? ShrinkLogo : GrowLogo);
@@ -50,9 +59,10 @@ export const NewsFeedPage = () => {
         setLeftPanelWidths(logoVisible ? [85, 85] : [220, 300]);
         setCreditsVisible(!logoVisible);
     };
+
     useLayoutEffect(() => {
         function CheckForMenuResize() {
-            if (document.body.offsetWidth >= maxMenuOnWindowWidth) {
+            if (document.body.offsetWidth >= MAX_MENU_ON_WINDOW_WIDTH) {
                 setMenuButtonDisabled(false);
                 return;
             }
@@ -63,6 +73,7 @@ export const NewsFeedPage = () => {
         CheckForMenuResize();
         return () => window.removeEventListener("resize", CheckForMenuResize);
     }, []);
+
     return (
         <NewsFeedPageRoot>
             <Dimming opacity={dimmingOpacity} interactive={dimmingInteractive}/>
@@ -75,7 +86,9 @@ export const NewsFeedPage = () => {
                     <SearchLabel>ძებნა</SearchLabel>
                     <DropDownArrow src={arrowSrc} alt="Drop down"/>
                 </SearchButton>
-                {filtersOpen && (<Filters/>)}
+                <div className={searchState}>
+                    <SearchComponent/>
+                </div>
                 <ProfileButton
                     onClick={(e) => ProfileButtonFunction(e, "Profile Button")}
                 />
