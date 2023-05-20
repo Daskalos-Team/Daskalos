@@ -34,11 +34,11 @@ public class TeacherDTO {
 
     private UserAddressDTO address;
 
-    private boolean isOnPlace;
+    private Boolean isOnPlace;
 
-    private int priceMin;
+    private Integer priceMin;
 
-    private int priceMax;
+    private Integer priceMax;
 
     private List<ExperienceDTO> teachersExperience;
 

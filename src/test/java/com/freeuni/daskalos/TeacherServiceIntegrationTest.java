@@ -1,12 +1,11 @@
 package com.freeuni.daskalos;
 
-import com.freeuni.daskalos.dto.ExperienceDTO;
-import com.freeuni.daskalos.dto.SubjectDTO;
-import com.freeuni.daskalos.dto.TeacherRatingDTO;
+import com.freeuni.daskalos.dto.*;
 import com.freeuni.daskalos.repository.*;
 import com.freeuni.daskalos.repository.embeddables.UserAddress;
 import com.freeuni.daskalos.repository.entities.Student;
 import com.freeuni.daskalos.repository.entities.Teacher;
+import com.freeuni.daskalos.repository.entities.User;
 import com.freeuni.daskalos.service.experience.ExperienceServiceImpl;
 import com.freeuni.daskalos.service.rating.RatingServiceImpl;
 import com.freeuni.daskalos.service.subject.SubjectServiceImpl;
@@ -32,12 +31,11 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.junit.Assert.assertEquals;
-
+import static org.junit.Assert.*;
 
 @ContextConfiguration
 @DataJpaTest
-@AutoConfigureTestDatabase(connection =  EmbeddedDatabaseConnection.H2, replace = AutoConfigureTestDatabase.Replace.NONE)
+@AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2, replace = AutoConfigureTestDatabase.Replace.NONE)
 @RunWith(SpringJUnit4ClassRunner.class)
 @TestPropertySource(locations = "/application-test.properties")
 public class TeacherServiceIntegrationTest {
@@ -65,7 +63,6 @@ public class TeacherServiceIntegrationTest {
             return new SubjectServiceImpl();
         }
     }
-
 
     @Autowired
     private TeacherRepository teacherRepository;
@@ -140,20 +137,6 @@ public class TeacherServiceIntegrationTest {
                 endDate(new Date(2017, Calendar.NOVEMBER, 19)).
                 build();
 
-        teacherRatingDTO1 = TeacherRatingDTO.builder().
-                studentID(student1.getID()).
-                studentComment("very nice teacher").
-                rating(5).
-                //studentNameSecondName("Malkhaz Verstappen").
-                        build();
-
-        teacherRatingDTO2 = TeacherRatingDTO.builder().
-                studentID(student1.getID()).
-                studentComment("not bad teacher").
-                rating(3).
-                //studentNameSecondName("Karen Horner").
-                        build();
-
         subjectDTO1 = SubjectDTO.builder().
                 name("Aero Engineering").
                 build();
@@ -189,6 +172,17 @@ public class TeacherServiceIntegrationTest {
     public void testAddRemoveRating() {
         Teacher t = userRepository.save(teacher1);
         Student s = userRepository.save(student1);
+        teacherRatingDTO1 = TeacherRatingDTO.builder().
+                studentID(s.getID()).
+                studentComment("very nice teacher").
+                rating(5).
+                build();
+
+        teacherRatingDTO2 = TeacherRatingDTO.builder().
+                studentID(s.getID()).
+                studentComment("not bad teacher").
+                rating(3).
+                build();
         TeacherRatingDTO addedRating1 = teacherService.addRating(t.getID(), teacherRatingDTO1);
         List<TeacherRatingDTO> teacherRatings = teacherService.getTeacherDTO(t.getID()).getTeacherRatings();
         assertEquals(1, teacherRatings.size());
@@ -232,10 +226,38 @@ public class TeacherServiceIntegrationTest {
         assertEquals(0, teacherSubjects.size());
     }
 
-//    @Test
-//    public void testUpdateTeacher() {
-//        Teacher t = userRepository.save(teacher1);
-//        teacherService.updateTeacher(TeacherDTO.builder().ID(t.getID()).name("Levani").build());
-//        String newName = teacherService.getTeacherDTO(t.getID()).getName();
-//    }
+    @Test
+    public void testUpdateTeacher() {
+        Teacher t = userRepository.save(teacher1);
+        Iterable<User> users = userRepository.findAll();
+        // update phone number
+        teacherService.updateTeacher(TeacherDTO.builder().ID(t.getID()).phoneNumber("503909309").build());
+        assertEquals(teacherService.getTeacherDTO(t.getID()).getPhoneNumber(), "503909309");
+        // update address
+        UserAddressDTO userAddressDTO = new UserAddressDTO(10.0, 20.0);
+        userAddressDTO.setCity("Tbilisi");
+        userAddressDTO.setCountry("Sakartvelo");
+        teacherService.updateTeacher(TeacherDTO.builder().ID(t.getID()).address(userAddressDTO).build());
+        UserAddressDTO userAddress = teacherService.getTeacherDTO(t.getID()).getAddress();
+        assertEquals("Tbilisi", userAddress.getCity());
+        assertEquals("Sakartvelo", userAddress.getCountry());
+        assertEquals(userAddress.getLatitude(), 10.0, 0.00001);
+        assertEquals(userAddress.getLongitude(), 20.0, 0.00001);
+
+        // update on place
+        teacherService.updateTeacher(TeacherDTO.builder().ID(t.getID()).isOnPlace(false).build());
+        assertFalse(teacherService.getTeacherDTO(t.getID()).getIsOnPlace());
+
+        teacherService.updateTeacher(TeacherDTO.builder().ID(t.getID()).isOnPlace(true).build());
+        assertTrue(teacherService.getTeacherDTO(t.getID()).getIsOnPlace());
+
+        // update price min
+        teacherService.updateTeacher(TeacherDTO.builder().ID(t.getID()).priceMin(100).build());
+        int priceMin = teacherService.getTeacherDTO(t.getID()).getPriceMin();
+        assertEquals(priceMin, 100);
+        // update price max
+        teacherService.updateTeacher(TeacherDTO.builder().ID(t.getID()).priceMax(1000).build());
+        int priceMax = teacherService.getTeacherDTO(t.getID()).getPriceMax();
+        assertEquals(priceMax, 1000);
+    }
 }

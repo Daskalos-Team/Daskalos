@@ -43,8 +43,8 @@ public abstract class User implements Serializable {
                 @NonNull UserType userType,
                 @NonNull String phoneNumber,
                 @NonNull UserAddress address,
-                int priceMin,
-                int priceMax) {
+                Integer priceMin,
+                Integer priceMax) {
         this.ID = ID;
         this.name = name;
         this.surname = surname;

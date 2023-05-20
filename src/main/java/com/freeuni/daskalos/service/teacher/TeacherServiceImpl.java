@@ -21,10 +21,13 @@ public class TeacherServiceImpl {
 
     @Autowired
     private TeacherRepository teacherRepository;
+
     @Autowired
     private SubjectServiceImpl subjectService;
+
     @Autowired
     private RatingServiceImpl ratingService;
+
     @Autowired
     private ExperienceServiceImpl experienceService;
 
@@ -42,19 +45,15 @@ public class TeacherServiceImpl {
     }
 
     public void updateTeacher(TeacherDTO teacherDTO) {
+        TeacherDTO existingData = getTeacherDTO(teacherDTO.getID());
         Teacher updatedTeacherData = DaoDtoConversionUtils.toTeacher(
                 TeacherDTO.builder().
                         ID(teacherDTO.getID()).
-                        name(teacherDTO.getName()).
-                        surname(teacherDTO.getSurname()).
-                        password(teacherDTO.getPassword()).
-                        email(teacherDTO.getEmail()).
-                        userType(teacherDTO.getUserType()).
                         phoneNumber(teacherDTO.getPhoneNumber()).
-                        address(teacherDTO.getAddress()).
-                        isOnPlace(teacherDTO.isOnPlace()).
-                        priceMin(teacherDTO.getPriceMin()).
-                        priceMax(teacherDTO.getPriceMax()).
+                        address(teacherDTO.getAddress() != null ? teacherDTO.getAddress() : existingData.getAddress()).
+                        isOnPlace(teacherDTO.getIsOnPlace() != null ? teacherDTO.getIsOnPlace() : existingData.getIsOnPlace()).
+                        priceMin(teacherDTO.getPriceMin() != null ? teacherDTO.getPriceMin() : existingData.getPriceMin()).
+                        priceMax(teacherDTO.getPriceMax() != null ? teacherDTO.getPriceMax() : existingData.getPriceMax()).
                         build());
         teacherRepository.save(updatedTeacherData);
     }

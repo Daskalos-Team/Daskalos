@@ -70,11 +70,17 @@ public class DaoDtoConversionUtils {
     }
 
     public static UserAddressDTO toUserAddressDTO(UserAddress userAddress) {
-        return new UserAddressDTO(userAddress.getLatitude(), userAddress.getLongitude());
+        UserAddressDTO userAddressDTO = new UserAddressDTO(userAddress.getLatitude(), userAddress.getLongitude());
+        userAddressDTO.setCountry(userAddress.getCountry());
+        userAddressDTO.setCity(userAddress.getCity());
+        return userAddressDTO;
     }
 
-    public static UserAddress toUserAddress(UserAddressDTO userAddress) {
-        return new UserAddress(userAddress.getLatitude(), userAddress.getLongitude());
+    public static UserAddress toUserAddress(UserAddressDTO userAddressDTO) {
+        UserAddress userAddress = new UserAddress(userAddressDTO.getLatitude(), userAddressDTO.getLongitude());
+        userAddress.setCity(userAddressDTO.getCity());
+        userAddress.setCountry(userAddressDTO.getCountry());
+        return userAddress;
     }
 
     public static Teacher toTeacher(TeacherDTO teacherDTO) {
@@ -86,7 +92,7 @@ public class DaoDtoConversionUtils {
                 teacherDTO.getUserType(),
                 teacherDTO.getPhoneNumber(),
                 toUserAddress(teacherDTO.getAddress()),
-                teacherDTO.isOnPlace(),
+                teacherDTO.getIsOnPlace(),
                 teacherDTO.getPriceMin(),
                 teacherDTO.getPriceMax());
     }

@@ -11,7 +11,7 @@ import reactor.util.annotation.NonNull;
 public class Teacher extends User {
 
     @Basic
-    @Column(name="on_place")
+    @Column(name = "on_place")
     private boolean onPlace;
 
     public Teacher(Long ID,
@@ -22,9 +22,9 @@ public class Teacher extends User {
                    @NonNull UserType userType,
                    @NonNull String phoneNumber,
                    @NonNull UserAddress address,
-                   boolean onPlace,
-                   int priceMin,
-                   int priceMax) {
+                   Boolean onPlace,
+                   Integer priceMin,
+                   Integer priceMax) {
         super(ID, name, secondName, password, mail, userType, phoneNumber, address, priceMin, priceMax);
         this.onPlace = onPlace;
     }
