@@ -41,10 +41,10 @@ public class TeacherController implements ErrorController {
     }
 
     @PostMapping("/add_experience/{id}")
-    public ResponseEntity<HttpStatus> addExperience(@PathVariable long id, @RequestBody ExperienceDTO experience) {
+    public ResponseEntity<ExperienceDTO> addExperience(@PathVariable long id, @RequestBody ExperienceDTO experience) {
         try {
             ExperienceDTO experienceDTO = teacherService.addExperience(id, experience);
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(experienceDTO, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -63,10 +63,10 @@ public class TeacherController implements ErrorController {
     }
 
     @PostMapping("/add_rating/{id}")
-    public ResponseEntity<TeacherDTO> addTeacherRating(@PathVariable long id, @RequestBody TeacherRatingDTO teacherRating) {
+    public ResponseEntity<TeacherRatingDTO> addTeacherRating(@PathVariable long id, @RequestBody TeacherRatingDTO teacherRating) {
         try {
             TeacherRatingDTO teacherRatingDTO = teacherService.addRating(id, teacherRating);
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(teacherRatingDTO ,HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -85,10 +85,10 @@ public class TeacherController implements ErrorController {
     }
 
     @PostMapping("/add_subject/{id}")
-    public ResponseEntity<TeacherDTO> addTeacherSubject(@PathVariable long id, @RequestBody SubjectDTO subject) {
+    public ResponseEntity<SubjectDTO> addTeacherSubject(@PathVariable long id, @RequestBody SubjectDTO subject) {
         try {
             SubjectDTO subjectDTO = teacherService.addSubject(id, subject);
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(subjectDTO, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
