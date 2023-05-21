@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useState } from "react";
 import { GoogleMapsProvider } from "@ubilabs/google-maps-react-hooks";
 import {
     ICON_SIZE,
-    MAP_API_KEY,
     circleOptions,
     defaultCenter,
     getTeachersInRadius,
@@ -10,8 +9,8 @@ import {
     mapStyles
 } from "../../../service/news-feed-page-service/google-map-search-service";
 import Geocode from "react-geocode";
-import { PlacesAutocompleteInput } from "./AutocompleteInputComponent";
-import { addressToCoordinates } from "../../../service/common-service";
+import { PlacesAutocompleteInput } from "../../helper-components";
+import { addressToCoordinates, API_KEY } from "../../../service/common-service";
 import "./SearchComponent.css";
 
 export const SearchComponent = (): React.JSX.Element => {
@@ -25,7 +24,7 @@ export const SearchComponent = (): React.JSX.Element => {
     const [circle, setCircle] = useState<any>(undefined);
 
     useEffect(() => {
-        Geocode.setApiKey(MAP_API_KEY); // need Google maps API KEY for usage
+        Geocode.setApiKey(API_KEY); // need API KEY for usage
     }, []);
 
     const onMapLoad = useCallback((map: any) => {
@@ -98,7 +97,7 @@ export const SearchComponent = (): React.JSX.Element => {
 
     return (
         <GoogleMapsProvider
-            googleMapsAPIKey={MAP_API_KEY}
+            googleMapsAPIKey={API_KEY}
             mapOptions={mapDefaultOptions}
             mapContainer={mapContainer}
             onLoadMap={onMapLoad}

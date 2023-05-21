@@ -8,8 +8,8 @@ export const addressToCoordinates = async (address: string): Promise<any> => {
             return response.results[0].geometry.location;
         },
         (error) => {
-            alert("ასეთი მისამართი ვერ მოიძებნა");
             console.log(error);
+            return -1;
         }
     );
 };

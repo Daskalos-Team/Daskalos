@@ -5,15 +5,14 @@ import jakarta.persistence.Embeddable;
 @Embeddable
 public class UserAddress {
 
-    private String country;
-
-    private String city;
+    private String fullAddress;
 
     private double latitude;
 
     private double longitude;
 
-    public UserAddress(double latitude, double longitude) {
+    public UserAddress(String fullAddress, double latitude, double longitude) {
+        this.fullAddress = fullAddress;
         this.latitude = latitude;
         this.longitude = longitude;
     }
@@ -22,20 +21,12 @@ public class UserAddress {
 
     }
 
-    public String getCountry() {
-        return country;
+    public String getFullAddress() {
+        return fullAddress;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
+    public void setFullAddress(String country) {
+        this.fullAddress = country;
     }
 
     public double getLatitude() {

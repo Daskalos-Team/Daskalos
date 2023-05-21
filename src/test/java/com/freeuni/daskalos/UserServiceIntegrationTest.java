@@ -50,9 +50,9 @@ public class UserServiceIntegrationTest {
 
     @Before
     public void setUp() {
-        Student student = new Student("email1", "AtLeast^8", "Giorgi", "Adikashviili", new UserAddress(41.700858, 44.871817), UserType.STUDENT);
+        Student student = new Student("email1", "AtLeast^8", "Giorgi", "Adikashviili", new UserAddress("address1", 41.700858, 44.871817), UserType.STUDENT);
         student.setID(10L);
-        Teacher teacher = new Teacher("email2", "AtLeast^8", "Luka", "Kalandadze", new UserAddress(41.701219, 44.868266), UserType.TEACHER);
+        Teacher teacher = new Teacher("email2", "AtLeast^8", "Luka", "Kalandadze", new UserAddress("address2", 41.701219, 44.868266), UserType.TEACHER);
 
         List<User> allUsers = Arrays.asList(student, teacher);
 
@@ -115,7 +115,7 @@ public class UserServiceIntegrationTest {
     @Test
     public void whenUserAlreadyExists() {
         String expected = AuthorizationStatus.ALREADY_EXISTS.name();
-        String result = userService.addUser(new UserDTO("email1", "AtLeast^8", "Giorgi", "Adikashviili", new UserAddress(41.739191, 44.779635), UserType.STUDENT.name()));
+        String result = userService.addUser(new UserDTO("email1", "AtLeast^8", "Giorgi", "Adikashviili", new UserAddress("address3", 41.739191, 44.779635), UserType.STUDENT.name()));
 
         verifyFindByEMAILIsCalledOnce("email1");
         assertThat(result).isEqualTo(expected);
@@ -125,10 +125,10 @@ public class UserServiceIntegrationTest {
     public void whenSuccessfulRegistration() {
         String expected = AuthorizationStatus.SUCCESSFUL_REGISTRATION.name();
 
-        String result1 = userService.addUser(new UserDTO("email4", "AtLeast^8", "Shota", "Ghvinepadze", new UserAddress(41.739191, 44.779635), UserType.TEACHER.name()));
+        String result1 = userService.addUser(new UserDTO("email4", "AtLeast^8", "Shota", "Ghvinepadze", new UserAddress("address4", 41.739191, 44.779635), UserType.TEACHER.name()));
         verifyFindByEMAILIsCalledOnce("email4");
 
-        String result2 = userService.addUser(new UserDTO("email3", "AtLeast^8", "Nika", "Nargizashvili", new UserAddress(41.739191, 44.779635), UserType.STUDENT.name()));
+        String result2 = userService.addUser(new UserDTO("email3", "AtLeast^8", "Nika", "Nargizashvili", new UserAddress("address5", 41.739191, 44.779635), UserType.STUDENT.name()));
         verifyFindByEMAILIsCalledOnce("email3");
 
         assertThat(result1).isEqualTo(expected);
@@ -188,7 +188,7 @@ public class UserServiceIntegrationTest {
     @Test
     public void whenFoundAllTeachersInRadius() {
         List<String> expected = List.of("email2");
-        List<String> result = userService.getAllTeachersInRadius(new UserAddressDTO(41.699389, 44.875089)).stream().map(UserDTO::getEmail).collect(Collectors.toList());
+        List<String> result = userService.getAllTeachersInRadius(new UserAddressDTO("address", 41.699389, 44.875089)).stream().map(UserDTO::getEmail).collect(Collectors.toList());
 
         assertThat(result).isEqualTo(expected);
     }

@@ -5,33 +5,24 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 @JsonAutoDetect
 public class UserAddressDTO {
 
-    private String country;
-
-    private String city;
+    private String fullAddress;
 
     private double latitude;
 
     private double longitude;
 
-    public UserAddressDTO(double latitude, double longitude) {
+    public UserAddressDTO(String fullAddress, double latitude, double longitude) {
+        this.fullAddress = fullAddress;
         this.latitude = latitude;
         this.longitude = longitude;
     }
 
-    public String getCountry() {
-        return country;
+    public String getFullAddress() {
+        return fullAddress;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
+    public void setFullAddress(String fullAddress) {
+        this.fullAddress = fullAddress;
     }
 
     public double getLatitude() {

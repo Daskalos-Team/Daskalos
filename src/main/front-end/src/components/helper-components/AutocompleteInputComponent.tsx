@@ -3,10 +3,11 @@ import {
     Combobox,
     ComboboxInput,
     ComboboxList,
-    ComboboxOption
+    ComboboxOption,
+    ComboboxPopover
 } from "@reach/combobox";
 import "@reach/combobox/styles.css";
-import "./SearchComponent.css";
+import "../news-feed-page/search-component/SearchComponent.css";
 import React from "react";
 
 export const PlacesAutocompleteInput = ({setAddress}: any): React.JSX.Element => {
@@ -32,20 +33,18 @@ export const PlacesAutocompleteInput = ({setAddress}: any): React.JSX.Element =>
                     setValue(e.target.value);
                     setAddress(e.target.value);
                 }}
-                style={{width: "70vh"}}
                 disabled={!ready}
                 className="combobox-input"
                 placeholder="თქვენი ლოკაცია"
             />
-            {status === "OK" &&
-                <div className={"suggestions-combo"}>
-                    <ComboboxList>
-                        {data.map(({ place_id, description }) => (
-                            <ComboboxOption key={place_id} value={description} />
-                        ))}
-                    </ComboboxList>
-                </div>
-            }
+            <ComboboxPopover className={"suggestions-combo"}>
+                <ComboboxList>
+                    {status === "OK" &&
+                      data.map(({ place_id, description }) => (
+                          <ComboboxOption key={place_id} value={description} />
+                      ))}
+                </ComboboxList>
+            </ComboboxPopover>
         </Combobox>
     );
 };
