@@ -88,7 +88,8 @@ export const AuthorizationPage = (): React.JSX.Element => {
             return;
         }
         setCoordinates(coordinates);
-        await checkAndSendConfirmation(email, password, realCode).then(res => {
+        const code = generateRandomCode();
+        await checkAndSendConfirmation(email, password, code).then(res => {
             if (res) {
                 showVerifierPopup();
             }
@@ -120,8 +121,7 @@ export const AuthorizationPage = (): React.JSX.Element => {
         if (verifierContent === "email") {
             await checkUserWithEmail(email).then(res => {
                 if (res) {
-                    const code = randomInteger(10000, 1000000) + ""; // generate private code
-                    setRealCode(code);
+                    const code = generateRandomCode();
                     sendVerificationCode(email, code);
                     setVerifierContent("password-code");
                 }
@@ -142,6 +142,12 @@ export const AuthorizationPage = (): React.JSX.Element => {
             return;
         }
         hideVerifierPopup();
+    };
+
+    const generateRandomCode = () => {
+        const code = randomInteger(10000, 1000000) + ""; // generate private code
+        setRealCode(code);
+        return code;
     };
 
     const showVerifierPopup = () => {
