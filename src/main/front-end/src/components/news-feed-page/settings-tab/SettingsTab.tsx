@@ -10,8 +10,22 @@ import {
 export const SettingsTab = (): React.JSX.Element => {
     const [settingOptionsOpen, setSettingOptionsOpen] = useState([false, false, false]);
     const [settingOptionsAnimations, setSettingOptionsAnimations] = useState<(Keyframes | null)[]>([null, null]);
-    const [arrowRotations, setArrowRotations] = useState([0, 0, 0]);
-    const [checked, setChecked] = useState([true, false, false, false, true, false, false, true, false]);
+    const [arrowRotations, setArrowRotations] = useState([0, 0, 0, 0]);
+
+    const subjects = ["მათემატიკა", "ქართული", "ფიზიკა", "ბიოლოგია", "გეოგრაფია", "ისტორია"];
+    const weekdays = ["ორშაბათი", "სამშაბათი", "ოთხშაბათი", "ხუთშაბათი", "პარასკევი", "შაბათი", "კვირა"];
+    const checkedInitial = new Map([
+        ["ფავორიტები", true],
+        ["დისტანციური სწავლება", false],
+        ["ფასი", true]
+    ]);
+    for (const subject in subjects) {
+        checkedInitial.set(subject, false);
+    }
+    for (const weekday in weekdays) {
+        checkedInitial.set(weekday, false);
+    }
+    const [checked, setChecked] = useState(checkedInitial);
 
     const toggleSettings = (settingId: number) => {
         const newSettingOptionsOpen = settingOptionsOpen.slice();
@@ -25,9 +39,9 @@ export const SettingsTab = (): React.JSX.Element => {
         setArrowRotations(newArrowRotations);
     };
 
-    const toggleCheckboxChecked = (checkboxId: number) => {
-        const newChecked = checked.slice();
-        newChecked[checkboxId] = !newChecked[checkboxId];
+    const toggleCheckboxChecked = (checkboxName: string) => {
+        const newChecked = new Map(checked);
+        newChecked.set(checkboxName, !newChecked.get(checkboxName));
         setChecked(newChecked);
     };
 
@@ -43,7 +57,11 @@ export const SettingsTab = (): React.JSX.Element => {
                     <SettingOptions>
                         <SettingOption>
                             <OptionLabel>ფავორიტები</OptionLabel>
-                            <Checkbox checked={checked[0]} onClick={() => toggleCheckboxChecked(0)}/>
+                            <Checkbox checked={checked.get("ფავორიტები") as boolean} onClick={() => toggleCheckboxChecked("ფავორიტები")}/>
+                        </SettingOption>
+                        <SettingOption>
+                            <OptionLabel>დისტანციური სწავლება</OptionLabel>
+                            <Checkbox checked={checked.get("დისტანციური") as boolean} onClick={() => toggleCheckboxChecked("დისტანციური")}/>
                         </SettingOption>
                         <SettingOption>
                             <OptionLabel>ფასი</OptionLabel>
@@ -52,7 +70,7 @@ export const SettingsTab = (): React.JSX.Element => {
                                 <FiltersDash>–</FiltersDash>
                                 <FiltersNumberField type="number" min={0}/>
                             </PriceRangeContainer>
-                            <Checkbox checked={checked[1]} onClick={() => toggleCheckboxChecked(1)}/>
+                            <Checkbox checked={checked.get("ფასი") as boolean} onClick={() => toggleCheckboxChecked("ფასი")}/>
                         </SettingOption>
                         <SettingOption onClick={() => toggleSettings(2)}>
                             <Arrows src="/images/news-feed-page/DownArrow.png" rotation={arrowRotations[2]} rotationDirection={1}/>
@@ -61,55 +79,29 @@ export const SettingsTab = (): React.JSX.Element => {
                         </SettingOption>
                         <SettingOptionsContainer open={settingOptionsOpen[2]} animation={settingOptionsAnimations[2]}>
                             <SettingOptions>
-                                <SettingOption>
-                                    <OptionLabel>მათემატიკა</OptionLabel>
-                                    <Checkbox checked={checked[3]} onClick={() => toggleCheckboxChecked(3)}/>
-                                </SettingOption>
-                                <SettingOption>
-                                    <OptionLabel>ქართული</OptionLabel>
-                                    <Checkbox checked={checked[4]} onClick={() => toggleCheckboxChecked(4)}/>
-                                </SettingOption>
-                                <SettingOption>
-                                    <OptionLabel>ფიზიკა</OptionLabel>
-                                    <Checkbox checked={checked[5]} onClick={() => toggleCheckboxChecked(5)}/>
-                                </SettingOption>
-                                <SettingOption>
-                                    <OptionLabel>ბიოლოგია</OptionLabel>
-                                    <Checkbox checked={checked[6]} onClick={() => toggleCheckboxChecked(6)}/>
-                                </SettingOption>
-                                <SettingOption>
-                                    <OptionLabel>გეოგრაფია</OptionLabel>
-                                    <Checkbox checked={checked[7]} onClick={() => toggleCheckboxChecked(7)}/>
-                                </SettingOption>
-                                <SettingOption>
-                                    <OptionLabel>ისტორია</OptionLabel>
-                                    <Checkbox checked={checked[8]} onClick={() => toggleCheckboxChecked(8)}/>
-                                </SettingOption>
+                                {subjects.map((subject) => (
+                                    <SettingOption key={subject}>
+                                        <OptionLabel>{subject}</OptionLabel>
+                                        <Checkbox checked={checked.get(subject) as boolean} onClick={() => toggleCheckboxChecked(subject)}/>
+                                    </SettingOption>
+                                ))}
                             </SettingOptions>
                         </SettingOptionsContainer>
-                    </SettingOptions>
-                </SettingOptionsContainer>
-            </Setting>
-            <Setting>
-                <SettingTitleContainer onClick={() => toggleSettings(1)}>
-                    <Arrows src="/images/news-feed-page/DownArrow.png" rotation={arrowRotations[1]} rotationDirection={1}/>
-                    <SettingTitle>სხვა პარამეტრები</SettingTitle>
-                    <Arrows src="/images/news-feed-page/DownArrow.png" rotation={arrowRotations[1]} rotationDirection={-1}/>
-                </SettingTitleContainer>
-                <SettingOptionsContainer open={settingOptionsOpen[1]} animation={settingOptionsAnimations[1]}>
-                    <SettingOptions>
-                        <SettingOption>
-                            <OptionLabel>a</OptionLabel>
+                        <SettingOption onClick={() => toggleSettings(3)}>
+                            <Arrows src="/images/news-feed-page/DownArrow.png" rotation={arrowRotations[3]} rotationDirection={1}/>
+                            <SettingTitle>თავისუფალი დღეები</SettingTitle>
+                            <Arrows src="/images/news-feed-page/DownArrow.png" rotation={arrowRotations[3]} rotationDirection={-1}/>
                         </SettingOption>
-                        <SettingOption>
-                            <OptionLabel>b</OptionLabel>
-                        </SettingOption>
-                        <SettingOption>
-                            <OptionLabel>c</OptionLabel>
-                        </SettingOption>
-                        <SettingOption>
-                            <OptionLabel>d</OptionLabel>
-                        </SettingOption>
+                        <SettingOptionsContainer open={settingOptionsOpen[3]} animation={settingOptionsAnimations[3]}>
+                            <SettingOptions>
+                                {weekdays.map((weekday) => (
+                                    <SettingOption key={weekday}>
+                                        <OptionLabel>{weekday}</OptionLabel>
+                                        <Checkbox checked={checked.get(weekday) as boolean} onClick={() => toggleCheckboxChecked(weekday)}/>
+                                    </SettingOption>
+                                ))}
+                            </SettingOptions>
+                        </SettingOptionsContainer>
                     </SettingOptions>
                 </SettingOptionsContainer>
             </Setting>
