@@ -5,7 +5,6 @@ import { Filters } from "./filters-button";
 import { LeftPanelOption } from "./left-panel-option";
 import {
     DimmingProps,
-    IconCreditsProps,
     LeftPanelProps,
     LogoProps,
     NewsFeedPageColorPalette, ProfileButtonMenuProps, RootScaleProps, TabProps
@@ -27,8 +26,6 @@ export const NewsFeedPage = (): React.JSX.Element => {
     const [leftPanelAnimation, setLeftPanelAnimation] = useState<Keyframes | null>(null);
     const [menuButtonDisabled, setMenuButtonDisabled] = useState(document.body.offsetWidth
         < maxMenuOnWindowWidth);
-    const [creditsVisible, setCreditsVisible] = useState(!menuButtonDisabled);
-    const [creditsAnimation, setCreditsAnimation] = useState<Keyframes | null>(null);
     const [rootScale, setRootScale] = useState(1);
     const [tabAnimation, setTabAnimation] = useState<Keyframes | null>(null);
     const [profileButtonMenuOpen, setProfileButtonMenuOpen] = useState(false);
@@ -56,9 +53,7 @@ export const NewsFeedPage = (): React.JSX.Element => {
         setLogoVisible(on);
         setLogoAnimation(logoVisible ? ShrinkLogo : GrowLogo);
         setLeftPanelAnimation(logoVisible ? ShrinkLeftPanel : GrowLeftPanel);
-        setCreditsAnimation(logoVisible ? CollapseIconCredits : RestoreIconCredits);
         setLeftPanelWidths(logoVisible ? [110, 110] : [250, 330]);
-        setCreditsVisible(!logoVisible);
     };
 
     const ToggleProfileButtonMenu = () => {
@@ -126,17 +121,6 @@ export const NewsFeedPage = (): React.JSX.Element => {
                             imageSrc="/images/news-feed-page/SettingsIcon.png"
                             labelText="პარამეტრები"/>
                     </div>
-                    <IconCredits visible={creditsVisible} animation={creditsAnimation}>
-                        <p>
-                            Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik
-                            </a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
-                        </p>
-                        <p>
-                            Icons made by <a href="https://www.flaticon.com/authors/laisa-islam-ani" title="Laisa Islam Ani">
-                            Laisa Islam Ani</a> from <a href="https://www.flaticon.com/" title="Flaticon">
-                            www.flaticon.com</a>
-                        </p>
-                    </IconCredits>
                 </LeftPanel>
                 <MainContentContainer>
                     <TabContainer animation={tabAnimation}>
@@ -194,16 +178,6 @@ const Shimmer = keyframes`
   0% {left: -200px}
   40% {left: 100%}
   100% {left: 100%}
-`;
-
-const CollapseIconCredits = keyframes`
-  0% {font-size: 12px}
-  100% {font-size: 0}
-`;
-
-const RestoreIconCredits = keyframes`
-  0% {font-size: 0}
-  100% {font-size: 12px}
 `;
 
 const TabSwitch = keyframes`
@@ -458,17 +432,6 @@ const LeftPanel = styled.div<LeftPanelProps>`
     position: absolute;
     border-top-left-radius: 30px;
   };
-`;
-
-const IconCredits = styled.div<IconCreditsProps>`
-  position: absolute;
-  bottom: 50px;
-  margin: 0 40px 0 10px;
-  font-size: ${props => props.visible ? 12 : 0}px;
-  font-weight: 700;
-  text-align: center;
-  color: darkblue;
-  animation: ${props => props.animation} 300ms;
 `;
 
 const MainContentContainer = styled.div`

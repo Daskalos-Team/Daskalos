@@ -22,26 +22,26 @@ export const RecommendedTeacher = (props: RecommendedTeacherProps): React.JSX.El
                 <ProfilePicture src="/images/news-feed-page/TeachersIcon.png"
                     onClick={() => SelectTeacher()}/>
                 <RecommendedTeacherTopRight>
-                    <Name onClick={() => SelectTeacher()}>Name</Name>
-                    <SubjectsLabel>Subjects</SubjectsLabel>
+                    <Name onClick={() => SelectTeacher()}>სახელი გვარი</Name>
+                    <SubjectsLabel>საგნები</SubjectsLabel>
                     <SubjectList>
-                        <Subject>subject 1</Subject>
-                        <Subject>subject 2</Subject>
-                        <Subject>subject 3</Subject>
-                        <Subject>subject 4</Subject>
-                        <Subject>subject 5</Subject>
-                        <Subject>subject 6</Subject>
-                        <Subject>subject 7</Subject>
-                        <Subject>subject 8</Subject>
+                        <Subject>საგანი 1</Subject>
+                        <Subject>საგანი 2</Subject>
+                        <Subject>საგანი 3</Subject>
+                        <Subject>საგანი 4</Subject>
+                        <Subject>საგანი 5</Subject>
+                        <Subject>საგანი 6</Subject>
+                        <Subject>საგანი 7</Subject>
+                        <Subject>საგანი 8</Subject>
                     </SubjectList>
                 </RecommendedTeacherTopRight>
             </RecommendedTeacherTop>
-            <DescriptionLabel>Description</DescriptionLabel>
+            <DescriptionLabel>აღწერა</DescriptionLabel>
             <DescriptionTextfield rootScale={props.rootScale}>
                 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
             </DescriptionTextfield>
             <RecommendedTeacherBottom rootScale={props.rootScale}>
-                <PriceRangeLabel>Price Range:</PriceRangeLabel>
+                <PriceRangeLabel>ფასი:</PriceRangeLabel>
                 <PriceRangeValue>####-####</PriceRangeValue>
                 <Favourite onClick={() => FavouriteFunction()}
                     src={imageSrc} alt="Heart"/>
@@ -118,7 +118,6 @@ const Name = styled.p`
   font-weight: 800;
   font-style: italic;
   text-decoration: black underline;
-  line-height: normal;
   box-sizing: border-box;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -159,7 +158,7 @@ const DescriptionLabel = styled.div`
   justify-content: flex-start;
   align-items: center;
   margin-left: 2px;
-  font-size: 16px;
+  font-size: 1em;
   font-weight: 600;
   font-family: Inter;
   text-transform: uppercase;
@@ -194,19 +193,19 @@ const RecommendedTeacherBottom = styled.div<RecommendedTeacherScaleProps>`
 `;
 
 const PriceRangeLabel = styled.p`
-  width: 100px;
-  margin-right: 10px;
+  width: fit-content;
+  margin-right: 20px;
   overflow-y: hidden;
   text-wrap: normal;
   height: 100%;
-  font-style: italic;
+  font-size: 1.1em;
   box-sizing: border-box;
   cursor: default;
 `;
 
 const PriceRangeValue = styled.p`
   width: 120px;
-  height: 100%;
+  height: fit-content;
   text-align: start;
   box-sizing: border-box;
   cursor: default;

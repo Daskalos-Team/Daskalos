@@ -20,11 +20,6 @@ export interface LeftPanelProps {
     animation: Keyframes | null;
 }
 
-export interface IconCreditsProps {
-    visible: boolean;
-    animation: Keyframes | null;
-}
-
 export interface RecommendedTeacherProps {
     isFavourite: boolean;
     rootScale: number;
