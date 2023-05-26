@@ -1,9 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { INFO } from "../../data";
-import "./styles/Logo.css";
+import "./styles/ProfileImage.css";
 
-export const Logo = (props: any): React.JSX.Element => {
+export const ProfileImage = (props: any): React.JSX.Element => {
     let { width, link } = props;
 
     if (link === undefined) {
@@ -11,7 +10,7 @@ export const Logo = (props: any): React.JSX.Element => {
     }
 
     const imageElement = (
-        <img src={INFO.main.logo} alt="logo" className="logo" width={width} />
+        <img src={"ado.png"} alt="profile image" className="profile-image" width={width} />
     );
 
     return (

@@ -1,3 +1,3 @@
 export * from "./Card";
-export * from "./Logo";
+export * from "./ProfileImage";
 export * from "./NavBar";

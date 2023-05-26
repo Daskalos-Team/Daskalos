@@ -9,7 +9,7 @@ export const AllProjects = (): React.JSX.Element => {
             {INFO.projects.map((project, index) => (
                 <div className="all-projects-project" key={index}>
                     <Project
-                        logo={project.logo}
+                        logo={"ado.png"}
                         title={project.title}
                         description={project.description}
                         linkText={project.linkText}

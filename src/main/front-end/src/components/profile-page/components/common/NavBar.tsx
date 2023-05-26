@@ -18,43 +18,25 @@ export const NavBar = (props: any): React.JSX.Element => {
                                         : "nav-item"
                                 }
                             >
-                                <Link to="/">Home</Link>
+                                <Link to="/profile-page">პროფილი</Link>
                             </li>
                             <li
                                 className={
-                                    active === "about"
+                                    active === "profile"
                                         ? "nav-item active"
                                         : "nav-item"
                                 }
                             >
-                                <Link to="/about">About</Link>
+                                <Link to="/news-feed">მთავარი გვერდი</Link>
                             </li>
                             <li
                                 className={
-                                    active === "projects"
+                                    active === "logout"
                                         ? "nav-item active"
                                         : "nav-item"
                                 }
                             >
-                                <Link to="/projects">Projects</Link>
-                            </li>
-                            <li
-                                className={
-                                    active === "articles"
-                                        ? "nav-item active"
-                                        : "nav-item"
-                                }
-                            >
-                                <Link to="/articles">Articles</Link>
-                            </li>
-                            <li
-                                className={
-                                    active === "contact"
-                                        ? "nav-item active"
-                                        : "nav-item"
-                                }
-                            >
-                                <Link to="/contact">Contact</Link>
+                                <Link to="/">გამოსვლა</Link>
                             </li>
                         </ul>
                     </div>

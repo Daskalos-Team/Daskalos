@@ -2,40 +2,39 @@ import React, { useState, useEffect } from "react";
 import { faMailBulk } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-    faTwitter,
-    faGithub,
-    faStackOverflow,
-    faInstagram
+    faFacebook,
+    faInstagram,
+    faTwitter
 } from "@fortawesome/free-brands-svg-icons";
 import {
-    Logo,
+    ProfileImage,
     NavBar,
-    HomePageArticle,
+    Comment,
     Experience,
     AllProjects
 } from "./components";
-import { INFO, myArticles } from "./data";
-import { LOGO_DEFAULT_SIZE } from "../../service/profile-page-service";
+import { INFO, comments } from "./data";
+import { PROFILE_IMAGE_DEFAULT_SIZE } from "../../service/profile-page-service";
 import "./ProfilePage.css";
 
 export const ProfilePage = (): React.JSX.Element => {
-    const [stayLogo, setStayLogo] = useState(false);
-    const [logoSize, setLogoSize] = useState(LOGO_DEFAULT_SIZE);
-    const [oldLogoSize, setOldLogoSize] = useState(80);
+    const [stayProfileImage, setStayProfileImage] = useState(false);
+    const [profileImageSize, setProfileImageSize] = useState(PROFILE_IMAGE_DEFAULT_SIZE);
+    const [oldProfileImageSize, setOldProfileImageSize] = useState(80);
 
     // large or small size during scroll
-    const logoStyle: any = {
+    const profileImageStyle: any = {
         display: "flex",
-        position: stayLogo ? "fixed" : "relative",
-        top: stayLogo ? "4vh" : "auto",
+        position: stayProfileImage ? "fixed" : "relative",
+        top: stayProfileImage ? "3vh" : "auto",
         zIndex: 1000,
-        border: stayLogo ? "1px solid white" : "none",
-        borderRadius: stayLogo ? "50%" : "none",
-        boxShadow: stayLogo ? "0px 4px 10px rgba(0, 0, 0, 0.25)" : "none"
+        border: stayProfileImage ? "1px solid white" : "none",
+        borderRadius: stayProfileImage ? "50%" : "none",
+        boxShadow: stayProfileImage ? "0px 4px 10px rgba(0, 0, 0, 0.25)" : "none"
     };
 
     useEffect(() => {
-        document.title = INFO.main.title;
+        document.title = "პროფილი";
         window.scrollTo(0, 0);
     }, []);
 
@@ -43,63 +42,75 @@ export const ProfilePage = (): React.JSX.Element => {
         const handleScroll = () => {
             const scroll = Math.round(window.pageYOffset);
 
-            const newLogoSize = LOGO_DEFAULT_SIZE - scroll;
+            const newProfileImageSize = PROFILE_IMAGE_DEFAULT_SIZE - scroll;
 
-            if (newLogoSize < oldLogoSize) {
-                if (newLogoSize > 40) {
-                    setLogoSize(newLogoSize);
-                    setOldLogoSize(newLogoSize);
-                    setStayLogo(false);
+            if (newProfileImageSize < oldProfileImageSize) {
+                if (newProfileImageSize > 40) {
+                    setProfileImageSize(newProfileImageSize);
+                    setOldProfileImageSize(newProfileImageSize);
+                    setStayProfileImage(false);
                 } else {
-                    setStayLogo(true);
+                    setStayProfileImage(true);
                 }
             } else {
-                setLogoSize(newLogoSize);
-                setStayLogo(false);
+                setProfileImageSize(newProfileImageSize);
+                setStayProfileImage(false);
             }
         };
 
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
-    }, [logoSize, oldLogoSize]);
+    }, [profileImageSize, oldProfileImageSize]);
 
     return (
         <React.Fragment>
             <div className="page-content">
                 <NavBar active="home" />
                 <div className="content-wrapper">
-                    <div className="homepage-logo-container">
-                        <div style={logoStyle}>
-                            <Logo width={logoSize} link={false} />
+                    <div className="profile-page-profile-image-container">
+                        <div style={profileImageStyle}>
+                            <ProfileImage width={profileImageSize} link={false} />
                         </div>
                     </div>
 
-                    <div className="homepage-container">
-                        <div className="homepage-first-area">
-                            <div className="homepage-first-area-left-side">
-                                <div className="title homepage-title">
-                                    {INFO.homepage.title}
+                    <div className="profile-page-container">
+                        <div className="profile-page-first-area">
+                            <div className="profile-page-first-area-left-side">
+                                <div className="title profile-page-title">
+                                    {"პროგრამული უზრუნველყოფის ინჟინერი, მათემატიკის მასწავლებელი"}
                                 </div>
 
-                                <div className="subtitle homepage-subtitle">
-                                    {INFO.homepage.description}
+                                <div className="subtitle profile-page-subtitle">
+                                    {"2019 წლიდან ვასწავლი მათემატიკას, დამატებით ვარ პროგრამისტი და " +
+                                      "შემიძლია პროგრამირების და კიდევ სხვა საინტერესო საგნების სწავლებაც, " +
+                                      "ორივეს ერთად თუ მოისურვებთ შემოგთავაზებთ გარკვეულ ფასდაკლებებს"}
                                 </div>
                             </div>
 
-                            <div className="homepage-first-area-right-side">
-                                <div className="homepage-image-container">
-                                    <div className="homepage-image-wrapper">
+                            <div className="profile-page-first-area-right-side">
+                                <div className="profile-page-image-container">
+                                    <div className="profile-page-image-wrapper">
                                         <img
                                             src="cover.jpg"
                                             alt="about"
-                                            className="homepage-image"
+                                            className="profile-page-image"
                                         />
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div className="homepage-socials">
+                        <div className="profile-page-socials">
+                            <a
+                                href={`mailto:${INFO.socials.facebook}`}
+                                target="_blank"
+                                rel="noreferrer"
+                            >
+                                <FontAwesomeIcon
+                                    icon={faFacebook}
+                                    className="profile-page-social-icon"
+                                />
+                            </a>
                             <a
                                 href={INFO.socials.twitter}
                                 target="_blank"
@@ -107,27 +118,7 @@ export const ProfilePage = (): React.JSX.Element => {
                             >
                                 <FontAwesomeIcon
                                     icon={faTwitter}
-                                    className="homepage-social-icon"
-                                />
-                            </a>
-                            <a
-                                href={INFO.socials.github}
-                                target="_blank"
-                                rel="noreferrer"
-                            >
-                                <FontAwesomeIcon
-                                    icon={faGithub}
-                                    className="homepage-social-icon"
-                                />
-                            </a>
-                            <a
-                                href={INFO.socials.stackoverflow}
-                                target="_blank"
-                                rel="noreferrer"
-                            >
-                                <FontAwesomeIcon
-                                    icon={faStackOverflow}
-                                    className="homepage-social-icon"
+                                    className="profile-page-social-icon"
                                 />
                             </a>
                             <a
@@ -137,44 +128,44 @@ export const ProfilePage = (): React.JSX.Element => {
                             >
                                 <FontAwesomeIcon
                                     icon={faInstagram}
-                                    className="homepage-social-icon"
+                                    className="profile-page-social-icon"
                                 />
                             </a>
                             <a
-                                href={`mailto:${INFO.main.email}`}
+                                href={"mailto:adikashviligiorgi@gmail.com"}
                                 target="_blank"
                                 rel="noreferrer"
                             >
                                 <FontAwesomeIcon
                                     icon={faMailBulk}
-                                    className="homepage-social-icon"
+                                    className="profile-page-social-icon"
                                 />
                             </a>
                         </div>
 
-                        <div className="homepage-projects">
+                        <div className="profile-page-projects">
                             <AllProjects />
                         </div>
 
-                        <div className="homepage-after-title">
-                            <div className="homepage-articles">
-                                {myArticles.map((article: any, index: any) => (
+                        <div className="profile-page-after-title">
+                            <div className="profile-page-comments">
+                                {comments.map((comment: any, index: any) => (
                                     <div
-                                        className="homepage-article"
+                                        className="profile-page-comment"
                                         key={(index + 1).toString()}
                                     >
-                                        <HomePageArticle
+                                        <Comment
                                             key={(index + 1).toString()}
-                                            date={article().date}
-                                            title={article().title}
-                                            description={article().description}
-                                            link={"/article/" + (index + 1)}
+                                            date={comment().date}
+                                            title={comment().title}
+                                            description={comment().description}
+                                            link={"/comment/" + (index + 1)}
                                         />
                                     </div>
                                 ))}
                             </div>
 
-                            <div className="homepage-works">
+                            <div className="profile-page-experiences">
                                 <Experience />
                             </div>
                         </div>

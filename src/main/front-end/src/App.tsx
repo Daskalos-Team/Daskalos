@@ -16,6 +16,7 @@ function App() {
                     <Route path="register" element={<AuthorizationPage />} />
                 </Route>
                 <Route path="/news-feed" element={<NewsFeedPage />} />
+                <Route path="/profile-page" element={<ProfilePage />} />
             </Routes>
         </BrowserRouter>
     );

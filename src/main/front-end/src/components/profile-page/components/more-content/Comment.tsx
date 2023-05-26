@@ -2,25 +2,25 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
-import "./styles/HomePageArticle.css";
+import "./styles/Comment.css";
 
-export const HomePageArticle = (props: any): React.JSX.Element => {
+export const Comment = (props: any): React.JSX.Element => {
     const { title, description, date, link } = props;
 
     return (
         <React.Fragment>
-            <div className="homepage-article">
-                <div className="homepage-article-content">
-                    <div className="homepage-article-date">
+            <div className="content-comment">
+                <div className="content-comment-content">
+                    <div className="content-comment-date">
 						|&nbsp;&nbsp;&nbsp;{date}
                     </div>
-                    <div className="homepage-article-title">{title}</div>
-                    <div className="homepage-article-description">
+                    <div className="content-comment-title">{title}</div>
+                    <div className="content-comment-description">
                         {description}
                     </div>
-                    <div className="homepage-article-link">
+                    <div className="content-comment-link">
                         <Link to={link}>
-							Read article{" "}
+                            ნახეთ მოსწავლე{" "}
                             <FontAwesomeIcon
                                 style={{ fontSize: "10px" }}
                                 icon={faChevronRight}

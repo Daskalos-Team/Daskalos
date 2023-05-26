@@ -1,2 +1,2 @@
-export * from "./articles";
-export * from "./user";
+export * from "./Comments";
+export * from "./Info";

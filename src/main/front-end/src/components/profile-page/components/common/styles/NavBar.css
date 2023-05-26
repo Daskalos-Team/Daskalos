@@ -27,16 +27,16 @@
 .nav-background {
 	width: 380px;
 	height: 40px;
-	padding-left: 0%;
-	padding-right: 0%;
+	padding-left: 0;
+	padding-right: 0;
 	background: #fff;
-	box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 	border-radius: 40px;
 }
 
 .nav-list {
 	display: flex;
-	justify-content: space-between;
+	justify-content: space-around;
 	list-style: none;
 	align-items: center;
 	margin-left: -16px;
@@ -68,7 +68,7 @@
 		margin-left: 25%;
 		margin-right: 25%;
 		width: 80%;
-		font-size: 80%;
+		font-size: 90%;
 	}
 
 	.nav-background {

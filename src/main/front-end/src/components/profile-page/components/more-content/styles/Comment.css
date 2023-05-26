@@ -8,31 +8,31 @@
 	--secondary-font: "Roboto", sans-serif;
 }
 
-.homepage-article {
+.content-comment {
 	width: 90%;
 	mix-blend-mode: normal;
 	border-radius: 20px;
 	opacity: 0.8;
 }
 
-.homepage-article:hover {
+.content-comment:hover {
 	background: #fafafa;
 	opacity: 1;
 	transition: background-color 0.3s ease-in-out;
 }
 
-.homepage-article-content {
+.content-comment-content {
 	padding: 30px;
 }
 
-.homepage-article-date {
+.content-comment-date {
 	opacity: 1;
 	color: var(--tertiary-color);
 	font-size: 12px;
 	margin-bottom: 1em;
 }
 
-.homepage-article-title {
+.content-comment-title {
 	opacity: 1;
 	color: var(--primary-color);
 	font-size: 16px;
@@ -40,27 +40,27 @@
 	font-weight: 700;
 }
 
-.homepage-article-description {
+.content-comment-description {
 	opacity: 1;
 	color: var(--secondary-color);
 	font-size: 12px;
 	line-height: 1.5;
 }
 
-.homepage-article-link {
+.content-comment-link {
 	opacity: 1;
 	padding-top: 20px;
 	font-size: 15px;
 	font-weight: 700;
 }
 
-.homepage-article-link a {
+.content-comment-link a {
 	color: var(--link-color);
 	text-decoration: none;
 }
 
 @media (max-width: 600px) {
-	.homepage-article {
+	.content-comment {
 		width: 100%;
 	}
 }
