@@ -3,7 +3,7 @@ import { faMailBulk } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faFacebook,
-    faInstagram,
+    faInstagram, faLinkedin,
     faTwitter
 } from "@fortawesome/free-brands-svg-icons";
 import {
@@ -20,7 +20,7 @@ import "./ProfilePage.css";
 export const ProfilePage = (): React.JSX.Element => {
     const [stayProfileImage, setStayProfileImage] = useState(false);
     const [profileImageSize, setProfileImageSize] = useState(PROFILE_IMAGE_DEFAULT_SIZE);
-    const [oldProfileImageSize, setOldProfileImageSize] = useState(80);
+    const [oldProfileImageSize, setOldProfileImageSize] = useState(PROFILE_IMAGE_DEFAULT_SIZE);
 
     // large or small size during scroll
     const profileImageStyle: any = {
@@ -28,9 +28,9 @@ export const ProfilePage = (): React.JSX.Element => {
         position: stayProfileImage ? "fixed" : "relative",
         top: stayProfileImage ? "3vh" : "auto",
         zIndex: 1000,
-        border: stayProfileImage ? "1px solid white" : "none",
         borderRadius: stayProfileImage ? "50%" : "none",
-        boxShadow: stayProfileImage ? "0px 4px 10px rgba(0, 0, 0, 0.25)" : "none"
+        border: "1px solid white",
+        boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.25)"
     };
 
     useEffect(() => {
@@ -102,12 +102,22 @@ export const ProfilePage = (): React.JSX.Element => {
 
                         <div className="profile-page-socials">
                             <a
-                                href={`mailto:${INFO.socials.facebook}`}
+                                href={INFO.socials.facebook}
                                 target="_blank"
                                 rel="noreferrer"
                             >
                                 <FontAwesomeIcon
                                     icon={faFacebook}
+                                    className="profile-page-social-icon"
+                                />
+                            </a>
+                            <a
+                                href={INFO.socials.linkedin}
+                                target="_blank"
+                                rel="noreferrer"
+                            >
+                                <FontAwesomeIcon
+                                    icon={faLinkedin}
                                     className="profile-page-social-icon"
                                 />
                             </a>
