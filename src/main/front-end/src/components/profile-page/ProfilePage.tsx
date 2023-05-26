@@ -11,9 +11,9 @@ import {
     NavBar,
     Comment,
     Experience,
-    AllProjects
+    Subjects
 } from "./components";
-import { INFO, comments } from "./data";
+import { INFO, comments } from "./example-data";
 import { PROFILE_IMAGE_DEFAULT_SIZE } from "../../service/profile-page-service";
 import "./ProfilePage.css";
 
@@ -144,7 +144,7 @@ export const ProfilePage = (): React.JSX.Element => {
                         </div>
 
                         <div className="profile-page-projects">
-                            <AllProjects />
+                            <Subjects />
                         </div>
 
                         <div className="profile-page-after-title">

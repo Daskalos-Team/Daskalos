@@ -1,4 +1,4 @@
-.all-projects-container {
+.all-subjects-container {
 	display: flex;
 	flex-wrap: wrap;
 	align-items: stretch;
@@ -8,7 +8,7 @@
 	margin-right: -35px;
 }
 
-.all-projects-project {
+.all-subjects-subject {
 	width: calc(100% / 3);
 	box-sizing: border-box;
 	padding: 10px;
@@ -16,7 +16,7 @@
 }
 
 @media (max-width: 600px) {
-	.all-projects-project {
+	.all-subjects-subject {
 		width: calc(100% / 2);
 	}
 }

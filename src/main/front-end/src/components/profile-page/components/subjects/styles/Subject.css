@@ -8,41 +8,41 @@
 	--secondary-font: "Roboto", sans-serif;
 }
 
-.project {
+.subject {
 	mix-blend-mode: normal;
 	border-radius: 20px;
 	opacity: 0.8;
 	height: 100%;
 }
 
-.project a {
+.subject a {
 	text-decoration: none;
 }
 
-.project:hover {
+.subject:hover {
 	background: #fafafa;
 	opacity: 1;
 	transition: background-color 0.3s ease-in-out;
 }
 
-.project:hover .project-link {
+.subject:hover .subject-link {
 	color: var(--link-color);
 	transition: color 0.3s ease-in-out;
 }
 
-.project-container {
+.subject-container {
 	padding: 30px;
 }
 
-.project-logo {
-	width: 30px;
+.subject-logo {
+	width: 100px;
 }
 
-.project-logo img {
+.subject-logo img {
 	width: 100%;
 }
 
-.project-title {
+.subject-title {
 	font-family: var(--secondary-font);
 	color: var(--primary-color);
 	font-size: 16px;
@@ -51,11 +51,11 @@
 	font-weight: 700;
 }
 
-.project-description {
+.subject-description {
 	color: var(--secondary-color);
 }
 
-.project-link {
+.subject-link {
 	display: flex;
 	align-items: center;
 	color: var(--secondary-color);
@@ -63,18 +63,18 @@
 	padding-top: 20px;
 }
 
-.project-link-icon {
+.subject-link-icon {
 	padding-left: 5px;
 	font-size: 13px;
 }
 
-.project-link-text {
+.subject-link-text {
 	padding-left: 20px;
 	font-weight: 700;
 }
 
 @media (max-width: 600px) {
-	.project {
+	.subject {
 		height: 300px;
 	}
 }
