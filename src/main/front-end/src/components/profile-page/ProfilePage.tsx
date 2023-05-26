@@ -21,6 +21,7 @@ export const ProfilePage = (): React.JSX.Element => {
     const [stayProfileImage, setStayProfileImage] = useState(false);
     const [profileImageSize, setProfileImageSize] = useState(PROFILE_IMAGE_DEFAULT_SIZE);
     const [oldProfileImageSize, setOldProfileImageSize] = useState(PROFILE_IMAGE_DEFAULT_SIZE);
+    const [userDescriptionState, setUserDescriptionState] = useState("user-description");
 
     // large or small size during scroll
     const profileImageStyle: any = {
@@ -28,7 +29,7 @@ export const ProfilePage = (): React.JSX.Element => {
         position: stayProfileImage ? "fixed" : "relative",
         top: stayProfileImage ? "3vh" : "auto",
         zIndex: 1000,
-        borderRadius: stayProfileImage ? "50%" : "none",
+        borderRadius: "50%",
         border: "1px solid white",
         boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.25)"
     };
@@ -49,12 +50,15 @@ export const ProfilePage = (): React.JSX.Element => {
                     setProfileImageSize(newProfileImageSize);
                     setOldProfileImageSize(newProfileImageSize);
                     setStayProfileImage(false);
+                    setUserDescriptionState("user-description");
                 } else {
                     setStayProfileImage(true);
+                    setUserDescriptionState("user-description-hide");
                 }
             } else {
                 setProfileImageSize(newProfileImageSize);
                 setStayProfileImage(false);
+                setUserDescriptionState("user-description");
             }
         };
 
@@ -70,6 +74,19 @@ export const ProfilePage = (): React.JSX.Element => {
                     <div className="profile-page-profile-image-container">
                         <div style={profileImageStyle}>
                             <ProfileImage width={profileImageSize} link={false} />
+                        </div>
+                        <div className={userDescriptionState}>
+                            <div id="name-div">
+                                {"გიორგი ადიკაშვილი"}
+                            </div>
+                            <div className="user-short-description">
+                                <div id="role-div">
+                                    {"მასწავლებელი"}
+                                </div>
+                                <div id="rating-div">
+                                    {"7.7"}
+                                </div>
+                            </div>
                         </div>
                     </div>
 

@@ -1,1 +1,1 @@
-export const PROFILE_IMAGE_DEFAULT_SIZE = 150;
+export const PROFILE_IMAGE_DEFAULT_SIZE = 180;

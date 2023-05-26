@@ -12,7 +12,51 @@
     display: flex;
     justify-content: left;
     align-items: center;
+    column-gap: 3vh;
     padding-top: 130px;
+}
+
+.user-description {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 1rem;
+}
+
+#name-div {
+    font-size: 22px;
+    font-weight: 500;
+    border: 1px solid var(--link-color);
+    border-radius: 30px;
+    padding: 1em;
+}
+
+.user-short-description {
+    display: flex;
+    align-items: center;
+    column-gap: 2em;
+}
+
+#role-div {
+    border: 3px solid lightsteelblue;
+    font-weight: 550;
+    background: lightgreen;
+    border-radius: 30px;
+    padding: 10px;
+}
+
+#rating-div {
+    font-size: 30px;
+    border: 5px solid red;
+    border-radius: 50%;
+    outline: 5px solid blue;
+    background: lightyellow;
+    padding: 1em;
+}
+
+.user-description-hide {
+    position: absolute;
+    transform: scale(0);
 }
 
 .profile-page-container {
