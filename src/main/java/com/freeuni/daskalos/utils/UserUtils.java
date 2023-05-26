@@ -1,10 +1,6 @@
 package com.freeuni.daskalos.utils;
 
 import com.freeuni.daskalos.dto.UserAddressDTO;
-import com.freeuni.daskalos.dto.UserDTO;
-import com.freeuni.daskalos.repository.entities.Student;
-import com.freeuni.daskalos.repository.entities.Teacher;
-import com.freeuni.daskalos.repository.entities.User;
 import com.freeuni.daskalos.repository.embeddables.UserAddress;
 
 import java.util.Arrays;
@@ -26,17 +22,6 @@ public class UserUtils {
 
     public static String urlNetworks(List<String> networkUrls) {
         return String.join(", ", networkUrls);
-    }
-
-    public static User toUserEntity(UserDTO userDTO) {
-        return userDTO.getUserType().equals(UserType.TEACHER.name()) ?
-                new Teacher(userDTO.getEmail(), userDTO.getPassword(), userDTO.getName(), userDTO.getSurname(), userDTO.getAddress(), UserType.fromName(userDTO.getUserType()))
-                :
-                new Student(userDTO.getEmail(), userDTO.getPassword(), userDTO.getName(), userDTO.getSurname(), userDTO.getAddress(), UserType.fromName(userDTO.getUserType()));
-    }
-
-    public static UserDTO toUserDTO(User userEntity) {
-        return new UserDTO(userEntity.getEmail(), userEntity.getPassword(), userEntity.getName(), userEntity.getSurname(), userEntity.getAddress(), userEntity.getUserType().name());
     }
 
     public static boolean isInRadius(UserAddress currentAddress, UserAddressDTO targetAddress, double radius) {

@@ -3,11 +3,14 @@ package com.freeuni.daskalos.repository.entities;
 import com.freeuni.daskalos.repository.embeddables.UserAddress;
 import com.freeuni.daskalos.utils.UserType;
 import jakarta.persistence.*;
+import lombok.NoArgsConstructor;
 import reactor.util.annotation.NonNull;
 
 import java.io.Serializable;
 
+@NoArgsConstructor
 @Entity
+@Table(name = "USERS")
 public abstract class User implements Serializable {
 
     @Id
@@ -40,8 +43,8 @@ public abstract class User implements Serializable {
                 @NonNull UserType userType,
                 @NonNull String phoneNumber,
                 @NonNull UserAddress address,
-                int priceMin,
-                int priceMax) {
+                Integer priceMin,
+                Integer priceMax) {
         this.ID = ID;
         this.name = name;
         this.surname = surname;
@@ -66,10 +69,6 @@ public abstract class User implements Serializable {
         this.surname = surname;
         this.address = address;
         this.userType = userType;
-    }
-
-    public User() {
-
     }
 
     public Long getID() {

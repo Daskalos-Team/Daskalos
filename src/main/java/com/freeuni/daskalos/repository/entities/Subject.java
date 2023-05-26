@@ -1,32 +1,25 @@
 package com.freeuni.daskalos.repository.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import lombok.*;
 
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@Table(name = "subject", schema = "daskalos")
+@Builder
 @Entity
 public class Subject {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Id()
+    @Column(name = "ID")
+    @SequenceGenerator(name = "idGenerator", schema = "daskalos", sequenceName = "subject_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "idGenerator")
     private Long ID;
 
+    @Basic
+    @Column(name = "name")
     private String name;
-
-    public Long getID() {
-        return ID;
-    }
-
-    public void setID(Long ID) {
-        this.ID = ID;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }
