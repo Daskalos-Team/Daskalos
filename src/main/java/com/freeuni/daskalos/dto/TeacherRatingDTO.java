@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
+import java.util.Date;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 @ToString
 @Data
@@ -22,4 +24,8 @@ public class TeacherRatingDTO {
     private String studentComment;
 
     private int rating;
+
+    private String nameSecondName;
+
+    private Date addDate;
 }

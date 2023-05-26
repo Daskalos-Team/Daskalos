@@ -29,8 +29,7 @@ import java.util.Date;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 
 @ContextConfiguration
@@ -104,6 +103,10 @@ public class TeacherServiceIntegrationTest {
 
     private Student student1;
 
+    private Student student2;
+
+    private Student student3;
+
     private ExperienceDTO experienceDTO1;
 
     private ExperienceDTO experienceDTO2;
@@ -121,8 +124,8 @@ public class TeacherServiceIntegrationTest {
         teacher1 = new Teacher(10L, "Luka", "Kalandadze", "AtLeast^8", "email2",
                 UserType.TEACHER, "55555555", new UserAddress(11.0, 20.0), true, 100, 150);
         student1 = new Student("email1", "AtLeast^8", "Giorgi", "Adikashviili", new UserAddress(1, 2), UserType.STUDENT);
-        student1.setID(11L);
-
+        student2 = new Student("email2", "AtLeast^8", "Niko", "Nargizashviili", new UserAddress(1, 2), UserType.STUDENT);
+        student3 = new Student("email3", "AtLeast^8", "Shalva", "Leclerishviili", new UserAddress(1, 2), UserType.STUDENT);
         experienceDTO1 = ExperienceDTO.builder().
                 employer("Microsoft").
                 jobDescription("Code maintenance").
@@ -169,6 +172,47 @@ public class TeacherServiceIntegrationTest {
     }
 
     @Test
+    public void testTeacherExperienceOrderedCorrectly() {
+        ExperienceDTO experience1 = ExperienceDTO.builder().
+                employer("Amazon").
+                jobDescription("Code development").
+                startDate(new Date(2014, Calendar.JUNE, 8)).
+                endDate(new Date(2017, Calendar.NOVEMBER, 19)).
+                build();
+        ExperienceDTO experience2 = ExperienceDTO.builder().
+                employer("Google").
+                jobDescription("Software Engineer").
+                startDate(new Date(2009, Calendar.JUNE, 8)).
+                endDate(new Date(2012, Calendar.FEBRUARY, 19)).
+                build();
+        ExperienceDTO experience3 = ExperienceDTO.builder().
+                employer("Meta").
+                jobDescription("Software Architect").
+                startDate(new Date(2012, Calendar.JUNE, 8)).
+                endDate(new Date(2014, Calendar.MAY, 19)).
+                build();
+        ExperienceDTO experience4 = ExperienceDTO.builder().
+                employer("Microsoft").
+                jobDescription("Code maintenance").
+                startDate(new Date(2017, Calendar.NOVEMBER, 19)).
+                endDate(null).
+                build();
+
+        Teacher t = userRepository.save(teacher1);
+        ExperienceDTO addedExperience1 = teacherService.addExperience(t.getID(), experience1);
+        ExperienceDTO addedExperience2 = teacherService.addExperience(t.getID(), experience2);
+        ExperienceDTO addedExperience3 = teacherService.addExperience(t.getID(), experience3);
+        ExperienceDTO addedExperience4 = teacherService.addExperience(t.getID(), experience4);
+        List<ExperienceDTO> teachersExperience = teacherService.getTeacherDTO(t.getID()).getTeachersExperience();
+        assertThat(teachersExperience, containsInAnyOrder(addedExperience1, addedExperience2, addedExperience3, addedExperience4));
+        assertThat(teachersExperience, hasSize(4));
+        assertEquals(addedExperience3, teachersExperience.get(2));
+        assertEquals(addedExperience1, teachersExperience.get(1));
+        assertEquals(addedExperience2, teachersExperience.get(3));
+        assertEquals(addedExperience4, teachersExperience.get(0));
+    }
+
+    @Test
     public void testAddRemoveRating() {
         Teacher t = userRepository.save(teacher1);
         Student s = userRepository.save(student1);
@@ -201,6 +245,42 @@ public class TeacherServiceIntegrationTest {
         teacherService.removeRating(addedRating2);
         teacherRatings = teacherService.getTeacherDTO(t.getID()).getTeacherRatings();
         assertEquals(0, teacherRatings.size());
+    }
+
+    @Test
+    public void testGetTeacherRatingOrder() {
+        Teacher t = userRepository.save(teacher1);
+        Student s1 = userRepository.save(student1);
+        Student s2 = userRepository.save(student2);
+        Student s3 = userRepository.save(student3);
+        TeacherRatingDTO teacherRating1 = TeacherRatingDTO.builder().
+                studentID(s1.getID()).
+                studentComment("very nice teacher").
+                rating(5).
+                addDate(new Date(2012, Calendar.JUNE, 8)).
+                build();
+
+        TeacherRatingDTO teacherRating2 = TeacherRatingDTO.builder().
+                studentID(s2.getID()).
+                studentComment("not bad teacher").
+                rating(3).
+                addDate(new Date(2017, Calendar.NOVEMBER, 19)).
+                build();
+
+        TeacherRatingDTO teacherRating3 = TeacherRatingDTO.builder().
+                studentID(s3.getID()).
+                studentComment("not bad teacher").
+                rating(4).
+                addDate(new Date(2014, Calendar.MAY, 19)).
+                build();
+        TeacherRatingDTO addedRating1 = teacherService.addRating(t.getID(), teacherRating1);
+        TeacherRatingDTO addedRating2 = teacherService.addRating(t.getID(), teacherRating2);
+        TeacherRatingDTO addedRating3 = teacherService.addRating(t.getID(), teacherRating3);
+
+        List<TeacherRatingDTO> teacherRatings = teacherService.getTeacherDTO(t.getID()).getTeacherRatings();
+        assertEquals(teacherRatings.get(0), addedRating2);
+        assertEquals(teacherRatings.get(1), addedRating3);
+        assertEquals(teacherRatings.get(2), addedRating1);
     }
 
     @Test

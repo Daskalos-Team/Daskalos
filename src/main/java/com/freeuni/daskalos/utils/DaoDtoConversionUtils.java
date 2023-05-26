@@ -45,6 +45,7 @@ public class DaoDtoConversionUtils {
                 studentID(teacherRating.getStudentID()).
                 studentComment(teacherRating.getStudentComment()).
                 rating(teacherRating.getRating()).
+                addDate(teacherRating.getAddDate()).
                 build();
     }
 
@@ -54,6 +55,7 @@ public class DaoDtoConversionUtils {
                 studentID(teacherRating.getStudentID()).
                 studentComment(teacherRating.getStudentComment()).
                 rating(teacherRating.getRating()).
+                addDate(teacherRating.getAddDate()).
                 build();
     }
 

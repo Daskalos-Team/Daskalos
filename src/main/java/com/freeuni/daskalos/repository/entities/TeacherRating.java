@@ -3,6 +3,8 @@ package com.freeuni.daskalos.repository.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Date;
+
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
@@ -30,4 +32,8 @@ public class TeacherRating {
     @Basic
     @Column(name = "rating")
     private int rating;
+
+    @Basic
+    @Column(name = "addDate")
+    private Date addDate;
 }

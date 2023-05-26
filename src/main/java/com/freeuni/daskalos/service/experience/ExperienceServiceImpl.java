@@ -9,6 +9,8 @@ import com.freeuni.daskalos.utils.DaoDtoConversionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -23,6 +25,8 @@ public class ExperienceServiceImpl {
     public List<ExperienceDTO> getTeachersExperience(Long teacherID) {
         List<TeacherToExperience> teacherToExperienceList = teacherToExperienceRepository.findAllByTeacherID(teacherID);
         List<Experience> teachersExperience = experienceRepository.findAllById(teacherToExperienceList.stream().map(TeacherToExperience::getExperienceID).toList());
+        teachersExperience.sort(Comparator.comparing(Experience::getStartDate).reversed());
+
         return teachersExperience.
                 stream().
                 map(DaoDtoConversionUtils::toExperienceDTO).
