@@ -47,6 +47,7 @@
 
 #rating-div {
     font-size: 30px;
+    color: darkgreen;
     border: 5px solid red;
     border-radius: 50%;
     outline: 5px solid blue;
