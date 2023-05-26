@@ -11,7 +11,10 @@ export const Card = (props: any): React.JSX.Element => {
                     <div className="card-icon">
                         <FontAwesomeIcon icon={icon} />
                     </div>
-                    <div className="card-title">{title}</div>
+                    <div className="header-content">
+                        <div className="card-title">{title}</div>
+                        <div className="add-experience" onClick={undefined}>+</div>
+                    </div>
                 </div>
                 <div className="card-body">
                     <div className="card-text">{body}</div>
