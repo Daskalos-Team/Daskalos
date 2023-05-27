@@ -10,6 +10,7 @@ import {
     NewsFeedPageColorPalette, ProfileButtonMenuProps, RootScaleProps, TabProps
 } from "../../service/news-feed-page-service";
 import { SettingsTab } from "./settings-tab";
+import { TopTenTab } from "./top-10-tab";
 
 export const NewsFeedPage = (): React.JSX.Element => {
     const maxMenuOnWindowWidth = 1180;
@@ -19,7 +20,7 @@ export const NewsFeedPage = (): React.JSX.Element => {
     const [dimmingOpacity, setDimmingOpacity] = useState(0);
     const [arrowSrc, setArrowSrc] = useState("/images/news-feed-page/DownArrow.png");
     const [dimmingInteractive, setDimmingInteractive] = useState("none");
-    const [selectedOptions, setSelectedOptions] = useState([true, false]);
+    const [selectedOptions, setSelectedOptions] = useState([true, false, false]);
     const [logoVisible, setLogoVisible] = useState(true);
     const [logoAnimation, setLogoAnimation] = useState<Keyframes | null>(null);
     const [leftPanelWidths, setLeftPanelWidths] = useState([250, 330]);
@@ -121,6 +122,11 @@ export const NewsFeedPage = (): React.JSX.Element => {
                             imageSrc="/images/news-feed-page/SettingsIcon.png"
                             labelText="პარამეტრები"/>
                     </div>
+                    <div onClick={() => SetOptionSelected(2)}>
+                        <LeftPanelOption isSelected={selectedOptions[2]}
+                            imageSrc="/images/news-feed-page/TopTenIcon.png"
+                            labelText="Top 10"/>
+                    </div>
                 </LeftPanel>
                 <MainContentContainer>
                     <TabContainer animation={tabAnimation}>
@@ -144,6 +150,14 @@ export const NewsFeedPage = (): React.JSX.Element => {
                                 <TabTitle>პარამეტრები</TabTitle>
                                 <TabContent>
                                     <SettingsTab/>
+                                </TabContent>
+                            </React.Fragment>
+                        )}
+                        {selectedOptions[2] && (
+                            <React.Fragment>
+                                <TabTitle>Top 10</TabTitle>
+                                <TabContent>
+                                    <TopTenTab/>
                                 </TabContent>
                             </React.Fragment>
                         )}
