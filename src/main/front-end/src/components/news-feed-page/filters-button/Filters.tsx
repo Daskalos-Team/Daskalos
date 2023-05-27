@@ -1,7 +1,7 @@
 import React from "react";
 import styled, { keyframes } from "styled-components";
 
-export const Filters = (): JSX.Element => {
+export const Filters = (): React.JSX.Element => {
     return (
         <FiltersRoot>
             <FilterContainer>
