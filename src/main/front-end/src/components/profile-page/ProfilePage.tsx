@@ -3,7 +3,8 @@ import { faMailBulk } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faFacebook,
-    faInstagram, faLinkedin,
+    faInstagram,
+    faLinkedin,
     faTwitter
 } from "@fortawesome/free-brands-svg-icons";
 import {
@@ -22,6 +23,17 @@ export const ProfilePage = (): React.JSX.Element => {
     const [profileImageSize, setProfileImageSize] = useState(PROFILE_IMAGE_DEFAULT_SIZE);
     const [oldProfileImageSize, setOldProfileImageSize] = useState(PROFILE_IMAGE_DEFAULT_SIZE);
     const [userDescriptionState, setUserDescriptionState] = useState("user-description");
+
+    const profileButtonClicked = () => {
+        if (stayProfileImage) {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        } else {
+            // upload image
+        }
+    };
 
     // large or small size during scroll
     const profileImageStyle: any = {
@@ -69,10 +81,11 @@ export const ProfilePage = (): React.JSX.Element => {
     return (
         <React.Fragment>
             <div className="page-content">
-                <NavBar active="home" />
+                <NavBar active="profile" />
+
                 <div className="content-wrapper">
                     <div className="profile-page-profile-image-container">
-                        <div style={profileImageStyle}>
+                        <div style={profileImageStyle} onClick={profileButtonClicked}>
                             <ProfileImage width={profileImageSize} link={false} />
                         </div>
                         <div className={userDescriptionState}>

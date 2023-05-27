@@ -5,6 +5,10 @@ import "./styles/NavBar.css";
 export const NavBar = (props: any): React.JSX.Element => {
     const { active } = props;
 
+    const scrollToTop = () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+
     return (
         <React.Fragment>
             <div className="nav-container">
@@ -13,16 +17,17 @@ export const NavBar = (props: any): React.JSX.Element => {
                         <ul className="nav-list">
                             <li
                                 className={
-                                    active === "home"
+                                    active === "profile"
                                         ? "nav-item active"
                                         : "nav-item"
                                 }
+                                onClick={scrollToTop}
                             >
                                 <Link to="/profile-page">პროფილი</Link>
                             </li>
                             <li
                                 className={
-                                    active === "profile"
+                                    active === "home"
                                         ? "nav-item active"
                                         : "nav-item"
                                 }
