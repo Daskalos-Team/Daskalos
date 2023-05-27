@@ -58,7 +58,7 @@ export const ProfilePage = (): React.JSX.Element => {
             const newProfileImageSize = PROFILE_IMAGE_DEFAULT_SIZE - scroll;
 
             if (newProfileImageSize < oldProfileImageSize) {
-                if (newProfileImageSize > 40) {
+                if (newProfileImageSize > 50) {
                     setProfileImageSize(newProfileImageSize);
                     setOldProfileImageSize(newProfileImageSize);
                     setStayProfileImage(false);

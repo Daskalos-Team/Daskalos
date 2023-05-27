@@ -47,10 +47,11 @@
 
 #rating-div {
     font-size: 30px;
+    font-weight: 600;
     color: darkgreen;
-    border: 5px solid red;
+    border: 5px solid yellow;
     border-radius: 50%;
-    outline: 5px solid blue;
+    outline: 3px solid lightcoral;
     background: lightyellow;
     padding: 1em;
 }
