@@ -65,10 +65,13 @@ export const Calendar = (): React.JSX.Element => {
     }, []);
 
     return (
-        <DayPilotCalendar
-            style={styles}
-            {...calendarConfig}
-            ref={calendarRef}
-        />
+        <div className="calendar-div">
+            <div className="calendar-header"> საგნების განრიგი </div>
+            <DayPilotCalendar
+                style={styles}
+                {...calendarConfig}
+                ref={calendarRef}
+            />
+        </div>
     );
 };
