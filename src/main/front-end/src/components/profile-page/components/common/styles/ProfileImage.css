@@ -5,3 +5,24 @@
 	padding: 0;
 	cursor: pointer;
 }
+
+.add-icon {
+	display: none;
+}
+
+.image-container:hover .add-icon {
+	display: flex;
+	position: absolute;
+	z-index: 1001;
+	color: dimgrey;
+	font-size: 100px;
+	width: 100px;
+	height: 100px;
+	left: calc((180px - 100px) / 2);
+	cursor: pointer;
+	top: calc((180px - 100px) / 2);
+}
+
+.image-container:hover .profile-image {
+	opacity: 0.3;
+}

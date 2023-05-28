@@ -26,18 +26,6 @@ export const ProfilePage = (): React.JSX.Element => {
     const [oldProfileImageSize, setOldProfileImageSize] = useState(PROFILE_IMAGE_DEFAULT_SIZE);
     const [userDescriptionState, setUserDescriptionState] = useState("user-description");
 
-    const profileButtonClicked = () => {
-        if (stayProfileImage) {
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            });
-        } else {
-            alert("თქვენ დაკლიკეთ პროფილის ფოტოზე");
-            // upload image TODO
-        }
-    };
-
     // large or small size during scroll
     const profileImageStyle: any = {
         display: "flex",
@@ -79,8 +67,8 @@ export const ProfilePage = (): React.JSX.Element => {
                     </div>
 
                     <div className="profile-page-profile-image-container">
-                        <div style={profileImageStyle} onClick={profileButtonClicked}>
-                            <ProfileImage width={profileImageSize} link={false} />
+                        <div style={profileImageStyle}>
+                            <ProfileImage width={profileImageSize} source={"ado.png"} />
                         </div>
                         <div className={userDescriptionState}>
                             <div id="name-div">
