@@ -33,6 +33,7 @@ export const ProfilePage = (): React.JSX.Element => {
                 behavior: "smooth"
             });
         } else {
+            alert("თქვენ დაკლიკეთ პროფილის ფოტოზე");
             // upload image TODO
         }
     };
