@@ -3,12 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@emailjs/browser": "^3.11.0",
     "@fortawesome/fontawesome-svg-core": "^6.4.0",
     "@fortawesome/free-brands-svg-icons": "^6.4.0",
     "@fortawesome/free-regular-svg-icons": "^6.4.0",
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
-    "@emailjs/browser": "^3.11.0",
     "@react-google-maps/api": "^2.18.1",
     "@react-oauth/google": "^0.9.0",
     "@testing-library/jest-dom": "^5.16.5",
@@ -62,6 +62,7 @@
     ]
   },
   "devDependencies": {
+    "@daypilot/daypilot-lite-react": "^3.14.0",
     "@googlemaps/react-wrapper": "^1.1.35",
     "@types/react-geocode": "^0.2.1",
     "@types/styled-components": "^5.1.26",

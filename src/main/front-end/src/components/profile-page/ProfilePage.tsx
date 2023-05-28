@@ -12,13 +12,15 @@ import {
     NavBar,
     Comment,
     Experience,
-    Subjects
+    Subjects,
+    Calendar
 } from "./components";
 import { INFO, comments } from "./example-data";
 import { PROFILE_IMAGE_DEFAULT_SIZE } from "../../service/profile-page-service";
 import "./ProfilePage.css";
 
 export const ProfilePage = (): React.JSX.Element => {
+    // TODO if needed in future
     const [stayProfileImage, setStayProfileImage] = useState(false);
     const [profileImageSize, setProfileImageSize] = useState(PROFILE_IMAGE_DEFAULT_SIZE);
     const [oldProfileImageSize, setOldProfileImageSize] = useState(PROFILE_IMAGE_DEFAULT_SIZE);
@@ -31,7 +33,7 @@ export const ProfilePage = (): React.JSX.Element => {
                 behavior: "smooth"
             });
         } else {
-            // upload image
+            // upload image TODO
         }
     };
 
@@ -51,39 +53,30 @@ export const ProfilePage = (): React.JSX.Element => {
         window.scrollTo(0, 0);
     }, []);
 
-    useEffect(() => {
-        const handleScroll = () => {
-            const scroll = Math.round(window.pageYOffset);
-
-            const newProfileImageSize = PROFILE_IMAGE_DEFAULT_SIZE - scroll;
-
-            if (newProfileImageSize < oldProfileImageSize) {
-                if (newProfileImageSize > 50) {
-                    setProfileImageSize(newProfileImageSize);
-                    setOldProfileImageSize(newProfileImageSize);
-                    setStayProfileImage(false);
-                    setUserDescriptionState("user-description");
-                } else {
-                    setStayProfileImage(true);
-                    setUserDescriptionState("user-description-hide");
-                }
-            } else {
-                setProfileImageSize(newProfileImageSize);
-                setStayProfileImage(false);
-                setUserDescriptionState("user-description");
-            }
-        };
-
-        window.addEventListener("scroll", handleScroll);
-        return () => window.removeEventListener("scroll", handleScroll);
-    }, [profileImageSize, oldProfileImageSize]);
-
     return (
         <React.Fragment>
             <div className="page-content">
                 <NavBar active="profile" />
 
+                <svg className="cover-svg" viewBox="0 0 1440 320" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <path id='sineWave' fill="#0099ff" fillOpacity="0.1"
+                            d="M0,160 C320,300,420,300,740,160 C1060,20,1120,20,1440,160 V0 H0" />
+                    </defs>
+                    <use className="wave" href="#sineWave" />
+                    <use className="wave" x="-100%" href="#sineWave" />
+                    <use className="wave1" href="#sineWave" />
+                    <use className="wave1" x="-100%" href="#sineWave" />
+                    <use className="wave2" href="#sineWave" />
+                    <use className="wave2" x="-100%" href="#sineWave" />
+                </svg>
+
                 <div className="content-wrapper">
+                    <div className="ocean">
+                        <div className="wave"></div>
+                        <div className="wave"></div>
+                    </div>
+
                     <div className="profile-page-profile-image-container">
                         <div style={profileImageStyle} onClick={profileButtonClicked}>
                             <ProfileImage width={profileImageSize} link={false} />
@@ -115,72 +108,66 @@ export const ProfilePage = (): React.JSX.Element => {
                                       "შემიძლია პროგრამირების და კიდევ სხვა საინტერესო საგნების სწავლებაც, " +
                                       "ორივეს ერთად თუ მოისურვებთ შემოგთავაზებთ გარკვეულ ფასდაკლებებს"}
                                 </div>
+
+                                <div className="profile-page-socials">
+                                    <a
+                                        href={INFO.socials.facebook}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                    >
+                                        <FontAwesomeIcon
+                                            icon={faFacebook}
+                                            className="profile-page-social-icon"
+                                        />
+                                    </a>
+                                    <a
+                                        href={INFO.socials.linkedin}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                    >
+                                        <FontAwesomeIcon
+                                            icon={faLinkedin}
+                                            className="profile-page-social-icon"
+                                        />
+                                    </a>
+                                    <a
+                                        href={INFO.socials.twitter}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                    >
+                                        <FontAwesomeIcon
+                                            icon={faTwitter}
+                                            className="profile-page-social-icon"
+                                        />
+                                    </a>
+                                    <a
+                                        href={INFO.socials.instagram}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                    >
+                                        <FontAwesomeIcon
+                                            icon={faInstagram}
+                                            className="profile-page-social-icon"
+                                        />
+                                    </a>
+                                    <a
+                                        href={"mailto:adikashviligiorgi@gmail.com"}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                    >
+                                        <FontAwesomeIcon
+                                            icon={faMailBulk}
+                                            className="profile-page-social-icon"
+                                        />
+                                    </a>
+                                </div>
                             </div>
 
                             <div className="profile-page-first-area-right-side">
-                                <div className="profile-page-image-container">
-                                    <div className="profile-page-image-wrapper">
-                                        <img
-                                            src="cover.jpg"
-                                            alt="about"
-                                            className="profile-page-image"
-                                        />
-                                    </div>
+                                <div className="profile-page-calendar-container">
+                                    <Calendar />
                                 </div>
                             </div>
-                        </div>
-
-                        <div className="profile-page-socials">
-                            <a
-                                href={INFO.socials.facebook}
-                                target="_blank"
-                                rel="noreferrer"
-                            >
-                                <FontAwesomeIcon
-                                    icon={faFacebook}
-                                    className="profile-page-social-icon"
-                                />
-                            </a>
-                            <a
-                                href={INFO.socials.linkedin}
-                                target="_blank"
-                                rel="noreferrer"
-                            >
-                                <FontAwesomeIcon
-                                    icon={faLinkedin}
-                                    className="profile-page-social-icon"
-                                />
-                            </a>
-                            <a
-                                href={INFO.socials.twitter}
-                                target="_blank"
-                                rel="noreferrer"
-                            >
-                                <FontAwesomeIcon
-                                    icon={faTwitter}
-                                    className="profile-page-social-icon"
-                                />
-                            </a>
-                            <a
-                                href={INFO.socials.instagram}
-                                target="_blank"
-                                rel="noreferrer"
-                            >
-                                <FontAwesomeIcon
-                                    icon={faInstagram}
-                                    className="profile-page-social-icon"
-                                />
-                            </a>
-                            <a
-                                href={"mailto:adikashviligiorgi@gmail.com"}
-                                target="_blank"
-                                rel="noreferrer"
-                            >
-                                <FontAwesomeIcon
-                                    icon={faMailBulk}
-                                    className="profile-page-social-icon"
-                                />
-                            </a>
                         </div>
 
                         <div className="profile-page-projects">

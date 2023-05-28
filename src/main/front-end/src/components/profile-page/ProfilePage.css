@@ -8,12 +8,60 @@
     --secondary-font: "Roboto", sans-serif;
 }
 
+.cover-svg {
+    position: absolute;
+    z-index: 0;
+}
+
+.wave {
+  animation: wave 7s linear infinite;
+}
+
+.wave1 {
+    animation: wave1 10s linear infinite;
+}
+
+.wave2 {
+    animation: wave2 11s linear infinite;
+}
+
+@keyframes wave {
+    0% {
+        transform: translateX(0%);
+    }
+
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+@keyframes wave1 {
+    0% {
+        transform: scaleY(1.2) translateX(0%);
+    }
+
+    100% {
+        transform: scaleY(1.2) translateX(100%);
+    }
+}
+
+@keyframes wave2 {
+    0% {
+        transform: scaleY(.8) translateX(0%);
+    }
+
+    100% {
+        transform: scaleY(.8) translateX(100%);
+    }
+}
+
 .profile-page-profile-image-container {
     display: flex;
     justify-content: left;
     align-items: center;
     column-gap: 3vh;
     padding-top: 130px;
+    z-index: 1;
 }
 
 .user-description {
@@ -24,9 +72,12 @@
 }
 
 #name-div {
-    font-size: 22px;
-    font-weight: 500;
-    border: 1px solid var(--link-color);
+    font-size: 24px;
+    z-index: 1;
+    font-weight: 600;
+    border: 1px solid white;
+    background: whitesmoke;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
     border-radius: 30px;
     padding: 1em;
 }
@@ -39,8 +90,9 @@
 
 #role-div {
     border: 3px solid lightsteelblue;
+    z-index: 1;
     font-weight: 550;
-    background: lightgreen;
+    background: antiquewhite;
     border-radius: 30px;
     padding: 10px;
 }
@@ -48,6 +100,7 @@
 #rating-div {
     font-size: 30px;
     font-weight: 600;
+    z-index: 1;
     color: darkgreen;
     border: 5px solid yellow;
     border-radius: 50%;
@@ -75,6 +128,7 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    height: 500px;
 }
 
 .profile-page-title {
@@ -90,9 +144,9 @@
     align-items: center;
 }
 
-.profile-page-image-container {
-    width: 370px;
-    height: 370px;
+.profile-page-calendar-container {
+    width: 500px;
+    height: 600px;
 }
 
 .profile-page-image-wrapper {
@@ -174,10 +228,10 @@
 
     .profile-page-first-area-right-side {
         width: 100%;
-        order: 1;
+        order: 3;
     }
 
-    .profile-page-image-container {
+    .profile-page-calendar-container {
         padding-top: 50px;
         padding-bottom: 50px;
         margin-left: 10px;
