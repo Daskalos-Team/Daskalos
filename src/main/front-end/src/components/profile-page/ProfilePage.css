@@ -146,7 +146,8 @@
 
 .profile-page-calendar-container {
     width: 500px;
-    height: 600px;
+    height: 570px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
 }
 
 .profile-page-image-wrapper {
@@ -232,7 +233,6 @@
     }
 
     .profile-page-calendar-container {
-        padding-top: 50px;
         padding-bottom: 50px;
         margin-left: 10px;
         order: 1;
