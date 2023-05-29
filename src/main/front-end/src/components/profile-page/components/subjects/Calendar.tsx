@@ -4,17 +4,15 @@ import { DayPilot, DayPilotCalendar } from "@daypilot/daypilot-lite-react";
 import React, { useState, useRef, useEffect } from "react";
 import "./styles/Calendar.css";
 
-const styles = {
-    background: "red"
-};
-
 export const Calendar = (): React.JSX.Element => {
     const calendarRef = useRef<any>();
     const [calendarConfig, setCalendarConfig] = useState<any>({
         viewType: "Week",
         headerDateFormat: "ddd",
         durationBarVisible: true,
-        timeRangeSelectedHandling: "Enabled",
+        eventDeleteHandling: "Update", // Disabled
+        timeRangeSelectedHandling: "Enabled", // Disabled
+        // eventMoveHandling: "Disabled",
         onTimeRangeSelected: async (args: any) => {
             const dp = calendarRef.current.control;
             const modal = await DayPilot.Modal.prompt("დაამატეთ საგანი ამ დროებში:", "საგანი");
@@ -27,20 +25,19 @@ export const Calendar = (): React.JSX.Element => {
                 text: modal.result
             });
         },
-        eventDeleteHandling: "Update",
-        onEventClick: async (args: any) => {
-            const dp = calendarRef.current.control;
-            // modal---
-            const modal = await DayPilot.Modal.prompt("განაახლეთ საგანი:", args.e.text());
-            if (!modal.result) { return; }
-            //---------
-            const e = args.e;
-            e.data.text = modal.result;
-            dp.events.update(e);
-        }
+        onEventDelete: async (args: any) => {
+            console.log("event deleted, ", args);
+        },
+        onEventResize: async (args: any) => {
+            console.log("event resized, ", args);
+        },
+        onEventMove: async (args: any) => {
+            console.log("event moved, ", args);
+        },
+        onEventClick: undefined
     });
 
-    // 2023-05-22 default date
+    // 2023-05-22 default date / 05-21 for sunday
     useEffect(() => {
         const events = [
             {
@@ -68,7 +65,6 @@ export const Calendar = (): React.JSX.Element => {
         <div className="calendar-div">
             <div className="calendar-header"> საგნების განრიგი </div>
             <DayPilotCalendar
-                style={styles}
                 {...calendarConfig}
                 ref={calendarRef}
             />
