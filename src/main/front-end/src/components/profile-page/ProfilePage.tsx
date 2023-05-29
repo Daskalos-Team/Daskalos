@@ -26,6 +26,8 @@ export const ProfilePage = (): React.JSX.Element => {
     const [oldProfileImageSize, setOldProfileImageSize] = useState(PROFILE_IMAGE_DEFAULT_SIZE);
     const [userDescriptionState, setUserDescriptionState] = useState("user-description");
 
+    const [userSubjects, setUserSubjects] = useState(INFO.subjects); // Subjects state
+
     // large or small size during scroll
     const profileImageStyle: any = {
         display: "flex",
@@ -47,18 +49,18 @@ export const ProfilePage = (): React.JSX.Element => {
             <div className="page-content">
                 <NavBar active="profile" />
 
-                <svg className="cover-svg" viewBox="0 0 1440 320" xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                        <path id='sineWave' fill="#0099ff" fillOpacity="0.1"
-                            d="M0,160 C320,300,420,300,740,160 C1060,20,1120,20,1440,160 V0 H0" />
-                    </defs>
-                    <use className="wave" href="#sineWave" />
-                    <use className="wave" x="-100%" href="#sineWave" />
-                    <use className="wave1" href="#sineWave" />
-                    <use className="wave1" x="-100%" href="#sineWave" />
-                    <use className="wave2" href="#sineWave" />
-                    <use className="wave2" x="-100%" href="#sineWave" />
-                </svg>
+                {/* <svg className="cover-svg" viewBox="0 0 1440 320" xmlns="http://www.w3.org/2000/svg"> */}
+                {/*     <defs> */}
+                {/*         <path id='sineWave' fill="#0099ff" fillOpacity="0.1" */}
+                {/*             d="M0,160 C320,300,420,300,740,160 C1060,20,1120,20,1440,160 V0 H0" /> */}
+                {/*     </defs> */}
+                {/*     <use className="wave" href="#sineWave" /> */}
+                {/*     <use className="wave" x="-100%" href="#sineWave" /> */}
+                {/*     <use className="wave1" href="#sineWave" /> */}
+                {/*     <use className="wave1" x="-100%" href="#sineWave" /> */}
+                {/*     <use className="wave2" href="#sineWave" /> */}
+                {/*     <use className="wave2" x="-100%" href="#sineWave" /> */}
+                {/* </svg> */}
 
                 <div className="content-wrapper">
                     <div className="ocean">
@@ -154,13 +156,13 @@ export const ProfilePage = (): React.JSX.Element => {
 
                             <div className="profile-page-first-area-right-side">
                                 <div className="profile-page-calendar-container">
-                                    <Calendar />
+                                    <Calendar subjects={userSubjects} setSubjects={setUserSubjects}/>
                                 </div>
                             </div>
                         </div>
 
                         <div className="profile-page-projects">
-                            <Subjects />
+                            <Subjects subjects={userSubjects}/>
                         </div>
 
                         <div className="profile-page-after-title">

@@ -1,12 +1,13 @@
 import React from "react";
 import { Subject } from "./Subject";
-import { INFO } from "../../example-data";
 import "./styles/Subjects.css";
 
-export const Subjects = (): React.JSX.Element => {
+export const Subjects = (props: any): React.JSX.Element => {
+    const { subjects } = props;
+
     return (
         <div className="all-subjects-container">
-            {INFO.subjects.map((subject, index) => (
+            {subjects.map((subject: any, index: any) => (
                 <div className="all-subjects-subject" key={index}>
                     <Subject
                         logo={subject.image}

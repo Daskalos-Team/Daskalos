@@ -12,15 +12,30 @@ export const INFO = {
             description: "შეგასწავლით მათემატიკას 10-12 კლასელებს",
             image: "subjects/math.png",
             linkText: "იხილეთ დეტალები",
-            link: "https://github.com"
+            link: "https://github.com",
+            days: [
+                {
+                    start: "2023-05-24T11:22:00",
+                    end: "2023-05-24T13:00:00"
+                },
+                {
+                    start: "2023-05-25T13:22:00",
+                    end: "2023-05-25T15:00:00"
+                }
+            ]
         },
-
         {
             title: "ფიზიკა",
             description: "ფიზიკის სწავლა არასდროს ყოფილა ასეთი მარტივი",
             image: "subjects/physics.png",
             linkText: "იხილეთ დეტალები",
-            link: "https://github.com"
+            link: "https://github.com",
+            days: [
+                {
+                    start: "2023-05-22T10:00:00",
+                    end: "2023-05-22T11:00:00"
+                }
+            ]
         },
 
         {
@@ -28,7 +43,13 @@ export const INFO = {
             description: "ქიმია ჩემი სიყვარულია, ვეცდები ეს სიყვარული თქვენც გაგიზიაროთ",
             image: "subjects/chemistry.png",
             linkText: "იხილეთ დეტალები",
-            link: "https://github.com"
+            link: "https://github.com",
+            days: [
+                {
+                    start: "2023-05-25T09:30:00",
+                    end: "2023-05-25T10:30:00"
+                }
+            ]
         },
 
         {
@@ -36,7 +57,13 @@ export const INFO = {
             description: "უნივერსიტეტში ნორმალურად ვისწავლე, ისე კი მასწი მაძულებდა სკოლაში თუმცა რამეს ვიზამთ",
             image: "subjects/biology.png",
             linkText: "იხილეთ დეტალები",
-            link: "https://github.com"
+            link: "https://github.com",
+            days: [
+                {
+                    start: "2023-05-23T12:22:00",
+                    end: "2023-05-23T14:00:00"
+                }
+            ]
         },
 
         {
@@ -44,7 +71,13 @@ export const INFO = {
             description: "აზრზე არ ვარ ისტორიის მარა ფული მჭირდება და გთხოვთ შემეხმიანოთ",
             image: "subjects/history.png",
             linkText: "იხილეთ დეტალები",
-            link: "https://github.com"
+            link: "https://github.com",
+            days: [
+                {
+                    start: "2023-05-26T11:22:00",
+                    end: "2023-05-26T13:00:00"
+                }
+            ]
         }
     ]
 };
