@@ -26,9 +26,7 @@ public class SessionController {
     @GetMapping("/id")
     public ResponseEntity<Long> getUserId() {
         Long userId = (Long) getSession().getAttribute("userId");
-        if (userId != null)
-            return new ResponseEntity<>(userId, HttpStatus.OK);
-        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(userId, HttpStatus.OK);
     }
 
     @PostMapping("/type-set")

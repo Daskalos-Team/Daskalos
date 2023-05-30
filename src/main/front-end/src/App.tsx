@@ -1,20 +1,19 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { NewsFeedPage } from "./components/news-feed-page";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthorizationPage } from "./components/authorization-page";
 import { MainPage } from "./components/main-page";
-import { GoogleMapSearch } from "./components/google-map-search";
 
 function App() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<GoogleMapSearch />}>
-                    <Route index element={<MainPage />} />
-                    <Route path="main" element={<MainPage />} />
-                    <Route path="register" element={<AuthorizationPage />} />
+                <Route path="/" element={
+                    <MainPage>
+                        <AuthorizationPage />
+                    </MainPage>
+                }>
+                    <Route path="*" element={<Navigate to="/" replace={true} />} />
                 </Route>
-                <Route path="/news-feed" element={<NewsFeedPage />} />
             </Routes>
         </BrowserRouter>
     );
