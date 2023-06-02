@@ -9,3 +9,6 @@ spring:
     password: a9729ace
     hikari:
       max-lifetime: 20000
+  data:
+    redis:
+      port: 6379
