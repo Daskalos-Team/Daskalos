@@ -165,8 +165,12 @@ export const Calendar = (props: any): React.JSX.Element => {
                         <option value="ისტორია">ისტორია</option>
                     </select>
                 </div>
-                <input type="number" placeholder="საგნის ფასი" onInput={e => setPrice(e.currentTarget.value)}/>
-                <textarea className="description-area" placeholder="მოკლე აღწერა" onChange={e => setDescription(e.target.value)} />
+                { subjects.some((userSubject: any) => userSubject.title === subject) ? null :
+                    <>
+                        <input type="number" placeholder="საგნის ფასი" onInput={e => setPrice(e.currentTarget.value)}/>
+                        <textarea className="description-area" placeholder="მოკლე აღწერა" onChange={e => setDescription(e.target.value)} />
+                    </>
+                }
                 <div className="verifier-buttons">
                     <div className="verifier-ok" onClick={e => createSubjects(e)}>დადასტურება</div>
                     <div className="verifier-close" onClick={() => {
