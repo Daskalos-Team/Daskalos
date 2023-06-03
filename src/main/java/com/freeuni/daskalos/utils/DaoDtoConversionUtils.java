@@ -10,9 +10,9 @@ public class DaoDtoConversionUtils {
 
     public static User toUserEntity(UserDTO userDTO) {
         return userDTO.getUserType().equals(UserType.TEACHER.name()) ?
-                new Teacher(userDTO.getEmail(), userDTO.getPassword(), userDTO.getName(), userDTO.getSurname(), userDTO.getAddress(), UserType.fromName(userDTO.getUserType()))
+                new Teacher(userDTO.getEmail(), userDTO.getPassword(), userDTO.getName(), userDTO.getSurname(), userDTO.getAddress(), UserType.fromName(userDTO.getUserType()), false)
                 :
-                new Student(userDTO.getEmail(), userDTO.getPassword(), userDTO.getName(), userDTO.getSurname(), userDTO.getAddress(), UserType.fromName(userDTO.getUserType()));
+                new Student(userDTO.getEmail(), userDTO.getPassword(), userDTO.getName(), userDTO.getSurname(), userDTO.getAddress(), UserType.fromName(userDTO.getUserType()), false);
     }
 
     public static UserDTO toUserDTO(User userEntity) {
@@ -63,12 +63,14 @@ public class DaoDtoConversionUtils {
         return SubjectDTO.builder().
                 ID(subject.getID()).
                 name(subject.getName()).
+                description(subject.getDescription()).
+                price(subject.getPrice()).
                 build();
     }
 
     public static Subject toSubject(SubjectDTO subjectDTO) {
         return new Subject(subjectDTO.getID(),
-                subjectDTO.getName());
+                subjectDTO.getName(), subjectDTO.getDescription(), subjectDTO.getPrice());
     }
 
     public static UserAddressDTO toUserAddressDTO(UserAddress userAddress) {
@@ -94,9 +96,7 @@ public class DaoDtoConversionUtils {
                 teacherDTO.getUserType(),
                 teacherDTO.getPhoneNumber(),
                 toUserAddress(teacherDTO.getAddress()),
-                teacherDTO.getIsOnPlace(),
-                teacherDTO.getPriceMin(),
-                teacherDTO.getPriceMax());
+                teacherDTO.getIsOnPlace());
     }
 
     public static TeacherDTO toTeacherDTO(Teacher teacher, List<ExperienceDTO> experience, List<TeacherRatingDTO> ratings, List<SubjectDTO> subjects) {
@@ -109,12 +109,38 @@ public class DaoDtoConversionUtils {
                 userType(teacher.getUserType()).
                 phoneNumber(teacher.getPhoneNumber()).
                 address(toUserAddressDTO(teacher.getAddress())).
-                isOnPlace(teacher.isOnPlace()).
-                priceMin(teacher.getPriceMin()).
-                priceMax(teacher.getPriceMax()).
+                isOnPlace(teacher.getOnPlace()).
                 teachersExperience(experience).
                 teacherRatings(ratings).
                 teacherSubjects(subjects).
                 build();
+    }
+
+    public static StudentDTO toStudentDTO(Student student, List<SubjectDTO> studentSubjects, List<TeacherDTO> studentFavouriteTeachers) {
+        return StudentDTO.builder().
+                ID(student.getID()).
+                name(student.getName()).
+                surname(student.getSurname()).
+                password(student.getPassword()).
+                email(student.getEmail()).
+                userType(student.getUserType()).
+                userAddress(toUserAddressDTO(student.getAddress())).
+                phoneNumber(student.getPhoneNumber()).
+                studentSubjects(studentSubjects).
+                studentFavouriteTeachers(studentFavouriteTeachers).
+                onPlace(student.getOnPlace()).
+                build();
+    }
+
+    public static Student toStudent(StudentDTO studentDTO) {
+        return new Student(studentDTO.getID(),
+                studentDTO.getName(),
+                studentDTO.getSurname(),
+                studentDTO.getPassword(),
+                studentDTO.getEmail(),
+                studentDTO.getUserType(),
+                studentDTO.getPhoneNumber(),
+                toUserAddress(studentDTO.getUserAddress()),
+                studentDTO.getOnPlace());
     }
 }
