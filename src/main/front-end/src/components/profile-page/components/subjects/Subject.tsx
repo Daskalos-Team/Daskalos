@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLink } from "@fortawesome/free-solid-svg-icons";
 import "./styles/Subject.css";
+import { SUBJECT_TO_COLOR } from "../../../../service/profile-page-service";
 
 export const Subject = (props: any): React.JSX.Element => {
     const { logo, title, description, linkText, price } = props;
@@ -23,6 +24,7 @@ export const Subject = (props: any): React.JSX.Element => {
         <React.Fragment>
             <div className={subjectDimmerState}></div>
             <div className={subjectWindowState}>
+                <div className="title-div" style={{background: SUBJECT_TO_COLOR[title]}}> {title} </div>
                 <div className="price-div">
                     <h5 className="price-label">სასურველი ფასი</h5>
                     <div className="price-number"> {price} ₾ </div>
