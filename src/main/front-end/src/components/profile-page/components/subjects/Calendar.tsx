@@ -127,8 +127,6 @@ export const Calendar = (props: any): React.JSX.Element => {
     const hideWindow = (): void => {
         setDimmerState("dimmer-hide");
         setWindowState("window-hide");
-        setPrice("");
-        setDescription("");
     };
 
     const containsSubject = (): boolean => {
@@ -202,6 +200,8 @@ export const Calendar = (props: any): React.JSX.Element => {
             text: subject,
             backColor: hexToRgba(SUBJECT_TO_COLOR[subject], subjectOpacity.get(subject))
         });
+        setPrice("");
+        setDescription("");
         hideWindow();
     };
 
