@@ -31,10 +31,10 @@ export const Calendar = (props: any): React.JSX.Element => {
         onEventDelete: async (args: any) => {
             await removeSubjects(args);
         },
-        onEventResize: async (args: any) => {
+        onEventResized: async (args: any) => {
             console.log("event resized, ", args);
         },
-        onEventMove: async (args: any) => {
+        onEventMoved: async (args: any) => {
             console.log("event moved, ", args);
         },
         onEventClick: undefined
@@ -69,6 +69,8 @@ export const Calendar = (props: any): React.JSX.Element => {
     const hideWindow = () => {
         setDimmerState("dimmer-hide");
         setWindowState("window-hide");
+        setPrice("");
+        setDescription("");
     };
 
     const removeSubjects = async (args: any) => {
@@ -99,12 +101,23 @@ export const Calendar = (props: any): React.JSX.Element => {
         });
     };
 
+    const containsSubject = () => {
+        return subjects.some((userSubject: any) => userSubject.title === subject);
+    };
+
+    const containsDay = (userSubject: any, newDay: string) => {
+        return userSubject.days.some((day: any) => {
+            const oldDay = day.start.split("T")[0];
+            return newDay.includes(oldDay);
+        });
+    };
+
     const createSubjects = async (e: any) => {
-        if (price === "" || description === "") {
+        if (!containsSubject() && (price === "" || description === "")) {
             alert("გთხოვთ შეიყვანოთ ყველა მონაცემი");
             return;
         }
-        if (!subjects.some((userSubject: any) => userSubject.title === subject)) {
+        if (!containsSubject()) {
             const newSubject = {
                 title: subject,
                 description: description,
@@ -113,15 +126,20 @@ export const Calendar = (props: any): React.JSX.Element => {
                 link: "https://github.com",
                 days: [
                     {
-                        start: args.start,
-                        end: args.end
+                        start: args.start.value,
+                        end: args.end.value
                     }
                 ]
             };
             setSubjects((oldSubjects: any) => [...oldSubjects, newSubject]);
         } else {
+            let containsCurrentDay = false;
             subjects.forEach((userSubject: any) => {
                 if (userSubject.title === subject) {
+                    if (containsDay(userSubject, args.start.value)) {
+                        containsCurrentDay = true;
+                        return;
+                    }
                     const updatedDays = [...userSubject.days, { start: args.start.value, end: args.end.value }];
                     const updatedSubject = {...userSubject, days: updatedDays};
                     const otherSubjects = subjects.filter((sub: any) => {
@@ -133,6 +151,10 @@ export const Calendar = (props: any): React.JSX.Element => {
                     return;
                 }
             });
+            if (containsCurrentDay) {
+                alert("ამ დღეს უკვე გაქვთ ეს საგანი!");
+                return;
+            }
         }
 
         // update times of subject
@@ -165,10 +187,10 @@ export const Calendar = (props: any): React.JSX.Element => {
                         <option value="ისტორია">ისტორია</option>
                     </select>
                 </div>
-                { subjects.some((userSubject: any) => userSubject.title === subject) ? null :
+                { containsSubject() ? null :
                     <>
                         <input type="number" placeholder="საგნის ფასი" onInput={e => setPrice(e.currentTarget.value)}/>
-                        <textarea className="description-area" placeholder="მოკლე აღწერა" onChange={e => setDescription(e.target.value)} />
+                        <textarea className="description-area" maxLength={185} placeholder="მოკლე აღწერა" onChange={e => setDescription(e.target.value)} />
                     </>
                 }
                 <div className="verifier-buttons">

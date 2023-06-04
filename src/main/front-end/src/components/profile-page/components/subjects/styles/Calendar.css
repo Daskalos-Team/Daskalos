@@ -177,4 +177,5 @@ input:hover {
 
 .description-area:focus {
     outline-color: #ecf0ef;
+    resize: none;
 }
