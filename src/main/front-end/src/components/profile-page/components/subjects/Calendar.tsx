@@ -16,9 +16,7 @@ export const Calendar = (props: any): React.JSX.Element => {
     const [price, setPrice] = useState<string>("");
     const [description, setDescription] = useState<string>("");
 
-    // helper maps
     const [subjectOpacity, setSubjectOpacity] = useState<any>(new Map());
-    const [headerState, setHeaderState] = useState<any>(new Map());
 
     const allSubjectsList = ["მათემატიკა", "ფიზიკა", "ქიმია", "ბიოლოგია", "ისტორია"];
     const calendarRef = useRef<any>();

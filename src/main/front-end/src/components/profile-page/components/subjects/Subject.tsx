@@ -6,33 +6,34 @@ import "./styles/Subject.css";
 export const Subject = (props: any): React.JSX.Element => {
     const { logo, title, description, linkText, price } = props;
 
-    const [windowState, setWindowState] = useState<string>("window-hide");
-    const [dimmerState, setDimmerState] = useState<string>("dimmer-hide");
+    const [subjectWindowState, setSubjectWindowState] = useState<string>("subject-window-hide");
+    const [subjectDimmerState, setSubjectDimmerState] = useState<string>("subject-dimmer-hide");
 
     const showWindow = (): void => {
-        setDimmerState("dimmer");
-        setWindowState("window-popup");
+        setSubjectDimmerState("subject-dimmer");
+        setSubjectWindowState("subject-window-popup");
     };
 
     const hideWindow = (): void => {
-        setDimmerState("dimmer-hide");
-        setWindowState("window-hide");
+        setSubjectDimmerState("subject-dimmer-hide");
+        setSubjectWindowState("subject-window-hide");
     };
 
     return (
         <React.Fragment>
-            <div className="subject">
-                <div className={dimmerState}></div>
-                <div className={windowState}>
-                    <div> { price } </div>
-                    <div className="verifier-buttons">
-                        <div className="verifier-ok" onClick={undefined}>დადასტურება</div>
-                        <div className="verifier-close" onClick={() => {
-                            hideWindow();
-                        }}>დახურვა</div>
-                    </div>
+            <div className={subjectDimmerState}></div>
+            <div className={subjectWindowState}>
+                <div className="price-div">
+                    <h5 className="price-label">სასურველი ფასი</h5>
+                    <div className="price-number"> {price} ₾ </div>
                 </div>
-
+                <div className="subject-verifier-buttons">
+                    <div className="subject-verifier-close" onClick={() => {
+                        hideWindow();
+                    }}>დახურვა</div>
+                </div>
+            </div>
+            <div className="subject">
                 <a onClick={() => showWindow()}>
                     <div className="subject-container">
                         <div className="subject-logo">
