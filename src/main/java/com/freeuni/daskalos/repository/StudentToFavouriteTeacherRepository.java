@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public interface StudentToFavouriteTeacherRepository extends JpaRepository<StudentToFavouriteTeacher, Long> {
 
-    List<Long> getStudentFavouriteTeacherByStudentID(Long studentID);
+    List<StudentToFavouriteTeacher> findByStudentID(Long studentID);
 
     void deleteByStudentIDAndTeacherID(Long studentID, Long teacherID);
 }

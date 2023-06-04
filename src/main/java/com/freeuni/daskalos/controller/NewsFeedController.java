@@ -19,7 +19,7 @@ public class NewsFeedController {
     private NewsFeedService newsFeedService;
 
     @PostMapping("/get_filtered_students/")
-    public ResponseEntity<List<StudentDTO>> getStudents( @RequestBody FilterDTO filter) {
+    public ResponseEntity<List<StudentDTO>> getStudents(@RequestBody FilterDTO filter) {
         try {
             List<StudentDTO> students = newsFeedService.getStudents(filter);
             return new ResponseEntity<>(students, HttpStatus.OK);

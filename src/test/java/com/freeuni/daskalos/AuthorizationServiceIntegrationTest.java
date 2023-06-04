@@ -1,16 +1,14 @@
 package com.freeuni.daskalos;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import com.freeuni.daskalos.dto.UserAddressDTO;
 import com.freeuni.daskalos.dto.UserDTO;
 import com.freeuni.daskalos.repository.UserRepository;
+import com.freeuni.daskalos.repository.embeddables.UserAddress;
 import com.freeuni.daskalos.repository.entities.Student;
 import com.freeuni.daskalos.repository.entities.Teacher;
 import com.freeuni.daskalos.repository.entities.User;
 import com.freeuni.daskalos.service.AuthorizationService;
 import com.freeuni.daskalos.utils.AuthorizationStatus;
-import com.freeuni.daskalos.repository.embeddables.UserAddress;
 import com.freeuni.daskalos.utils.UserType;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,6 +26,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

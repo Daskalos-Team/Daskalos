@@ -17,6 +17,7 @@ public class SubjectService {
 
     @Autowired
     private SubjectRepository subjectRepository;
+
     @Autowired
     private UserToSubjectRepository userToSubjectRepository;
 

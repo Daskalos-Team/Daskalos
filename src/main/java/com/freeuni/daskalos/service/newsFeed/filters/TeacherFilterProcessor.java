@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 public class TeacherFilterProcessor implements FilterProcessor {
 
     private final UserService userService;
+
     private final FilterDTO filter;
 
     private final Long studentID;
@@ -32,8 +33,8 @@ public class TeacherFilterProcessor implements FilterProcessor {
     private boolean checkSubjects(Long userID) {
         Set<String> userSubjects = userService.getTeacherDTO(userID).getTeacherSubjects().stream().map(SubjectDTO::getName).collect(Collectors.toSet());
         List<String> chosenSubjects = filter.getSubjectsOnly();
-        for(String subject : chosenSubjects) {
-            if(!userSubjects.contains(subject)) {
+        for (String subject : chosenSubjects) {
+            if (!userSubjects.contains(subject)) {
                 return false;
             }
         }

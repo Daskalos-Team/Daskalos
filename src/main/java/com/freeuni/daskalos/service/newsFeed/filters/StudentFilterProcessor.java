@@ -9,12 +9,12 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class StudentFilterProcessor implements FilterProcessor{
+public class StudentFilterProcessor implements FilterProcessor {
 
     private UserService userService;
+
     private FilterDTO filter;
 
-    // filters buy
     public StudentFilterProcessor(FilterDTO filter, UserService userService) {
         this.filter = filter;
         this.userService = userService;
@@ -28,8 +28,8 @@ public class StudentFilterProcessor implements FilterProcessor{
     private boolean checkSubjects(Long userID) {
         Set<String> userSubjects = userService.getStudentDTO(userID).getStudentSubjects().stream().map(SubjectDTO::getName).collect(Collectors.toSet());
         List<String> chosenSubjects = filter.getSubjectsOnly();
-        for(String subject : chosenSubjects) {
-            if(!userSubjects.contains(subject)) {
+        for (String subject : chosenSubjects) {
+            if (!userSubjects.contains(subject)) {
                 return false;
             }
         }
@@ -40,5 +40,4 @@ public class StudentFilterProcessor implements FilterProcessor{
         StudentDTO student = userService.getStudentDTO(userID);
         return student.getOnPlace();
     }
-
 }

@@ -15,7 +15,10 @@ import com.freeuni.daskalos.utils.exceptions.UserNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.OptionalInt;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -53,7 +56,6 @@ public class UserService {
         }
     }
 
-    // TODO add tests
     public List<TeacherDTO> getAllTeachers() {
         return StreamSupport.stream(teacherRepository.findAll().spliterator(), false)
                 .map(teacher -> DaoDtoConversionUtils.toTeacherDTO(
@@ -64,7 +66,7 @@ public class UserService {
                 ))
                 .collect(Collectors.toList());
     }
-    // TODO add tests
+
     public List<StudentDTO> getAllStudents() {
         return StreamSupport.stream(studentRepository.findAll().spliterator(), false)
                 .map(student -> DaoDtoConversionUtils.toStudentDTO(
@@ -86,7 +88,7 @@ public class UserService {
                         build());
         teacherRepository.save(updatedTeacherData);
     }
-    // TODO add tests
+
     public void updateStudent(StudentDTO studentDTO) {
         StudentDTO existingData = getStudentDTO(studentDTO.getID());
         Student updatedStudentData = DaoDtoConversionUtils.toStudent(
@@ -122,24 +124,27 @@ public class UserService {
     public void removeSubject(Long userID, SubjectDTO subject) {
         subjectService.deleteUserSubject(userID, subject);
     }
-    // TODO tests
+
     public StudentDTO getStudentDTO(Long studentID) {
         Optional<Student> student = studentRepository.findById(studentID);
         if (student.isEmpty()) {
-           throw new UserNotExistException("Student with ID not found");
+            throw new UserNotExistException("Student with ID not found");
         } else {
             return DaoDtoConversionUtils.toStudentDTO(student.get(),
                     subjectService.getUserSubjects(studentID),
                     getStudentFavouriteTeachers(studentID));
         }
     }
+
     // TODO tests
     public List<TeacherDTO> getStudentFavouriteTeachers(Long studentID) {
-        return favouriteTeacherRepository.getStudentFavouriteTeacherByStudentID(studentID).
+        return favouriteTeacherRepository.findByStudentID(studentID).
                 stream().
+                map(StudentToFavouriteTeacher::getTeacherID).
                 map(this::getTeacherDTO).
                 collect(Collectors.toList());
     }
+
     // TODO tests
     public void addStudentFavouriteTeacher(Long studentID, Long teacherID) {
         favouriteTeacherRepository.save(StudentToFavouriteTeacher.
@@ -148,6 +153,7 @@ public class UserService {
                 teacherID(teacherID).
                 build());
     }
+
     // TODO tests
     public void removeStudentFavouriteTeacher(Long studentID, Long teacherID) {
         favouriteTeacherRepository.deleteByStudentIDAndTeacherID(studentID, teacherID);
@@ -159,6 +165,4 @@ public class UserService {
         OptionalInt maxPrice = teacherSubjects.stream().mapToInt(SubjectDTO::getPrice).max();
         return Map.entry(minPrice.getAsInt(), maxPrice.getAsInt());
     }
-
-
 }

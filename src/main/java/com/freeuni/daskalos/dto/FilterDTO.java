@@ -26,5 +26,4 @@ public class FilterDTO {
     private Boolean onPlace;
 
     private List<String> subjectsOnly;
-
 }

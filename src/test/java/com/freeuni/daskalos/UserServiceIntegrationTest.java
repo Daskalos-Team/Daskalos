@@ -5,11 +5,11 @@ import com.freeuni.daskalos.repository.*;
 import com.freeuni.daskalos.repository.embeddables.UserAddress;
 import com.freeuni.daskalos.repository.entities.Student;
 import com.freeuni.daskalos.repository.entities.Teacher;
-import com.freeuni.daskalos.repository.entities.User;
 import com.freeuni.daskalos.service.experience.ExperienceService;
 import com.freeuni.daskalos.service.rating.RatingService;
 import com.freeuni.daskalos.service.subject.SubjectService;
 import com.freeuni.daskalos.service.teacher.UserService;
+import com.freeuni.daskalos.utils.DaoDtoConversionUtils;
 import com.freeuni.daskalos.utils.UserType;
 import org.junit.Before;
 import org.junit.Test;
@@ -68,6 +68,9 @@ public class UserServiceIntegrationTest {
     private TeacherRepository teacherRepository;
 
     @Autowired
+    private StudentRepository studentRepository;
+
+    @Autowired
     private ExperienceRepository experienceRepository;
 
     @Autowired
@@ -95,12 +98,16 @@ public class UserServiceIntegrationTest {
     private ExperienceService experienceService;
 
     @Autowired
-    private UserService teacherService;
+    private UserService userService;
 
     @Autowired
     private UserRepository userRepository;
 
     private Teacher teacher1;
+
+    private Teacher teacher2;
+
+    private Teacher teacher3;
 
     private Student student1;
 
@@ -122,11 +129,18 @@ public class UserServiceIntegrationTest {
 
     @Before
     public void setup() {
-        teacher1 = new Teacher(10L, "Luka", "Kalandadze", "AtLeast^8", "email2",
+        teacher1 = new Teacher(10L, "Luka", "Kalandadze", "AtLeast^8", "email4",
                 UserType.TEACHER, "55555555", new UserAddress(11.0, 20.0), true);
+
+        teacher2 = new Teacher(11L, "Murtaz", "Gobozovi", "AtLeast^8", "email5",
+                UserType.TEACHER, "55555555", new UserAddress(11.0, 20.0), true);
+
+        teacher3 = new Teacher(12L, "Juansher", "Mamiashvili", "AtLeast^8", "email6",
+                UserType.TEACHER, "55555555", new UserAddress(11.0, 20.0), true);
+
         student1 = new Student("email1", "AtLeast^8", "Giorgi", "Adikashviili", new UserAddress(1, 2), UserType.STUDENT, false);
         student2 = new Student("email2", "AtLeast^8", "Niko", "Nargizashviili", new UserAddress(1, 2), UserType.STUDENT, false);
-        student3 = new Student("email3", "AtLeast^8", "Shalva", "Leclerishviili", new UserAddress(1, 2), UserType.STUDENT, false);
+        student3 = new Student("email3", "AtLeast^8", "Shalva", "Leclerishvili", new UserAddress(1, 2), UserType.STUDENT, false);
         experienceDTO1 = ExperienceDTO.builder().
                 employer("Microsoft").
                 jobDescription("Code maintenance").
@@ -156,23 +170,23 @@ public class UserServiceIntegrationTest {
     @Test
     public void testAddRemoveExperience() {
         Teacher t = userRepository.save(teacher1);
-        ExperienceDTO addedExperience1 = teacherService.addTeachersExperience(t.getID(), experienceDTO1);
-        List<ExperienceDTO> teachersExperience = teacherService.getTeacherDTO(t.getID()).getTeachersExperience();
+        ExperienceDTO addedExperience1 = userService.addTeachersExperience(t.getID(), experienceDTO1);
+        List<ExperienceDTO> teachersExperience = userService.getTeacherDTO(t.getID()).getTeachersExperience();
         assertEquals(1, teachersExperience.size());
         assertThat(teachersExperience, contains(addedExperience1));
 
-        ExperienceDTO addedExperience2 = teacherService.addTeachersExperience(t.getID(), experienceDTO2);
-        teachersExperience = teacherService.getTeacherDTO(t.getID()).getTeachersExperience();
+        ExperienceDTO addedExperience2 = userService.addTeachersExperience(t.getID(), experienceDTO2);
+        teachersExperience = userService.getTeacherDTO(t.getID()).getTeachersExperience();
         assertEquals(2, teachersExperience.size());
         assertThat(teachersExperience, containsInAnyOrder(addedExperience2, addedExperience1));
 
-        teacherService.removeTeachersExperience(addedExperience1);
-        teachersExperience = teacherService.getTeacherDTO(t.getID()).getTeachersExperience();
+        userService.removeTeachersExperience(addedExperience1);
+        teachersExperience = userService.getTeacherDTO(t.getID()).getTeachersExperience();
         assertEquals(1, teachersExperience.size());
         assertThat(teachersExperience, contains(addedExperience2));
 
-        teacherService.removeTeachersExperience(addedExperience2);
-        teachersExperience = teacherService.getTeacherDTO(t.getID()).getTeachersExperience();
+        userService.removeTeachersExperience(addedExperience2);
+        teachersExperience = userService.getTeacherDTO(t.getID()).getTeachersExperience();
         assertEquals(0, teachersExperience.size());
     }
 
@@ -204,11 +218,11 @@ public class UserServiceIntegrationTest {
                 build();
 
         Teacher t = userRepository.save(teacher1);
-        ExperienceDTO addedExperience1 = teacherService.addTeachersExperience(t.getID(), experience1);
-        ExperienceDTO addedExperience2 = teacherService.addTeachersExperience(t.getID(), experience2);
-        ExperienceDTO addedExperience3 = teacherService.addTeachersExperience(t.getID(), experience3);
-        ExperienceDTO addedExperience4 = teacherService.addTeachersExperience(t.getID(), experience4);
-        List<ExperienceDTO> teachersExperience = teacherService.getTeacherDTO(t.getID()).getTeachersExperience();
+        ExperienceDTO addedExperience1 = userService.addTeachersExperience(t.getID(), experience1);
+        ExperienceDTO addedExperience2 = userService.addTeachersExperience(t.getID(), experience2);
+        ExperienceDTO addedExperience3 = userService.addTeachersExperience(t.getID(), experience3);
+        ExperienceDTO addedExperience4 = userService.addTeachersExperience(t.getID(), experience4);
+        List<ExperienceDTO> teachersExperience = userService.getTeacherDTO(t.getID()).getTeachersExperience();
         assertThat(teachersExperience, containsInAnyOrder(addedExperience1, addedExperience2, addedExperience3, addedExperience4));
         assertThat(teachersExperience, hasSize(4));
         assertEquals(addedExperience3, teachersExperience.get(2));
@@ -232,23 +246,23 @@ public class UserServiceIntegrationTest {
                 studentComment("not bad teacher").
                 rating(3).
                 build();
-        TeacherRatingDTO addedRating1 = teacherService.addTeachersRating(t.getID(), teacherRatingDTO1);
-        List<TeacherRatingDTO> teacherRatings = teacherService.getTeacherDTO(t.getID()).getTeacherRatings();
+        TeacherRatingDTO addedRating1 = userService.addTeachersRating(t.getID(), teacherRatingDTO1);
+        List<TeacherRatingDTO> teacherRatings = userService.getTeacherDTO(t.getID()).getTeacherRatings();
         assertEquals(1, teacherRatings.size());
         assertThat(teacherRatings, contains(addedRating1));
 
-        TeacherRatingDTO addedRating2 = teacherService.addTeachersRating(t.getID(), teacherRatingDTO2);
-        teacherRatings = teacherService.getTeacherDTO(t.getID()).getTeacherRatings();
+        TeacherRatingDTO addedRating2 = userService.addTeachersRating(t.getID(), teacherRatingDTO2);
+        teacherRatings = userService.getTeacherDTO(t.getID()).getTeacherRatings();
         assertEquals(2, teacherRatings.size());
         assertThat(teacherRatings, containsInAnyOrder(addedRating2, addedRating1));
 
-        teacherService.removeTeacherRating(addedRating1);
-        teacherRatings = teacherService.getTeacherDTO(t.getID()).getTeacherRatings();
+        userService.removeTeacherRating(addedRating1);
+        teacherRatings = userService.getTeacherDTO(t.getID()).getTeacherRatings();
         assertEquals(1, teacherRatings.size());
         assertThat(teacherRatings, contains(addedRating2));
 
-        teacherService.removeTeacherRating(addedRating2);
-        teacherRatings = teacherService.getTeacherDTO(t.getID()).getTeacherRatings();
+        userService.removeTeacherRating(addedRating2);
+        teacherRatings = userService.getTeacherDTO(t.getID()).getTeacherRatings();
         assertEquals(0, teacherRatings.size());
     }
 
@@ -278,11 +292,11 @@ public class UserServiceIntegrationTest {
                 rating(4).
                 addDate(new Date(2014, Calendar.MAY, 19)).
                 build();
-        TeacherRatingDTO addedRating1 = teacherService.addTeachersRating(t.getID(), teacherRating1);
-        TeacherRatingDTO addedRating2 = teacherService.addTeachersRating(t.getID(), teacherRating2);
-        TeacherRatingDTO addedRating3 = teacherService.addTeachersRating(t.getID(), teacherRating3);
+        TeacherRatingDTO addedRating1 = userService.addTeachersRating(t.getID(), teacherRating1);
+        TeacherRatingDTO addedRating2 = userService.addTeachersRating(t.getID(), teacherRating2);
+        TeacherRatingDTO addedRating3 = userService.addTeachersRating(t.getID(), teacherRating3);
 
-        List<TeacherRatingDTO> teacherRatings = teacherService.getTeacherDTO(t.getID()).getTeacherRatings();
+        List<TeacherRatingDTO> teacherRatings = userService.getTeacherDTO(t.getID()).getTeacherRatings();
         assertEquals(teacherRatings.get(0), addedRating2);
         assertEquals(teacherRatings.get(1), addedRating3);
         assertEquals(teacherRatings.get(2), addedRating1);
@@ -291,50 +305,137 @@ public class UserServiceIntegrationTest {
     @Test
     public void testAddRemoveSubject() {
         Teacher t = userRepository.save(teacher1);
-        SubjectDTO addedSubject1 = teacherService.addSubject(t.getID(), subjectDTO1);
-        List<SubjectDTO> teacherSubjects = teacherService.getTeacherDTO(t.getID()).getTeacherSubjects();
+        SubjectDTO addedSubject1 = userService.addSubject(t.getID(), subjectDTO1);
+        List<SubjectDTO> teacherSubjects = userService.getTeacherDTO(t.getID()).getTeacherSubjects();
         assertEquals(1, teacherSubjects.size());
         assertThat(teacherSubjects, contains(addedSubject1));
 
-        SubjectDTO addedSubject2 = teacherService.addSubject(t.getID(), subjectDTO2);
-        teacherSubjects = teacherService.getTeacherDTO(t.getID()).getTeacherSubjects();
+        SubjectDTO addedSubject2 = userService.addSubject(t.getID(), subjectDTO2);
+        teacherSubjects = userService.getTeacherDTO(t.getID()).getTeacherSubjects();
         assertEquals(2, teacherSubjects.size());
         assertThat(teacherSubjects, containsInAnyOrder(addedSubject2, addedSubject1));
 
-        teacherService.removeSubject(t.getID(), addedSubject1);
-        teacherSubjects = teacherService.getTeacherDTO(t.getID()).getTeacherSubjects();
+        userService.removeSubject(t.getID(), addedSubject1);
+        teacherSubjects = userService.getTeacherDTO(t.getID()).getTeacherSubjects();
         assertEquals(1, teacherSubjects.size());
         assertThat(teacherSubjects, contains(addedSubject2));
 
-        teacherService.removeSubject(t.getID(), addedSubject2);
-        teacherSubjects = teacherService.getTeacherDTO(t.getID()).getTeacherSubjects();
+        userService.removeSubject(t.getID(), addedSubject2);
+        teacherSubjects = userService.getTeacherDTO(t.getID()).getTeacherSubjects();
         assertEquals(0, teacherSubjects.size());
     }
 
     @Test
     public void testUpdateTeacher() {
         Teacher t = userRepository.save(teacher1);
-        Iterable<User> users = userRepository.findAll();
         // update phone number
-        teacherService.updateTeacher(TeacherDTO.builder().ID(t.getID()).phoneNumber("503909309").build());
-        assertEquals(teacherService.getTeacherDTO(t.getID()).getPhoneNumber(), "503909309");
+        userService.updateTeacher(TeacherDTO.builder().ID(t.getID()).phoneNumber("503909309").build());
+        assertEquals(userService.getTeacherDTO(t.getID()).getPhoneNumber(), "503909309");
         // update address
         UserAddressDTO userAddressDTO = new UserAddressDTO(10.0, 20.0);
         userAddressDTO.setCity("Tbilisi");
         userAddressDTO.setCountry("Sakartvelo");
-        teacherService.updateTeacher(TeacherDTO.builder().ID(t.getID()).address(userAddressDTO).build());
-        UserAddressDTO userAddress = teacherService.getTeacherDTO(t.getID()).getAddress();
+        userService.updateTeacher(TeacherDTO.builder().ID(t.getID()).address(userAddressDTO).build());
+        UserAddressDTO userAddress = userService.getTeacherDTO(t.getID()).getAddress();
         assertEquals("Tbilisi", userAddress.getCity());
         assertEquals("Sakartvelo", userAddress.getCountry());
         assertEquals(userAddress.getLatitude(), 10.0, 0.00001);
         assertEquals(userAddress.getLongitude(), 20.0, 0.00001);
 
         // update on place
-        teacherService.updateTeacher(TeacherDTO.builder().ID(t.getID()).isOnPlace(false).build());
-        assertFalse(teacherService.getTeacherDTO(t.getID()).getIsOnPlace());
+        userService.updateTeacher(TeacherDTO.builder().ID(t.getID()).isOnPlace(false).build());
+        assertFalse(userService.getTeacherDTO(t.getID()).getIsOnPlace());
 
-        teacherService.updateTeacher(TeacherDTO.builder().ID(t.getID()).isOnPlace(true).build());
-        assertTrue(teacherService.getTeacherDTO(t.getID()).getIsOnPlace());
+        userService.updateTeacher(TeacherDTO.builder().ID(t.getID()).isOnPlace(true).build());
+        assertTrue(userService.getTeacherDTO(t.getID()).getIsOnPlace());
+    }
+
+    @Test
+    public void testUpdateStudent() {
+        Student student = studentRepository.save(student1);
+        // test phone number update
+        userService.updateStudent(StudentDTO.builder().ID(student.getID()).phoneNumber("11111111").build());
+        assertEquals(userService.getStudentDTO(student.getID()).getPhoneNumber(), "11111111");
+
+        // test address update
+        UserAddressDTO userAddressDTO = new UserAddressDTO(10.0, 20.0);
+        userAddressDTO.setCity("Tbilisi");
+        userAddressDTO.setCountry("Sakartvelo");
+        userService.updateStudent(StudentDTO.builder().ID(student.getID()).userAddress(userAddressDTO).build());
+        UserAddressDTO userAddress = userService.getStudentDTO(student.getID()).getUserAddress();
+        assertEquals("Tbilisi", userAddress.getCity());
+        assertEquals("Sakartvelo", userAddress.getCountry());
+        assertEquals(userAddress.getLatitude(), 10.0, 0.00001);
+        assertEquals(userAddress.getLongitude(), 20.0, 0.00001);
+
+        // update on place
+        userService.updateStudent(StudentDTO.builder().ID(student.getID()).onPlace(true).build());
+        assertTrue(userService.getStudentDTO(student.getID()).getOnPlace());
+    }
+
+    @Test
+    public void testGetAllTeachers() {
+        Teacher t1 = userRepository.save(teacher1);
+        Teacher t2 = userRepository.save(teacher2);
+        Teacher t3 = userRepository.save(teacher3);
+
+        List<TeacherDTO> teachers = userService.getAllTeachers();
+        assertThat(teachers, containsInAnyOrder(DaoDtoConversionUtils.toTeacherDTO(t1, new ArrayList<>(), new ArrayList<>(), new ArrayList<>()),
+                DaoDtoConversionUtils.toTeacherDTO(t2, new ArrayList<>(), new ArrayList<>(), new ArrayList<>()),
+                DaoDtoConversionUtils.toTeacherDTO(t3, new ArrayList<>(), new ArrayList<>(), new ArrayList<>())));
+    }
+
+    @Test
+    public void testGetAllStudents() {
+        Student s1 = userRepository.save(student1);
+        Student s2 = userRepository.save(student2);
+        Student s3 = userRepository.save(student3);
+
+        List<StudentDTO> students = userService.getAllStudents();
+        assertThat(students, containsInAnyOrder(DaoDtoConversionUtils.toStudentDTO(s1, new ArrayList<>(), new ArrayList<>()),
+                DaoDtoConversionUtils.toStudentDTO(s2, new ArrayList<>(), new ArrayList<>()),
+                DaoDtoConversionUtils.toStudentDTO(s3, new ArrayList<>(), new ArrayList<>())));
+    }
+
+    @Test
+    public void testAddDeleteStudentFavorite() {
+        Student student = userRepository.save(student1);
+        Teacher teacherFirst = userRepository.save(teacher1);
+        Teacher teacherSecond = userRepository.save(teacher2);
+        Teacher teacherThird = userRepository.save(teacher3);
+        TeacherDTO t1 = DaoDtoConversionUtils.toTeacherDTO(teacherFirst, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+        TeacherDTO t2 = DaoDtoConversionUtils.toTeacherDTO(teacherSecond, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+        TeacherDTO t3 = DaoDtoConversionUtils.toTeacherDTO(teacherThird, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+
+        // add first teacher
+        userService.addStudentFavouriteTeacher(student.getID(), t1.getID());
+        List<TeacherDTO> studentFavorites = userService.getStudentFavouriteTeachers(student.getID());
+        assertThat(studentFavorites, hasSize(1));
+        assertThat(studentFavorites, containsInAnyOrder(t1));
+        // add second teacher
+        userService.addStudentFavouriteTeacher(student.getID(), t2.getID());
+        studentFavorites = userService.getStudentFavouriteTeachers(student.getID());
+        assertThat(studentFavorites, hasSize(2));
+        assertThat(studentFavorites, containsInAnyOrder(t1, t2));
+        // add third teacher
+        userService.addStudentFavouriteTeacher(student.getID(), t3.getID());
+        studentFavorites = userService.getStudentFavouriteTeachers(student.getID());
+        assertThat(studentFavorites, hasSize(3));
+        assertThat(studentFavorites, containsInAnyOrder(t1, t2, t3));
+        // remove first teacher
+        userService.removeStudentFavouriteTeacher(student.getID(), t1.getID());
+        studentFavorites = userService.getStudentFavouriteTeachers(student.getID());
+        assertThat(studentFavorites, hasSize(2));
+        assertThat(studentFavorites, containsInAnyOrder(t3, t2));
+        // remove second teacher
+        userService.removeStudentFavouriteTeacher(student.getID(), t2.getID());
+        studentFavorites = userService.getStudentFavouriteTeachers(student.getID());
+        assertThat(studentFavorites, hasSize(1));
+        assertThat(studentFavorites, containsInAnyOrder(t3));
+        // remove third teacher
+        userService.removeStudentFavouriteTeacher(student.getID(), t3.getID());
+        studentFavorites = userService.getStudentFavouriteTeachers(student.getID());
+        assertThat(studentFavorites, hasSize(0));
     }
 
 }
