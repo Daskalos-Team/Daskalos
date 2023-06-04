@@ -61,19 +61,19 @@ export const Calendar = (props: any): React.JSX.Element => {
         calendarRef.current.control.update({startDate, events});
     }, []);
 
-    const showWindow = () => {
+    const showWindow = (): void => {
         setDimmerState("dimmer");
         setWindowState("window-popup");
     };
 
-    const hideWindow = () => {
+    const hideWindow = (): void => {
         setDimmerState("dimmer-hide");
         setWindowState("window-hide");
         setPrice("");
         setDescription("");
     };
 
-    const removeSubjects = async (args: any) => {
+    const removeSubjects = async (args: any): Promise<void> => {
         const currSubject = args.e.data;
 
         subjects.forEach((userSubject: any) => {
@@ -101,18 +101,18 @@ export const Calendar = (props: any): React.JSX.Element => {
         });
     };
 
-    const containsSubject = () => {
+    const containsSubject = (): boolean => {
         return subjects.some((userSubject: any) => userSubject.title === subject);
     };
 
-    const containsDay = (userSubject: any, newDay: string) => {
+    const containsDay = (userSubject: any, newDay: string): boolean => {
         return userSubject.days.some((day: any) => {
             const oldDay = day.start.split("T")[0];
             return newDay.includes(oldDay);
         });
     };
 
-    const createSubjects = async (e: any) => {
+    const createSubjects = async (e: any): Promise<void> => {
         if (!containsSubject() && (price === "" || description === "")) {
             alert("გთხოვთ შეიყვანოთ ყველა მონაცემი");
             return;
@@ -169,6 +169,11 @@ export const Calendar = (props: any): React.JSX.Element => {
         hideWindow();
     };
 
+    // 0 - 10 000
+    const priceInRange = (price: string): string => {
+        return Math.min(10000, Math.max(0, parseFloat(price))) + "";
+    };
+
     return (
         <div className="calendar-div">
             <div className={dimmerState}></div>
@@ -189,7 +194,7 @@ export const Calendar = (props: any): React.JSX.Element => {
                 </div>
                 { containsSubject() ? null :
                     <>
-                        <input type="number" placeholder="საგნის ფასი" onInput={e => setPrice(e.currentTarget.value)}/>
+                        <input type="number" min={"0"} max={"10000"} placeholder="საგნის ფასი" onInput={e => setPrice(priceInRange(e.currentTarget.value))}/>
                         <textarea className="description-area" maxLength={185} placeholder="მოკლე აღწერა" onChange={e => setDescription(e.target.value)} />
                     </>
                 }

@@ -15,11 +15,11 @@ export const INFO = {
             link: "https://github.com",
             days: [
                 {
-                    start: "2023-05-24T11:22:00",
+                    start: "2023-05-24T11:30:00",
                     end: "2023-05-24T13:00:00"
                 },
                 {
-                    start: "2023-05-25T13:22:00",
+                    start: "2023-05-25T13:30:00",
                     end: "2023-05-25T15:00:00"
                 }
             ]
@@ -60,7 +60,7 @@ export const INFO = {
             link: "https://github.com",
             days: [
                 {
-                    start: "2023-05-23T12:22:00",
+                    start: "2023-05-23T12:30:00",
                     end: "2023-05-23T14:00:00"
                 }
             ]
@@ -74,7 +74,7 @@ export const INFO = {
             link: "https://github.com",
             days: [
                 {
-                    start: "2023-05-26T11:22:00",
+                    start: "2023-05-26T11:30:00",
                     end: "2023-05-26T13:00:00"
                 }
             ]
