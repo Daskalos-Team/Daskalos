@@ -20,6 +20,7 @@ export const Calendar = (props: any): React.JSX.Element => {
     const [subjectOpacity, setSubjectOpacity] = useState<any>(new Map());
     const [headerState, setHeaderState] = useState<any>(new Map());
 
+    const allSubjectsList = ["მათემატიკა", "ფიზიკა", "ქიმია", "ბიოლოგია", "ისტორია"];
     const calendarRef = useRef<any>();
     const calendarConfig = {
         viewType: "Week",
@@ -48,15 +49,15 @@ export const Calendar = (props: any): React.JSX.Element => {
     // INITIAL PROCESSING OF SUBJECTS
     useEffect(() => {
         const events: any = [];
-        const opacityMap = new Map();
+        initOpacities();
 
         subjects.map((userSubject: any) => {
-            opacityMap.set(userSubject.title, 0.5);
             const allSubjects = userSubject.days.map((day: any) => {
                 return {
                     id: DayPilot.guid(),
                     text: userSubject.title,
-                    backColor: hexToRgba(SUBJECT_TO_COLOR[userSubject.title], opacityMap.get(userSubject.title)),
+                    backColor: hexToRgba(SUBJECT_TO_COLOR[userSubject.title], 0.5),
+                    resource: "vaaax",
                     start: day.start,
                     end: day.end
                 };
@@ -64,11 +65,53 @@ export const Calendar = (props: any): React.JSX.Element => {
             events.push(...allSubjects);
         });
 
-        setSubjectOpacity(opacityMap);
-
         const startDate = "2023-05-22";
         calendarRef.current.control.update({startDate, events});
     }, []);
+
+    // all 0.5 initially
+    const initOpacities = () => {
+        const opacityMap = new Map();
+        allSubjectsList.map((sub: string) => {
+            opacityMap.set(sub, 0.5);
+        });
+        setSubjectOpacity(opacityMap);
+    };
+
+    const updateOpacities = (currSubject: string) => {
+        const events = calendarRef.current.control.events.list;
+        const updatedEvents: any = [];
+
+        if (subjectOpacity.get(currSubject) == 1) {
+            for (let i = 0; i < events.length; i++) {
+                const event = events[i];
+                event.backColor = hexToRgba(SUBJECT_TO_COLOR[event.text], 0.5);
+                updatedEvents.push(event);
+            }
+            allSubjectsList.map((sub: any) => {
+                subjectOpacity.set(sub, 0.5);
+            });
+        } else {
+            for (let i = 0; i < events.length; i++) {
+                const event = events[i];
+
+                if (event.text === currSubject) {
+                    event.backColor = hexToRgba(SUBJECT_TO_COLOR[event.text], 1);
+                } else {
+                    event.backColor = hexToRgba(SUBJECT_TO_COLOR[event.text], 0.1);
+                }
+                updatedEvents.push(event);
+            }
+            allSubjectsList.map((sub: any) => {
+                if (sub == currSubject) {
+                    subjectOpacity.set(sub, 1);
+                } else {
+                    subjectOpacity.set(sub, 0.1);
+                }
+            });
+        }
+        calendarRef.current.control.update({updatedEvents});
+    };
 
     const hexToRgba = (hex: string, opacity: number): string => {
         hex = hex.replace("#", "");
@@ -104,34 +147,6 @@ export const Calendar = (props: any): React.JSX.Element => {
     // 0 - 10 000
     const priceInRange = (price: string): string => {
         return Math.min(10000, Math.max(0, parseFloat(price))) + "";
-    };
-
-    const updateOpacities = (currSubject: string) => {
-        const events = calendarRef.current.control.events.list;
-        const updatedEvents: any = [];
-
-        if (subjectOpacity.get(currSubject) == 1) {
-            for (let i = 0; i < events.length; i++) {
-                const event = events[i];
-                subjectOpacity.set(event.text, 0.5);
-                event.backColor = hexToRgba(SUBJECT_TO_COLOR[event.text], 0.5);
-                updatedEvents.push(event);
-            }
-        } else {
-            for (let i = 0; i < events.length; i++) {
-                const event = events[i];
-
-                if (event.text === currSubject) {
-                    subjectOpacity.set(event.text, 1);
-                    event.backColor = hexToRgba(SUBJECT_TO_COLOR[event.text], 1);
-                } else {
-                    subjectOpacity.set(event.text, 0.1);
-                    event.backColor = hexToRgba(SUBJECT_TO_COLOR[event.text], 0.1);
-                }
-                updatedEvents.push(event);
-            }
-        }
-        calendarRef.current.control.update({updatedEvents});
     };
 
     const createSubjects = async (e: any): Promise<void> => {
@@ -223,8 +238,6 @@ export const Calendar = (props: any): React.JSX.Element => {
     const changeSubjectTimes = async (args: any, isResize = false): Promise<void> => {
         const currSubject = args.e.data;
 
-        const oldStart = args.e.part.start.value;
-        const oldEnd = args.e.part.end.value;
         const newStart = args.newStart.value;
         const newEnd = args.newEnd.value;
 
