@@ -183,7 +183,7 @@
     display: flex;
 }
 
-.profile-page-projects {
+.profile-page-subjects {
     flex-basis: 300px;
     padding-top: 40px;
 }
@@ -248,7 +248,7 @@
         flex-direction: column;
     }
 
-    .profile-page-projects {
+    .profile-page-subjects {
         flex-basis: auto;
     }
 

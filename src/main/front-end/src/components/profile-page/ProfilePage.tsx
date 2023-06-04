@@ -161,7 +161,7 @@ export const ProfilePage = (): React.JSX.Element => {
                             </div>
                         </div>
 
-                        <div className="profile-page-projects">
+                        <div className="profile-page-subjects">
                             <Subjects subjects={userSubjects}/>
                         </div>
 
