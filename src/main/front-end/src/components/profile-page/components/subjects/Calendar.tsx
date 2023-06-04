@@ -31,11 +31,11 @@ export const Calendar = (props: any): React.JSX.Element => {
         onEventDelete: async (args: any) => {
             await removeSubjects(args);
         },
-        onEventResized: async (args: any) => {
-            console.log("event resized, ", args);
+        onEventResize: async (args: any) => {
+            await changeSubjectTimes(args, true);
         },
-        onEventMoved: async (args: any) => {
-            console.log("event moved, ", args);
+        onEventMove: async (args: any) => {
+            await changeSubjectTimes(args);
         },
         onEventClick: undefined
     };
@@ -73,34 +73,6 @@ export const Calendar = (props: any): React.JSX.Element => {
         setDescription("");
     };
 
-    const removeSubjects = async (args: any): Promise<void> => {
-        const currSubject = args.e.data;
-
-        subjects.forEach((userSubject: any) => {
-            if (userSubject.title === currSubject["text"]) {
-                if (userSubject.days.length === 1) { // only 1 time left
-                    const updatedSubjects = subjects.filter((sub: any) => {
-                        return sub.title !== userSubject.title;
-                    });
-                    setSubjects(updatedSubjects);
-                } else {
-                    const updatedDays = userSubject.days.filter((day: any) => {
-                        return day.start !== currSubject.start.value && day.end !== currSubject.end.value;
-                    });
-                    const updatedSubject = {...userSubject, days: updatedDays};
-
-                    const otherSubjects = subjects.filter((sub: any) => {
-                        return sub.title !== userSubject.title;
-                    });
-                    const updatedSubjects = [updatedSubject, ...otherSubjects];
-
-                    setSubjects(updatedSubjects);
-                }
-                return;
-            }
-        });
-    };
-
     const containsSubject = (): boolean => {
         return subjects.some((userSubject: any) => userSubject.title === subject);
     };
@@ -110,6 +82,11 @@ export const Calendar = (props: any): React.JSX.Element => {
             const oldDay = day.start.split("T")[0];
             return newDay.includes(oldDay);
         });
+    };
+
+    // 0 - 10 000
+    const priceInRange = (price: string): string => {
+        return Math.min(10000, Math.max(0, parseFloat(price))) + "";
     };
 
     const createSubjects = async (e: any): Promise<void> => {
@@ -169,9 +146,73 @@ export const Calendar = (props: any): React.JSX.Element => {
         hideWindow();
     };
 
-    // 0 - 10 000
-    const priceInRange = (price: string): string => {
-        return Math.min(10000, Math.max(0, parseFloat(price))) + "";
+    const removeSubjects = async (args: any): Promise<void> => {
+        const currSubject = args.e.data;
+
+        subjects.forEach((userSubject: any) => {
+            if (userSubject.title === currSubject["text"]) {
+                if (userSubject.days.length === 1) { // only 1 time left
+                    const updatedSubjects = subjects.filter((sub: any) => {
+                        return sub.title !== userSubject.title;
+                    });
+                    setSubjects(updatedSubjects);
+                } else {
+                    const updatedDays = userSubject.days.filter((day: any) => {
+                        return day.start !== currSubject.start.value && day.end !== currSubject.end.value;
+                    });
+                    const updatedSubject = {...userSubject, days: updatedDays};
+
+                    const otherSubjects = subjects.filter((sub: any) => {
+                        return sub.title !== userSubject.title;
+                    });
+                    const updatedSubjects = [updatedSubject, ...otherSubjects];
+
+                    setSubjects(updatedSubjects);
+                }
+                return;
+            }
+        });
+    };
+
+    const changeSubjectTimes = async (args: any, isResize = false): Promise<void> => {
+        const currSubject = args.e.data;
+
+        const oldStart = args.e.part.start.value;
+        const oldEnd = args.e.part.end.value;
+        const newStart = args.newStart.value;
+        const newEnd = args.newEnd.value;
+
+        let restrictSameDay = false;
+        subjects.forEach((userSubject: any) => {
+            if (userSubject.title === currSubject["text"]) {
+                if (!isResize && containsDay(userSubject, newStart)) {
+                    restrictSameDay = true;
+                    return;
+                }
+                const otherDays = userSubject.days.filter((day: any) => {
+                    return day.start !== currSubject.start.value && day.end !== currSubject.end.value;
+                });
+                const updatedDays = [...otherDays, {
+                    start: newStart,
+                    end: newEnd
+                }];
+                const updatedSubject = {...userSubject, days: updatedDays};
+
+                const otherSubjects = subjects.filter((sub: any) => {
+                    return sub.title !== userSubject.title;
+                });
+                const updatedSubjects = [updatedSubject, ...otherSubjects];
+
+                setSubjects(updatedSubjects);
+                return;
+            }
+        });
+
+        if (restrictSameDay) {
+            args.preventDefault();
+            alert("ამ დღეს უკვე გაქვთ ეს საგანი!");
+            return;
+        }
     };
 
     return (
