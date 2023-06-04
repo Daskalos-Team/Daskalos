@@ -1,16 +1,39 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLink } from "@fortawesome/free-solid-svg-icons";
 import "./styles/Subject.css";
 
 export const Subject = (props: any): React.JSX.Element => {
-    const { logo, title, description, linkText, link } = props;
+    const { logo, title, description, linkText, price } = props;
+
+    const [windowState, setWindowState] = useState<string>("window-hide");
+    const [dimmerState, setDimmerState] = useState<string>("dimmer-hide");
+
+    const showWindow = (): void => {
+        setDimmerState("dimmer");
+        setWindowState("window-popup");
+    };
+
+    const hideWindow = (): void => {
+        setDimmerState("dimmer-hide");
+        setWindowState("window-hide");
+    };
 
     return (
         <React.Fragment>
             <div className="subject">
-                <Link to={link}>
+                <div className={dimmerState}></div>
+                <div className={windowState}>
+                    <div> { price } </div>
+                    <div className="verifier-buttons">
+                        <div className="verifier-ok" onClick={undefined}>დადასტურება</div>
+                        <div className="verifier-close" onClick={() => {
+                            hideWindow();
+                        }}>დახურვა</div>
+                    </div>
+                </div>
+
+                <a onClick={() => showWindow()}>
                     <div className="subject-container">
                         <div className="subject-logo">
                             <img src={logo} alt="logo" />
@@ -25,7 +48,7 @@ export const Subject = (props: any): React.JSX.Element => {
                             <div className="subject-link-text">{linkText}</div>
                         </div>
                     </div>
-                </Link>
+                </a>
             </div>
         </React.Fragment>
     );

@@ -14,7 +14,7 @@ export const Subjects = (props: any): React.JSX.Element => {
                         title={subject.title}
                         description={subject.description}
                         linkText={subject.linkText}
-                        link={subject.link}
+                        price={subject.price}
                     />
                 </div>
             ))}
