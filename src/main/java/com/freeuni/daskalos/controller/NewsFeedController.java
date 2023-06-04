@@ -18,10 +18,10 @@ public class NewsFeedController {
     @Autowired
     private NewsFeedService newsFeedService;
 
-    @PostMapping("/get_filtered_students/{id}")
-    public ResponseEntity<List<StudentDTO>> getStudents(@PathVariable long teacherID, @RequestBody FilterDTO filter) {
+    @PostMapping("/get_filtered_students/")
+    public ResponseEntity<List<StudentDTO>> getStudents( @RequestBody FilterDTO filter) {
         try {
-            List<StudentDTO> students = newsFeedService.getStudents(teacherID, filter);
+            List<StudentDTO> students = newsFeedService.getStudents(filter);
             return new ResponseEntity<>(students, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
@@ -29,7 +29,7 @@ public class NewsFeedController {
         }
     }
 
-    @PostMapping("/get_filtered_teachers/{id}")
+    @PostMapping("/get_filtered_teachers/{studentID}")
     public ResponseEntity<List<TeacherDTO>> getTeachers(@PathVariable long studentID, @RequestBody FilterDTO filter) {
         try {
             List<TeacherDTO> teachers = newsFeedService.getTeachers(studentID, filter);

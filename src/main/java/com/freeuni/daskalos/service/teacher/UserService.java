@@ -86,7 +86,7 @@ public class UserService {
                         build());
         teacherRepository.save(updatedTeacherData);
     }
-
+    // TODO add tests
     public void updateStudent(StudentDTO studentDTO) {
         StudentDTO existingData = getStudentDTO(studentDTO.getID());
         Student updatedStudentData = DaoDtoConversionUtils.toStudent(
@@ -94,6 +94,7 @@ public class UserService {
                         ID(studentDTO.getID()).
                         phoneNumber(studentDTO.getPhoneNumber() != null ? studentDTO.getPhoneNumber() : existingData.getPhoneNumber()).
                         userAddress(studentDTO.getUserAddress() != null ? studentDTO.getUserAddress() : existingData.getUserAddress()).
+                        onPlace(studentDTO.getOnPlace() != null ? studentDTO.getOnPlace() : existingData.getOnPlace()).
                         build());
         studentRepository.save(updatedStudentData);
     }

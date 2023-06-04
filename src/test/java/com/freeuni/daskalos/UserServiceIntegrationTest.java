@@ -143,9 +143,13 @@ public class UserServiceIntegrationTest {
 
         subjectDTO1 = SubjectDTO.builder().
                 name("Aero Engineering").
+                description("Best lecturer in the world, Adrian Newey").
+                price(100).
                 build();
         subjectDTO2 = SubjectDTO.builder().
                 name("Mechanical Engineering").
+                description("All the engineering principles in one course").
+                price(200).
                 build();
     }
 
@@ -332,4 +336,5 @@ public class UserServiceIntegrationTest {
         teacherService.updateTeacher(TeacherDTO.builder().ID(t.getID()).isOnPlace(true).build());
         assertTrue(teacherService.getTeacherDTO(t.getID()).getIsOnPlace());
     }
+
 }

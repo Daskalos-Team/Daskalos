@@ -10,13 +10,13 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-// filters buy subjects, price range, favourites only, on place
+// TODO add filtering by subject days
 public class TeacherFilterProcessor implements FilterProcessor {
 
-    private UserService userService;
-    private FilterDTO filter;
+    private final UserService userService;
+    private final FilterDTO filter;
 
-    private Long studentID;
+    private final Long studentID;
 
     public TeacherFilterProcessor(FilterDTO filter, UserService userService, Long studentID) {
         this.filter = filter;
@@ -33,11 +33,11 @@ public class TeacherFilterProcessor implements FilterProcessor {
         Set<String> userSubjects = userService.getTeacherDTO(userID).getTeacherSubjects().stream().map(SubjectDTO::getName).collect(Collectors.toSet());
         List<String> chosenSubjects = filter.getSubjectsOnly();
         for(String subject : chosenSubjects) {
-            if(userSubjects.contains(subject)) {
-                return true;
+            if(!userSubjects.contains(subject)) {
+                return false;
             }
         }
-        return false;
+        return true;
     }
 
     private boolean checkPriceRange(Long userID) {

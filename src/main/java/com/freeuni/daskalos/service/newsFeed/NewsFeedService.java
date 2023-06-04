@@ -11,10 +11,8 @@ import com.freeuni.daskalos.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-
 
 @Service
 public class NewsFeedService {
@@ -28,10 +26,10 @@ public class NewsFeedService {
         return teachers.stream().filter(teacher -> filterProcessor.checkUser(teacher.getID())).toList();
     }
 
-    public List<StudentDTO> getStudents(Long teacherID, FilterDTO filter) {
-        FilterProcessor filterProcessor = new StudentFilterProcessor(filter, userService, teacherID);
-        List<StudentDTO> studentS = userService.getAllStudents();
-        return new ArrayList<>();
+    public List<StudentDTO> getStudents(FilterDTO filter) {
+        FilterProcessor filterProcessor = new StudentFilterProcessor(filter, userService);
+        List<StudentDTO> students = userService.getAllStudents();
+        return students.stream().filter(student -> filterProcessor.checkUser(student.getID())).toList();
     }
 
     public List<TeacherDTO> getTopTenTeacherByRating() {

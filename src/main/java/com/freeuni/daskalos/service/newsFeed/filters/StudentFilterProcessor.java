@@ -1,6 +1,7 @@
 package com.freeuni.daskalos.service.newsFeed.filters;
 
 import com.freeuni.daskalos.dto.FilterDTO;
+import com.freeuni.daskalos.dto.StudentDTO;
 import com.freeuni.daskalos.dto.SubjectDTO;
 import com.freeuni.daskalos.service.teacher.UserService;
 
@@ -12,28 +13,32 @@ public class StudentFilterProcessor implements FilterProcessor{
 
     private UserService userService;
     private FilterDTO filter;
-    private Long teacherID;
 
     // filters buy
-    public StudentFilterProcessor(FilterDTO filter, UserService userService, Long teacherID) {
+    public StudentFilterProcessor(FilterDTO filter, UserService userService) {
         this.filter = filter;
         this.userService = userService;
-        this.teacherID = teacherID;
     }
 
     @Override
     public boolean checkUser(Long userID) {
-        return false;
+        return checkSubjects(userID) && checkOnPlace(userID);
     }
 
     private boolean checkSubjects(Long userID) {
         Set<String> userSubjects = userService.getStudentDTO(userID).getStudentSubjects().stream().map(SubjectDTO::getName).collect(Collectors.toSet());
         List<String> chosenSubjects = filter.getSubjectsOnly();
         for(String subject : chosenSubjects) {
-            if(userSubjects.contains(subject)) {
-                return true;
+            if(!userSubjects.contains(subject)) {
+                return false;
             }
         }
-        return false;
+        return true;
     }
+
+    private boolean checkOnPlace(Long userID) {
+        StudentDTO student = userService.getStudentDTO(userID);
+        return student.getOnPlace();
+    }
+
 }
