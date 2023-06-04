@@ -8,7 +8,6 @@
     border-radius: 5px;
     font-size: 10pt;
     padding: 7px;
-    opacity: 0.5;
 }
 
 .calendar-div {
@@ -19,12 +18,67 @@
     border-radius: 10px 10px 0 0;
     background: whitesmoke;
     border: 1px solid antiquewhite;
-    font-size: 18px;
+    font-size: 12px;
     font-weight: 550;
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-wrap: wrap;
+    column-gap: 1em;
+    row-gap: 5px;
     padding: 0.5rem;
+}
+
+.calendar-header section {
+    width: 7em;
+    height: 2em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px;
+    color: antiquewhite;
+    opacity: 0.5;
+    cursor: pointer;
+}
+
+.math {
+    background: #808080;
+}
+
+.math:hover {
+    outline: 2px solid #808080;
+}
+
+.physics {
+    background: #FF0000;
+}
+
+.physics:hover {
+    outline: 2px solid #FF0000;
+}
+
+.chemistry {
+    background: #0000FF;
+}
+
+.chemistry:hover {
+    outline: 2px solid #0000FF;
+}
+
+.biology {
+    background: #008000;
+}
+
+.biology:hover {
+    outline: 2px solid #008000;
+}
+
+.history {
+    background: #FF8C00;
+}
+
+.history:hover {
+    outline: 2px solid #FF8C00;
 }
 
 .window-hide {

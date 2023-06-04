@@ -13,6 +13,7 @@ export const INFO = {
             image: "subjects/math.png",
             linkText: "იხილეთ დეტალები",
             link: "https://github.com",
+            price: 123.1,
             days: [
                 {
                     start: "2023-05-24T11:30:00",
@@ -30,6 +31,7 @@ export const INFO = {
             image: "subjects/physics.png",
             linkText: "იხილეთ დეტალები",
             link: "https://github.com",
+            price: 100,
             days: [
                 {
                     start: "2023-05-22T10:00:00",
@@ -44,6 +46,7 @@ export const INFO = {
             image: "subjects/chemistry.png",
             linkText: "იხილეთ დეტალები",
             link: "https://github.com",
+            price: 80,
             days: [
                 {
                     start: "2023-05-25T09:30:00",
@@ -58,6 +61,7 @@ export const INFO = {
             image: "subjects/biology.png",
             linkText: "იხილეთ დეტალები",
             link: "https://github.com",
+            price: 70,
             days: [
                 {
                     start: "2023-05-23T12:30:00",
@@ -72,6 +76,7 @@ export const INFO = {
             image: "subjects/history.png",
             linkText: "იხილეთ დეტალები",
             link: "https://github.com",
+            price: 20,
             days: [
                 {
                     start: "2023-05-26T11:30:00",

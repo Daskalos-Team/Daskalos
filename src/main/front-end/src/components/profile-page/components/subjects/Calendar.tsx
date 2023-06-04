@@ -16,6 +16,10 @@ export const Calendar = (props: any): React.JSX.Element => {
     const [price, setPrice] = useState<string>("");
     const [description, setDescription] = useState<string>("");
 
+    // helper maps
+    const [subjectOpacity, setSubjectOpacity] = useState<any>(new Map());
+    const [headerState, setHeaderState] = useState<any>(new Map());
+
     const calendarRef = useRef<any>();
     const calendarConfig = {
         viewType: "Week",
@@ -41,14 +45,18 @@ export const Calendar = (props: any): React.JSX.Element => {
     };
 
     // 2023-05-22 default date / 05-21 for sunday
+    // INITIAL PROCESSING OF SUBJECTS
     useEffect(() => {
         const events: any = [];
+        const opacityMap = new Map();
+
         subjects.map((userSubject: any) => {
+            opacityMap.set(userSubject.title, 0.5);
             const allSubjects = userSubject.days.map((day: any) => {
                 return {
-                    id: 1,
+                    id: DayPilot.guid(),
                     text: userSubject.title,
-                    backColor: SUBJECT_TO_COLOR[userSubject.title],
+                    backColor: hexToRgba(SUBJECT_TO_COLOR[userSubject.title], opacityMap.get(userSubject.title)),
                     start: day.start,
                     end: day.end
                 };
@@ -56,10 +64,19 @@ export const Calendar = (props: any): React.JSX.Element => {
             events.push(...allSubjects);
         });
 
-        const startDate = "2023-05-22";
+        setSubjectOpacity(opacityMap);
 
+        const startDate = "2023-05-22";
         calendarRef.current.control.update({startDate, events});
     }, []);
+
+    const hexToRgba = (hex: string, opacity: number): string => {
+        hex = hex.replace("#", "");
+        const r = parseInt(hex.substring(0, 2), 16);
+        const g = parseInt(hex.substring(2, 4), 16);
+        const b = parseInt(hex.substring(4, 6), 16);
+        return "rgba(" + r + ", " + g + ", " + b + ", " + opacity + ")";
+    };
 
     const showWindow = (): void => {
         setDimmerState("dimmer");
@@ -89,6 +106,34 @@ export const Calendar = (props: any): React.JSX.Element => {
         return Math.min(10000, Math.max(0, parseFloat(price))) + "";
     };
 
+    const updateOpacities = (currSubject: string) => {
+        const events = calendarRef.current.control.events.list;
+        const updatedEvents: any = [];
+
+        if (subjectOpacity.get(currSubject) == 1) {
+            for (let i = 0; i < events.length; i++) {
+                const event = events[i];
+                subjectOpacity.set(event.text, 0.5);
+                event.backColor = hexToRgba(SUBJECT_TO_COLOR[event.text], 0.5);
+                updatedEvents.push(event);
+            }
+        } else {
+            for (let i = 0; i < events.length; i++) {
+                const event = events[i];
+
+                if (event.text === currSubject) {
+                    subjectOpacity.set(event.text, 1);
+                    event.backColor = hexToRgba(SUBJECT_TO_COLOR[event.text], 1);
+                } else {
+                    subjectOpacity.set(event.text, 0.1);
+                    event.backColor = hexToRgba(SUBJECT_TO_COLOR[event.text], 0.1);
+                }
+                updatedEvents.push(event);
+            }
+        }
+        calendarRef.current.control.update({updatedEvents});
+    };
+
     const createSubjects = async (e: any): Promise<void> => {
         if (!containsSubject() && (price === "" || description === "")) {
             alert("გთხოვთ შეიყვანოთ ყველა მონაცემი");
@@ -97,10 +142,11 @@ export const Calendar = (props: any): React.JSX.Element => {
         if (!containsSubject()) {
             const newSubject = {
                 title: subject,
-                description: description,
+                description,
                 image: `subjects/${SUBJECT_IN_ENGLISH[subject]}.png`,
                 linkText: "იხილეთ დეტალები",
                 link: "https://github.com",
+                price,
                 days: [
                     {
                         start: args.start.value,
@@ -129,7 +175,7 @@ export const Calendar = (props: any): React.JSX.Element => {
                 }
             });
             if (containsCurrentDay) {
-                alert("ამ დღეს უკვე გაქვთ ეს საგანი!");
+                alert("ამ დღეს უკვე გაქვთ მონიშნული ეს საგანი!");
                 return;
             }
         }
@@ -141,7 +187,7 @@ export const Calendar = (props: any): React.JSX.Element => {
             end: args.end,
             id: DayPilot.guid(),
             text: subject,
-            backColor: SUBJECT_TO_COLOR[subject]
+            backColor: hexToRgba(SUBJECT_TO_COLOR[subject], subjectOpacity.get(subject))
         });
         hideWindow();
     };
@@ -210,7 +256,7 @@ export const Calendar = (props: any): React.JSX.Element => {
 
         if (restrictSameDay) {
             args.preventDefault();
-            alert("ამ დღეს უკვე გაქვთ ეს საგანი!");
+            alert("ამ დღეს უკვე გაქვთ მონიშნული ეს საგანი!");
             return;
         }
     };
@@ -246,7 +292,13 @@ export const Calendar = (props: any): React.JSX.Element => {
                     }}>დახურვა</div>
                 </div>
             </div>
-            <div className="calendar-header"> საგნების განრიგი </div>
+            <div className="calendar-header">
+                <section className={"math"} onClick={() => updateOpacities("მათემატიკა")}>მათემატიკა</section>
+                <section className={"physics"} onClick={() => updateOpacities("ფიზიკა")}>ფიზიკა</section>
+                <section className={"chemistry"} onClick={() => updateOpacities("ქიმია")}>ქიმია</section>
+                <section className={"biology"} onClick={() => updateOpacities("ბიოლოგია")}>ბიოლოგია</section>
+                <section className={"history"} onClick={() => updateOpacities("ისტორია")}>ისტორია</section>
+            </div>
             <DayPilotCalendar
                 {...calendarConfig}
                 ref={calendarRef}
