@@ -55,7 +55,7 @@ export const Subject = (props: any): React.JSX.Element => {
                         return (
                             <div key={index} className="day">
                                 <div key={index} className="day-name"> { info[0] } </div>
-                                <div key={index} className="day-time"> { info[1] } - {info[2]} </div>
+                                <div key={index} className="day-time"> { info[1].slice(0, -3) } - {info[2].slice(0, -3)} </div>
                             </div>
                         );
                     })}

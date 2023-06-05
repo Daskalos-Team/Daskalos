@@ -236,13 +236,15 @@ export const Calendar = (props: any): React.JSX.Element => {
     const changeSubjectTimes = async (args: any, isResize = false): Promise<void> => {
         const currSubject = args.e.data;
 
+        const oldStart = args.e.part.start.value;
+
         const newStart = args.newStart.value;
         const newEnd = args.newEnd.value;
 
         let restrictSameDay = false;
         subjects.forEach((userSubject: any) => {
             if (userSubject.title === currSubject["text"]) {
-                if (!isResize && containsDay(userSubject, newStart)) {
+                if (!isResize && oldStart.split("T")[0] != newStart.split("T")[0] && containsDay(userSubject, newStart)) {
                     restrictSameDay = true;
                     return;
                 }
