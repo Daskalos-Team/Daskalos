@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Service
-public class UserService {
+public class AuthorizationService {
 
     @Autowired
     private UserRepository userRepository;

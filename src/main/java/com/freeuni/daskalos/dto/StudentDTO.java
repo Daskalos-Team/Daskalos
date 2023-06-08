@@ -16,7 +16,7 @@ import java.util.List;
 @Setter
 @Builder
 @JsonAutoDetect
-public class TeacherDTO {
+public class StudentDTO {
 
     private Long ID;
 
@@ -32,13 +32,11 @@ public class TeacherDTO {
 
     private String phoneNumber;
 
-    private UserAddressDTO address;
+    private List<SubjectDTO> studentSubjects;
 
-    private Boolean isOnPlace;
+    private List<TeacherDTO> studentFavouriteTeachers;
 
-    private List<ExperienceDTO> teachersExperience;
+    private UserAddressDTO userAddress;
 
-    private List<TeacherRatingDTO> teacherRatings;
-
-    private List<SubjectDTO> teacherSubjects;
+    private Boolean onPlace;
 }

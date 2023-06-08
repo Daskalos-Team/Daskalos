@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public interface TeacherToExperienceRepository extends JpaRepository<TeacherToExperience, Long> {
 
-    public List<TeacherToExperience> findAllByTeacherID(Long teacherID);
+    List<TeacherToExperience> findAllByTeacherID(Long teacherID);
 
-    public void deleteByExperienceID(Long experienceID);
+    void deleteByExperienceID(Long experienceID);
 }

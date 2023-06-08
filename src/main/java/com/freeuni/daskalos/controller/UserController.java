@@ -1,77 +1,149 @@
 package com.freeuni.daskalos.controller;
 
-import com.freeuni.daskalos.dto.UserAddressDTO;
-import com.freeuni.daskalos.dto.UserDTO;
-import com.freeuni.daskalos.service.UserService;
-import com.freeuni.daskalos.utils.AuthorizationStatus;
+import com.freeuni.daskalos.dto.*;
+import com.freeuni.daskalos.service.teacher.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/teacher")
 public class UserController implements ErrorController {
 
     @Autowired
     private UserService userService;
 
-    @PostMapping("/exists")
-    public ResponseEntity<String> checkUserWithEmail(@RequestBody UserDTO user) {
-        String message = userService.checkUserWithEmail(user.getEmail());
-        if (message.equals(AuthorizationStatus.OK.name())) {
-            return new ResponseEntity<>(message, HttpStatus.OK);
+    @PostMapping("/get_teacher/{id}")
+    public ResponseEntity<TeacherDTO> getTeacherData(@PathVariable long id) {
+        try {
+            TeacherDTO teacherDTO = userService.getTeacherDTO(id);
+            return new ResponseEntity<>(teacherDTO, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
     }
 
-    @PostMapping("/check")
-    public ResponseEntity<String> checkEmailAndPassword(@RequestBody UserDTO user) {
-        String message = userService.checkUserWithEmailAndPassword(user.getEmail(), user.getPassword());
-        if (message.equals(AuthorizationStatus.OK.name())) {
-            return new ResponseEntity<>(message, HttpStatus.OK);
+    @PostMapping("/get_student/{id}")
+    public ResponseEntity<StudentDTO> getStudentData(@PathVariable long id) {
+        try {
+            StudentDTO studentDTO = userService.getStudentDTO(id);
+            return new ResponseEntity<>(studentDTO, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
     }
 
-    @PostMapping("/register")
-    public ResponseEntity<String> registerUser(@RequestBody UserDTO user) {
-        String message = userService.addUser(user);
-        if (message.equals(AuthorizationStatus.SUCCESSFUL_REGISTRATION.name())) {
-            return new ResponseEntity<>(message, HttpStatus.OK);
+    @PostMapping("/update_teacher")
+    public ResponseEntity<HttpStatus> updateTeacherData(@RequestBody TeacherDTO teacher) {
+        try {
+            userService.updateTeacher(teacher);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<String> loginUser(@RequestBody UserDTO user) {
-        String message = userService.authorizeUser(user);
-        if (message.equals(AuthorizationStatus.SUCCESSFUL_LOGIN.name())) {
-            return new ResponseEntity<>(message, HttpStatus.OK);
+    @PostMapping("/update_student")
+    public ResponseEntity<HttpStatus> updateStudentData(@RequestBody StudentDTO studentDTO) {
+        try {
+            userService.updateStudent(studentDTO);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
     }
 
-    @PostMapping("change")
-    public ResponseEntity<String> changePassword(@RequestBody UserDTO user) {
-        String message = userService.changePassword(user.getEmail(), user.getPassword());
-        if (message.equals(AuthorizationStatus.SUCCESSFUL_CHANGE.name())) {
-            return new ResponseEntity<>(message, HttpStatus.OK);
+    @PostMapping("/add_experience/{id}")
+    public ResponseEntity<ExperienceDTO> addExperience(@PathVariable long id, @RequestBody ExperienceDTO experience) {
+        try {
+            ExperienceDTO experienceDTO = userService.addTeachersExperience(id, experience);
+            return new ResponseEntity<>(experienceDTO, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
     }
 
-    @PostMapping("/address_info")
-    public ResponseEntity<?> getAllTeachersInRadius(@RequestBody UserAddressDTO address) {
-        List<UserDTO> teachersInRadius = userService.getAllTeachersInRadius(address);
-        return new ResponseEntity<>(teachersInRadius, HttpStatus.OK);
+    @PostMapping("remove_experience")
+    public ResponseEntity<TeacherDTO> removeExperience(ExperienceDTO experienceDTO) {
+        try {
+            userService.removeTeachersExperience(experienceDTO);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
-    @GetMapping("/info")
-    public List<UserDTO> getAllUsersInfo() {
-        return userService.getAllUsers();
+    @PostMapping("/add_rating/{id}")
+    public ResponseEntity<TeacherRatingDTO> addTeacherRating(@PathVariable long id, @RequestBody TeacherRatingDTO teacherRating) {
+        try {
+            TeacherRatingDTO teacherRatingDTO = userService.addTeachersRating(id, teacherRating);
+            return new ResponseEntity<>(teacherRatingDTO, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping("remove_rating")
+    public ResponseEntity<TeacherDTO> removeTeacherRating(@RequestBody TeacherRatingDTO teacherRating) {
+        try {
+            userService.removeTeacherRating(teacherRating);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping("/add_subject/{id}")
+    public ResponseEntity<SubjectDTO> addTeacherSubject(@PathVariable long id, @RequestBody SubjectDTO subject) {
+        try {
+            SubjectDTO subjectDTO = userService.addSubject(id, subject);
+            return new ResponseEntity<>(subjectDTO, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping("/remove_subject/{id}")
+    public ResponseEntity<TeacherDTO> removeTeacherSubject(@PathVariable long id, @RequestBody SubjectDTO subject) {
+        try {
+            userService.removeSubject(id, subject);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping("/{student_id}/add_student_favourite/{teacher_id}")
+    public ResponseEntity<HttpStatus> addStudentsFavouriteTeacher(@PathVariable long student_id, @PathVariable long teacher_id) {
+        try {
+            userService.addStudentFavouriteTeacher(student_id, teacher_id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping("/{student_id}/remove_student_favourite/{teacher_id}")
+    public ResponseEntity<HttpStatus> removeStudentsFavouriteTeacher(@PathVariable long student_id, @PathVariable long teacher_id) {
+        try {
+            userService.removeStudentFavouriteTeacher(student_id, teacher_id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 }

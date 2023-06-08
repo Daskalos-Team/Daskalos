@@ -4,7 +4,10 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
+import java.util.List;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
+@ToString
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -12,13 +15,15 @@ import lombok.*;
 @Setter
 @Builder
 @JsonAutoDetect
-public class SubjectDTO {
+public class FilterDTO {
 
-    private Long ID;
+    private Integer minPrice;
 
-    private String name;
+    private Integer maxPrice;
 
-    private String description;
+    private Boolean favouritesOnly;
 
-    private Integer price;
+    private Boolean onPlace;
+
+    private List<String> subjectsOnly;
 }

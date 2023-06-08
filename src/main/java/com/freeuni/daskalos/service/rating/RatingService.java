@@ -16,7 +16,7 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class RatingServiceImpl {
+public class RatingService {
 
     @Autowired
     private TeacherRatingRepository teacherRatingRepository;
