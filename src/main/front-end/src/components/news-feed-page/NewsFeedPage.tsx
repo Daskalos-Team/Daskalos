@@ -5,70 +5,90 @@ import { Filters } from "./filters-button";
 import { LeftPanelOption } from "./left-panel-option";
 import {
     DimmingProps,
-    IconCreditsProps,
     LeftPanelProps,
-    LogoProps
-} from "./news-feed-page-service/NewsFeedPageOptionsConstants";
+    LogoProps,
+    NewsFeedPageColorPalette, ProfileButtonMenuProps, RootScaleProps, TabProps
+} from "../../service/news-feed-page-service";
+import { SettingsTab } from "./settings-tab";
+import { TopTenTab } from "./top-10-tab";
 
-const mainColor = "rgba(1,157,209,1)";
-const secondaryColor = "#f0f6f7";
-
-export const NewsFeedPage = () => {
+export const NewsFeedPage = (): React.JSX.Element => {
     const maxMenuOnWindowWidth = 1180;
+    const maxUnscaledRootWidth = 700;
+
     const [filtersOpen, setFiltersOpen] = useState(false);
     const [dimmingOpacity, setDimmingOpacity] = useState(0);
     const [arrowSrc, setArrowSrc] = useState("/images/news-feed-page/DownArrow.png");
     const [dimmingInteractive, setDimmingInteractive] = useState("none");
-    const [selectedOptions, setSelectedOptions] = useState([true, false, false, false]);
+    const [selectedOptions, setSelectedOptions] = useState([true, false, false]);
     const [logoVisible, setLogoVisible] = useState(true);
     const [logoAnimation, setLogoAnimation] = useState<Keyframes | null>(null);
-    const [leftPanelWidths, setLeftPanelWidths] = useState([220, 300]);
+    const [leftPanelWidths, setLeftPanelWidths] = useState([250, 330]);
     const [leftPanelAnimation, setLeftPanelAnimation] = useState<Keyframes | null>(null);
     const [menuButtonDisabled, setMenuButtonDisabled] = useState(document.body.offsetWidth
         < maxMenuOnWindowWidth);
-    const [creditsVisible, setCreditsVisible] = useState(!menuButtonDisabled);
-    const [creditsAnimation, setCreditsAnimation] = useState<Keyframes | null>(null);
-    const ProfileButtonFunction = (e: any, name: any) => {
-        alert(`${name} was clicked`);
-    };
+    const [rootScale, setRootScale] = useState(1);
+    const [tabAnimation, setTabAnimation] = useState<Keyframes | null>(null);
+    const [profileButtonMenuOpen, setProfileButtonMenuOpen] = useState(false);
+    const [profileButtonMenuAnimation, setProfileButtonMenuAnimation] = useState<Keyframes | null>(null);
+
     const SearchButtonFunction = () => {
         setFiltersOpen(!filtersOpen);
         setArrowSrc(filtersOpen ? "/images/news-feed-page/DownArrow.png" : "/images/news-feed-page/UpArrow.png");
         setDimmingOpacity(filtersOpen ? 0 : 0.8);
         setDimmingInteractive(dimmingInteractive == "none" ? "auto" : "none");
     };
+
     const SetOptionSelected = (option_id: number) => {
-        const newSelectedOptions = [false, false, false, false];
+        if (selectedOptions[option_id]) {
+            return;
+        }
+        const newSelectedOptions = [false, false];
         newSelectedOptions[option_id] = true;
-        setSelectedOptions(newSelectedOptions);
+        setTabAnimation(TabSwitch);
+        setTimeout(() => setSelectedOptions(newSelectedOptions), 250);
+        setTimeout(() => setTabAnimation(null), 500);
     };
+
     const ToggleMenu = (on: boolean) => {
         setLogoVisible(on);
         setLogoAnimation(logoVisible ? ShrinkLogo : GrowLogo);
         setLeftPanelAnimation(logoVisible ? ShrinkLeftPanel : GrowLeftPanel);
-        setCreditsAnimation(logoVisible ? CollapseIconCredits : RestoreIconCredits);
-        setLeftPanelWidths(logoVisible ? [85, 85] : [220, 300]);
-        setCreditsVisible(!logoVisible);
+        setLeftPanelWidths(logoVisible ? [110, 110] : [250, 330]);
     };
+
+    const ToggleProfileButtonMenu = () => {
+        setProfileButtonMenuAnimation(profileButtonMenuOpen ? FadeUp : FadeDown);
+        setProfileButtonMenuOpen(!profileButtonMenuOpen);
+    };
+
     useLayoutEffect(() => {
         function CheckForMenuResize() {
-            if (document.body.offsetWidth >= maxMenuOnWindowWidth) {
+            const currWidth = document.body.offsetWidth;
+            if (currWidth < maxUnscaledRootWidth) {
+                setRootScale(currWidth / maxUnscaledRootWidth);
+            } else {
+                setRootScale(1);
+            }
+            if (currWidth >= maxMenuOnWindowWidth) {
                 setMenuButtonDisabled(false);
                 return;
             }
             setMenuButtonDisabled(true);
             ToggleMenu(false);
         }
+
         window.addEventListener("resize", CheckForMenuResize);
         CheckForMenuResize();
         return () => window.removeEventListener("resize", CheckForMenuResize);
     }, []);
+
     return (
-        <NewsFeedPageRoot>
+        <NewsFeedPageRoot scale={rootScale}>
             <Dimming opacity={dimmingOpacity} interactive={dimmingInteractive}/>
             <Header>
                 <Logo src="/images/news-feed-page/Logo.png" alt="Logo" visible={logoVisible} animation={logoAnimation}/>
-                <ShowMenuButton disabled={menuButtonDisabled} onClick={() => ToggleMenu(!logoVisible)}/>
+                {!menuButtonDisabled && <ShowMenuButton onClick={() => ToggleMenu(!logoVisible)}/>}
                 <SearchButton
                     onClick={() => SearchButtonFunction()}
                 >
@@ -77,56 +97,71 @@ export const NewsFeedPage = () => {
                 </SearchButton>
                 {filtersOpen && (<Filters/>)}
                 <ProfileButton
-                    onClick={(e) => ProfileButtonFunction(e, "Profile Button")}
+                    onClick={() => ToggleProfileButtonMenu()}
                 />
+                <ProfileButtonMenu open={profileButtonMenuOpen} animation={profileButtonMenuAnimation}>
+                    <ProfileButtonMenuTop>
+                        <ProfilePicture src="/images/news-feed-page/AccountIcon.png" alt="Profile Picture"/>
+                        <UserName>სახელი გვარი</UserName>
+                    </ProfileButtonMenuTop>
+                    <ProfileButtonMenuOption>ჩემი პროფილი</ProfileButtonMenuOption>
+                    <ProfileButtonMenuOption>ანგარიშის შეცვლა</ProfileButtonMenuOption>
+                    <ProfileButtonMenuOption>ანგარიშიდან გამოსვლა</ProfileButtonMenuOption>
+                </ProfileButtonMenu>
             </Header>
-            <Content>
+            <Content scale={rootScale}>
                 <LeftPanel minWidth={leftPanelWidths[0]} maxWidth={leftPanelWidths[1]}
                     animation={leftPanelAnimation}>
                     <div onClick={() => SetOptionSelected(0)}>
                         <LeftPanelOption isSelected={selectedOptions[0]}
                             imageSrc="/images/news-feed-page/TeachersIcon.png"
-                            labelText="მასწავლებლები" mainColor={mainColor} secondaryColor={secondaryColor}/>
+                            labelText="მასწავლებლები"/>
                     </div>
                     <div onClick={() => SetOptionSelected(1)}>
                         <LeftPanelOption isSelected={selectedOptions[1]}
-                            imageSrc="/images/news-feed-page/FavouritesIcon.png"
-                            labelText="ფავორიტები" mainColor={mainColor} secondaryColor={secondaryColor}/>
+                            imageSrc="/images/news-feed-page/SettingsIcon.png"
+                            labelText="პარამეტრები"/>
                     </div>
                     <div onClick={() => SetOptionSelected(2)}>
                         <LeftPanelOption isSelected={selectedOptions[2]}
-                            imageSrc="/images/news-feed-page/AccountIcon.png"
-                            labelText="ანგარიში" mainColor={mainColor} secondaryColor={secondaryColor}/>
+                            imageSrc="/images/news-feed-page/TopTenIcon.png"
+                            labelText="Top 10"/>
                     </div>
-                    <div onClick={() => SetOptionSelected(3)}>
-                        <LeftPanelOption isSelected={selectedOptions[3]}
-                            imageSrc="/images/news-feed-page/SettingsIcon.png"
-                            labelText="პარამეტრები" mainColor={mainColor} secondaryColor={secondaryColor}/>
-                    </div>
-                    <IconCredits visible={creditsVisible} animation={creditsAnimation}>
-                        <p>
-                            Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik
-                            </a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
-                        </p>
-                        <p>
-                            Icons made by <a href="https://www.flaticon.com/authors/laisa-islam-ani" title="Laisa Islam Ani">
-                            Laisa Islam Ani</a> from <a href="https://www.flaticon.com/" title="Flaticon">
-                            www.flaticon.com</a>
-                        </p>
-                    </IconCredits>
                 </LeftPanel>
                 <MainContentContainer>
-                    <TeacherFeedLabel>თქვენთვის რეკომენდებული მასწავლებლები</TeacherFeedLabel>
-                    <NewsFeed>
-                        <RecommendedTeacher isFavourite={true} color={secondaryColor}/>
-                        <RecommendedTeacher isFavourite={true} color={secondaryColor}/>
-                        <RecommendedTeacher isFavourite={false} color={secondaryColor}/>
-                        <RecommendedTeacher isFavourite={false} color={secondaryColor}/>
-                        <RecommendedTeacher isFavourite={true} color={secondaryColor}/>
-                        <RecommendedTeacher isFavourite={false} color={secondaryColor}/>
-                        <RecommendedTeacher isFavourite={false} color={secondaryColor}/>
-                        <RecommendedTeacher isFavourite={true} color={secondaryColor}/>
-                    </NewsFeed>
+                    <TabContainer animation={tabAnimation}>
+                        {selectedOptions[0] && (
+                            <React.Fragment>
+                                <TabTitle>თქვენთვის რეკომენდებული მასწავლებლები</TabTitle>
+                                <TabContent>
+                                    <RecommendedTeacher isFavourite={true} rootScale={rootScale}/>
+                                    <RecommendedTeacher isFavourite={true} rootScale={rootScale}/>
+                                    <RecommendedTeacher isFavourite={false} rootScale={rootScale}/>
+                                    <RecommendedTeacher isFavourite={false} rootScale={rootScale}/>
+                                    <RecommendedTeacher isFavourite={true} rootScale={rootScale}/>
+                                    <RecommendedTeacher isFavourite={false} rootScale={rootScale}/>
+                                    <RecommendedTeacher isFavourite={false} rootScale={rootScale}/>
+                                    <RecommendedTeacher isFavourite={true} rootScale={rootScale}/>
+                                </TabContent>
+                            </React.Fragment>
+                        )}
+                        {selectedOptions[1] && (
+                            <React.Fragment>
+                                <TabTitle>პარამეტრები</TabTitle>
+                                <TabContent>
+                                    <SettingsTab/>
+                                </TabContent>
+                            </React.Fragment>
+                        )}
+                        {selectedOptions[2] && (
+                            <React.Fragment>
+                                <TabTitle>Top 10</TabTitle>
+                                <TabContent>
+                                    <TopTenTab/>
+                                </TabContent>
+                            </React.Fragment>
+                        )}
+                    </TabContainer>
                 </MainContentContainer>
             </Content>
         </NewsFeedPageRoot>
@@ -144,13 +179,13 @@ const GrowLogo = keyframes`
 `;
 
 const ShrinkLeftPanel = keyframes`
-  0% { min-width: 220px; max-width: 300px}
-  100% { min-width: 85px; max-width: 85px }
+  0% { min-width: 250px; max-width: 330px}
+  100% { min-width: 110px; max-width: 110px }
 `;
 
 const GrowLeftPanel = keyframes`
-  0% { min-width: 85px; max-width: 85px}
-  100% { min-width: 220px; max-width: 300px }
+  0% { min-width: 110px; max-width: 110px}
+  100% { min-width: 250px; max-width: 330px }
 `;
 
 const Shimmer = keyframes`
@@ -159,21 +194,34 @@ const Shimmer = keyframes`
   100% {left: 100%}
 `;
 
-const CollapseIconCredits = keyframes`
-  0% {font-size: 12px}
-  100% {font-size: 0}
+const TabSwitch = keyframes`
+  0% {transform: translateX(0); scale: 1; opacity: 1; pointer-events: none}
+  45% {transform: translateX(0); scale: 0.8; opacity: 0; pointer-events: none}
+  55% {transform: translateX(100%); scale: 1; opacity: 0; pointer-events: none}
+  100% {transform: translateX(0); scale: 1; opacity: 1; pointer-events: auto}
 `;
 
-const RestoreIconCredits = keyframes`
-  0% {font-size: 0}
-  100% {font-size: 12px}
+const FadeDown = keyframes`
+  0% {opacity: 0; transform: translateY(-40%);}
+  100% {opacity: 1; transform: translateY(0)}
 `;
 
-const NewsFeedPageRoot = styled.div`
-  width: 100%;
+const FadeUp = keyframes`
+  0% {opacity: 1; transform: translateY(0)}
+  70% {opacity: 0}
+  100% {opacity: 0; transform: translateY(-40%)}
+`;
+
+const NewsFeedPageRoot = styled.div<RootScaleProps>`
+  width: ${props => 100 / props.scale}%;
+  height: ${props => 1100 / props.scale}px;
   gap: 12.6px;
-  background: ${secondaryColor};
+  background: ${NewsFeedPageColorPalette.secondaryColor};
   overflow: hidden;
+  transform-origin: top left;
+  scale: ${props => props.scale};
+  color: black;
+  position: absolute;
 `;
 
 const Dimming = styled.div<DimmingProps>`
@@ -193,7 +241,7 @@ const Header = styled.div`
   height: 100px;
   position: relative;
   box-sizing: border-box;
-  background: linear-gradient(90deg, ${mainColor} 0%, ${mainColor} 300px, rgba(14, 99, 161, 1) 100%);
+  background: ${NewsFeedPageColorPalette.menuBG};
   display: flex;
   align-items: center;
 `;
@@ -209,8 +257,8 @@ const Logo = styled.img<LogoProps>`
 `;
 
 const ProfileButton = styled.button`
-  width: 70px;
-  height: 70px;
+  width: 60px;
+  height: 60px;
   right: 22px;
   top: 50%;
   position: absolute;
@@ -222,12 +270,15 @@ const ProfileButton = styled.button`
   background-color: transparent;
   background-position: center;
   background-size: cover;
-  background-image: url("/images/news-feed-page/MyProfile.png");
+  background-image: url("/images/news-feed-page/AccountIcon.png");
   cursor: pointer;
   transform: translateY(-50%);
   border-radius: 50%;
-
+  transform-origin: top;
+  transition-property: scale;
+  transition-duration: 200ms;
   &:hover {
+    scale: 1.07;
     &:before {
       content: "";
       left: 0;
@@ -235,11 +286,74 @@ const ProfileButton = styled.button`
       position: absolute;
       width: 100%;
       height: 100%;
-      background: radial-gradient(${secondaryColor + "20"} 0%, ${secondaryColor + "00"} 65%);
+      background: ${NewsFeedPageColorPalette.profileButtonBeforeBG};
     }
   ;
   }
 ;
+`;
+
+const ProfileButtonMenu = styled.div<ProfileButtonMenuProps>`
+  width: 400px;
+  opacity: ${props => props.open ? 1 : 0};
+  pointer-events: ${props => props.open ? "auto" : "none"};
+  height: 300px;
+  animation: ${props => props.animation} 300ms;
+  background: ${NewsFeedPageColorPalette.profileButtonMenuBG};
+  z-index: 1;
+  position: absolute;
+  right: 20px;
+  top: 90px;
+  border: 4px solid ${NewsFeedPageColorPalette.profileButtonMenuBorder};
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  font-family: "Noto Serif Georgian";
+`;
+
+const ProfileButtonMenuTop = styled.div`
+  margin-left: 10px;
+  width: 100%;
+  height: 40%;
+  display: flex;
+  flex-direction: row;
+`;
+
+const ProfilePicture = styled.img`
+  width: 120px;
+  height: 120px;
+  padding: 14px;
+`;
+
+const UserName = styled.p`
+  width: 260px;
+  margin-right: auto;
+  font-weight: 800;
+  text-align: center;
+  font-size: 1.4rem;
+  margin-block: auto;
+  border-radius: 50%;
+  padding-inline: 10px;
+`;
+
+const ProfileButtonMenuOption = styled.p`
+  width: 100%;
+  height: 20%;
+  line-height: 52px;
+  padding-left: 30px;
+  text-align: start;
+  justify-self: end;
+  border-block: 4px solid transparent;
+  box-sizing: content-box;
+  font-weight: 550;
+  transition-property: border-color;
+  transition-duration: 100ms;
+  cursor: pointer;
+  &:hover {
+    border-color: ${NewsFeedPageColorPalette.profileButtonMenuBorder};
+  }
 `;
 
 const ShowMenuButton = styled.button`
@@ -262,10 +376,11 @@ const SearchButton = styled.button`
   border-width: 0;
   border-radius: 50px;
   box-sizing: content-box;
-  background-color: #ece9e9;
-  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+  background-color: ${NewsFeedPageColorPalette.searchButtonBG};
+  box-shadow: 0 4px 4px 0 ${NewsFeedPageColorPalette.searchButtonShadow};
   cursor: pointer;
   z-index: 3;
+  color: black;
 
   &:hover {
     box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.3);
@@ -302,9 +417,9 @@ const DropDownArrow = styled.img`
   transform: translateY(-50%);
 `;
 
-const Content = styled.div`
-  height: 1000px;
-  margin: 0 20px 0 0;
+const Content = styled.div<RootScaleProps>`
+  height: ${props => (1000 + 100 * (1 - props.scale)) / props.scale}px;
+  margin-right: 20px;
   display: flex;
 `;
 
@@ -312,38 +427,25 @@ const LeftPanel = styled.div<LeftPanelProps>`
   min-width: ${props => props.minWidth}px;
   max-width: ${props => props.maxWidth}px;
   margin-right: 30px;
-  height: 100%;
+  height: calc(100% + 2px);
+  top: -2px;
   flex-basis: 25%;
   display: flex;
   flex-direction: column;
-  padding-top: 100px;
-  background: ${mainColor};
-  border: none;
+  padding-top: 130px;
+  background: ${NewsFeedPageColorPalette.menuBG};
   animation: ${props => props.animation} 300ms;
   position: relative;
   &:before {
-    background-color: transparent;
+    background-color: ${NewsFeedPageColorPalette.secondaryColor};
     content: "";
-    height: 60px;
-    width: 60px;
-    top: 0;
-    right: -60px;
+    height: 100%;
+    width: 32px;
+    top: 2px;
+    right: -2px;
     position: absolute;
     border-top-left-radius: 30px;
-    box-shadow: -15px -15px 0 ${mainColor};
-    pointer-events: none;
   };
-`;
-
-const IconCredits = styled.div<IconCreditsProps>`
-  position: absolute;
-  bottom: 50px;
-  margin: 0 20px 0 20px;
-  font-size: ${props => props.visible ? 12 : 0}px;
-  font-weight: 700;
-  text-align: center;
-  color: darkblue;
-  animation: ${props => props.animation} 300ms;
 `;
 
 const MainContentContainer = styled.div`
@@ -353,7 +455,12 @@ const MainContentContainer = styled.div`
   margin-bottom: 100px;
 `;
 
-const TeacherFeedLabel = styled.p`
+const TabContainer = styled.div<TabProps>`
+  height: 100%;
+  animation: ${props => props.animation} 500ms;
+`;
+
+const TabTitle = styled.p`
   font-family: "Noto Serif Georgian";
   font-weight: 800;
   letter-spacing: 1px;
@@ -364,21 +471,18 @@ const TeacherFeedLabel = styled.p`
   width: fit-content;
   margin: 20px 0 20px 0;
   max-height: 80px;
-  overflow-x: hidden;
-  overflow-y: hidden;
+  overflow: hidden;
   transition-property: color, scale;
   transition-duration: 0.3s;
   cursor: default;
   position: relative;
   transform-origin: left;
   &:hover {
-    transition-property: color, scale;
-    transition-duration: 0.3s;
     scale: 1.07;
     color: lightskyblue;
   };
   &:before {
-    background: linear-gradient(100deg, #00000000 20%, ${secondaryColor + "80"} 50%, #00000000 80%);
+    background: ${NewsFeedPageColorPalette.shimmerBG};
     position: absolute;
     content: "";
     display: block;
@@ -388,7 +492,7 @@ const TeacherFeedLabel = styled.p`
   };
 `;
 
-const NewsFeed = styled.div`
+const TabContent = styled.div`
   margin: 20px 0 20px 0;
   height: 100%;
   width: 100%;
@@ -396,9 +500,17 @@ const NewsFeed = styled.div`
   flex-wrap: wrap;
   justify-content: space-evenly;
   scroll-behavior: auto;
-  overflow-y: scroll;
+  overflow-y: auto;
   padding: 5px;
-  border-left: 2px solid #9c9c9c40;
-  border-radius: 50px;
+  border-left: 2px solid ${NewsFeedPageColorPalette.border};
+  border-top-left-radius: 50px;
+  border-bottom-left-radius: 50px;
   position: relative;
+  background: ${NewsFeedPageColorPalette.newsFeedBG};
+  &::-webkit-scrollbar {
+    width: .8rem;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: ${NewsFeedPageColorPalette.scrollbarThumbBG};
+  }
 `;

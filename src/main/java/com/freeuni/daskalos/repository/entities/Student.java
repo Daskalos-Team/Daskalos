@@ -1,19 +1,12 @@
 package com.freeuni.daskalos.repository.entities;
 
 import com.freeuni.daskalos.repository.embeddables.UserAddress;
-import com.freeuni.daskalos.utils.*;
+import com.freeuni.daskalos.utils.UserType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToMany;
 import reactor.util.annotation.NonNull;
-
-import java.util.List;
-import java.util.Objects;
 
 @Entity
 public class Student extends User {
-
-    @ManyToMany
-    private List<Teacher> favouriteTeachers;
 
     public Student(Long ID,
                    @NonNull String name,
@@ -23,11 +16,8 @@ public class Student extends User {
                    @NonNull UserType userType,
                    @NonNull String phoneNumber,
                    @NonNull UserAddress address,
-                   int priceMin,
-                   int priceMax,
-                   List<Teacher> favouriteTeachers) {
-        super(ID, name, secondName, password, mail, userType, phoneNumber, address, priceMin, priceMax);
-        this.favouriteTeachers = !Objects.isNull(favouriteTeachers) ? favouriteTeachers : List.of();
+                   Boolean onPlace) {
+        super(ID, name, secondName, password, mail, userType, phoneNumber, address, onPlace);
     }
 
     public Student(@NonNull String mail,
@@ -35,19 +25,12 @@ public class Student extends User {
                    @NonNull String name,
                    @NonNull String surname,
                    @NonNull UserAddress address,
-                   @NonNull UserType userType) {
-        super(mail, password, name, surname, address, userType);
+                   @NonNull UserType userType,
+                   Boolean onPlace) {
+        super(mail, password, name, surname, address, userType, onPlace);
     }
 
     public Student() {
 
-    }
-
-    public List<Teacher> getFavouriteTeachers() {
-        return favouriteTeachers;
-    }
-
-    public void setFavouriteTeachers(List<Teacher> favouriteTeachers) {
-        this.favouriteTeachers = favouriteTeachers;
     }
 }

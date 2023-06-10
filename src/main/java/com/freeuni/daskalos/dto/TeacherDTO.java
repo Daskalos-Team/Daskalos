@@ -36,10 +36,6 @@ public class TeacherDTO {
 
     private Boolean isOnPlace;
 
-    private Integer priceMin;
-
-    private Integer priceMax;
-
     private List<ExperienceDTO> teachersExperience;
 
     private List<TeacherRatingDTO> teacherRatings;

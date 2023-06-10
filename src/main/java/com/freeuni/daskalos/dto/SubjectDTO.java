@@ -17,4 +17,8 @@ public class SubjectDTO {
     private Long ID;
 
     private String name;
+
+    private String description;
+
+    private Integer price;
 }

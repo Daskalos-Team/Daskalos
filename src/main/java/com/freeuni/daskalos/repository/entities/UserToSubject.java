@@ -10,18 +10,18 @@ import lombok.*;
 @Setter
 @Entity
 @Builder(toBuilder = true)
-@Table(name = "teacher_to_subject", schema = "daskalos")
-public class TeacherToSubject {
+@Table(name = "user_to_subject", schema = "daskalos")
+public class UserToSubject {
 
     @Id()
     @Column(name = "ID")
-    @SequenceGenerator(name = "idGenerator", schema = "daskalos", sequenceName = "teacher_to_subject_seq", allocationSize = 1)
+    @SequenceGenerator(name = "idGenerator", schema = "daskalos", sequenceName = "user_to_subject_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "idGenerator")
     private long ID;
 
     @Basic
-    @Column(name = "teacher_id")
-    private long teacherID;
+    @Column(name = "user_id")
+    private long userID;
 
     @Basic
     @Column(name = "subject_id")

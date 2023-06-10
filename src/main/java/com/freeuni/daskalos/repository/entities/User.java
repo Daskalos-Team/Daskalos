@@ -31,9 +31,7 @@ public abstract class User implements Serializable {
 
     private UserAddress address;
 
-    private int priceMin;
-
-    private int priceMax;
+    private Boolean onPlace;
 
     public User(Long ID,
                 @NonNull String name,
@@ -43,8 +41,7 @@ public abstract class User implements Serializable {
                 @NonNull UserType userType,
                 @NonNull String phoneNumber,
                 @NonNull UserAddress address,
-                Integer priceMin,
-                Integer priceMax) {
+                Boolean onPlace) {
         this.ID = ID;
         this.name = name;
         this.surname = surname;
@@ -53,8 +50,7 @@ public abstract class User implements Serializable {
         this.userType = userType;
         this.phoneNumber = phoneNumber;
         this.address = address;
-        this.priceMin = priceMin;
-        this.priceMax = priceMax;
+        this.onPlace = onPlace;
     }
 
     public User(@NonNull String email,
@@ -62,13 +58,15 @@ public abstract class User implements Serializable {
                 @NonNull String name,
                 @NonNull String surname,
                 @NonNull UserAddress address,
-                @NonNull UserType userType) {
+                @NonNull UserType userType,
+                Boolean onPlace) {
         this.email = email;
         this.password = password;
         this.name = name;
         this.surname = surname;
         this.address = address;
         this.userType = userType;
+        this.onPlace = onPlace;
     }
 
     public Long getID() {
@@ -136,19 +134,11 @@ public abstract class User implements Serializable {
         this.address = address;
     }
 
-    public int getPriceMin() {
-        return priceMin;
+    public void setOnPlace(Boolean onPlace) {
+        this.onPlace = onPlace;
     }
 
-    public void setPriceMin(int priceMin) {
-        this.priceMin = priceMin;
-    }
-
-    public int getPriceMax() {
-        return priceMax;
-    }
-
-    public void setPriceMax(int priceMax) {
-        this.priceMax = priceMax;
+    public Boolean getOnPlace() {
+        return this.onPlace;
     }
 }

@@ -22,4 +22,13 @@ public class Subject {
     @Basic
     @Column(name = "name")
     private String name;
+
+    @Basic
+    @Column(name = "description")
+    private String description;
+
+    @Basic
+    @Column(name = "price")
+    private Integer price;
+
 }

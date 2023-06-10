@@ -1,5 +1,7 @@
 package com.freeuni.daskalos.utils;
 
+import com.freeuni.daskalos.dto.TeacherDTO;
+import com.freeuni.daskalos.dto.TeacherRatingDTO;
 import com.freeuni.daskalos.dto.UserAddressDTO;
 import com.freeuni.daskalos.repository.embeddables.UserAddress;
 
@@ -37,5 +39,9 @@ public class UserUtils {
         double distance = EARTH_RADIUS * c;
 
         return distance <= radius;
+    }
+
+    public static Double teacherAverageRating(TeacherDTO teacherDTO) {
+        return teacherDTO.getTeacherRatings().stream().mapToDouble(TeacherRatingDTO::getRating).sum() / teacherDTO.getTeacherRatings().size();
     }
 }

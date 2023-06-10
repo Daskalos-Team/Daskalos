@@ -1,54 +1,61 @@
 import React from "react";
 import styled from "styled-components";
 import {
-    LeftPanelOptionProps,
-    OptionInnerContainerProps,
-    OptionOuterContainerProps
-} from "../news-feed-page-service/NewsFeedPageOptionsConstants";
+    LeftPanelOptionProps, NewsFeedPageColorPalette,
+    OptionContainerProps
+} from "../../../service/news-feed-page-service";
 
-export const LeftPanelOption = (props: LeftPanelOptionProps) => {
+export const LeftPanelOption = (props: LeftPanelOptionProps): React.JSX.Element => {
     return (
-        <OptionOuterContainer isSelected={props.isSelected} color={props.secondaryColor}>
-            <OptionInnerContainer color={props.mainColor}>
+        <OptionRoot>
+            <OptionContainer isSelected={props.isSelected}>
                 <OptionImg src={props.imageSrc}/>
                 <OptionLabel>{props.labelText}</OptionLabel>
-            </OptionInnerContainer>
-        </OptionOuterContainer>
+            </OptionContainer>
+            {props.isSelected && <SelectedEnd/>}
+        </OptionRoot>
     );
 };
 
-const OptionOuterContainer = styled.div<OptionOuterContainerProps>`
-  width: 100%;
-  height: 80px;
-  padding: 0 5px 0 5px;
-  margin-left: 5px;
-  background: transparent;
-  display: flex;
-  align-items: center;
-  border-radius: 50px 0 0 50px;
-  cursor: pointer;
-  &:hover{
-    color: ${props => props.color};
-  }
-  ${props => props.isSelected && `
-    background: ${props.color};
-    color: ${props.color};
-  `}
+const OptionRoot = styled.div`
+  position: relative;
 `;
 
-const OptionInnerContainer = styled.div<OptionInnerContainerProps>`
-  width: 100%;
-  height: 70px;
+const OptionContainer = styled.div<OptionContainerProps>`
+  width: calc(100% - 30px);
+  height: 80px;
   display: flex;
   flex-direction: row;
   align-items: center;
-  background: ${props => props.color};
+  background: ${NewsFeedPageColorPalette.menuBG};
+  border: 5px solid transparent;
   border-radius: 50px;
+  margin-block: 10px;
+  background-clip: padding-box;
   overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  ${props => props.isSelected && `
+    border: 5px solid ${NewsFeedPageColorPalette.secondaryColor};
+    color: ${NewsFeedPageColorPalette.secondaryColor};
+  `}
+  &:hover {
+    color: ${NewsFeedPageColorPalette.secondaryColor};
+  }
+  z-index: 1;
+`;
+
+const SelectedEnd = styled.div`
+  top: 0;
+  width: calc((100% - 31px) / 2);
+  height: 80px;
+  right: 29px;
+  position: absolute;
+  background: ${NewsFeedPageColorPalette.secondaryColor};
 `;
 
 const OptionImg = styled.img`
-  margin: 30px 50px 30px 15px;
+  margin: 30px 35px 30px 12.5px;
   width: 45px;
   height: auto;
 `;
