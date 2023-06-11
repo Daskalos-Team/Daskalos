@@ -10,7 +10,6 @@ import lombok.*;
 @Setter
 @Entity
 @Builder
-@Table(name = "teacher_to_rating", schema = "daskalos")
 public class TeacherToRating {
 
     @Id()
