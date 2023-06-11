@@ -14,19 +14,19 @@ public class SessionService {
         return attributes.getRequest().getSession(true);
     }
 
-    public void setUserId(Long userId) {
+    public static void setUserId(Long userId) {
         getSession().setAttribute("userId", userId);
     }
 
-    public Long getUserId() {
+    public static Long getUserId() {
         return (Long) getSession().getAttribute("userId");
     }
 
-    public void setUserType(UserType userType) {
+    public static void setUserType(UserType userType) {
         getSession().setAttribute("userType", userType);
     }
 
-    public UserType getUserType() {
+    public static UserType getUserType() {
         return (UserType) getSession().getAttribute("userType");
     }
 
