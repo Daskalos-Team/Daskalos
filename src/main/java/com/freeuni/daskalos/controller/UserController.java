@@ -2,11 +2,14 @@ package com.freeuni.daskalos.controller;
 
 import com.freeuni.daskalos.dto.*;
 import com.freeuni.daskalos.service.teacher.UserService;
+import com.freeuni.daskalos.utils.exceptions.UserNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/teacher")
@@ -43,6 +46,27 @@ public class UserController implements ErrorController {
             userService.updateTeacher(teacher);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping("/get_teacher_subject_schedule/{teacherID}")
+    public ResponseEntity<List<SubjectDTO>> getTeacherSubjectSchedule(@PathVariable Long teacherID) {
+        try {
+            return new ResponseEntity<>(userService.getTeacherDTO(teacherID).getTeacherSubjects(), HttpStatus.OK);
+        } catch (UserNotExistException e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping("/update_teacher_subject_schedule")
+    public ResponseEntity<HttpStatus> updateTeacherSubjectSchedule(@RequestBody List<SubjectDTO> subjectData) {
+        try {
+            userService.updateTeacherSubjectSchedule(subjectData);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (UserNotExistException e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

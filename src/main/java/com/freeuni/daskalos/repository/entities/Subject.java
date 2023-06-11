@@ -30,5 +30,4 @@ public class Subject {
     @Basic
     @Column(name = "price")
     private Integer price;
-
 }

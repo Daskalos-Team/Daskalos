@@ -24,30 +24,10 @@ public class SubjectSchedule {
     Long subjectID;
 
     @Basic
-    @Column(name = "monday")
-    String monday;
+    @Column(name = "start_time")
+    String startTime;
 
     @Basic
-    @Column(name = "tuesday")
-    String tuesday;
-
-    @Basic
-    @Column(name = "wednesday")
-    String wednesday;
-
-    @Basic
-    @Column(name = "thursday")
-    String thursday;
-
-    @Basic
-    @Column(name = "friday")
-    String friday;
-
-    @Basic
-    @Column(name = "saturday")
-    String saturday;
-
-    @Basic
-    @Column(name = "sunday")
-    String sunday;
+    @Column(name = "end_time")
+    String endTime;
 }

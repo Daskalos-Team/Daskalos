@@ -121,6 +121,10 @@ public class UserService {
         return subjectService.addUserSubject(userID, subject);
     }
 
+    public List<SubjectDTO> updateTeacherSubjectSchedule(List<SubjectDTO> subjectDTOs) {
+        return subjectDTOs.stream().map(subjectDTO -> subjectService.updateSubject(subjectDTO)).collect(Collectors.toList());
+    }
+
     public void removeSubject(Long userID, SubjectDTO subject) {
         subjectService.deleteUserSubject(userID, subject);
     }
@@ -136,7 +140,6 @@ public class UserService {
         }
     }
 
-    // TODO tests
     public List<TeacherDTO> getStudentFavouriteTeachers(Long studentID) {
         return favouriteTeacherRepository.findByStudentID(studentID).
                 stream().
@@ -145,7 +148,6 @@ public class UserService {
                 collect(Collectors.toList());
     }
 
-    // TODO tests
     public void addStudentFavouriteTeacher(Long studentID, Long teacherID) {
         favouriteTeacherRepository.save(StudentToFavouriteTeacher.
                 builder().
@@ -154,7 +156,6 @@ public class UserService {
                 build());
     }
 
-    // TODO tests
     public void removeStudentFavouriteTeacher(Long studentID, Long teacherID) {
         favouriteTeacherRepository.deleteByStudentIDAndTeacherID(studentID, teacherID);
     }

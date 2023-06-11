@@ -37,6 +37,9 @@ public class StudentFilterProcessor implements FilterProcessor {
     }
 
     private boolean checkOnPlace(Long userID) {
+        if (!filter.getOnPlace()) {
+            return true;
+        }
         StudentDTO student = userService.getStudentDTO(userID);
         return student.getOnPlace();
     }

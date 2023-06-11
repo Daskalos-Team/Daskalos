@@ -5,6 +5,7 @@ import com.freeuni.daskalos.repository.embeddables.UserAddress;
 import com.freeuni.daskalos.repository.entities.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class DaoDtoConversionUtils {
 
@@ -59,18 +60,23 @@ public class DaoDtoConversionUtils {
                 build();
     }
 
-    public static SubjectDTO toSubjectDTO(Subject subject) {
+    public static SubjectDTO toSubjectDTO(Subject subject, List<SubjectScheduleDTO> subjectScheduleDTOList) {
         return SubjectDTO.builder().
                 ID(subject.getID()).
                 name(subject.getName()).
                 description(subject.getDescription()).
                 price(subject.getPrice()).
+                subjectSchedule(subjectScheduleDTOList).
                 build();
     }
 
     public static Subject toSubject(SubjectDTO subjectDTO) {
-        return new Subject(subjectDTO.getID(),
-                subjectDTO.getName(), subjectDTO.getDescription(), subjectDTO.getPrice());
+        return Subject.builder().
+                ID(subjectDTO.getID()).
+                name(subjectDTO.getName()).
+                description(subjectDTO.getDescription()).
+                price(subjectDTO.getPrice()).
+                build();
     }
 
     public static UserAddressDTO toUserAddressDTO(UserAddress userAddress) {
@@ -142,5 +148,51 @@ public class DaoDtoConversionUtils {
                 studentDTO.getPhoneNumber(),
                 toUserAddress(studentDTO.getUserAddress()),
                 studentDTO.getOnPlace());
+    }
+
+    public static List<SubjectSchedule> toSubjectScheduleList(List<SubjectScheduleDTO> subjectScheduleDTO) {
+        if (subjectScheduleDTO == null) {
+            return null;
+        }
+        return subjectScheduleDTO.stream().
+                map(subjectSchedule -> SubjectSchedule.builder().
+                        ID(subjectSchedule.getID()).
+                        subjectID(subjectSchedule.getSubjectID()).
+                        startTime(subjectSchedule.getStartTime()).
+                        endTime(subjectSchedule.getEndTime()).
+                        build()).
+                collect(Collectors.toList());
+    }
+
+    public static List<SubjectScheduleDTO> toSubjectScheduleDTOList(List<SubjectSchedule> subjectSchedule) {
+        if (subjectSchedule == null) {
+            return null;
+        }
+        return subjectSchedule.stream().
+                map(subjSchedule -> SubjectScheduleDTO.builder().
+                        ID(subjSchedule.getID()).
+                        subjectID(subjSchedule.getSubjectID()).
+                        startTime(subjSchedule.getStartTime()).
+                        endTime(subjSchedule.getEndTime()).
+                        build()).
+                collect(Collectors.toList());
+    }
+
+    public static SubjectSchedule toSubjectSchedule(SubjectScheduleDTO subjectScheduleDTO) {
+        return SubjectSchedule.builder().
+                ID(subjectScheduleDTO.getID()).
+                subjectID(subjectScheduleDTO.getSubjectID()).
+                startTime(subjectScheduleDTO.getStartTime()).
+                endTime(subjectScheduleDTO.getEndTime()).
+                build();
+    }
+
+    public static SubjectScheduleDTO toSubjectScheduleDTO(SubjectSchedule subjectScheduleDTO) {
+        return SubjectScheduleDTO.builder().
+                ID(subjectScheduleDTO.getID()).
+                subjectID(subjectScheduleDTO.getSubjectID()).
+                startTime(subjectScheduleDTO.getStartTime()).
+                endTime(subjectScheduleDTO.getEndTime()).
+                build();
     }
 }

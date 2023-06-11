@@ -10,7 +10,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-// TODO add filtering by subject days
 public class TeacherFilterProcessor implements FilterProcessor {
 
     private final UserService userService;
@@ -52,7 +51,10 @@ public class TeacherFilterProcessor implements FilterProcessor {
     }
 
     private boolean checkOnPlace(Long userID) {
+        if (!filter.getOnPlace()) {
+            return true;
+        }
         TeacherDTO teacher = userService.getTeacherDTO(userID);
-        return teacher.getIsOnPlace() == filter.getOnPlace();
+        return teacher.getIsOnPlace();
     }
 }

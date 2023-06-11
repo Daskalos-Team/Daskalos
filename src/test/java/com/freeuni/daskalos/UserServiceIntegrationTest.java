@@ -24,10 +24,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -127,6 +124,8 @@ public class UserServiceIntegrationTest {
 
     private SubjectDTO subjectDTO2;
 
+    private SubjectDTO subjectDTO3;
+
     @Before
     public void setup() {
         teacher1 = new Teacher(10L, "Luka", "Kalandadze", "AtLeast^8", "email4",
@@ -164,6 +163,12 @@ public class UserServiceIntegrationTest {
                 name("Mechanical Engineering").
                 description("All the engineering principles in one course").
                 price(200).
+                build();
+
+        subjectDTO3 = SubjectDTO.builder().
+                name("Software Engineering").
+                description("Become software engineer with me").
+                price(350).
                 build();
     }
 
@@ -438,4 +443,71 @@ public class UserServiceIntegrationTest {
         assertThat(studentFavorites, hasSize(0));
     }
 
+    @Test
+    public void testUpdateSubjectSchedule() {
+        Teacher t = userRepository.save(teacher1);
+        SubjectDTO addedSubject1 = userService.addSubject(t.getID(), subjectDTO1);
+        TeacherDTO teacherDTO = userService.getTeacherDTO(t.getID());
+        teacherDTO.getTeacherSubjects().stream().map(teacherSubject -> {
+                    assertNull(teacherSubject.getSubjectSchedule());
+                    return null;
+                }
+        );
+
+        SubjectScheduleDTO subject1Schedule1DTO = SubjectScheduleDTO.builder().
+                subjectID(addedSubject1.getID()).
+                startTime("2023-05-24T11:30:00").
+                endTime("2023-05-24T13:00:00").
+                build();
+
+        SubjectScheduleDTO subject1Schedule2DTO = SubjectScheduleDTO.builder().
+                subjectID(addedSubject1.getID()).
+                startTime("2023-05-26T11:30:00").
+                endTime("2023-05-26T13:00:00").
+                build();
+
+        SubjectScheduleDTO subject1Schedule3DTO = SubjectScheduleDTO.builder().
+                subjectID(addedSubject1.getID()).
+                startTime("2023-05-23T12:30:00").
+                endTime("2023-05-23T14:00:00").
+                build();
+
+        SubjectDTO updatedSubj = SubjectDTO.builder().
+                ID(addedSubject1.getID()).
+                name(addedSubject1.getName()).
+                price(addedSubject1.getPrice()).
+                subjectSchedule(List.of(subject1Schedule1DTO, subject1Schedule2DTO, subject1Schedule3DTO)).
+                build();
+        SubjectDTO updatedSubject = userService.updateTeacherSubjectSchedule(List.of(updatedSubj)).
+                stream().
+                filter(subjectDTO -> Objects.equals(subjectDTO.getID(), updatedSubj.getID())).
+                findFirst().
+                get();
+
+        SubjectDTO subject1DataFromDB = userService.getTeacherDTO(t.getID()).
+                getTeacherSubjects().
+                stream().
+                filter(subjectDTO -> Objects.equals(subjectDTO.getID(), updatedSubj.getID())).
+                findFirst().
+                get();
+
+        List<SubjectScheduleDTO> subject1Schedule = subject1DataFromDB.getSubjectSchedule();
+        for (SubjectScheduleDTO subjectScheduleDTO : updatedSubject.getSubjectSchedule()) {
+            assertThat(subject1Schedule, contains(subjectScheduleDTO));
+        }
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
