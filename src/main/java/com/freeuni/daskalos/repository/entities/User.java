@@ -10,7 +10,6 @@ import java.io.Serializable;
 
 @NoArgsConstructor
 @Entity
-@Table(name = "USERS")
 public abstract class User implements Serializable {
 
     @Id

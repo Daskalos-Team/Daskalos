@@ -8,7 +8,6 @@ import lombok.*;
 @AllArgsConstructor
 @Getter
 @Setter
-@Table(name = "subject_schedule", schema = "daskalos")
 @Builder
 @Entity
 public class SubjectSchedule {
