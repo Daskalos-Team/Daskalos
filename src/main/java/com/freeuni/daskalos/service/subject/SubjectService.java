@@ -54,6 +54,7 @@ public class SubjectService {
     }
 
     public SubjectDTO updateSubject(SubjectDTO subject) {
+        subjectScheduleRepository.removeAllBySubjectID(subject.getID());
         List<SubjectScheduleDTO> subjectScheduleDTOList = new ArrayList<>();
         for (SubjectScheduleDTO subjectSchedule : subject.getSubjectSchedule()) {
             SubjectSchedule subSchedule = subjectScheduleRepository.save(DaoDtoConversionUtils.toSubjectSchedule(subjectSchedule));

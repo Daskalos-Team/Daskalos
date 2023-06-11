@@ -447,12 +447,16 @@ public class UserServiceIntegrationTest {
     public void testUpdateSubjectSchedule() {
         Teacher t = userRepository.save(teacher1);
         SubjectDTO addedSubject1 = userService.addSubject(t.getID(), subjectDTO1);
+
+        // test subject schedule null before adding
         TeacherDTO teacherDTO = userService.getTeacherDTO(t.getID());
         teacherDTO.getTeacherSubjects().stream().map(teacherSubject -> {
                     assertNull(teacherSubject.getSubjectSchedule());
                     return null;
                 }
         );
+
+        // test adding subject schedule
 
         SubjectScheduleDTO subject1Schedule1DTO = SubjectScheduleDTO.builder().
                 subjectID(addedSubject1.getID()).
@@ -480,34 +484,60 @@ public class UserServiceIntegrationTest {
                 build();
         SubjectDTO updatedSubject = userService.updateTeacherSubjectSchedule(List.of(updatedSubj)).
                 stream().
-                filter(subjectDTO -> Objects.equals(subjectDTO.getID(), updatedSubj.getID())).
+                filter(subjectDTO -> Objects.equals(subjectDTO.getID(), addedSubject1.getID())).
                 findFirst().
                 get();
 
         SubjectDTO subject1DataFromDB = userService.getTeacherDTO(t.getID()).
                 getTeacherSubjects().
                 stream().
-                filter(subjectDTO -> Objects.equals(subjectDTO.getID(), updatedSubj.getID())).
+                filter(subjectDTO -> Objects.equals(subjectDTO.getID(), addedSubject1.getID())).
                 findFirst().
                 get();
 
         List<SubjectScheduleDTO> subject1Schedule = subject1DataFromDB.getSubjectSchedule();
-        for (SubjectScheduleDTO subjectScheduleDTO : updatedSubject.getSubjectSchedule()) {
-            assertThat(subject1Schedule, contains(subjectScheduleDTO));
-        }
+        assertThat(subject1Schedule, containsInAnyOrder(updatedSubject.getSubjectSchedule().toArray()));
+
+        // test update existing schedule for subject
+
+        SubjectScheduleDTO subject1Schedule1DTO1 = SubjectScheduleDTO.builder().
+                subjectID(addedSubject1.getID()).
+                startTime("2023-05-25T11:30:00").
+                endTime("2023-05-25T13:00:00").
+                build();
+
+        SubjectScheduleDTO subject1Schedule2DTO1 = SubjectScheduleDTO.builder().
+                subjectID(addedSubject1.getID()).
+                startTime("2023-05-28T11:30:00").
+                endTime("2023-05-28T13:00:00").
+                build();
+
+        SubjectScheduleDTO subject1Schedule3DTO1 = SubjectScheduleDTO.builder().
+                subjectID(addedSubject1.getID()).
+                startTime("2023-05-22T12:30:00").
+                endTime("2023-05-22T14:00:00").
+                build();
+        updatedSubj = SubjectDTO.builder().
+                ID(addedSubject1.getID()).
+                name(addedSubject1.getName()).
+                price(addedSubject1.getPrice()).
+                subjectSchedule(List.of(subject1Schedule1DTO1, subject1Schedule2DTO1, subject1Schedule3DTO1)).
+                build();
+
+        updatedSubject = userService.updateTeacherSubjectSchedule(List.of(updatedSubj)).
+                stream().
+                filter(subjectDTO -> Objects.equals(subjectDTO.getID(), addedSubject1.getID())).
+                findFirst().
+                get();
+
+        subject1DataFromDB = userService.getTeacherDTO(t.getID()).
+                getTeacherSubjects().
+                stream().
+                filter(subjectDTO -> Objects.equals(subjectDTO.getID(), addedSubject1.getID())).
+                findFirst().
+                get();
+
+        subject1Schedule = subject1DataFromDB.getSubjectSchedule();
+        assertThat(subject1Schedule, containsInAnyOrder(updatedSubject.getSubjectSchedule().toArray()));
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

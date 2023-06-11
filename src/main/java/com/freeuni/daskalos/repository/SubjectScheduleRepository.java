@@ -10,4 +10,6 @@ import java.util.List;
 public interface SubjectScheduleRepository extends JpaRepository<SubjectSchedule, Long> {
 
     List<SubjectSchedule> findSubjectScheduleBySubjectID(Long subjectID);
+
+    void removeAllBySubjectID(Long subjectID);
 }
