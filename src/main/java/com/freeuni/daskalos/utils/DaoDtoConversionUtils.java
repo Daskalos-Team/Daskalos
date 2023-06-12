@@ -10,9 +10,11 @@ public class DaoDtoConversionUtils {
 
     public static User toUserEntity(UserDTO userDTO) {
         return userDTO.getUserType().equals(UserType.TEACHER.name()) ?
-                new Teacher(userDTO.getEmail(), userDTO.getPassword(), userDTO.getName(), userDTO.getSurname(), userDTO.getAddress(), UserType.fromName(userDTO.getUserType()), false)
+                new Teacher(userDTO.getEmail(), userDTO.getPassword(), userDTO.getName(), userDTO.getSurname(), userDTO.getAddress(),
+                        UserType.fromName(userDTO.getUserType()), false, null, null, null, null, null, null)
                 :
-                new Student(userDTO.getEmail(), userDTO.getPassword(), userDTO.getName(), userDTO.getSurname(), userDTO.getAddress(), UserType.fromName(userDTO.getUserType()), false);
+                new Student(userDTO.getEmail(), userDTO.getPassword(), userDTO.getName(), userDTO.getSurname(), userDTO.getAddress(),
+                        UserType.fromName(userDTO.getUserType()), false, null, null, null, null, null, null);
     }
 
     public static UserDTO toUserDTO(User userEntity) {
@@ -96,7 +98,13 @@ public class DaoDtoConversionUtils {
                 teacherDTO.getUserType(),
                 teacherDTO.getPhoneNumber(),
                 toUserAddress(teacherDTO.getAddress()),
-                teacherDTO.getIsOnPlace());
+                teacherDTO.getIsOnPlace(),
+                teacherDTO.getTitle(),
+                teacherDTO.getDescription(),
+                teacherDTO.getFbUrl(),
+                teacherDTO.getTwitterUrl(),
+                teacherDTO.getInstaUrl(),
+                teacherDTO.getLinkedinUrl());
     }
 
     public static TeacherDTO toTeacherDTO(Teacher teacher, List<ExperienceDTO> experience, List<TeacherRatingDTO> ratings, List<SubjectDTO> subjects) {
@@ -113,6 +121,12 @@ public class DaoDtoConversionUtils {
                 teachersExperience(experience).
                 teacherRatings(ratings).
                 teacherSubjects(subjects).
+                title(teacher.getTitle()).
+                description(teacher.getDescription()).
+                fbUrl(teacher.getFbUrl()).
+                twitterUrl(teacher.getTwitterUrl()).
+                instaUrl(teacher.getInstaUrl()).
+                linkedinUrl(teacher.getLinkedinUrl()).
                 build();
     }
 
@@ -129,6 +143,12 @@ public class DaoDtoConversionUtils {
                 studentSubjects(studentSubjects).
                 studentFavouriteTeachers(studentFavouriteTeachers).
                 onPlace(student.getOnPlace()).
+                title(student.getTitle()).
+                description(student.getDescription()).
+                fbUrl(student.getFbUrl()).
+                twitterUrl(student.getTwitterUrl()).
+                instaUrl(student.getInstaUrl()).
+                linkedinUrl(student.getLinkedinUrl()).
                 build();
     }
 
@@ -141,6 +161,12 @@ public class DaoDtoConversionUtils {
                 studentDTO.getUserType(),
                 studentDTO.getPhoneNumber(),
                 toUserAddress(studentDTO.getUserAddress()),
-                studentDTO.getOnPlace());
+                studentDTO.getOnPlace(),
+                studentDTO.getTitle(),
+                studentDTO.getDescription(),
+                studentDTO.getFbUrl(),
+                studentDTO.getTwitterUrl(),
+                studentDTO.getInstaUrl(),
+                studentDTO.getLinkedinUrl());
     }
 }

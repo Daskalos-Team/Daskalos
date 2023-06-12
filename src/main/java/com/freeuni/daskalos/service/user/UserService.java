@@ -1,4 +1,4 @@
-package com.freeuni.daskalos.service.teacher;
+package com.freeuni.daskalos.service.user;
 
 import com.freeuni.daskalos.dto.*;
 import com.freeuni.daskalos.repository.StudentRepository;
@@ -85,6 +85,12 @@ public class UserService {
                         phoneNumber(teacherDTO.getPhoneNumber() != null ? teacherDTO.getPhoneNumber() : existingData.getPhoneNumber()).
                         address(teacherDTO.getAddress() != null ? teacherDTO.getAddress() : existingData.getAddress()).
                         isOnPlace(teacherDTO.getIsOnPlace() != null ? teacherDTO.getIsOnPlace() : existingData.getIsOnPlace()).
+                        title(teacherDTO.getTitle() != null ? teacherDTO.getTitle() : existingData.getTitle()).
+                        description(teacherDTO.getDescription() != null ? teacherDTO.getDescription() : existingData.getDescription()).
+                        fbUrl(teacherDTO.getFbUrl() != null ? teacherDTO.getFbUrl() : existingData.getFbUrl()).
+                        instaUrl(teacherDTO.getInstaUrl() != null ? teacherDTO.getInstaUrl() : existingData.getInstaUrl()).
+                        twitterUrl(teacherDTO.getTwitterUrl() != null ? teacherDTO.getTwitterUrl() : existingData.getTwitterUrl()).
+                        linkedinUrl(teacherDTO.getLinkedinUrl() != null ? teacherDTO.getLinkedinUrl() : existingData.getLinkedinUrl()).
                         build());
         teacherRepository.save(updatedTeacherData);
     }
@@ -97,6 +103,12 @@ public class UserService {
                         phoneNumber(studentDTO.getPhoneNumber() != null ? studentDTO.getPhoneNumber() : existingData.getPhoneNumber()).
                         userAddress(studentDTO.getUserAddress() != null ? studentDTO.getUserAddress() : existingData.getUserAddress()).
                         onPlace(studentDTO.getOnPlace() != null ? studentDTO.getOnPlace() : existingData.getOnPlace()).
+                        title(studentDTO.getTitle() != null ? studentDTO.getTitle() : existingData.getTitle()).
+                        description(studentDTO.getDescription() != null ? studentDTO.getDescription() : existingData.getDescription()).
+                        fbUrl(studentDTO.getFbUrl() != null ? studentDTO.getFbUrl() : existingData.getFbUrl()).
+                        instaUrl(studentDTO.getInstaUrl() != null ? studentDTO.getInstaUrl() : existingData.getInstaUrl()).
+                        twitterUrl(studentDTO.getTwitterUrl() != null ? studentDTO.getTwitterUrl() : existingData.getTwitterUrl()).
+                        linkedinUrl(studentDTO.getLinkedinUrl() != null ? studentDTO.getLinkedinUrl() : existingData.getLinkedinUrl()).
                         build());
         studentRepository.save(updatedStudentData);
     }
@@ -136,7 +148,6 @@ public class UserService {
         }
     }
 
-    // TODO tests
     public List<TeacherDTO> getStudentFavouriteTeachers(Long studentID) {
         return favouriteTeacherRepository.findByStudentID(studentID).
                 stream().
@@ -145,7 +156,6 @@ public class UserService {
                 collect(Collectors.toList());
     }
 
-    // TODO tests
     public void addStudentFavouriteTeacher(Long studentID, Long teacherID) {
         favouriteTeacherRepository.save(StudentToFavouriteTeacher.
                 builder().
@@ -154,15 +164,22 @@ public class UserService {
                 build());
     }
 
-    // TODO tests
     public void removeStudentFavouriteTeacher(Long studentID, Long teacherID) {
         favouriteTeacherRepository.deleteByStudentIDAndTeacherID(studentID, teacherID);
     }
 
     public Map.Entry<Integer, Integer> getTeacherMinMaxPrice(Long teacherID) {
         List<SubjectDTO> teacherSubjects = subjectService.getUserSubjects(teacherID);
+        if (teacherSubjects.isEmpty()) {
+            return Map.entry(Integer.MAX_VALUE, Integer.MIN_VALUE);
+        }
         OptionalInt minPrice = teacherSubjects.stream().mapToInt(SubjectDTO::getPrice).min();
         OptionalInt maxPrice = teacherSubjects.stream().mapToInt(SubjectDTO::getPrice).max();
+        if (minPrice.isEmpty() || maxPrice.isEmpty()) {
+            int minP = minPrice.isEmpty() ? Integer.MIN_VALUE : minPrice.getAsInt();
+            int maxP = maxPrice.isEmpty() ? Integer.MAX_VALUE : maxPrice.getAsInt();
+            return Map.entry(minP, maxP);
+        }
         return Map.entry(minPrice.getAsInt(), maxPrice.getAsInt());
     }
 }

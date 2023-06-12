@@ -32,6 +32,18 @@ public abstract class User implements Serializable {
 
     private Boolean onPlace;
 
+    private String title;
+
+    private String description;
+
+    private String fbUrl;
+
+    private String twitterUrl;
+
+    private String instaUrl;
+
+    private String linkedinUrl;
+
     public User(Long ID,
                 @NonNull String name,
                 @NonNull String surname,
@@ -40,7 +52,13 @@ public abstract class User implements Serializable {
                 @NonNull UserType userType,
                 @NonNull String phoneNumber,
                 @NonNull UserAddress address,
-                Boolean onPlace) {
+                Boolean onPlace,
+                String title,
+                String description,
+                String fbUrl,
+                String twitterUrl,
+                String instaUrl,
+                String linkedinUrl) {
         this.ID = ID;
         this.name = name;
         this.surname = surname;
@@ -50,6 +68,12 @@ public abstract class User implements Serializable {
         this.phoneNumber = phoneNumber;
         this.address = address;
         this.onPlace = onPlace;
+        this.title = title;
+        this.description = description;
+        this.fbUrl = fbUrl;
+        this.twitterUrl = twitterUrl;
+        this.instaUrl = instaUrl;
+        this.linkedinUrl = linkedinUrl;
     }
 
     public User(@NonNull String email,
@@ -58,7 +82,13 @@ public abstract class User implements Serializable {
                 @NonNull String surname,
                 @NonNull UserAddress address,
                 @NonNull UserType userType,
-                Boolean onPlace) {
+                Boolean onPlace,
+                String title,
+                String description,
+                String fbUrl,
+                String twitterUrl,
+                String instaUrl,
+                String linkedinUrl) {
         this.email = email;
         this.password = password;
         this.name = name;
@@ -66,6 +96,12 @@ public abstract class User implements Serializable {
         this.address = address;
         this.userType = userType;
         this.onPlace = onPlace;
+        this.title = title;
+        this.description = description;
+        this.fbUrl = fbUrl;
+        this.twitterUrl = twitterUrl;
+        this.instaUrl = instaUrl;
+        this.linkedinUrl = linkedinUrl;
     }
 
     public Long getID() {
@@ -139,5 +175,53 @@ public abstract class User implements Serializable {
 
     public Boolean getOnPlace() {
         return this.onPlace;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getFbUrl() {
+        return fbUrl;
+    }
+
+    public void setFbUrl(String fbUrl) {
+        this.fbUrl = fbUrl;
+    }
+
+    public String getTwitterUrl() {
+        return twitterUrl;
+    }
+
+    public void setTwitterUrl(String twitterUrl) {
+        this.twitterUrl = twitterUrl;
+    }
+
+    public String getInstaUrl() {
+        return instaUrl;
+    }
+
+    public void setInstaUrl(String instaUrl) {
+        this.instaUrl = instaUrl;
+    }
+
+    public String getLinkedinUrl() {
+        return linkedinUrl;
+    }
+
+    public void setLinkedinUrl(String linkedinUrl) {
+        this.linkedinUrl = linkedinUrl;
     }
 }
