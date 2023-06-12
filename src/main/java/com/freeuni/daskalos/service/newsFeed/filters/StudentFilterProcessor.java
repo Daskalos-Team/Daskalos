@@ -3,7 +3,7 @@ package com.freeuni.daskalos.service.newsFeed.filters;
 import com.freeuni.daskalos.dto.FilterDTO;
 import com.freeuni.daskalos.dto.StudentDTO;
 import com.freeuni.daskalos.dto.SubjectDTO;
-import com.freeuni.daskalos.service.teacher.UserService;
+import com.freeuni.daskalos.service.user.UserService;
 
 import java.util.List;
 import java.util.Set;
@@ -26,8 +26,11 @@ public class StudentFilterProcessor implements FilterProcessor {
     }
 
     private boolean checkSubjects(Long userID) {
-        Set<String> userSubjects = userService.getStudentDTO(userID).getStudentSubjects().stream().map(SubjectDTO::getName).collect(Collectors.toSet());
         List<String> chosenSubjects = filter.getSubjectsOnly();
+        if (chosenSubjects == null || chosenSubjects.isEmpty()) {
+            return true;
+        }
+        Set<String> userSubjects = userService.getStudentDTO(userID).getStudentSubjects().stream().map(SubjectDTO::getName).collect(Collectors.toSet());
         for (String subject : chosenSubjects) {
             if (!userSubjects.contains(subject)) {
                 return false;
@@ -37,6 +40,9 @@ public class StudentFilterProcessor implements FilterProcessor {
     }
 
     private boolean checkOnPlace(Long userID) {
+        if (filter.getOnPlace() == null || !filter.getOnPlace()) {
+            return true;
+        }
         StudentDTO student = userService.getStudentDTO(userID);
         return student.getOnPlace();
     }

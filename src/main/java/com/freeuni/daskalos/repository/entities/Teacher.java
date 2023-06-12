@@ -16,8 +16,14 @@ public class Teacher extends User {
                    @NonNull UserType userType,
                    @NonNull String phoneNumber,
                    @NonNull UserAddress address,
-                   Boolean onPlace) {
-        super(ID, name, secondName, password, mail, userType, phoneNumber, address, onPlace);
+                   Boolean onPlace,
+                   String title,
+                   String description,
+                   String fbUrl,
+                   String twitterUrl,
+                   String instaUrl,
+                   String linkedinUrl) {
+        super(ID, name, secondName, password, mail, userType, phoneNumber, address, onPlace, title, description, fbUrl, twitterUrl, instaUrl, linkedinUrl);
     }
 
     public Teacher(@NonNull String mail,
@@ -26,8 +32,14 @@ public class Teacher extends User {
                    @NonNull String surname,
                    @NonNull UserAddress address,
                    @NonNull UserType userType,
-                   @NonNull Boolean onPlace) {
-        super(mail, password, name, surname, address, userType, onPlace);
+                   @NonNull Boolean onPlace,
+                   String title,
+                   String description,
+                   String fbUrl,
+                   String twitterUrl,
+                   String instaUrl,
+                   String linkedinUrl) {
+        super(mail, password, name, surname, address, userType, onPlace, title, description, fbUrl, twitterUrl, instaUrl, linkedinUrl);
     }
 
     public Teacher() {

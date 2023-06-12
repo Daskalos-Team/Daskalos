@@ -8,7 +8,7 @@ import com.freeuni.daskalos.repository.entities.Teacher;
 import com.freeuni.daskalos.service.experience.ExperienceService;
 import com.freeuni.daskalos.service.rating.RatingService;
 import com.freeuni.daskalos.service.subject.SubjectService;
-import com.freeuni.daskalos.service.teacher.UserService;
+import com.freeuni.daskalos.service.user.UserService;
 import com.freeuni.daskalos.utils.DaoDtoConversionUtils;
 import com.freeuni.daskalos.utils.UserType;
 import org.junit.Before;
@@ -130,17 +130,23 @@ public class UserServiceIntegrationTest {
     @Before
     public void setup() {
         teacher1 = new Teacher(10L, "Luka", "Kalandadze", "AtLeast^8", "email4",
-                UserType.TEACHER, "55555555", new UserAddress(11.0, 20.0), true);
+                UserType.TEACHER, "55555555", new UserAddress(11.0, 20.0), true,
+                null, null, null, null, null, null);
 
         teacher2 = new Teacher(11L, "Murtaz", "Gobozovi", "AtLeast^8", "email5",
-                UserType.TEACHER, "55555555", new UserAddress(11.0, 20.0), true);
+                UserType.TEACHER, "55555555", new UserAddress(11.0, 20.0), true,
+                null, null, null, null, null, null);
 
         teacher3 = new Teacher(12L, "Juansher", "Mamiashvili", "AtLeast^8", "email6",
-                UserType.TEACHER, "55555555", new UserAddress(11.0, 20.0), true);
+                UserType.TEACHER, "55555555", new UserAddress(11.0, 20.0), true,
+                null, null, null, null, null, null);
 
-        student1 = new Student("email1", "AtLeast^8", "Giorgi", "Adikashviili", new UserAddress(1, 2), UserType.STUDENT, false);
-        student2 = new Student("email2", "AtLeast^8", "Niko", "Nargizashviili", new UserAddress(1, 2), UserType.STUDENT, false);
-        student3 = new Student("email3", "AtLeast^8", "Shalva", "Leclerishvili", new UserAddress(1, 2), UserType.STUDENT, false);
+        student1 = new Student("email1", "AtLeast^8", "Giorgi", "Adikashviili", new UserAddress(1, 2), UserType.STUDENT,
+                false, null, null, null, null, null, null);
+        student2 = new Student("email2", "AtLeast^8", "Niko", "Nargizashviili", new UserAddress(1, 2), UserType.STUDENT,
+                false, null, null, null, null, null, null);
+        student3 = new Student("email3", "AtLeast^8", "Shalva", "Leclerishvili", new UserAddress(1, 2), UserType.STUDENT,
+                false, null, null, null, null, null, null);
         experienceDTO1 = ExperienceDTO.builder().
                 employer("Microsoft").
                 jobDescription("Code maintenance").
@@ -348,6 +354,16 @@ public class UserServiceIntegrationTest {
 
         userService.updateTeacher(TeacherDTO.builder().ID(t.getID()).isOnPlace(true).build());
         assertTrue(userService.getTeacherDTO(t.getID()).getIsOnPlace());
+
+        userService.updateTeacher(TeacherDTO.builder().ID(t.getID()).description("bla bla bla").title("ble ble ble").build());
+        assertEquals("bla bla bla", userService.getTeacherDTO(t.getID()).getDescription());
+        assertEquals("ble ble ble", userService.getTeacherDTO(t.getID()).getTitle());
+
+        userService.updateTeacher(TeacherDTO.builder().ID(t.getID()).fbUrl("FB.com").twitterUrl("twitter.com").instaUrl("insta.com").linkedinUrl("linkedin.com").build());
+        assertEquals("FB.com", userService.getTeacherDTO(t.getID()).getFbUrl());
+        assertEquals("insta.com", userService.getTeacherDTO(t.getID()).getInstaUrl());
+        assertEquals("twitter.com", userService.getTeacherDTO(t.getID()).getTwitterUrl());
+        assertEquals("linkedin.com", userService.getTeacherDTO(t.getID()).getLinkedinUrl());
     }
 
     @Test
@@ -371,6 +387,16 @@ public class UserServiceIntegrationTest {
         // update on place
         userService.updateStudent(StudentDTO.builder().ID(student.getID()).onPlace(true).build());
         assertTrue(userService.getStudentDTO(student.getID()).getOnPlace());
+
+        userService.updateStudent(StudentDTO.builder().ID(student.getID()).description("bla bla bla").title("ble ble ble").build());
+        assertEquals("bla bla bla", userService.getStudentDTO(student.getID()).getDescription());
+        assertEquals("ble ble ble", userService.getStudentDTO(student.getID()).getTitle());
+
+        userService.updateStudent(StudentDTO.builder().ID(student.getID()).fbUrl("FB.com").twitterUrl("twitter.com").instaUrl("insta.com").linkedinUrl("linkedin.com").build());
+        assertEquals("FB.com", userService.getStudentDTO(student.getID()).getFbUrl());
+        assertEquals("insta.com", userService.getStudentDTO(student.getID()).getInstaUrl());
+        assertEquals("twitter.com", userService.getStudentDTO(student.getID()).getTwitterUrl());
+        assertEquals("linkedin.com", userService.getStudentDTO(student.getID()).getLinkedinUrl());
     }
 
     @Test
@@ -437,5 +463,4 @@ public class UserServiceIntegrationTest {
         studentFavorites = userService.getStudentFavouriteTeachers(student.getID());
         assertThat(studentFavorites, hasSize(0));
     }
-
 }

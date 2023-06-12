@@ -1,7 +1,7 @@
 package com.freeuni.daskalos.controller;
 
 import com.freeuni.daskalos.dto.*;
-import com.freeuni.daskalos.service.teacher.UserService;
+import com.freeuni.daskalos.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;
