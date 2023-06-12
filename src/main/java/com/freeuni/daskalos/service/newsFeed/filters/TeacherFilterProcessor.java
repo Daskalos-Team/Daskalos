@@ -57,10 +57,10 @@ public class TeacherFilterProcessor implements FilterProcessor {
     }
 
     private boolean checkOnPlace(Long userID) {
-        if (filter.getOnPlace() == null || !filter.getOnPlace()) {
+        if (filter.getOnPlace() == null) {
             return true;
         }
         TeacherDTO teacher = userService.getTeacherDTO(userID);
-        return teacher.getIsOnPlace();
+        return teacher.getIsOnPlace() == filter.getOnPlace();
     }
 }
