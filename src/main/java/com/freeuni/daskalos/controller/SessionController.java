@@ -36,10 +36,10 @@ public class SessionController {
     }
 
     @GetMapping("/type")
-    public ResponseEntity<UserType> getUserType() {
+    public ResponseEntity<String> getUserType() {
         UserType userType = (UserType) getSession().getAttribute("userType");
         if (userType != null) {
-            return new ResponseEntity<>(userType, HttpStatus.OK);
+            return new ResponseEntity<>(userType.name(), HttpStatus.OK);
         }
         return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }

@@ -1,1 +1,1 @@
-export * from "./RecommendedTeacher";
+export * from "./Recommendation";

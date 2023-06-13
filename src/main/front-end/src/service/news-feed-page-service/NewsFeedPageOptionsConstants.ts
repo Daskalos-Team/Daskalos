@@ -20,19 +20,42 @@ export interface LeftPanelProps {
     animation: Keyframes | null;
 }
 
-export interface RecommendedTeacherProps {
+export interface RecommendationProps {
+    currUserType: string;
     isFavourite: boolean;
+    rootScale: number;
+    userType: string;
+    userId: number;
+    name: string;
+    surname: string;
+    rating: number;
+    description: string;
+    subjects: string[];
+}
+
+export interface RecommendationRootProps {
+    userType: string;
     rootScale: number;
 }
 
-export interface RecommendedTeacherScaleProps {
+export interface RecommendationScaleProps {
     rootScale: number;
+}
+
+export interface RecommendationProfilePictureProps {
+    userType: string;
 }
 
 export interface LeftPanelOptionProps {
     isSelected: boolean;
     imageSrc: string;
     labelText: string;
+}
+
+export interface SettingsProps {
+    currUserType: string;
+    filters: UserFilters;
+    filtersSetFn: (filters: any) => void;
 }
 
 export interface OptionContainerProps {
@@ -62,6 +85,31 @@ export interface ProfileButtonMenuProps {
     animation: Keyframes | null;
 }
 
+export interface NewsFeedPageProps {
+    userId: number;
+    userType: string;
+}
+
+export interface UserFilters {
+    minPrice: number,
+    maxPrice: number,
+    favouritesOnly: boolean,
+    onPlace: boolean | null,
+    subjectsOnly: string[],
+    weekdays: string[]
+}
+
+export interface UserProps {
+    userId: number,
+    name: string,
+    surname: string,
+    userType: string,
+    description: string,
+    rating: number,
+    subjects: string[],
+    isFavourite: boolean
+}
+
 export const NewsFeedPageColorPalette = {
     mainColor: "rgba(1,157,209,1)",
     secondaryColor: "#f0f6f7",
@@ -73,8 +121,12 @@ export const NewsFeedPageColorPalette = {
     searchButtonBG: "#ece9e9",
     searchButtonShadow: "rgba(0, 0, 0, 0.25)",
     recommendedTeacherRootBG: "linear-gradient(130deg, rgba(1,157,255,0.5) 0%, rgba(130,187,255,0.5) 40%, rgba(14,99,221,0.5) 100%)",
+    recommendedStudentRootBG: "linear-gradient(130deg, rgba(255,157,1,0.8) 0%, rgba(255,187,130,0.8) 40%, rgba(221,99,14,0.8) 100%)",
+    recommendedTeacherPictureBorder: "skyblue",
+    recommendedStudentPictureBorder: "orange",
     recommendedTeacherPictureShadow: "powderblue",
-    recommendedTeacherDescriptionBG: "transparent",
+    recommendedStudentPictureShadow: "orange",
+    recommendationDescriptionBG: "transparent",
     scrollbarTrackBG: "#f0f6f7",
     scrollbarThumbBG: "rgba(1,157,255,0.6)",
     settingBG: "linear-gradient(130deg, rgba(70,207,255,0.3) 0%, rgba(130,187,255,0.3) 40%, rgba(50,157,255,0.3) 100%)",

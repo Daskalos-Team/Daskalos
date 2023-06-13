@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import {
-    NewsFeedPageColorPalette,
-    RecommendedTeacherProps, RecommendedTeacherScaleProps
+    NewsFeedPageColorPalette, RecommendationProfilePictureProps,
+    RecommendationProps, RecommendationRootProps, RecommendationScaleProps
 } from "../../../service/news-feed-page-service";
 
-export const RecommendedTeacher = (props: RecommendedTeacherProps): React.JSX.Element => {
+export const Recommendation = (props: RecommendationProps): React.JSX.Element => {
     const [imageSrc, setImageSrc] = useState(props.isFavourite ?
         "/images/news-feed-page/FavouriteSelected.png" : "/images/news-feed-page/FavouriteUnselected.png");
     const FavouriteFunction = () => {
@@ -13,40 +13,39 @@ export const RecommendedTeacher = (props: RecommendedTeacherProps): React.JSX.El
             "images/news-feed-page/FavouriteSelected.png" :
             "/images/news-feed-page/FavouriteUnselected.png");
     };
-    const SelectTeacher = () => {
-        alert("Teacher Recommendation was clicked");
+    const SelectRecommendation = () => {
+        alert("Recommendation with id " + props.userId + " was clicked");
     };
     return (
-        <RecommendedTeacherRoot rootScale={props.rootScale}>
-            <RecommendedTeacherTop>
-                <ProfilePicture src="/images/news-feed-page/TeachersIcon.png"
-                    onClick={() => SelectTeacher()}/>
-                <RecommendedTeacherTopRight>
-                    <Name onClick={() => SelectTeacher()}>სახელი გვარი</Name>
+        <RecommendationRoot userType={props.userType} rootScale={props.rootScale}>
+            <RecommendationTop>
+                <ProfilePicture userType={props.userType} src={"/images/news-feed-page/" + (props.userType == "TEACHER" ? "TeachersIcon.png" : "StudentIcon.png")}
+                    onClick={() => SelectRecommendation()}/>
+                <RecommendationTopRight>
+                    <Name onClick={() => SelectRecommendation()}>{props.name + " " + props.surname}</Name>
                     <SubjectsLabel>საგნები</SubjectsLabel>
                     <SubjectList>
-                        <Subject>საგანი 1</Subject>
-                        <Subject>საგანი 2</Subject>
-                        <Subject>საგანი 3</Subject>
-                        <Subject>საგანი 4</Subject>
-                        <Subject>საგანი 5</Subject>
-                        <Subject>საგანი 6</Subject>
-                        <Subject>საგანი 7</Subject>
-                        <Subject>საგანი 8</Subject>
+                        {props.subjects.map(s => (
+                            <Subject key={s}>{s}</Subject>
+                        ))}
                     </SubjectList>
-                </RecommendedTeacherTopRight>
-            </RecommendedTeacherTop>
+                </RecommendationTopRight>
+            </RecommendationTop>
             <DescriptionLabel>აღწერა</DescriptionLabel>
-            <DescriptionTextfield rootScale={props.rootScale}>
-                aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-            </DescriptionTextfield>
-            <RecommendedTeacherBottom rootScale={props.rootScale}>
-                <PriceRangeLabel>ფასი:</PriceRangeLabel>
-                <PriceRangeValue>####-####</PriceRangeValue>
-                <Favourite onClick={() => FavouriteFunction()}
-                    src={imageSrc} alt="Heart"/>
-            </RecommendedTeacherBottom>
-        </RecommendedTeacherRoot>
+            <DescriptionTextField rootScale={props.rootScale}>
+                {props.description}
+            </DescriptionTextField>
+            {props.userType == "TEACHER" && (
+                <RecommendationBottom rootScale={props.rootScale}>
+                    <RatingLabel>რეიტინგი:</RatingLabel>
+                    <RatingValue>{props.rating.toFixed(1) + "/10.0"}</RatingValue>
+                    {props.currUserType == "STUDENT" && (
+                        <Favourite onClick={() => FavouriteFunction()}
+                            src={imageSrc} alt="Heart"/>
+                    )}
+                </RecommendationBottom>
+            )}
+        </RecommendationRoot>
     );
 };
 
@@ -66,7 +65,7 @@ const CustomScrollbarComponent = styled.div`
   }
 `;
 
-const RecommendedTeacherRoot = styled.div<RecommendedTeacherScaleProps>`
+const RecommendationRoot = styled.div<RecommendationRootProps>`
   width: 450px;
   height: ${props => 360 / Math.pow(props.rootScale, 0.38)}px;
   padding: 21px 19px 26px 19px;
@@ -76,12 +75,13 @@ const RecommendedTeacherRoot = styled.div<RecommendedTeacherScaleProps>`
   border-style: solid;
   border-color: ${NewsFeedPageColorPalette.border};
   box-sizing: border-box;
-  background: ${NewsFeedPageColorPalette.recommendedTeacherRootBG};
+  background: ${props => props.userType == "TEACHER" ? NewsFeedPageColorPalette.recommendedTeacherRootBG :
+        NewsFeedPageColorPalette.recommendedStudentRootBG};
   overflow: hidden;
   color: darkblue;
 `;
 
-const RecommendedTeacherTop = styled.div`
+const RecommendationTop = styled.div`
   width: 100%;
   gap: 40px;
   display: flex;
@@ -92,16 +92,17 @@ const RecommendedTeacherTop = styled.div`
   box-sizing: border-box;
 `;
 
-const ProfilePicture = styled.img`
+const ProfilePicture = styled.img<RecommendationProfilePictureProps>`
   width: 170px;
   height: 150px;
-  border: 5px solid skyblue;
+  border: 5px solid ${props => props.userType == "TEACHER" ? NewsFeedPageColorPalette.recommendedTeacherPictureBorder :
+        NewsFeedPageColorPalette.recommendedStudentPictureBorder};
   border-radius: 50%;
   box-shadow: 0 0 70px 10px ${NewsFeedPageColorPalette.recommendedTeacherPictureShadow};
   cursor: pointer;
 `;
 
-const RecommendedTeacherTopRight = styled.div`
+const RecommendationTopRight = styled.div`
   width: 56%;
   gap: 10px;
   display: flex;
@@ -166,7 +167,7 @@ const DescriptionLabel = styled.div`
   cursor: default;
 `;
 
-const DescriptionTextfield = styled(CustomScrollbarComponent)<RecommendedTeacherScaleProps>`
+const DescriptionTextField = styled(CustomScrollbarComponent)<RecommendationScaleProps>`
   width: 100%;
   height: ${props => 90 / props.rootScale}px;
   margin: 5px 0 5px 0;
@@ -178,10 +179,10 @@ const DescriptionTextfield = styled(CustomScrollbarComponent)<RecommendedTeacher
   border-left: 2px solid ${NewsFeedPageColorPalette.border};
   border-radius: 10px;
   box-sizing: border-box;
-  background: ${NewsFeedPageColorPalette.recommendedTeacherDescriptionBG};
+  background: ${NewsFeedPageColorPalette.recommendationDescriptionBG};
 `;
 
-const RecommendedTeacherBottom = styled.div<RecommendedTeacherScaleProps>`
+const RecommendationBottom = styled.div<RecommendationScaleProps>`
   width: 100%;
   margin-top: 15px;
   padding-left: 5px;
@@ -192,7 +193,7 @@ const RecommendedTeacherBottom = styled.div<RecommendedTeacherScaleProps>`
   font-weight: 600;
 `;
 
-const PriceRangeLabel = styled.p`
+const RatingLabel = styled.p`
   width: fit-content;
   margin-right: 20px;
   overflow-y: hidden;
@@ -203,7 +204,7 @@ const PriceRangeLabel = styled.p`
   cursor: default;
 `;
 
-const PriceRangeValue = styled.p`
+const RatingValue = styled.p`
   width: 120px;
   height: fit-content;
   text-align: start;
