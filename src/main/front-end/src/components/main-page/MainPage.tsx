@@ -9,7 +9,7 @@ export const MainPage = ({ children }: MainPageProps): React.JSX.Element => {
             const response = await getUserId();
             setLoggedIn(response.data != "" && response.data as number >= 0);
         };
-        checkLoggedIn().then();
+        checkLoggedIn().catch(err => console.log(err));
     }, []);
 
     return loggedIn ? (

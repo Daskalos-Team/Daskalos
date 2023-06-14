@@ -4,6 +4,7 @@ import com.freeuni.daskalos.dto.UserAddressDTO;
 import com.freeuni.daskalos.dto.UserDTO;
 import com.freeuni.daskalos.repository.UserRepository;
 import com.freeuni.daskalos.repository.entities.User;
+import com.freeuni.daskalos.service.session.SessionService;
 import com.freeuni.daskalos.utils.AuthorizationStatus;
 import com.freeuni.daskalos.utils.DaoDtoConversionUtils;
 import com.freeuni.daskalos.utils.UserType;
@@ -66,6 +67,7 @@ public class AuthorizationService {
             return AuthorizationStatus.WRONG_PASSWORD.name();
         }
 
+        saveCurrentUser(currentUser.get());
         return AuthorizationStatus.SUCCESSFUL_LOGIN.name();
     }
 
@@ -94,5 +96,10 @@ public class AuthorizationService {
     public List<UserDTO> getAllUsers() {
         Iterable<User> all = userRepository.findAll();
         return StreamSupport.stream(all.spliterator(), false).map(DaoDtoConversionUtils::toUserDTO).collect(Collectors.toList());
+    }
+
+    private void saveCurrentUser(User user) {
+        SessionService.setUserId(user.getID());
+        SessionService.setUserType(user.getUserType());
     }
 }
