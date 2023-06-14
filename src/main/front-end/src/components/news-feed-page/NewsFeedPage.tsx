@@ -11,6 +11,7 @@ import {
 import { SettingsTab } from "./settings-tab";
 import { TopTenTab } from "./top-10-tab";
 import { Recommendation } from "./recommended-teacher";
+import {setUserId} from "../../service/session-service";
 
 export const NewsFeedPage = (props: NewsFeedPageProps): React.JSX.Element => {
     const maxMenuOnWindowWidth = 1180;
@@ -118,6 +119,12 @@ export const NewsFeedPage = (props: NewsFeedPageProps): React.JSX.Element => {
         setProfileButtonMenuOpen(!profileButtonMenuOpen);
     };
 
+    const LogOut = () => {
+        setUserId(-1).then(_ => {
+            window.location.reload();
+        }).catch(err => console.log(err));
+    };
+
     useLayoutEffect(() => {
         function CheckForMenuResize() {
             const currWidth = document.body.offsetWidth;
@@ -167,8 +174,7 @@ export const NewsFeedPage = (props: NewsFeedPageProps): React.JSX.Element => {
                         <UserName>სახელი გვარი</UserName>
                     </ProfileButtonMenuTop>
                     <ProfileButtonMenuOption>ჩემი პროფილი</ProfileButtonMenuOption>
-                    <ProfileButtonMenuOption>ანგარიშის შეცვლა</ProfileButtonMenuOption>
-                    <ProfileButtonMenuOption>ანგარიშიდან გამოსვლა</ProfileButtonMenuOption>
+                    <ProfileButtonMenuOption onClick={() => LogOut()}>ანგარიშიდან გამოსვლა</ProfileButtonMenuOption>
                 </ProfileButtonMenu>
             </Header>
             <Content scale={rootScale}>
@@ -399,8 +405,8 @@ const UserName = styled.p`
 
 const ProfileButtonMenuOption = styled.p`
   width: 100%;
-  height: 20%;
-  line-height: 52px;
+  height: 33%;
+  line-height: 80px;
   padding-left: 30px;
   text-align: start;
   justify-self: end;
@@ -410,6 +416,7 @@ const ProfileButtonMenuOption = styled.p`
   transition-property: border-color;
   transition-duration: 100ms;
   cursor: pointer;
+  overflow: hidden;
   &:hover {
     border-color: ${NewsFeedPageColorPalette.profileButtonMenuBorder};
   }

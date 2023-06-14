@@ -34,7 +34,9 @@ export const standardLogin = (email: string, password: string, google: boolean) 
             "Content-type": "application/json; charset=UTF-8"
         }
     })
-        .then(response => alert(NOTIFICATION_MAP[response.data] || ""))
+        .then(_ => {
+            window.location.reload();
+        })
         .catch(err => {
             alert(NOTIFICATION_MAP[err.response.data] || "");
             console.log(err);
