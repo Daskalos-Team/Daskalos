@@ -1,5 +1,5 @@
 import axios from "axios";
-import { NEWS_FEED_ENDPOINT } from "../common-service";
+import { NEWS_FEED_ENDPOINT, USER_DATA_ENDPOINT } from "../common-service";
 import { UserFilters } from "./NewsFeedPageOptionsConstants";
 
 export const getTeachers = (studentID: number, filters: UserFilters): Promise<any> => {
@@ -24,4 +24,20 @@ export const getTopTenTeachers = (): Promise<any> => {
             "Content-type": "application/json; charset=UTF-8"
         }
     });
+};
+
+export const addFavourite = (studentId: number, teacherId: number) => {
+    axios.post(USER_DATA_ENDPOINT + studentId + "/add_student_favourite/" + teacherId, "", {
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        }
+    }).catch(err => console.log(err));
+};
+
+export const removeFavourite = (studentId: number, teacherId: number) => {
+    axios.post(USER_DATA_ENDPOINT + studentId + "/remove_student_favourite/" + teacherId, "", {
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        }
+    }).catch(err => console.log(err));
 };

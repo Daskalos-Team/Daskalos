@@ -21,6 +21,7 @@ export interface LeftPanelProps {
 }
 
 export interface RecommendationProps {
+    currUserId: number;
     currUserType: string;
     isFavourite: boolean;
     rootScale: number;
@@ -44,6 +45,11 @@ export interface RecommendationScaleProps {
 
 export interface RecommendationProfilePictureProps {
     userType: string;
+}
+
+export interface FavouriteProps {
+    imageSrc: string;
+    animation: Keyframes | null;
 }
 
 export interface LeftPanelOptionProps {

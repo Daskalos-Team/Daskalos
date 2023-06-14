@@ -1,14 +1,24 @@
 import React, { useState } from "react";
-import styled from "styled-components";
+import styled, { Keyframes, keyframes } from "styled-components";
 import {
+    addFavourite, removeFavourite,
     NewsFeedPageColorPalette, RecommendationProfilePictureProps,
-    RecommendationProps, RecommendationRootProps, RecommendationScaleProps
+    RecommendationProps, RecommendationRootProps, RecommendationScaleProps, FavouriteProps
 } from "../../../service/news-feed-page-service";
 
 export const Recommendation = (props: RecommendationProps): React.JSX.Element => {
     const [imageSrc, setImageSrc] = useState(props.isFavourite ?
         "/images/news-feed-page/FavouriteSelected.png" : "/images/news-feed-page/FavouriteUnselected.png");
+    const [favouriteAnimation, setFavouriteAnimation] = useState<Keyframes | null>(null);
+
     const FavouriteFunction = () => {
+        if (imageSrc == "/images/news-feed-page/FavouriteUnselected.png") {
+            addFavourite(props.currUserId, props.userId);
+            setFavouriteAnimation(spinClockwise);
+        } else {
+            removeFavourite(props.currUserId, props.userId);
+            setFavouriteAnimation(spinCounterClockwise);
+        }
         setImageSrc(imageSrc == "/images/news-feed-page/FavouriteUnselected.png" ?
             "images/news-feed-page/FavouriteSelected.png" :
             "/images/news-feed-page/FavouriteUnselected.png");
@@ -40,14 +50,25 @@ export const Recommendation = (props: RecommendationProps): React.JSX.Element =>
                     <RatingLabel>რეიტინგი:</RatingLabel>
                     <RatingValue>{props.rating.toFixed(1) + "/10.0"}</RatingValue>
                     {props.currUserType == "STUDENT" && (
-                        <Favourite onClick={() => FavouriteFunction()}
-                            src={imageSrc} alt="Heart"/>
+                        <Favourite imageSrc={imageSrc} animation={favouriteAnimation} onClick={() => FavouriteFunction()}/>
                     )}
                 </RecommendationBottom>
             )}
         </RecommendationRoot>
     );
 };
+
+const spinClockwise = keyframes`
+  0% { transform: rotateY(0); pointer-events: none; background-image: url("/images/news-feed-page/FavouriteUnselected.png") }
+  50% { background-image: url("/images/news-feed-page/FavouriteSelected.png") }
+  100% { transform: rotateY(3600deg); pointer-events: auto }
+`;
+
+const spinCounterClockwise = keyframes`
+  0% { transform: rotateY(0); pointer-events: none; background-image: url("/images/news-feed-page/FavouriteSelected.png") }
+  50% { background-image: url("/images/news-feed-page/FavouriteUnselected.png") }
+  100% { transform: rotateY(-3600deg); pointer-events: auto }
+`;
 
 const CustomScrollbarComponent = styled.div`
   &::-webkit-scrollbar {
@@ -212,9 +233,13 @@ const RatingValue = styled.p`
   cursor: default;
 `;
 
-const Favourite = styled.img`
+const Favourite = styled.div<FavouriteProps>`
   width: 27px;
+  height: 27px;
   margin-left: auto;
   box-sizing: border-box;
   cursor: pointer;
+  background-size: cover;
+  background-image: url(${props => props.imageSrc});
+  animation: ${props => props.animation} 1s;
 `;

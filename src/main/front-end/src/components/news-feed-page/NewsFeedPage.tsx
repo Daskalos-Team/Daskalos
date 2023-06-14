@@ -198,7 +198,7 @@ export const NewsFeedPage = (props: NewsFeedPageProps): React.JSX.Element => {
                                 <TabContent>
                                     {recommendations.map((r) => (
                                         <React.Fragment key={r.userId}>
-                                            <Recommendation currUserType={props.userType} isFavourite={r.isFavourite} rootScale={rootScale} userType={r.userType} userId={r.userId} name={r.name} surname={r.surname} rating={r.rating} description={r.description} subjects={r.subjects}/>
+                                            <Recommendation currUserId={props.userId} currUserType={props.userType} isFavourite={r.isFavourite} rootScale={rootScale} userType={r.userType} userId={r.userId} name={r.name} surname={r.surname} rating={r.rating} description={r.description} subjects={r.subjects}/>
                                         </React.Fragment>
                                     ))}
                                 </TabContent>

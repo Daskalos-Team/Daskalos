@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/teacher")
+@RequestMapping("/user_data")
 public class UserController implements ErrorController {
 
     @Autowired
@@ -70,7 +70,7 @@ public class UserController implements ErrorController {
         }
     }
 
-    @PostMapping("remove_experience")
+    @PostMapping("/remove_experience")
     public ResponseEntity<TeacherDTO> removeExperience(ExperienceDTO experienceDTO) {
         try {
             userService.removeTeachersExperience(experienceDTO);
@@ -92,7 +92,7 @@ public class UserController implements ErrorController {
         }
     }
 
-    @PostMapping("remove_rating")
+    @PostMapping("/remove_rating")
     public ResponseEntity<TeacherDTO> removeTeacherRating(@RequestBody TeacherRatingDTO teacherRating) {
         try {
             userService.removeTeacherRating(teacherRating);
