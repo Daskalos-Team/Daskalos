@@ -96,6 +96,14 @@ export interface NewsFeedPageProps {
     userType: string;
 }
 
+export interface TopTeacherData {
+    teacherId: number;
+    name: string;
+    surname: string;
+    rating: number;
+    voterNum: number;
+}
+
 export interface UserFilters {
     minPrice: number,
     maxPrice: number,
