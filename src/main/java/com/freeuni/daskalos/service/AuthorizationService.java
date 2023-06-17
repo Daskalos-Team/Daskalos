@@ -67,7 +67,6 @@ public class AuthorizationService {
             return AuthorizationStatus.WRONG_PASSWORD.name();
         }
 
-        saveCurrentUser(currentUser.get());
         return AuthorizationStatus.SUCCESSFUL_LOGIN.name();
     }
 
