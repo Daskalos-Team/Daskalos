@@ -10,7 +10,6 @@ import lombok.*;
 @Setter
 @Entity
 @Builder(toBuilder = true)
-@Table(name = "user_to_subject", schema = "daskalos")
 public class UserToSubject {
 
     @Id()

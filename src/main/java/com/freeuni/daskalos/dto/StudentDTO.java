@@ -32,6 +32,18 @@ public class StudentDTO {
 
     private String phoneNumber;
 
+    private String title;
+
+    private String description;
+
+    private String fbUrl;
+
+    private String twitterUrl;
+
+    private String instaUrl;
+
+    private String linkedinUrl;
+
     private List<SubjectDTO> studentSubjects;
 
     private List<TeacherDTO> studentFavouriteTeachers;

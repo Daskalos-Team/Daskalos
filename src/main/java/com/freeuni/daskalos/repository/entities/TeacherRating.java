@@ -12,7 +12,6 @@ import java.util.Date;
 @Setter
 @Entity
 @Builder
-@Table(name = "teacher_rating", schema = "daskalos")
 public class TeacherRating {
 
     @Id()

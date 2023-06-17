@@ -10,7 +10,6 @@ import java.util.Date;
 @AllArgsConstructor
 @Getter
 @Setter
-@Table(name = "experience", schema = "daskalos")
 @Builder
 @Entity
 public class Experience {

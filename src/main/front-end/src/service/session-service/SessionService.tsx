@@ -1,13 +1,11 @@
 import axios from "axios";
 import { USER_ENDPOINT } from "../common-service";
 
-export const setUserID = (userId: number) => {
-    axios.post(USER_ENDPOINT + "session/id-set", userId, {
+export const setUserID = (userId: number): Promise<any> => {
+    return axios.post(USER_ENDPOINT + "session/id-set", userId, {
         headers: {
             "Content-type": "application/json; charset=UTF-8"
         }
-    }).catch(error => {
-        console.log(error);
     });
 };
 
@@ -19,13 +17,11 @@ export const getUserId = (): Promise<any> => {
     });
 };
 
-export const setUserType = (userType: string) => {
-    axios.post(USER_ENDPOINT + "session/type-set", userType, {
+export const setUserType = (userType: string): Promise<any> => {
+    return axios.post(USER_ENDPOINT + "session/type-set", userType, {
         headers: {
-            "Content-type": "application/json; charset=UTF-8"
+            "Content-type": "text/plain; charset=UTF-8"
         }
-    }).catch(error => {
-        console.log(error);
     });
 };
 

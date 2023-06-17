@@ -8,7 +8,6 @@ import lombok.*;
 @AllArgsConstructor
 @Getter
 @Setter
-@Table(name = "student_to_favourite_teacher", schema = "daskalos")
 @Builder
 @Entity
 public class StudentToFavouriteTeacher {

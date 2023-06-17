@@ -36,9 +36,23 @@ public class TeacherDTO {
 
     private Boolean isOnPlace;
 
+    private String title;
+
+    private String description;
+
+    private String fbUrl;
+
+    private String twitterUrl;
+
+    private String instaUrl;
+
+    private String linkedinUrl;
+
     private List<ExperienceDTO> teachersExperience;
 
     private List<TeacherRatingDTO> teacherRatings;
 
     private List<SubjectDTO> teacherSubjects;
+
+    private Boolean isFavoriteForLoggedInStudent;
 }
