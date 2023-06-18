@@ -1,36 +1,33 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { NewsFeedPageColorPalette } from "../../../service/news-feed-page-service";
+import { getTopTenTeachers, NewsFeedPageColorPalette, TopTeacherData } from "../../../service/news-feed-page-service";
 
 export const TopTenTab = (): React.JSX.Element => {
-    const topTeachers = new Map([
-        ["სახელი გვარი ა", (10.0).toFixed(1)],
-        ["სახელი გვარი ბ", (8.9).toFixed(1)],
-        ["სახელი გვარი გ", (7.7333).toFixed(1)],
-        ["სახელი გვარი დ", (6.4).toFixed(1)],
-        ["სახელი გვარი ე", (5.333).toFixed(1)],
-        ["სახელი გვარი ვ", (4.0).toFixed(1)],
-        ["სახელი გვარი ზ", (3.7).toFixed(1)],
-        ["სახელი გვარი თ", (2.3).toFixed(1)],
-        ["სახელი გვარი ი", (1.5).toFixed(1)],
-        ["სახელი გვარი კ", (0.0).toFixed(1)]
-    ]);
-    const voterNums = new Map([
-        ["სახელი გვარი ა", 103],
-        ["სახელი გვარი ბ", 95],
-        ["სახელი გვარი გ", 72],
-        ["სახელი გვარი დ", 107],
-        ["სახელი გვარი ე", 128],
-        ["სახელი გვარი ვ", 56],
-        ["სახელი გვარი ზ", 28],
-        ["სახელი გვარი თ", 88],
-        ["სახელი გვარი ი", 60],
-        ["სახელი გვარი კ", 17]
-    ]);
+    const [topTeachers, setTopTeachers] = useState<TopTeacherData[]>([]);
+
+    useEffect(() => {
+        async function updateTopTen() {
+            const topTeachersData = await getTopTenTeachers();
+            const newTopTeachers: TopTeacherData[] = [];
+            for (let i = 0; i < topTeachersData.data.length; i++) {
+                const teacher = topTeachersData.data[i];
+                newTopTeachers.push({
+                    teacherId: teacher.id,
+                    name: teacher.name,
+                    surname: teacher.surname,
+                    rating: teacher.teacherRatings.length == 0 ? 0 :
+                        teacher.teacherRatings.reduce((sum: number, curr: any) => sum + curr.rating) / teacher.teacherRatings.length,
+                    voterNum: teacher.teacherRatings.length
+                });
+            }
+            setTopTeachers(newTopTeachers);
+            return topTeachersData;
+        }
+        updateTopTen().catch(err => console.log(err));
+    }, []);
     const starIndices = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-    const getStarFill = (teacher: string, starIndex: number) => {
-        const rating = Number(topTeachers.get(teacher));
+    const getStarFill = (rating: number, starIndex: number) => {
         if (rating >= starIndex) {
             if (rating >= (starIndex + 1)) {
                 return 10;
@@ -41,18 +38,22 @@ export const TopTenTab = (): React.JSX.Element => {
         return 0;
     };
 
+    const moveToTeachersPage = (teacherId: number) => {
+        alert("moving to teacher " + teacherId + "'s page");
+    };
+
     return (
         <TopTenRoot>
-            {Array.from(topTeachers.keys()).map((teacher) => (
-                <TopTeacher key={teacher}>
+            {topTeachers.map((teacher) => (
+                <TopTeacher key={teacher.teacherId} onClick={() => moveToTeachersPage(teacher.teacherId)}>
                     <TopTeacherPicture src="/images/news-feed-page/TopTenIcon.png"/>
-                    <TopTeacherName>{teacher}</TopTeacherName>
+                    <TopTeacherName>{teacher.name + " " + teacher.surname}</TopTeacherName>
                     <Rating>
-                        <TopTeacherRatingNumeric>{topTeachers.get(teacher)}/10.0</TopTeacherRatingNumeric>
-                        <TopTeacherVoterNum>({voterNums.get(teacher)} შეფასება)</TopTeacherVoterNum>
+                        <TopTeacherRatingNumeric>{teacher.rating.toFixed(1)}/10.0</TopTeacherRatingNumeric>
+                        <TopTeacherVoterNum>({teacher.voterNum} შეფასება)</TopTeacherVoterNum>
                         <StarsContainer>
                             {starIndices.map((index) => (
-                                <RatingStar key={index} src={"/images/news-feed-page/stars/star_" + getStarFill(teacher, index) + ".png"}/>
+                                <RatingStar key={index} src={"/images/news-feed-page/stars/star_" + getStarFill(teacher.rating, index) + ".png"}/>
                             ))}
                         </StarsContainer>
                     </Rating>

@@ -1,7 +1,7 @@
 import axios from "axios";
 import { USER_ENDPOINT } from "../common-service";
 
-export const setUserID = (userId: number): Promise<any> => {
+export const setUserId = (userId: number): Promise<any> => {
     return axios.post(USER_ENDPOINT + "session/id-set", userId, {
         headers: {
             "Content-type": "application/json; charset=UTF-8"

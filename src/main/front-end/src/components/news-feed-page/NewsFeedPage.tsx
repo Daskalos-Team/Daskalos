@@ -1,18 +1,19 @@
-import React, { useState, useLayoutEffect } from "react";
+import React, { useState, useLayoutEffect, useEffect } from "react";
 import styled, { Keyframes, keyframes } from "styled-components";
-import { RecommendedTeacher } from "./recommended-teacher";
 import { Filters } from "./filters-button";
 import { LeftPanelOption } from "./left-panel-option";
 import {
-    DimmingProps,
+    DimmingProps, getStudents, getTeachers,
     LeftPanelProps,
     LogoProps,
-    NewsFeedPageColorPalette, ProfileButtonMenuProps, RootScaleProps, TabProps
+    NewsFeedPageColorPalette, NewsFeedPageProps, ProfileButtonMenuProps, RootScaleProps, TabProps, UserProps
 } from "../../service/news-feed-page-service";
 import { SettingsTab } from "./settings-tab";
 import { TopTenTab } from "./top-10-tab";
+import { Recommendation } from "./recommended-teacher";
+import {setUserId} from "../../service/session-service";
 
-export const NewsFeedPage = (): React.JSX.Element => {
+export const NewsFeedPage = (props: NewsFeedPageProps): React.JSX.Element => {
     const maxMenuOnWindowWidth = 1180;
     const maxUnscaledRootWidth = 700;
 
@@ -31,6 +32,59 @@ export const NewsFeedPage = (): React.JSX.Element => {
     const [tabAnimation, setTabAnimation] = useState<Keyframes | null>(null);
     const [profileButtonMenuOpen, setProfileButtonMenuOpen] = useState(false);
     const [profileButtonMenuAnimation, setProfileButtonMenuAnimation] = useState<Keyframes | null>(null);
+    const [recommendations, setRecommendations] = useState<UserProps[]>([]);
+    const [filters, setFilters] = useState({
+        minPrice: -1,
+        maxPrice: 1000000,
+        favouritesOnly: false,
+        onPlace: null,
+        subjectsOnly: [],
+        weekdays: []
+    });
+
+    async function updateRecommendations() {
+        const teachers = await getTeachers(props.userId, filters);
+        const students = await getStudents(filters);
+        const teachersProps: UserProps[] = [];
+        const studentsProps: UserProps[] = [];
+        for (let i = 0; i < teachers.data.length; i++) {
+            const teacher = teachers.data[i];
+            if (teacher.id == props.userId) {
+                continue;
+            }
+            teachersProps.push({
+                userId: teacher.id,
+                name: teacher.name,
+                surname: teacher.surname,
+                userType: teacher.userType,
+                description: teacher.description,
+                rating: teacher.teacherRatings.length == 0 ? 0 :
+                    teacher.teacherRatings.reduce((sum: number, curr: any) => sum + curr.rating) / teacher.teacherRatings.length,
+                subjects: teacher.teacherSubjects.map((subject: any) => subject.name),
+                isFavourite: teacher.isFavoriteForLoggedInStudent
+            });
+        }
+        if (!filters.favouritesOnly) {
+            for (let i = 0; i < students.data.length; i++) {
+                const student = students.data[i];
+                if (student.id == props.userId) {
+                    continue;
+                }
+                studentsProps.push({
+                    userId: student.id,
+                    name: student.name,
+                    surname: student.surname,
+                    userType: student.userType,
+                    description: student.description,
+                    rating: 0,
+                    subjects: student.studentSubjects.map((subject: any) => subject.name),
+                    isFavourite: false
+                });
+            }
+        }
+        setRecommendations(props.userType == "STUDENT" ? teachersProps.concat(studentsProps) : studentsProps.concat(teachersProps));
+        return teachers;
+    }
 
     const SearchButtonFunction = () => {
         setFiltersOpen(!filtersOpen);
@@ -42,6 +96,9 @@ export const NewsFeedPage = (): React.JSX.Element => {
     const SetOptionSelected = (option_id: number) => {
         if (selectedOptions[option_id]) {
             return;
+        }
+        if (option_id == 0) {
+            updateRecommendations().catch(err => console.log(err));
         }
         const newSelectedOptions = [false, false];
         newSelectedOptions[option_id] = true;
@@ -60,6 +117,12 @@ export const NewsFeedPage = (): React.JSX.Element => {
     const ToggleProfileButtonMenu = () => {
         setProfileButtonMenuAnimation(profileButtonMenuOpen ? FadeUp : FadeDown);
         setProfileButtonMenuOpen(!profileButtonMenuOpen);
+    };
+
+    const LogOut = () => {
+        setUserId(-1).then(_ => {
+            window.location.reload();
+        }).catch(err => console.log(err));
     };
 
     useLayoutEffect(() => {
@@ -83,6 +146,12 @@ export const NewsFeedPage = (): React.JSX.Element => {
         return () => window.removeEventListener("resize", CheckForMenuResize);
     }, []);
 
+    useEffect(() => {
+        if (recommendations.length == 0) {
+            updateRecommendations().catch(err => console.log(err));
+        }
+    }, [filters]);
+
     return (
         <NewsFeedPageRoot scale={rootScale}>
             <Dimming opacity={dimmingOpacity} interactive={dimmingInteractive}/>
@@ -105,8 +174,7 @@ export const NewsFeedPage = (): React.JSX.Element => {
                         <UserName>სახელი გვარი</UserName>
                     </ProfileButtonMenuTop>
                     <ProfileButtonMenuOption>ჩემი პროფილი</ProfileButtonMenuOption>
-                    <ProfileButtonMenuOption>ანგარიშის შეცვლა</ProfileButtonMenuOption>
-                    <ProfileButtonMenuOption>ანგარიშიდან გამოსვლა</ProfileButtonMenuOption>
+                    <ProfileButtonMenuOption onClick={() => LogOut()}>ანგარიშიდან გამოსვლა</ProfileButtonMenuOption>
                 </ProfileButtonMenu>
             </Header>
             <Content scale={rootScale}>
@@ -115,7 +183,7 @@ export const NewsFeedPage = (): React.JSX.Element => {
                     <div onClick={() => SetOptionSelected(0)}>
                         <LeftPanelOption isSelected={selectedOptions[0]}
                             imageSrc="/images/news-feed-page/TeachersIcon.png"
-                            labelText="მასწავლებლები"/>
+                            labelText="რეკომენდაციები"/>
                     </div>
                     <div onClick={() => SetOptionSelected(1)}>
                         <LeftPanelOption isSelected={selectedOptions[1]}
@@ -132,16 +200,13 @@ export const NewsFeedPage = (): React.JSX.Element => {
                     <TabContainer animation={tabAnimation}>
                         {selectedOptions[0] && (
                             <React.Fragment>
-                                <TabTitle>თქვენთვის რეკომენდებული მასწავლებლები</TabTitle>
+                                <TabTitle>რეკომენდაციები</TabTitle>
                                 <TabContent>
-                                    <RecommendedTeacher isFavourite={true} rootScale={rootScale}/>
-                                    <RecommendedTeacher isFavourite={true} rootScale={rootScale}/>
-                                    <RecommendedTeacher isFavourite={false} rootScale={rootScale}/>
-                                    <RecommendedTeacher isFavourite={false} rootScale={rootScale}/>
-                                    <RecommendedTeacher isFavourite={true} rootScale={rootScale}/>
-                                    <RecommendedTeacher isFavourite={false} rootScale={rootScale}/>
-                                    <RecommendedTeacher isFavourite={false} rootScale={rootScale}/>
-                                    <RecommendedTeacher isFavourite={true} rootScale={rootScale}/>
+                                    {recommendations.map((r) => (
+                                        <React.Fragment key={r.userId}>
+                                            <Recommendation currUserId={props.userId} currUserType={props.userType} isFavourite={r.isFavourite} rootScale={rootScale} userType={r.userType} userId={r.userId} name={r.name} surname={r.surname} rating={r.rating} description={r.description} subjects={r.subjects}/>
+                                        </React.Fragment>
+                                    ))}
                                 </TabContent>
                             </React.Fragment>
                         )}
@@ -149,7 +214,7 @@ export const NewsFeedPage = (): React.JSX.Element => {
                             <React.Fragment>
                                 <TabTitle>პარამეტრები</TabTitle>
                                 <TabContent>
-                                    <SettingsTab/>
+                                    <SettingsTab currUserType={props.userType} filters={filters} filtersSetFn={setFilters}/>
                                 </TabContent>
                             </React.Fragment>
                         )}
@@ -340,8 +405,8 @@ const UserName = styled.p`
 
 const ProfileButtonMenuOption = styled.p`
   width: 100%;
-  height: 20%;
-  line-height: 52px;
+  height: 33%;
+  line-height: 80px;
   padding-left: 30px;
   text-align: start;
   justify-self: end;
@@ -351,6 +416,7 @@ const ProfileButtonMenuOption = styled.p`
   transition-property: border-color;
   transition-duration: 100ms;
   cursor: pointer;
+  overflow: hidden;
   &:hover {
     border-color: ${NewsFeedPageColorPalette.profileButtonMenuBorder};
   }
@@ -493,7 +559,7 @@ const TabTitle = styled.p`
 `;
 
 const TabContent = styled.div`
-  margin: 20px 0 20px 0;
+  margin: 40px 0 40px 0;
   height: 100%;
   width: 100%;
   display: flex;
