@@ -7,6 +7,7 @@ import com.freeuni.daskalos.service.user.UserService;
 
 import java.util.List;
 import java.util.Map;
+import java.util.OptionalInt;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -26,15 +27,20 @@ public class TeacherFilterProcessor implements FilterProcessor {
 
     @Override
     public boolean checkUser(Long userID) {
-        return checkSubjects(userID) && checkPriceRange(userID) && checkFavourites(userID) && checkOnPlace(userID);
+        TeacherDTO teacherDTO = userService.getTeacherDTO(userID);
+        return checkSubjects(teacherDTO) &&
+                checkPriceRange(teacherDTO) &&
+                checkFavourites(userID) &&
+                checkOnPlace(teacherDTO) &&
+                checkNameSurname(teacherDTO);
     }
 
-    private boolean checkSubjects(Long userID) {
+    private boolean checkSubjects(TeacherDTO teacherDTO) {
         List<String> chosenSubjects = filter.getSubjectsOnly();
         if (chosenSubjects == null || chosenSubjects.isEmpty()) {
             return true;
         }
-        Set<String> userSubjects = userService.getTeacherDTO(userID).getTeacherSubjects().stream().map(SubjectDTO::getName).collect(Collectors.toSet());
+        Set<String> userSubjects = teacherDTO.getTeacherSubjects().stream().map(SubjectDTO::getName).collect(Collectors.toSet());
         for (String subject : chosenSubjects) {
             if (!userSubjects.contains(subject)) {
                 return false;
@@ -43,9 +49,18 @@ public class TeacherFilterProcessor implements FilterProcessor {
         return true;
     }
 
-    private boolean checkPriceRange(Long userID) {
-        Map.Entry<Integer, Integer> teacherMinMaxPrice = userService.getTeacherMinMaxPrice(userID);
-        return filter.getMaxPrice() >= teacherMinMaxPrice.getValue() || filter.getMinPrice() <= teacherMinMaxPrice.getKey();
+    private boolean checkPriceRange(TeacherDTO teacherDTO) {
+        if (filter.getMinPrice() == null && filter.getMaxPrice() == null) {
+            return true;
+        }
+        Map.Entry<Integer, Integer> teacherMinMaxPrice = getTeacherMinMaxPrice(teacherDTO);
+        if (filter.getMinPrice() == null) {
+            return filter.getMaxPrice() >= teacherMinMaxPrice.getValue();
+        }
+        if (filter.getMaxPrice() == null) {
+           return filter.getMinPrice() <= teacherMinMaxPrice.getKey();
+        }
+        return filter.getMaxPrice() >= teacherMinMaxPrice.getValue() && filter.getMinPrice() <= teacherMinMaxPrice.getKey();
     }
 
     private boolean checkFavourites(Long userID) {
@@ -56,11 +71,35 @@ public class TeacherFilterProcessor implements FilterProcessor {
         return studentFavouriteIDs.contains(userID);
     }
 
-    private boolean checkOnPlace(Long userID) {
+    private boolean checkOnPlace(TeacherDTO teacherDTO) {
         if (filter.getOnPlace() == null) {
             return true;
         }
-        TeacherDTO teacher = userService.getTeacherDTO(userID);
-        return teacher.getIsOnPlace() == filter.getOnPlace();
+        return teacherDTO.getIsOnPlace() == filter.getOnPlace();
+    }
+
+    private boolean checkNameSurname(TeacherDTO teacherDTO) {
+        if (filter.getName() == null) {
+            return filter.getSurname().equals(teacherDTO.getSurname());
+        }
+        if (filter.getSurname() == null) {
+            return filter.getName().equals(teacherDTO.getName());
+        }
+        return filter.getName().equals(teacherDTO.getName()) && filter.getSurname().equals(teacherDTO.getSurname());
+    }
+
+    private Map.Entry<Integer, Integer> getTeacherMinMaxPrice(TeacherDTO teacherDTO) {
+        List<SubjectDTO> teacherSubjects = teacherDTO.getTeacherSubjects();
+        if (teacherSubjects.isEmpty()) {
+            return Map.entry(Integer.MAX_VALUE, Integer.MIN_VALUE);
+        }
+        OptionalInt minPrice = teacherSubjects.stream().mapToInt(SubjectDTO::getPrice).min();
+        OptionalInt maxPrice = teacherSubjects.stream().mapToInt(SubjectDTO::getPrice).max();
+        if (minPrice.isEmpty() || maxPrice.isEmpty()) {
+            int minP = minPrice.isEmpty() ? Integer.MIN_VALUE : minPrice.getAsInt();
+            int maxP = maxPrice.isEmpty() ? Integer.MAX_VALUE : maxPrice.getAsInt();
+            return Map.entry(minP, maxP);
+        }
+        return Map.entry(minPrice.getAsInt(), maxPrice.getAsInt());
     }
 }
