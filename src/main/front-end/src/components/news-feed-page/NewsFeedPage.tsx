@@ -183,7 +183,7 @@ export const NewsFeedPage = (props: NewsFeedPageProps): React.JSX.Element => {
                     <div onClick={() => SetOptionSelected(0)}>
                         <LeftPanelOption isSelected={selectedOptions[0]}
                             imageSrc="/images/news-feed-page/TeachersIcon.png"
-                            labelText="მასწავლებლები"/>
+                            labelText="რეკომენდაციები"/>
                     </div>
                     <div onClick={() => SetOptionSelected(1)}>
                         <LeftPanelOption isSelected={selectedOptions[1]}
