@@ -1,20 +1,5 @@
-import Geocode from "react-geocode";
 import axios from "axios";
-import { USER_ENDPOINT } from "../common-service";
-
-// returns {lat, lng} coordinates from address
-export const addressToCoordinates = async (address: string): Promise<any> => {
-    const promise = Geocode.fromAddress(address);
-    return promise.then(
-        (response) => {
-            return response.results[0].geometry.location;
-        },
-        (error) => {
-            alert("ასეთი მისამართი ვერ მოიძებნა");
-            console.log(error);
-        }
-    );
-};
+import { USER_ENDPOINT } from "../../common-service";
 
 // returns teachers in search radius (in kilometers)
 export const getTeachersInRadius = async (coordinates: any): Promise<any> => {

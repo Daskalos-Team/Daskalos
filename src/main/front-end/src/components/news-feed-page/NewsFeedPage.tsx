@@ -1,23 +1,23 @@
 import React, { useState, useLayoutEffect, useEffect } from "react";
 import styled, { Keyframes, keyframes } from "styled-components";
-import { Filters } from "./filters-button";
+import { SearchComponent } from "./search-component";
 import { LeftPanelOption } from "./left-panel-option";
 import {
     DimmingProps, getStudents, getTeachers,
     LeftPanelProps,
     LogoProps,
+    MAX_MENU_ON_WINDOW_WIDTH, MAX_UNSCALED_ROOT_WIDTH,
     NewsFeedPageColorPalette, NewsFeedPageProps, ProfileButtonMenuProps, RootScaleProps, TabProps, UserProps
 } from "../../service/news-feed-page-service";
 import { SettingsTab } from "./settings-tab";
 import { TopTenTab } from "./top-10-tab";
 import { Recommendation } from "./recommended-teacher";
-import {setUserId} from "../../service/session-service";
+import { setUserId } from "../../service/session-service";
+import "./NewsFeedHelperStyles.css";
 
 export const NewsFeedPage = (props: NewsFeedPageProps): React.JSX.Element => {
-    const maxMenuOnWindowWidth = 1180;
-    const maxUnscaledRootWidth = 700;
-
     const [filtersOpen, setFiltersOpen] = useState(false);
+    const [searchState, setSearchState] = useState("search-hide");
     const [dimmingOpacity, setDimmingOpacity] = useState(0);
     const [arrowSrc, setArrowSrc] = useState("/images/news-feed-page/DownArrow.png");
     const [dimmingInteractive, setDimmingInteractive] = useState("none");
@@ -26,8 +26,7 @@ export const NewsFeedPage = (props: NewsFeedPageProps): React.JSX.Element => {
     const [logoAnimation, setLogoAnimation] = useState<Keyframes | null>(null);
     const [leftPanelWidths, setLeftPanelWidths] = useState([250, 330]);
     const [leftPanelAnimation, setLeftPanelAnimation] = useState<Keyframes | null>(null);
-    const [menuButtonDisabled, setMenuButtonDisabled] = useState(document.body.offsetWidth
-        < maxMenuOnWindowWidth);
+    const [menuButtonDisabled, setMenuButtonDisabled] = useState(document.body.offsetWidth < MAX_MENU_ON_WINDOW_WIDTH);
     const [rootScale, setRootScale] = useState(1);
     const [tabAnimation, setTabAnimation] = useState<Keyframes | null>(null);
     const [profileButtonMenuOpen, setProfileButtonMenuOpen] = useState(false);
@@ -87,9 +86,14 @@ export const NewsFeedPage = (props: NewsFeedPageProps): React.JSX.Element => {
     }
 
     const SearchButtonFunction = () => {
+        if (filtersOpen) {
+            setSearchState("search-hide");
+        } else {
+            setSearchState("search-show");
+        }
         setFiltersOpen(!filtersOpen);
         setArrowSrc(filtersOpen ? "/images/news-feed-page/DownArrow.png" : "/images/news-feed-page/UpArrow.png");
-        setDimmingOpacity(filtersOpen ? 0 : 0.8);
+        setDimmingOpacity(filtersOpen ? 0 : 0.95);
         setDimmingInteractive(dimmingInteractive == "none" ? "auto" : "none");
     };
 
@@ -128,12 +132,12 @@ export const NewsFeedPage = (props: NewsFeedPageProps): React.JSX.Element => {
     useLayoutEffect(() => {
         function CheckForMenuResize() {
             const currWidth = document.body.offsetWidth;
-            if (currWidth < maxUnscaledRootWidth) {
-                setRootScale(currWidth / maxUnscaledRootWidth);
+            if (currWidth < MAX_UNSCALED_ROOT_WIDTH) {
+                setRootScale(currWidth / MAX_UNSCALED_ROOT_WIDTH);
             } else {
                 setRootScale(1);
             }
-            if (currWidth >= maxMenuOnWindowWidth) {
+            if (currWidth >= MAX_MENU_ON_WINDOW_WIDTH) {
                 setMenuButtonDisabled(false);
                 return;
             }
@@ -164,7 +168,9 @@ export const NewsFeedPage = (props: NewsFeedPageProps): React.JSX.Element => {
                     <SearchLabel>ძებნა</SearchLabel>
                     <DropDownArrow src={arrowSrc} alt="Drop down"/>
                 </SearchButton>
-                {filtersOpen && (<Filters/>)}
+                <div className={searchState}>
+                    <SearchComponent/>
+                </div>
                 <ProfileButton
                     onClick={() => ToggleProfileButtonMenu()}
                 />

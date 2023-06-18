@@ -4,3 +4,4 @@ export const USER_DATA_ENDPOINT = "https://daskalos.herokuapp.com/user_data/"; /
 export const SERVICE_ID = "service_m92suca";
 export const TEMPLATE_ID = "template_wcrd1ei";
 export const PUBLIC_KEY = "CbmNbHyLjq1ERQzPU";
+export const API_KEY = "AIzaSyBcrOZ8MoKE8K4wVykIvHrts-qm2HhmHtg";

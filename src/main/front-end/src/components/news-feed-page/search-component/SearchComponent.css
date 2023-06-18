@@ -212,3 +212,9 @@ a {
     top: -25px;
     left: -20px;
 }
+
+.suggestions-combo {
+    background: lightgrey;
+    border-radius: 1rem;
+    padding: 1em 1em;
+}

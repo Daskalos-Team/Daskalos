@@ -6,41 +6,41 @@ import {
     TEMPLATE_ID
 } from "../common-service";
 import emailjs from "@emailjs/browser";
-import { NOTIFICATION_MAP } from "./AuthorizationPageServiceConstants";
+import { NOTIFICATION_MAP, RegistrationCredentials } from "./AuthorizationPageServiceConstants";
 
-export const loginWithGoogle = (user: any) => {
-    axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
+export const loginWithGoogle = async (user: any): Promise<boolean> => {
+    const res = await axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
         headers: {
             Authorization: `Bearer ${user.access_token}`,
             Accept: "application/json"
         }
-    }).then(res => {
-        standardLogin(res.data.email, res.data.id, true);
     });
+
+    return standardLogin(res.data.email, res.data.id, true);
 };
 
-export const standardLogin = (email: string, password: string, google: boolean) => {
+export const standardLogin = async (email: string, password: string, google: boolean): Promise<boolean> => {
     if (isEmptyInput([email, password])) {
         alert("გთხოვთ შეიყვანოთ ყველა მონაცემი");
-        return;
+        return false;
     }
     const userInfo = {
         usingGoogle: google,
         email,
         password
     };
-    axios.post(USER_ENDPOINT + "login", userInfo, {
+    const promise = axios.post(USER_ENDPOINT + "login", userInfo, {
         headers: {
             "Content-type": "application/json; charset=UTF-8"
         }
-    })
-        .then(_ => {
-            window.location.reload();
-        })
-        .catch(err => {
-            alert(NOTIFICATION_MAP[err.response.data] || "");
-            console.log(err);
-        });
+    });
+    return promise.then(response => {
+        window.location.reload();
+        return true;
+    }).catch(err => {
+        alert(NOTIFICATION_MAP[err.response.data] || "");
+        return false;
+    });
 };
 
 export const changePassword = async (email: string, newPassword: string): Promise<boolean> => {
@@ -56,12 +56,11 @@ export const changePassword = async (email: string, newPassword: string): Promis
     return promise.then(response => {
         alert(NOTIFICATION_MAP[response.data] || "");
         return true;
-    })
-        .catch(err => {
-            alert(NOTIFICATION_MAP[err.response.data] || "");
-            console.log(err);
-            return false;
-        });
+    }).catch(err => {
+        alert(NOTIFICATION_MAP[err.response.data] || "");
+        console.log(err);
+        return false;
+    });
 };
 
 export const sendVerificationCode = (email: string, code: string) => {
@@ -110,24 +109,20 @@ export const checkAndSendConfirmation = async (email: string, password: string, 
     });
 };
 
-export const registration = (email: string, password: string, name: string, surname: string, userType: string) => {
+export const registration = async (registrationCredentials: RegistrationCredentials): Promise<boolean> => {
     const userInfo = {
-        email,
-        password,
-        name,
-        surname,
-        userType
+        ...registrationCredentials
     };
-    axios.post(USER_ENDPOINT + "register", userInfo, {
+    const promise = axios.post(USER_ENDPOINT + "register", userInfo, {
         headers: {
             "Content-type": "application/json; charset=UTF-8"
         }
-    })
-        .then(response => alert(NOTIFICATION_MAP[response.data] || ""))
-        .catch(err => {
-            alert(NOTIFICATION_MAP[err.response.data] || "");
-            console.log(err);
-        });
+    });
+    return promise.then(response => {
+        return true;
+    }).catch(err => {
+        return false;
+    });
 };
 
 export const isEmptyInput = (inputs: string[]): boolean => {

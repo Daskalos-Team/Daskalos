@@ -130,22 +130,22 @@ public class UserServiceIntegrationTest {
     @Before
     public void setup() {
         teacher1 = new Teacher(10L, "Luka", "Kalandadze", "AtLeast^8", "email4",
-                UserType.TEACHER, "55555555", new UserAddress(11.0, 20.0), true,
+                UserType.TEACHER, "55555555", new UserAddress("address1", 11.0, 20.0), true,
                 null, null, null, null, null, null);
 
         teacher2 = new Teacher(11L, "Murtaz", "Gobozovi", "AtLeast^8", "email5",
-                UserType.TEACHER, "55555555", new UserAddress(11.0, 20.0), true,
+                UserType.TEACHER, "55555555", new UserAddress("address2", 11.0, 20.0), true,
                 null, null, null, null, null, null);
 
         teacher3 = new Teacher(12L, "Juansher", "Mamiashvili", "AtLeast^8", "email6",
-                UserType.TEACHER, "55555555", new UserAddress(11.0, 20.0), true,
+                UserType.TEACHER, "55555555", new UserAddress("address3", 11.0, 20.0), true,
                 null, null, null, null, null, null);
 
-        student1 = new Student("email1", "AtLeast^8", "Giorgi", "Adikashviili", new UserAddress(1, 2), UserType.STUDENT,
+        student1 = new Student("email1", "AtLeast^8", "Giorgi", "Adikashviili", new UserAddress("address4", 1, 2), UserType.STUDENT,
                 false, null, null, null, null, null, null);
-        student2 = new Student("email2", "AtLeast^8", "Niko", "Nargizashviili", new UserAddress(1, 2), UserType.STUDENT,
+        student2 = new Student("email2", "AtLeast^8", "Niko", "Nargizashviili", new UserAddress("address5", 1, 2), UserType.STUDENT,
                 false, null, null, null, null, null, null);
-        student3 = new Student("email3", "AtLeast^8", "Shalva", "Leclerishvili", new UserAddress(1, 2), UserType.STUDENT,
+        student3 = new Student("email3", "AtLeast^8", "Shalva", "Leclerishvili", new UserAddress("address6", 1, 2), UserType.STUDENT,
                 false, null, null, null, null, null, null);
         experienceDTO1 = ExperienceDTO.builder().
                 employer("Microsoft").
@@ -338,13 +338,10 @@ public class UserServiceIntegrationTest {
         userService.updateTeacher(TeacherDTO.builder().ID(t.getID()).phoneNumber("503909309").build());
         assertEquals(userService.getTeacherDTO(t.getID()).getPhoneNumber(), "503909309");
         // update address
-        UserAddressDTO userAddressDTO = new UserAddressDTO(10.0, 20.0);
-        userAddressDTO.setCity("Tbilisi");
-        userAddressDTO.setCountry("Sakartvelo");
+        UserAddressDTO userAddressDTO = new UserAddressDTO("address7", 10.0, 20.0);
         userService.updateTeacher(TeacherDTO.builder().ID(t.getID()).address(userAddressDTO).build());
         UserAddressDTO userAddress = userService.getTeacherDTO(t.getID()).getAddress();
-        assertEquals("Tbilisi", userAddress.getCity());
-        assertEquals("Sakartvelo", userAddress.getCountry());
+        assertEquals(userAddress.getFullAddress(), "address7");
         assertEquals(userAddress.getLatitude(), 10.0, 0.00001);
         assertEquals(userAddress.getLongitude(), 20.0, 0.00001);
 
@@ -374,13 +371,10 @@ public class UserServiceIntegrationTest {
         assertEquals(userService.getStudentDTO(student.getID()).getPhoneNumber(), "11111111");
 
         // test address update
-        UserAddressDTO userAddressDTO = new UserAddressDTO(10.0, 20.0);
-        userAddressDTO.setCity("Tbilisi");
-        userAddressDTO.setCountry("Sakartvelo");
+        UserAddressDTO userAddressDTO = new UserAddressDTO("address8", 10.0, 20.0);
         userService.updateStudent(StudentDTO.builder().ID(student.getID()).userAddress(userAddressDTO).build());
         UserAddressDTO userAddress = userService.getStudentDTO(student.getID()).getUserAddress();
-        assertEquals("Tbilisi", userAddress.getCity());
-        assertEquals("Sakartvelo", userAddress.getCountry());
+        assertEquals(userAddress.getFullAddress(), "address8");
         assertEquals(userAddress.getLatitude(), 10.0, 0.00001);
         assertEquals(userAddress.getLongitude(), 20.0, 0.00001);
 
