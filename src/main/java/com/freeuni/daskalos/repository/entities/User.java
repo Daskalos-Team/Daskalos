@@ -44,6 +44,9 @@ public abstract class User implements Serializable {
 
     private String linkedinUrl;
 
+    @Lob
+    private byte[] imageData;
+
     public User(Long ID,
                 @NonNull String name,
                 @NonNull String surname,
@@ -58,7 +61,8 @@ public abstract class User implements Serializable {
                 String fbUrl,
                 String twitterUrl,
                 String instaUrl,
-                String linkedinUrl) {
+                String linkedinUrl,
+                byte[] imageData) {
         this.ID = ID;
         this.name = name;
         this.surname = surname;
@@ -74,6 +78,7 @@ public abstract class User implements Serializable {
         this.twitterUrl = twitterUrl;
         this.instaUrl = instaUrl;
         this.linkedinUrl = linkedinUrl;
+        this.imageData = imageData;
     }
 
     public User(@NonNull String email,
@@ -88,7 +93,8 @@ public abstract class User implements Serializable {
                 String fbUrl,
                 String twitterUrl,
                 String instaUrl,
-                String linkedinUrl) {
+                String linkedinUrl,
+                byte[] imageData) {
         this.email = email;
         this.password = password;
         this.name = name;
@@ -102,6 +108,7 @@ public abstract class User implements Serializable {
         this.twitterUrl = twitterUrl;
         this.instaUrl = instaUrl;
         this.linkedinUrl = linkedinUrl;
+        this.imageData = imageData;
     }
 
     public Long getID() {
@@ -223,5 +230,13 @@ public abstract class User implements Serializable {
 
     public void setLinkedinUrl(String linkedinUrl) {
         this.linkedinUrl = linkedinUrl;
+    }
+
+    public byte[] getImageData() {
+        return imageData;
+    }
+
+    public void setImageData(byte[] imageData) {
+        this.imageData = imageData;
     }
 }

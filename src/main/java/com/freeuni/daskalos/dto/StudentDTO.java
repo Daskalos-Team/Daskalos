@@ -51,4 +51,6 @@ public class StudentDTO {
     private UserAddressDTO userAddress;
 
     private Boolean onPlace;
+
+    private byte[] imageData;
 }

@@ -11,6 +11,7 @@ import com.freeuni.daskalos.service.experience.ExperienceService;
 import com.freeuni.daskalos.service.rating.RatingService;
 import com.freeuni.daskalos.service.subject.SubjectService;
 import com.freeuni.daskalos.utils.DaoDtoConversionUtils;
+import com.freeuni.daskalos.utils.UserUtils;
 import com.freeuni.daskalos.utils.exceptions.UserNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @Service
 public class UserService {
@@ -57,7 +57,8 @@ public class UserService {
     }
 
     public List<TeacherDTO> getAllTeachers() {
-        return StreamSupport.stream(teacherRepository.findAll().spliterator(), false)
+        return teacherRepository.findAll().stream()
+                .peek(teacher -> teacher.setImageData(UserUtils.decompressImage(teacher.getImageData())))
                 .map(teacher -> DaoDtoConversionUtils.toTeacherDTO(
                         teacher,
                         experienceService.getTeachersExperience(teacher.getID()),
@@ -68,7 +69,8 @@ public class UserService {
     }
 
     public List<StudentDTO> getAllStudents() {
-        return StreamSupport.stream(studentRepository.findAll().spliterator(), false)
+        return studentRepository.findAll().stream()
+                .peek(student -> student.setImageData(UserUtils.decompressImage(student.getImageData())))
                 .map(student -> DaoDtoConversionUtils.toStudentDTO(
                         student,
                         subjectService.getUserSubjects(student.getID()),
@@ -91,6 +93,7 @@ public class UserService {
                         instaUrl(teacherDTO.getInstaUrl() != null ? teacherDTO.getInstaUrl() : existingData.getInstaUrl()).
                         twitterUrl(teacherDTO.getTwitterUrl() != null ? teacherDTO.getTwitterUrl() : existingData.getTwitterUrl()).
                         linkedinUrl(teacherDTO.getLinkedinUrl() != null ? teacherDTO.getLinkedinUrl() : existingData.getLinkedinUrl()).
+                        imageData(teacherDTO.getImageData() != null ? UserUtils.compressImage(teacherDTO.getImageData()) : existingData.getImageData()).
                         build());
         teacherRepository.save(updatedTeacherData);
     }
@@ -109,6 +112,7 @@ public class UserService {
                         instaUrl(studentDTO.getInstaUrl() != null ? studentDTO.getInstaUrl() : existingData.getInstaUrl()).
                         twitterUrl(studentDTO.getTwitterUrl() != null ? studentDTO.getTwitterUrl() : existingData.getTwitterUrl()).
                         linkedinUrl(studentDTO.getLinkedinUrl() != null ? studentDTO.getLinkedinUrl() : existingData.getLinkedinUrl()).
+                        imageData(studentDTO.getImageData() != null ? UserUtils.compressImage(studentDTO.getImageData()) : existingData.getImageData()).
                         build());
         studentRepository.save(updatedStudentData);
     }
@@ -142,7 +146,9 @@ public class UserService {
         if (student.isEmpty()) {
             throw new UserNotExistException("Student with ID not found");
         } else {
-            return DaoDtoConversionUtils.toStudentDTO(student.get(),
+            Student fetchedStudent = student.get();
+            fetchedStudent.setImageData(UserUtils.decompressImage(fetchedStudent.getImageData()));
+            return DaoDtoConversionUtils.toStudentDTO(fetchedStudent,
                     subjectService.getUserSubjects(studentID),
                     getStudentFavouriteTeachers(studentID));
         }
@@ -153,6 +159,7 @@ public class UserService {
                 stream().
                 map(StudentToFavouriteTeacher::getTeacherID).
                 map(this::getTeacherDTO).
+                peek(teacherDTO -> teacherDTO.setImageData(UserUtils.decompressImage(teacherDTO.getImageData()))).
                 collect(Collectors.toList());
     }
 

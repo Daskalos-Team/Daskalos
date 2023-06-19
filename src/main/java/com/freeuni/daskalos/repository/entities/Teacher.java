@@ -22,8 +22,9 @@ public class Teacher extends User {
                    String fbUrl,
                    String twitterUrl,
                    String instaUrl,
-                   String linkedinUrl) {
-        super(ID, name, secondName, password, mail, userType, phoneNumber, address, onPlace, title, description, fbUrl, twitterUrl, instaUrl, linkedinUrl);
+                   String linkedinUrl,
+                   byte[] imageData) {
+        super(ID, name, secondName, password, mail, userType, phoneNumber, address, onPlace, title, description, fbUrl, twitterUrl, instaUrl, linkedinUrl, imageData);
     }
 
     public Teacher(@NonNull String mail,
@@ -38,8 +39,9 @@ public class Teacher extends User {
                    String fbUrl,
                    String twitterUrl,
                    String instaUrl,
-                   String linkedinUrl) {
-        super(mail, password, name, surname, address, userType, onPlace, title, description, fbUrl, twitterUrl, instaUrl, linkedinUrl);
+                   String linkedinUrl,
+                   byte[] imageData) {
+        super(mail, password, name, surname, address, userType, onPlace, title, description, fbUrl, twitterUrl, instaUrl, linkedinUrl, imageData);
     }
 
     public Teacher() {

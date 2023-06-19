@@ -55,4 +55,6 @@ public class TeacherDTO {
     private List<SubjectDTO> teacherSubjects;
 
     private Boolean isFavoriteForLoggedInStudent;
+
+    private byte[] imageData;
 }

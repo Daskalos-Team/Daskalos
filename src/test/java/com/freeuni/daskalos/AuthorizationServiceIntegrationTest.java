@@ -51,10 +51,10 @@ public class AuthorizationServiceIntegrationTest {
     @Before
     public void setUp() {
         Student student = new Student("email1", "AtLeast^8", "Giorgi", "Adikashviili",
-                new UserAddress(41.700858, 44.871817), UserType.STUDENT, false, null, null, null, null, null, null);
+                new UserAddress(41.700858, 44.871817), UserType.STUDENT, false, null, null, null, null, null, null, null);
         student.setID(10L);
         Teacher teacher = new Teacher("email2", "AtLeast^8", "Luka", "Kalandadze",
-                new UserAddress(41.701219, 44.868266), UserType.TEACHER, false, null, null, null, null, null, null);
+                new UserAddress(41.701219, 44.868266), UserType.TEACHER, false, null, null, null, null, null, null, null);
 
         List<User> allUsers = Arrays.asList(student, teacher);
 
