@@ -142,7 +142,7 @@ public class AuthorizationServiceIntegrationTest {
     @Test
     public void whenEmailNotFound() {
         String expected = AuthorizationStatus.EMAIL_NOT_FOUND.name();
-        String result = authorizationService.authorizeUser(new UserDTO().setEmail("email3").setPassword("AtLeast^8"));
+        String result = authorizationService.authorizeUser(new UserDTO().setEmail("email3").setPassword("AtLeast^8"))[0];
 
         verifyFindByEMAILIsCalledOnce("email3");
         assertThat(result).isEqualTo(expected);
@@ -151,7 +151,7 @@ public class AuthorizationServiceIntegrationTest {
     @Test
     public void whenWrongPassword() {
         String expected = AuthorizationStatus.WRONG_PASSWORD.name();
-        String result = authorizationService.authorizeUser(new UserDTO().setEmail("email1").setPassword("AtLeast^5"));
+        String result = authorizationService.authorizeUser(new UserDTO().setEmail("email1").setPassword("AtLeast^5"))[0];
 
         verifyFindByEMAILIsCalledOnce("email1");
         assertThat(result).isEqualTo(expected);
@@ -160,7 +160,7 @@ public class AuthorizationServiceIntegrationTest {
     @Test
     public void whenSuccessfulLogin() {
         String expected = AuthorizationStatus.SUCCESSFUL_LOGIN.name();
-        String result = authorizationService.authorizeUser(new UserDTO().setEmail("email1").setPassword("AtLeast^8"));
+        String result = authorizationService.authorizeUser(new UserDTO().setEmail("email1").setPassword("AtLeast^8"))[0];
 
         verifyFindByEMAILIsCalledOnce("email1");
         assertThat(result).isEqualTo(expected);
