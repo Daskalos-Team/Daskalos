@@ -1,4 +1,4 @@
-import React, { useState, useLayoutEffect, useEffect } from "react";
+import React, { useState, useLayoutEffect, useEffect, useContext } from "react";
 import styled, { Keyframes, keyframes } from "styled-components";
 import { Filters } from "./filters-button";
 import { LeftPanelOption } from "./left-panel-option";
@@ -12,10 +12,12 @@ import { SettingsTab } from "./settings-tab";
 import { TopTenTab } from "./top-10-tab";
 import { Recommendation } from "./recommended-teacher";
 import { setUserMainData } from "../../service/session-service";
+import { AppContext } from "../../App";
 
 export const NewsFeedPage = (props: NewsFeedPageProps): React.JSX.Element => {
     const maxMenuOnWindowWidth = 1180;
     const maxUnscaledRootWidth = 700;
+    const setLoading: any = useContext(AppContext);
 
     const [filtersOpen, setFiltersOpen] = useState(false);
     const [dimmingOpacity, setDimmingOpacity] = useState(0);
@@ -124,6 +126,10 @@ export const NewsFeedPage = (props: NewsFeedPageProps): React.JSX.Element => {
             window.location.reload();
         }).catch(err => console.log(err));
     };
+
+    useEffect(() => {
+        setLoading(false);
+    }, []);
 
     useLayoutEffect(() => {
         function CheckForMenuResize() {

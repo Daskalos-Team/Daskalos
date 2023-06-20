@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useGoogleLogin } from "@react-oauth/google";
 import randomInteger from "random-int";
 import {
@@ -12,6 +12,7 @@ import {
 } from "../../service/authorization-page-service";
 import "./AuthorizationPage.css";
 import { AuthorizationPageProps } from "../../service/authorization-page-service/AuthorizationPageServiceConstants";
+import { AppContext } from "../../App";
 
 export const AuthorizationPage = (props: AuthorizationPageProps): React.JSX.Element => {
     const [user, setUser]: any = useState(undefined);
@@ -28,6 +29,8 @@ export const AuthorizationPage = (props: AuthorizationPageProps): React.JSX.Elem
     const [inputCode, setInputCode] = useState("");
     const [realCode, setRealCode] = useState("bad");
 
+    const setLoading: any = useContext(AppContext);
+
     useEffect(() => {
         const code = randomInteger(10000, 1000000); // generate private code
         setRealCode(code + "");
@@ -35,6 +38,7 @@ export const AuthorizationPage = (props: AuthorizationPageProps): React.JSX.Elem
 
     useEffect(() => {
         if (user) {
+            setLoading(true);
             loginWithGoogle(user, props.logInFn);
         }
     }, [user]);
@@ -55,6 +59,7 @@ export const AuthorizationPage = (props: AuthorizationPageProps): React.JSX.Elem
     });
 
     const login = (e: any) => {
+        setLoading(true);
         standardLogin(email, password, false, props.logInFn);
     };
 
