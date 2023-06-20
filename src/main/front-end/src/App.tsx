@@ -24,15 +24,14 @@ function App() {
                     </div>
                     <div className="spinner"/>
                 </div>
-            ) : (
-                <BrowserRouter>
-                    <Routes>
-                        <Route path="/" element={<MainPage/>}>
-                            <Route path="*" element={<Navigate to="/" replace={true} />} />
-                        </Route>
-                    </Routes>
-                </BrowserRouter>
-            )}
+            ) : null}
+            <BrowserRouter>
+                <Routes>
+                    <Route path="/" element={<MainPage/>}>
+                        <Route path="*" element={<Navigate to="/" replace={true} />} />
+                    </Route>
+                </Routes>
+            </BrowserRouter>
         </>
     );
 }

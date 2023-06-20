@@ -78,6 +78,7 @@
 }
 
 .loader-container {
+    z-index: 1001;
     width: 100%;
     min-height: 100vh;
     display: flex;
@@ -87,7 +88,6 @@
     align-items: center;
     position: fixed;
     background: #3e606f;
-    z-index: 1;
 }
 
 .loader-container:before, .loader-container:after {
@@ -147,7 +147,7 @@
 .spinner {
     width: 24rem;
     height: 24rem;
-    border: 20px solid;
+    border: 16px solid;
     position: fixed;
     border-color: var(--link-color) transparent #e9c89e transparent;
     border-radius: 50%;
@@ -161,7 +161,7 @@
 .content h2 {
     color: #fff;
     font-size: 3.5em;
-    font-weight: 50;
+    font-weight: 300;
     position: fixed;
     transform: translate(-50%, -50%);
     font-family: "Poppins", sans-serif;
@@ -169,11 +169,11 @@
 
 .content h2:nth-child(1) {
     color: transparent;
-    -webkit-text-stroke: 1px darkslategray;
+    -webkit-text-stroke: 1px #3e606f;
 }
 
 .content h2:nth-child(2) {
-    color: darkslategray;
+    color: #3e606f;
     animation: animate 4s ease-in-out infinite;
 }
 
