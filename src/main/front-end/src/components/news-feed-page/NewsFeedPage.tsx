@@ -11,7 +11,7 @@ import {
 import { SettingsTab } from "./settings-tab";
 import { TopTenTab } from "./top-10-tab";
 import { Recommendation } from "./recommended-teacher";
-import {setUserId} from "../../service/session-service";
+import { setUserMainData } from "../../service/session-service";
 
 export const NewsFeedPage = (props: NewsFeedPageProps): React.JSX.Element => {
     const maxMenuOnWindowWidth = 1180;
@@ -120,7 +120,7 @@ export const NewsFeedPage = (props: NewsFeedPageProps): React.JSX.Element => {
     };
 
     const LogOut = () => {
-        setUserId(-1).then(_ => {
+        setUserMainData(-1, props.userType).then(_ => {
             window.location.reload();
         }).catch(err => console.log(err));
     };
