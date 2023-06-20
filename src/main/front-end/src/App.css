@@ -151,7 +151,7 @@
     position: fixed;
     border-color: var(--link-color) transparent #e9c89e transparent;
     border-radius: 50%;
-    animation: spin-anim 1.2s linear infinite;
+    animation: spin-anim 1.5s linear infinite;
 }
 
 .content {

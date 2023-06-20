@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { MainPage } from "./components/main-page";
 import "./App.css";
+
+export const AppContext: any = createContext(undefined); // context for global state control
 
 function App() {
     const [loading, setLoading] = useState<boolean>(false);
@@ -13,8 +15,16 @@ function App() {
         }, 2200);
     }, []);
 
+    useEffect(() => {
+        if (loading) {
+            setTimeout(() => {
+                setLoading(false);
+            }, 1000);
+        }
+    }, [loading]);
+
     return (
-        <>
+        <AppContext.Provider value={setLoading}>
             {loading ? (
                 <div className="loader-container">
                     <div className="spinner-label-background"/>
@@ -32,7 +42,7 @@ function App() {
                     </Route>
                 </Routes>
             </BrowserRouter>
-        </>
+        </AppContext.Provider>
     );
 }
 

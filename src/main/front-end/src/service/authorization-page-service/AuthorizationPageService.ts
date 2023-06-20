@@ -7,6 +7,8 @@ import {
 } from "../common-service";
 import emailjs from "@emailjs/browser";
 import { NOTIFICATION_MAP } from "./AuthorizationPageServiceConstants";
+import { useContext } from "react";
+import { AppContext } from "../../App";
 
 export const loginWithGoogle = (user: any, logInFn: (userId: number, userType: string) => void) => {
     axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
@@ -24,6 +26,7 @@ export const standardLogin = (email: string, password: string, google: boolean, 
         alert("გთხოვთ შეიყვანოთ ყველა მონაცემი");
         return;
     }
+    const setLoading: any = useContext(AppContext);
     const userInfo = {
         usingGoogle: google,
         email,
@@ -35,6 +38,7 @@ export const standardLogin = (email: string, password: string, google: boolean, 
         }
     })
         .then(response => {
+            setLoading(true);
             logInFn(Number(response.data[1]), response.data[2]);
         })
         .catch(err => {
