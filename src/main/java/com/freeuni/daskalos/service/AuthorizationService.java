@@ -58,17 +58,18 @@ public class AuthorizationService {
         return AuthorizationStatus.ALREADY_EXISTS.name();
     }
 
-    public String authorizeUser(UserDTO user) {
+    public String[] authorizeUser(UserDTO user) {
         Optional<User> currentUser = userRepository.findByEmail(user.getEmail());
 
         if (currentUser.isEmpty()) {
-            return AuthorizationStatus.EMAIL_NOT_FOUND.name();
+            return new String[] { AuthorizationStatus.EMAIL_NOT_FOUND.name(), "", "" };
         } else if (!user.isUsingGoogle() && !currentUser.get().getPassword().equals(user.getPassword())) {
-            return AuthorizationStatus.WRONG_PASSWORD.name();
+            return new String[] { AuthorizationStatus.WRONG_PASSWORD.name(), "", "" };
         }
 
-        saveCurrentUser(currentUser.get());
-        return AuthorizationStatus.SUCCESSFUL_LOGIN.name();
+        User currUser = currentUser.get();
+        saveCurrentUser(currUser);
+        return new String[] { AuthorizationStatus.SUCCESSFUL_LOGIN.name(), currUser.getID().toString(), currUser.getUserType().name() };
     }
 
     public String changePassword(String email, String password) {

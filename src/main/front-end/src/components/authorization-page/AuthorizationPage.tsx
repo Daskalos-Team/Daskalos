@@ -11,8 +11,9 @@ import {
     standardLogin
 } from "../../service/authorization-page-service";
 import "./AuthorizationPage.css";
+import { AuthorizationPageProps } from "../../service/authorization-page-service/AuthorizationPageServiceConstants";
 
-export const AuthorizationPage = (): React.JSX.Element => {
+export const AuthorizationPage = (props: AuthorizationPageProps): React.JSX.Element => {
     const [user, setUser]: any = useState(undefined);
     const [userType, setUserType] = useState("Teacher");
     const [loginOption, setLoginOption] = useState(true);
@@ -34,7 +35,7 @@ export const AuthorizationPage = (): React.JSX.Element => {
 
     useEffect(() => {
         if (user) {
-            loginWithGoogle(user);
+            loginWithGoogle(user, props.logInFn);
         }
     }, [user]);
 
@@ -54,7 +55,7 @@ export const AuthorizationPage = (): React.JSX.Element => {
     });
 
     const login = (e: any) => {
-        standardLogin(email, password, false);
+        standardLogin(email, password, false, props.logInFn);
     };
 
     const sendVerificationEmail = async (e: any): Promise<void> => {

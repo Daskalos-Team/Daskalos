@@ -8,18 +8,18 @@ import {
 import emailjs from "@emailjs/browser";
 import { NOTIFICATION_MAP } from "./AuthorizationPageServiceConstants";
 
-export const loginWithGoogle = (user: any) => {
+export const loginWithGoogle = (user: any, logInFn: (userId: number, userType: string) => void) => {
     axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
         headers: {
             Authorization: `Bearer ${user.access_token}`,
             Accept: "application/json"
         }
     }).then(res => {
-        standardLogin(res.data.email, res.data.id, true);
+        standardLogin(res.data.email, res.data.id, true, logInFn);
     });
 };
 
-export const standardLogin = (email: string, password: string, google: boolean) => {
+export const standardLogin = (email: string, password: string, google: boolean, logInFn: (userId: number, userType: string) => void) => {
     if (isEmptyInput([email, password])) {
         alert("გთხოვთ შეიყვანოთ ყველა მონაცემი");
         return;
@@ -34,8 +34,8 @@ export const standardLogin = (email: string, password: string, google: boolean) 
             "Content-type": "application/json; charset=UTF-8"
         }
     })
-        .then(_ => {
-            window.location.reload();
+        .then(response => {
+            logInFn(Number(response.data[1]), response.data[2]);
         })
         .catch(err => {
             alert(NOTIFICATION_MAP[err.response.data] || "");

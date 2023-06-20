@@ -47,12 +47,12 @@ public class AuthorizationController implements ErrorController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> loginUser(@RequestBody UserDTO user) {
-        String message = authorizationService.authorizeUser(user);
-        if (message.equals(AuthorizationStatus.SUCCESSFUL_LOGIN.name())) {
-            return new ResponseEntity<>(message, HttpStatus.OK);
+    public ResponseEntity<String[]> loginUser(@RequestBody UserDTO user) {
+        String[] results = authorizationService.authorizeUser(user);
+        if (results[0].equals(AuthorizationStatus.SUCCESSFUL_LOGIN.name())) {
+            return new ResponseEntity<>(results, HttpStatus.OK);
         }
-        return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(results, HttpStatus.BAD_REQUEST);
     }
 
     @PostMapping("change")

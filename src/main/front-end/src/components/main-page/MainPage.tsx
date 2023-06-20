@@ -8,6 +8,12 @@ export const MainPage = (): React.JSX.Element => {
     const [userId, setUserId] = useState(-1);
     const [userType, setUserType] = useState("");
 
+    const logIn = (newUserId: number, newUserType: string) => {
+        setUserId(newUserId);
+        setUserType(newUserType);
+        setLoggedIn(true);
+    };
+
     useEffect(() => {
         async function checkLoggedIn() {
             const response = await getUserId();
@@ -15,14 +21,12 @@ export const MainPage = (): React.JSX.Element => {
                 return response;
             }
             const resp = await getUserType();
-            setUserId(response.data as number);
-            setUserType(resp.data);
-            setLoggedIn(true);
+            logIn(response.data as number, resp.data);
             return response;
         }
         checkLoggedIn().catch(err => console.log(err));
     }, []);
 
     return loggedIn ? <NewsFeedPage userId={userId} userType={userType}/>
-        : <AuthorizationPage/>;
+        : <AuthorizationPage logInFn={logIn}/>;
 };
