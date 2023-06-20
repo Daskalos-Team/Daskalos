@@ -16,3 +16,7 @@ export const NOTIFICATION_MAP: any = {
     `,
     "SUCCESSFUL_CHANGE": "პაროლი წარმატებით შეიცვალა"
 };
+
+export interface AuthorizationPageProps {
+    logInFn: (userId: number, userType: string) => void;
+}
