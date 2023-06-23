@@ -26,4 +26,8 @@ public class FilterDTO {
     private Boolean onPlace;
 
     private List<String> subjectsOnly;
+
+    private String name;
+
+    private String surname;
 }

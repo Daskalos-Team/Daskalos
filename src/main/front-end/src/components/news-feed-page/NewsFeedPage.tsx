@@ -3,11 +3,21 @@ import styled, { Keyframes, keyframes } from "styled-components";
 import { SearchComponent } from "./search-component";
 import { LeftPanelOption } from "./left-panel-option";
 import {
-    DimmingProps, DropDownArrowProps, getStudents, getTeachers,
+    DimmingProps,
+    DropDownArrowProps,
+    getStudents,
+    getTeachers,
     LeftPanelProps,
     LogoProps,
-    MAX_MENU_ON_WINDOW_WIDTH, MAX_UNSCALED_ROOT_WIDTH,
-    NewsFeedPageColorPalette, NewsFeedPageProps, ProfileButtonMenuProps, RootScaleProps, TabProps, UserProps
+    MAX_MENU_ON_WINDOW_WIDTH,
+    MAX_UNSCALED_ROOT_WIDTH,
+    NewsFeedPageColorPalette,
+    NewsFeedPageProps,
+    ProfileButtonMenuProps,
+    RootScaleProps,
+    TabProps,
+    UserFilters,
+    UserProps
 } from "../../service/news-feed-page-service";
 import { SettingsTab } from "./settings-tab";
 import { TopTenTab } from "./top-10-tab";
@@ -32,7 +42,9 @@ export const NewsFeedPage = (props: NewsFeedPageProps): React.JSX.Element => {
     const [profileButtonMenuOpen, setProfileButtonMenuOpen] = useState(false);
     const [profileButtonMenuAnimation, setProfileButtonMenuAnimation] = useState<Keyframes | null>(null);
     const [recommendations, setRecommendations] = useState<UserProps[]>([]);
-    const [filters, setFilters] = useState({
+    const [filters, setFilters] = useState<UserFilters>({
+        name: "",
+        surname: "",
         minPrice: -1,
         maxPrice: 1000000,
         favouritesOnly: false,

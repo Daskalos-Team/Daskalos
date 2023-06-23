@@ -115,6 +115,8 @@ export interface TopTeacherData {
 }
 
 export interface UserFilters {
+    name: string,
+    surname: string,
     minPrice: number,
     maxPrice: number,
     favouritesOnly: boolean,

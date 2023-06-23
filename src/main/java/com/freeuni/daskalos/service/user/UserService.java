@@ -167,19 +167,4 @@ public class UserService {
     public void removeStudentFavouriteTeacher(Long studentID, Long teacherID) {
         favouriteTeacherRepository.deleteByStudentIDAndTeacherID(studentID, teacherID);
     }
-
-    public Map.Entry<Integer, Integer> getTeacherMinMaxPrice(Long teacherID) {
-        List<SubjectDTO> teacherSubjects = subjectService.getUserSubjects(teacherID);
-        if (teacherSubjects.isEmpty()) {
-            return Map.entry(Integer.MAX_VALUE, Integer.MIN_VALUE);
-        }
-        OptionalInt minPrice = teacherSubjects.stream().mapToInt(SubjectDTO::getPrice).min();
-        OptionalInt maxPrice = teacherSubjects.stream().mapToInt(SubjectDTO::getPrice).max();
-        if (minPrice.isEmpty() || maxPrice.isEmpty()) {
-            int minP = minPrice.isEmpty() ? Integer.MIN_VALUE : minPrice.getAsInt();
-            int maxP = maxPrice.isEmpty() ? Integer.MAX_VALUE : maxPrice.getAsInt();
-            return Map.entry(minP, maxP);
-        }
-        return Map.entry(minPrice.getAsInt(), maxPrice.getAsInt());
-    }
 }

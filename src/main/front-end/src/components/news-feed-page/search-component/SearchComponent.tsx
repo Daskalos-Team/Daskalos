@@ -33,6 +33,8 @@ export const SearchComponent = (): React.JSX.Element => {
     const [onPlaceOptionsAnimation, setOnPlaceOptionsAnimation] = useState<Keyframes | null>(null);
     const [favouritesOnly, setFavouritesOnly] = useState(false);
     const [filters, setFilters] = useState<UserFilters>({
+        name: "",
+        surname: "",
         minPrice: -1,
         maxPrice: 1000000,
         favouritesOnly: false,
@@ -174,6 +176,16 @@ export const SearchComponent = (): React.JSX.Element => {
         setFilters(filters);
     };
 
+    const setName = (name: string) => {
+        filters.name = name;
+        setFilters(filters);
+    }
+
+    const setSurname = (surname: string) => {
+        filters.surname = surname;
+        setFilters(filters);
+    }
+
     return (
         <GoogleMapsProvider
             googleMapsAPIKey={API_KEY}
@@ -194,11 +206,11 @@ export const SearchComponent = (): React.JSX.Element => {
                     </RadiusFilterContainer>
                 </FilterContainer>
                 <FilterContainer>
-                    <FiltersTextField type="text"/>
+                    <FiltersTextField type="text" onChange={(e) => setName(e.target.value)}/>
                     <FiltersLabel>სახელი</FiltersLabel>
                 </FilterContainer>
                 <FilterContainer>
-                    <FiltersTextField type="text"/>
+                    <FiltersTextField type="text" onChange={(e) => setSurname(e.target.value)}/>
                     <FiltersLabel>გვარი</FiltersLabel>
                 </FilterContainer>
                 <FilterContainer>
