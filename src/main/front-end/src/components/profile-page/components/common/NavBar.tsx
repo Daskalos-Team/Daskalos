@@ -1,12 +1,27 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import "./styles/NavBar.css";
+import { setUserMainData } from "../../../../service/session-service";
+import { AppContext } from "../../../../App";
+import { NEWS_FEED_LOAD_TIME, STANDARD_LOAD_TIME } from "../../../../service/common-service";
 
 export const NavBar = (props: any): React.JSX.Element => {
     const { active } = props;
+    const setTime: any = useContext(AppContext);
 
     const scrollToTop = () => {
         window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+
+    const moveToNewsFeed = () => {
+        setTime(NEWS_FEED_LOAD_TIME);
+    };
+
+    const logOut = () => {
+        setTime(STANDARD_LOAD_TIME);
+        setUserMainData(-1, props.userType).then(_ => {
+            window.location.reload();
+        }).catch(err => console.log(err));
     };
 
     return (
@@ -23,7 +38,7 @@ export const NavBar = (props: any): React.JSX.Element => {
                                 }
                                 onClick={scrollToTop}
                             >
-                                <Link to="/profile-page">პროფილი</Link>
+                                <a>პროფილი</a>
                             </li>
                             <li
                                 className={
@@ -32,7 +47,7 @@ export const NavBar = (props: any): React.JSX.Element => {
                                         : "nav-item"
                                 }
                             >
-                                <Link to="/news-feed">მთავარი გვერდი</Link>
+                                <Link to="/" onClick={() => moveToNewsFeed()}>მთავარი გვერდი</Link>
                             </li>
                             <li
                                 className={
@@ -40,8 +55,9 @@ export const NavBar = (props: any): React.JSX.Element => {
                                         ? "nav-item active"
                                         : "nav-item"
                                 }
+                                onClick={() => logOut()}
                             >
-                                <Link to="/">გამოსვლა</Link>
+                                <a>გამოსვლა</a>
                             </li>
                         </ul>
                     </div>

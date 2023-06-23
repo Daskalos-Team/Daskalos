@@ -3,7 +3,7 @@
 /* calendar event style */
 .calendar_default_event_inner {
     background: #2e78d6;
-    color: #fff;
+    color: white;
     border: none;
     border-radius: 5px;
     font-size: 10pt;

@@ -1,30 +1,31 @@
 import React, { createContext, useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { MainPage } from "./components/main-page";
+import { ProfilePage } from "./components/profile-page";
 import "./App.css";
 
 export const AppContext: any = createContext(undefined); // context for global state control
 
 function App() {
     const [loading, setLoading] = useState<boolean>(false);
+    const [time, setTime] = useState<number>(3000);
 
     useEffect(() => {
         setLoading(true);
         setTimeout(() => {
             setLoading(false);
-        }, 2200);
+        }, time);
     }, []);
 
     useEffect(() => {
-        if (loading) {
-            setTimeout(() => {
-                setLoading(false);
-            }, 1000);
-        }
-    }, [loading]);
+        setLoading(true);
+        setTimeout(() => {
+            setLoading(false);
+        }, time);
+    }, [time]);
 
     return (
-        <AppContext.Provider value={setLoading}>
+        <AppContext.Provider value={setTime}>
             {loading ? (
                 <div className="loader-container">
                     <div className="spinner-label-background"/>
@@ -40,6 +41,7 @@ function App() {
                     <Route path="/" element={<MainPage/>}>
                         <Route path="*" element={<Navigate to="/" replace={true} />} />
                     </Route>
+                    <Route path=":userId" element={<ProfilePage />} />
                 </Routes>
             </BrowserRouter>
         </AppContext.Provider>

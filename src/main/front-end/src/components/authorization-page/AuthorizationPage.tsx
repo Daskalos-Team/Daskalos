@@ -13,6 +13,7 @@ import {
 import "./AuthorizationPage.css";
 import { AuthorizationPageProps } from "../../service/authorization-page-service/AuthorizationPageServiceConstants";
 import { AppContext } from "../../App";
+import { STANDARD_LOAD_TIME } from "../../service/common-service";
 
 export const AuthorizationPage = (props: AuthorizationPageProps): React.JSX.Element => {
     const [user, setUser]: any = useState(undefined);
@@ -29,7 +30,7 @@ export const AuthorizationPage = (props: AuthorizationPageProps): React.JSX.Elem
     const [inputCode, setInputCode] = useState("");
     const [realCode, setRealCode] = useState("bad");
 
-    const setLoading: any = useContext(AppContext);
+    const setTime: any = useContext(AppContext);
 
     useEffect(() => {
         const code = randomInteger(10000, 1000000); // generate private code
@@ -38,7 +39,7 @@ export const AuthorizationPage = (props: AuthorizationPageProps): React.JSX.Elem
 
     useEffect(() => {
         if (user) {
-            setLoading(true);
+            setTime(STANDARD_LOAD_TIME);
             loginWithGoogle(user, props.logInFn);
         }
     }, [user]);
@@ -59,7 +60,7 @@ export const AuthorizationPage = (props: AuthorizationPageProps): React.JSX.Elem
     });
 
     const login = (e: any) => {
-        setLoading(true);
+        setTime(STANDARD_LOAD_TIME);
         standardLogin(email, password, false, props.logInFn);
     };
 

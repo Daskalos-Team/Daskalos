@@ -13,11 +13,13 @@ import { TopTenTab } from "./top-10-tab";
 import { Recommendation } from "./recommended-teacher";
 import { setUserMainData } from "../../service/session-service";
 import { AppContext } from "../../App";
+import { Link } from "react-router-dom";
+import { NEWS_FEED_LOAD_TIME, SMALL_LOAD_TIME } from "../../service/common-service";
 
 export const NewsFeedPage = (props: NewsFeedPageProps): React.JSX.Element => {
     const maxMenuOnWindowWidth = 1180;
     const maxUnscaledRootWidth = 700;
-    const setLoading: any = useContext(AppContext);
+    const setTime: any = useContext(AppContext);
 
     const [filtersOpen, setFiltersOpen] = useState(false);
     const [dimmingOpacity, setDimmingOpacity] = useState(0);
@@ -128,7 +130,7 @@ export const NewsFeedPage = (props: NewsFeedPageProps): React.JSX.Element => {
     };
 
     useEffect(() => {
-        setLoading(false);
+        setTime(NEWS_FEED_LOAD_TIME);
     }, []);
 
     useLayoutEffect(() => {
@@ -179,7 +181,7 @@ export const NewsFeedPage = (props: NewsFeedPageProps): React.JSX.Element => {
                         <ProfilePicture src="/images/news-feed-page/AccountIcon.png" alt="Profile Picture"/>
                         <UserName>სახელი გვარი</UserName>
                     </ProfileButtonMenuTop>
-                    <ProfileButtonMenuOption>ჩემი პროფილი</ProfileButtonMenuOption>
+                    <ProfileButtonMenuOption onClick={setTime(SMALL_LOAD_TIME)}><Link to={"" + props.userId}>ჩემი პროფილი</Link></ProfileButtonMenuOption>
                     <ProfileButtonMenuOption onClick={() => LogOut()}>ანგარიშიდან გამოსვლა</ProfileButtonMenuOption>
                 </ProfileButtonMenu>
             </Header>

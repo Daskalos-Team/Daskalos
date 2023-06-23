@@ -55,6 +55,7 @@
 
 .nav-item a {
 	text-decoration: none;
+	cursor: pointer;
 	color: var(--primary-color);
 }
 

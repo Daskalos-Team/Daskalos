@@ -78,7 +78,7 @@
 }
 
 .loader-container {
-    z-index: 1001;
+    z-index: 1005;
     width: 100%;
     min-height: 100vh;
     display: flex;
@@ -152,6 +152,7 @@
     border-color: var(--link-color) transparent #e9c89e transparent;
     border-radius: 50%;
     animation: spin-anim 1.5s linear infinite;
+    z-index: 1005;
 }
 
 .content {
@@ -165,6 +166,7 @@
     position: fixed;
     transform: translate(-50%, -50%);
     font-family: "Poppins", sans-serif;
+    z-index: 1005;
 }
 
 .content h2:nth-child(1) {
@@ -187,6 +189,7 @@
     border-radius: 50%;
     background: whitesmoke;
     box-shadow: 0 0.188em 1.550em rgb(156, 156, 156);
+    z-index: 1005;
 }
 
 @keyframes animate {

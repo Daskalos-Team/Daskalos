@@ -18,6 +18,7 @@ import {
 import { INFO, comments } from "./example-data";
 import { PROFILE_IMAGE_DEFAULT_SIZE } from "../../service/profile-page-service";
 import "./ProfilePage.css";
+import { useParams } from "react-router-dom";
 
 export const ProfilePage = (): React.JSX.Element => {
     // TODO if needed in future
@@ -25,6 +26,9 @@ export const ProfilePage = (): React.JSX.Element => {
     const [profileImageSize, setProfileImageSize] = useState(PROFILE_IMAGE_DEFAULT_SIZE);
     const [oldProfileImageSize, setOldProfileImageSize] = useState(PROFILE_IMAGE_DEFAULT_SIZE);
     const [userDescriptionState, setUserDescriptionState] = useState("user-description");
+
+    const user = useParams();
+    console.log(user);
 
     const [userSubjects, setUserSubjects] = useState(INFO.subjects); // Subjects state
 
