@@ -1,13 +1,11 @@
 package com.freeuni.daskalos.service;
 
-import com.freeuni.daskalos.dto.UserAddressDTO;
 import com.freeuni.daskalos.dto.UserDTO;
 import com.freeuni.daskalos.repository.UserRepository;
 import com.freeuni.daskalos.repository.entities.User;
 import com.freeuni.daskalos.service.session.SessionService;
 import com.freeuni.daskalos.utils.AuthorizationStatus;
 import com.freeuni.daskalos.utils.DaoDtoConversionUtils;
-import com.freeuni.daskalos.utils.UserType;
 import com.freeuni.daskalos.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -62,14 +60,14 @@ public class AuthorizationService {
         Optional<User> currentUser = userRepository.findByEmail(user.getEmail());
 
         if (currentUser.isEmpty()) {
-            return new String[] { AuthorizationStatus.EMAIL_NOT_FOUND.name(), "", "" };
+            return new String[]{AuthorizationStatus.EMAIL_NOT_FOUND.name(), "", ""};
         } else if (!user.isUsingGoogle() && !currentUser.get().getPassword().equals(user.getPassword())) {
-            return new String[] { AuthorizationStatus.WRONG_PASSWORD.name(), "", "" };
+            return new String[]{AuthorizationStatus.WRONG_PASSWORD.name(), "", ""};
         }
 
         User currUser = currentUser.get();
         saveCurrentUser(currUser);
-        return new String[] { AuthorizationStatus.SUCCESSFUL_LOGIN.name(), currUser.getID().toString(), currUser.getUserType().name() };
+        return new String[]{AuthorizationStatus.SUCCESSFUL_LOGIN.name(), currUser.getID().toString(), currUser.getUserType().name()};
     }
 
     public String changePassword(String email, String password) {
@@ -84,14 +82,6 @@ public class AuthorizationService {
         });
 
         return AuthorizationStatus.SUCCESSFUL_CHANGE.name();
-    }
-
-    public List<UserDTO> getAllTeachersInRadius(UserAddressDTO address) {
-        Iterable<User> all = userRepository.findAll();
-        return StreamSupport.stream(all.spliterator(), false)
-                .map(DaoDtoConversionUtils::toUserDTO)
-                .filter(userDTO -> userDTO.getUserType().equals(UserType.TEACHER.name()) && UserUtils.isInRadius(userDTO.getAddress(), address, UserUtils.SEARCH_RADIUS))
-                .collect(Collectors.toList());
     }
 
     public List<UserDTO> getAllUsers() {

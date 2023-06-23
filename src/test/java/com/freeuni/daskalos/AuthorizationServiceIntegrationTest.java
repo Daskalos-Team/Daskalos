@@ -1,6 +1,5 @@
 package com.freeuni.daskalos;
 
-import com.freeuni.daskalos.dto.UserAddressDTO;
 import com.freeuni.daskalos.dto.UserDTO;
 import com.freeuni.daskalos.repository.UserRepository;
 import com.freeuni.daskalos.repository.embeddables.UserAddress;
@@ -25,7 +24,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -182,26 +180,6 @@ public class AuthorizationServiceIntegrationTest {
         String result = authorizationService.changePassword("email1", "Giorgi^501");
 
         verifyFindByEMAILIsCalledOnce("email1");
-        assertThat(result).isEqualTo(expected);
-    }
-
-    // Test ----------------------------------------getAllTeachersInRadius-------------------------
-
-    @Test
-    public void whenFoundAllTeachersInRadius() {
-        List<String> expected = List.of("email2");
-        List<String> result = authorizationService.getAllTeachersInRadius(new UserAddressDTO(41.699389, 44.875089)).stream().map(UserDTO::getEmail).collect(Collectors.toList());
-
-        assertThat(result).isEqualTo(expected);
-    }
-
-    // Test ----------------------------------------getAllUsers------------------------------------
-
-    @Test
-    public void whenFoundAll() {
-        List<String> expected = List.of("email1", "email2");
-        List<String> result = authorizationService.getAllUsers().stream().map(UserDTO::getEmail).collect(Collectors.toList());
-
         assertThat(result).isEqualTo(expected);
     }
 

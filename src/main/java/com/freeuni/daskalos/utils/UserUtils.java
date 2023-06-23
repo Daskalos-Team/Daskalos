@@ -3,7 +3,6 @@ package com.freeuni.daskalos.utils;
 import com.freeuni.daskalos.dto.TeacherDTO;
 import com.freeuni.daskalos.dto.TeacherRatingDTO;
 import com.freeuni.daskalos.dto.UserAddressDTO;
-import com.freeuni.daskalos.repository.embeddables.UserAddress;
 
 import java.util.Arrays;
 import java.util.List;
@@ -11,8 +10,6 @@ import java.util.List;
 public class UserUtils {
 
     public static final String URL_DELIMITER = "|";
-
-    public static final double SEARCH_RADIUS = 2; // TODO Remove HARD-CODED 2 kilometers in future
 
     public static final double EARTH_RADIUS = 6371;
 
@@ -26,7 +23,7 @@ public class UserUtils {
         return String.join(", ", networkUrls);
     }
 
-    public static boolean isInRadius(UserAddress currentAddress, UserAddressDTO targetAddress, double radius) {
+    public static boolean isInRadius(UserAddressDTO currentAddress, UserAddressDTO targetAddress, double radius) {
         double lat1 = currentAddress.getLatitude(), lon1 = currentAddress.getLongitude();
         double lat2 = targetAddress.getLatitude(), lon2 = targetAddress.getLongitude();
 

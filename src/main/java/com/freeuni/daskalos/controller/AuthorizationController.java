@@ -1,6 +1,5 @@
 package com.freeuni.daskalos.controller;
 
-import com.freeuni.daskalos.dto.UserAddressDTO;
 import com.freeuni.daskalos.dto.UserDTO;
 import com.freeuni.daskalos.service.AuthorizationService;
 import com.freeuni.daskalos.utils.AuthorizationStatus;
@@ -62,12 +61,6 @@ public class AuthorizationController implements ErrorController {
             return new ResponseEntity<>(message, HttpStatus.OK);
         }
         return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
-    }
-
-    @PostMapping("/address_info")
-    public ResponseEntity<?> getAllTeachersInRadius(@RequestBody UserAddressDTO address) {
-        List<UserDTO> teachersInRadius = authorizationService.getAllTeachersInRadius(address);
-        return new ResponseEntity<>(teachersInRadius, HttpStatus.OK);
     }
 
     @GetMapping("/info")
