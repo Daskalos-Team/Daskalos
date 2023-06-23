@@ -11,14 +11,13 @@ import com.freeuni.daskalos.service.experience.ExperienceService;
 import com.freeuni.daskalos.service.rating.RatingService;
 import com.freeuni.daskalos.service.subject.SubjectService;
 import com.freeuni.daskalos.utils.DaoDtoConversionUtils;
+import com.freeuni.daskalos.utils.UserUtils;
 import com.freeuni.daskalos.utils.exceptions.UserNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.OptionalInt;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -166,5 +165,12 @@ public class UserService {
 
     public void removeStudentFavouriteTeacher(Long studentID, Long teacherID) {
         favouriteTeacherRepository.deleteByStudentIDAndTeacherID(studentID, teacherID);
+    }
+
+    public List<TeacherDTO> getAllTeachersInRadius(UserAddressDTO address, int radius) {
+        List<TeacherDTO> allTeachers = getAllTeachers();
+        return allTeachers.stream()
+                .filter(teacher -> UserUtils.isInRadius(teacher.getAddress(), address, radius))
+                .collect(Collectors.toList());
     }
 }

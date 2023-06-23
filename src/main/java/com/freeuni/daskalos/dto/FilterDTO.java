@@ -30,4 +30,8 @@ public class FilterDTO {
     private String name;
 
     private String surname;
+
+    private UserAddressDTO userAddressDTO;
+
+    private Integer radius;
 }
