@@ -96,6 +96,16 @@ export interface NewsFeedPageProps {
     userType: string;
 }
 
+export interface DropDownArrowProps {
+    rotation: number;
+}
+
+export interface SearchListMenuProps {
+    open: boolean;
+    animation: Keyframes | null;
+    scrollable: boolean;
+}
+
 export interface TopTeacherData {
     teacherId: number;
     name: string;
@@ -154,3 +164,9 @@ export const NewsFeedPageColorPalette = {
 export const MAX_MENU_ON_WINDOW_WIDTH = 1180;
 
 export const MAX_UNSCALED_ROOT_WIDTH = 700;
+
+export const SUBJECTS = ["მათემატიკა", "ქართული", "ფიზიკა", "ბიოლოგია", "გეოგრაფია", "ისტორია"];
+
+export const WEEKDAYS = ["ორშაბათი", "სამშაბათი", "ოთხშაბათი", "ხუთშაბათი", "პარასკევი", "შაბათი", "კვირა"];
+
+export const ON_PLACE_OPTIONS = ["ადგილზე", "დისტანციური", "ნებისმიერი"];

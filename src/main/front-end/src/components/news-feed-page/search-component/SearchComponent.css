@@ -180,7 +180,8 @@ a {
 
 #ok-button {
     height: 3em;
-    width: 10%;
+    width: 50%;
+    margin-block: auto;
     background-color: lightgreen;
     font-size: 1em;
     display: flex;
@@ -193,14 +194,6 @@ a {
 
 #ok-button:hover {
     transform: scale(1.15);
-}
-
-.input-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    column-gap: 1em;
-    align-items: center;
 }
 
 .marker-label {

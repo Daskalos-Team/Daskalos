@@ -3,7 +3,7 @@ import styled, { Keyframes, keyframes } from "styled-components";
 import { SearchComponent } from "./search-component";
 import { LeftPanelOption } from "./left-panel-option";
 import {
-    DimmingProps, getStudents, getTeachers,
+    DimmingProps, DropDownArrowProps, getStudents, getTeachers,
     LeftPanelProps,
     LogoProps,
     MAX_MENU_ON_WINDOW_WIDTH, MAX_UNSCALED_ROOT_WIDTH,
@@ -12,14 +12,14 @@ import {
 import { SettingsTab } from "./settings-tab";
 import { TopTenTab } from "./top-10-tab";
 import { Recommendation } from "./recommended-teacher";
-import { setUserId } from "../../service/session-service";
 import "./NewsFeedHelperStyles.css";
+import { setUserMainData } from "../../service/session-service";
 
 export const NewsFeedPage = (props: NewsFeedPageProps): React.JSX.Element => {
     const [filtersOpen, setFiltersOpen] = useState(false);
     const [searchState, setSearchState] = useState("search-hide");
     const [dimmingOpacity, setDimmingOpacity] = useState(0);
-    const [arrowSrc, setArrowSrc] = useState("/images/news-feed-page/DownArrow.png");
+    const [arrowRotation, setArrowRotation] = useState(0);
     const [dimmingInteractive, setDimmingInteractive] = useState("none");
     const [selectedOptions, setSelectedOptions] = useState([true, false, false]);
     const [logoVisible, setLogoVisible] = useState(true);
@@ -92,7 +92,7 @@ export const NewsFeedPage = (props: NewsFeedPageProps): React.JSX.Element => {
             setSearchState("search-show");
         }
         setFiltersOpen(!filtersOpen);
-        setArrowSrc(filtersOpen ? "/images/news-feed-page/DownArrow.png" : "/images/news-feed-page/UpArrow.png");
+        setArrowRotation(filtersOpen ? 0 : 180);
         setDimmingOpacity(filtersOpen ? 0 : 0.95);
         setDimmingInteractive(dimmingInteractive == "none" ? "auto" : "none");
     };
@@ -124,7 +124,7 @@ export const NewsFeedPage = (props: NewsFeedPageProps): React.JSX.Element => {
     };
 
     const LogOut = () => {
-        setUserId(-1).then(_ => {
+        setUserMainData(-1, props.userType).then(_ => {
             window.location.reload();
         }).catch(err => console.log(err));
     };
@@ -165,8 +165,8 @@ export const NewsFeedPage = (props: NewsFeedPageProps): React.JSX.Element => {
                 <SearchButton
                     onClick={() => SearchButtonFunction()}
                 >
-                    <SearchLabel>ძებნა</SearchLabel>
-                    <DropDownArrow src={arrowSrc} alt="Drop down"/>
+                    <SearchLabel>მოძებნე მასწავლებელი</SearchLabel>
+                    <DropDownArrow src="/images/news-feed-page/DownArrow.png" alt="Drop down" rotation={arrowRotation}/>
                 </SearchButton>
                 <div className={searchState}>
                     <SearchComponent/>
@@ -440,7 +440,7 @@ const ShowMenuButton = styled.button`
 `;
 
 const SearchButton = styled.button`
-  width: 100px;
+  width: 200px;
   left: 40px;
   height: 0;
   position: relative;
@@ -463,7 +463,7 @@ const SearchButton = styled.button`
 const SearchLabel = styled.div`
   width: 78%;
   height: 85%;
-  left: 50%;
+  left: 45%;
   top: 50%;
   position: absolute;
   display: flex;
@@ -471,22 +471,23 @@ const SearchLabel = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  font-size: 20px;
+  font-size: 15px;
   font-family: Noto Serif Georgian;
   text-align: center;
-  letter-spacing: 1.63px;
   text-transform: uppercase;
   box-sizing: border-box;
   transform: translate(-50%, -50%);
 `;
 
-const DropDownArrow = styled.img`
-  width: 25px;
+const DropDownArrow = styled.img<DropDownArrowProps>`
+  width: 20px;
   top: 50%;
   right: 10%;
   position: absolute;
   box-sizing: border-box;
-  transform: translateY(-50%);
+  transition-property: transform;
+  transition-duration: 300ms;
+  transform: translateY(-50%) rotate(${props => props.rotation}deg);
 `;
 
 const Content = styled.div<RootScaleProps>`

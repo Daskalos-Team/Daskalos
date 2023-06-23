@@ -29,3 +29,7 @@ export interface RegistrationCredentials {
     };
     userType: string
 }
+
+export interface AuthorizationPageProps {
+    logInFn: (userId: number, userType: string) => void;
+}
