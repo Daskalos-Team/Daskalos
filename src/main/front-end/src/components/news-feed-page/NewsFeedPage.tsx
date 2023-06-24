@@ -187,7 +187,7 @@ export const NewsFeedPage = (props: NewsFeedPageProps): React.JSX.Element => {
                     <DropDownArrow src="/images/news-feed-page/DownArrow.png" alt="Drop down" rotation={arrowRotation}/>
                 </SearchButton>
                 <div className={searchState}>
-                    <SearchComponent userId={props.userId}/>
+                    <SearchComponent userId={props.userId} userType={props.userType}/>
                 </div>
                 <ProfileButton
                     onClick={() => ToggleProfileButtonMenu()}

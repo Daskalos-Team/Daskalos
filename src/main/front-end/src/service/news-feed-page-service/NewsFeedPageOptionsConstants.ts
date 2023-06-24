@@ -102,6 +102,7 @@ export interface DropDownArrowProps {
 
 export interface SearchComponentProps {
     userId: number;
+    userType: string;
 }
 
 export interface SearchListMenuProps {

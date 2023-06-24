@@ -231,10 +231,12 @@ export const SearchComponent = (props: SearchComponentProps): React.JSX.Element 
                     <FiltersTextField type="text" onChange={(e) => setSurname(e.target.value)}/>
                     <FiltersLabel>გვარი</FiltersLabel>
                 </FilterContainer>
-                <FilterContainer>
-                    <FiltersLabel>ფავორიტები</FiltersLabel>
-                    <SearchCheckbox checked={favouritesOnly} onClick={() => toggleFavouritesOnly()}/>
-                </FilterContainer>
+                {props.userType == "STUDENT" && (
+                    <FilterContainer>
+                        <FiltersLabel>ფავორიტები</FiltersLabel>
+                        <SearchCheckbox checked={favouritesOnly} onClick={() => toggleFavouritesOnly()}/>
+                    </FilterContainer>
+                )}
                 <FilterContainer>
                     <FiltersNumberField type="number" min={0} max={10000} onChange={(e) => setPriceLimit(true, e)}/>
                     <FiltersLabel>–</FiltersLabel>
