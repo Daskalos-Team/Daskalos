@@ -14,9 +14,15 @@ import { addressToCoordinates, API_KEY } from "../../../service/common-service";
 import "./SearchComponent.css";
 import styled, { Keyframes, keyframes } from "styled-components";
 import { CheckboxComponent } from "../../helper-components/CheckboxComponent";
-import { ON_PLACE_OPTIONS, SearchListMenuProps, SUBJECTS, UserFilters } from "../../../service/news-feed-page-service";
+import {
+    ON_PLACE_OPTIONS,
+    SearchComponentProps,
+    SearchListMenuProps,
+    SUBJECTS,
+    UserFilters
+} from "../../../service/news-feed-page-service";
 
-export const SearchComponent = (): React.JSX.Element => {
+export const SearchComponent = (props: SearchComponentProps): React.JSX.Element => {
     const [map, setMap] = useState<any>(null);
     const [mapContainer, setMapContainer] = useState(null);
     const [center, setCenter] = useState(defaultCenter);
@@ -40,7 +46,13 @@ export const SearchComponent = (): React.JSX.Element => {
         favouritesOnly: false,
         onPlace: null,
         subjectsOnly: [],
-        weekdays: []
+        weekdays: [],
+        userAddressDTO: {
+            fullAddress: "",
+            latitude: 0,
+            longitude: 0
+        },
+        radius: radius / 1000
     });
 
     useEffect(() => {
@@ -65,6 +77,10 @@ export const SearchComponent = (): React.JSX.Element => {
 
     const addTeachersMarkers = async (e: any): Promise<void> => {
         const coordinates = await addressToCoordinates(address);
+        filters.userAddressDTO.fullAddress = address;
+        filters.userAddressDTO.latitude = coordinates.lat;
+        filters.userAddressDTO.longitude = coordinates.lng;
+        setFilters(filters);
         setCenter(() => ({ lat: coordinates.lat, lng: coordinates.lng }));
         centerMarker.setPosition({ lat: coordinates.lat, lng: coordinates.lng });
         circle.setCenter({ lat: coordinates.lat, lng: coordinates.lng });
@@ -72,7 +88,7 @@ export const SearchComponent = (): React.JSX.Element => {
             center: { lat: coordinates.lat, lng: coordinates.lng }
         });
 
-        const teachers = await getTeachersInRadius(coordinates);
+        const teachers = await getTeachersInRadius(props.userId, filters);
         removeTeachersMarkers(teachersMarkers);
         const markers = teachers.data.map((teacher: any) => {
             const marker = new google.maps.Marker({
@@ -168,6 +184,8 @@ export const SearchComponent = (): React.JSX.Element => {
     const setSearchRadius = (newRadius: number) => {
         setRadius(newRadius);
         circle.setRadius(newRadius);
+        filters.radius = newRadius / 1000;
+        setFilters(filters);
     };
 
     const toggleFavouritesOnly = () => {
@@ -179,12 +197,12 @@ export const SearchComponent = (): React.JSX.Element => {
     const setName = (name: string) => {
         filters.name = name;
         setFilters(filters);
-    }
+    };
 
     const setSurname = (surname: string) => {
         filters.surname = surname;
         setFilters(filters);
-    }
+    };
 
     return (
         <GoogleMapsProvider

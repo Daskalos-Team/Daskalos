@@ -1,14 +1,10 @@
 import axios from "axios";
-import { USER_ENDPOINT } from "../../common-service";
+import { SEARCH_ENDPOINT } from "../../common-service";
+import { UserFilters } from "../NewsFeedPageOptionsConstants";
 
 // returns teachers in search radius (in kilometers)
-export const getTeachersInRadius = async (coordinates: any): Promise<any> => {
-    const addressInfo = {
-        latitude: coordinates.lat,
-        longitude: coordinates.lng
-    };
-
-    const promise = axios.post(USER_ENDPOINT + "address_info", addressInfo, {
+export const getTeachersInRadius = async (userId: number, filters: UserFilters): Promise<any> => {
+    const promise = axios.post(SEARCH_ENDPOINT + "get_teachers/" + userId, filters, {
         headers: {
             "Content-type": "application/json; charset=UTF-8"
         }

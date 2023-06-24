@@ -50,7 +50,13 @@ export const NewsFeedPage = (props: NewsFeedPageProps): React.JSX.Element => {
         favouritesOnly: false,
         onPlace: null,
         subjectsOnly: [],
-        weekdays: []
+        weekdays: [],
+        userAddressDTO: {
+            fullAddress: "",
+            latitude: 0,
+            longitude: 0
+        },
+        radius: 0
     });
 
     async function updateRecommendations() {
@@ -181,7 +187,7 @@ export const NewsFeedPage = (props: NewsFeedPageProps): React.JSX.Element => {
                     <DropDownArrow src="/images/news-feed-page/DownArrow.png" alt="Drop down" rotation={arrowRotation}/>
                 </SearchButton>
                 <div className={searchState}>
-                    <SearchComponent/>
+                    <SearchComponent userId={props.userId}/>
                 </div>
                 <ProfileButton
                     onClick={() => ToggleProfileButtonMenu()}

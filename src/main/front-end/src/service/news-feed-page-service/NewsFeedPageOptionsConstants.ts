@@ -100,6 +100,10 @@ export interface DropDownArrowProps {
     rotation: number;
 }
 
+export interface SearchComponentProps {
+    userId: number;
+}
+
 export interface SearchListMenuProps {
     open: boolean;
     animation: Keyframes | null;
@@ -114,6 +118,12 @@ export interface TopTeacherData {
     voterNum: number;
 }
 
+export interface Address {
+    fullAddress: string;
+    latitude: number;
+    longitude: number;
+}
+
 export interface UserFilters {
     name: string,
     surname: string,
@@ -122,7 +132,9 @@ export interface UserFilters {
     favouritesOnly: boolean,
     onPlace: boolean | null,
     subjectsOnly: string[],
-    weekdays: string[]
+    weekdays: string[],
+    userAddressDTO: Address,
+    radius: number
 }
 
 export interface UserProps {
