@@ -178,7 +178,7 @@ export const NewsFeedPage = (props: NewsFeedPageProps): React.JSX.Element => {
                 />
                 <ProfileButtonMenu open={profileButtonMenuOpen} animation={profileButtonMenuAnimation}>
                     <ProfileButtonMenuTop>
-                        <ProfilePicture src="/images/news-feed-page/AccountIcon.png" alt="Profile Picture"/>
+                        <ProfilePicture src={`/images/news-feed-page/${props.userType === "TEACHER" ? "Teachers" : "Student"}.png`} alt="Profile Picture"/>
                         <UserName>სახელი გვარი</UserName>
                     </ProfileButtonMenuTop>
                     <ProfileButtonMenuOption onClick={setTime(SMALL_LOAD_TIME)}><Link to={`${props.userId}/${props.userType}`}>ჩემი პროფილი</Link></ProfileButtonMenuOption>

@@ -44,21 +44,24 @@ public abstract class User implements Serializable {
 
     private String linkedinUrl;
 
+    private String profileImage;
+
     public User(Long ID,
                 @NonNull String name,
                 @NonNull String surname,
                 @NonNull String password,
                 @NonNull String email,
                 @NonNull UserType userType,
-                @NonNull String phoneNumber,
-                @NonNull UserAddress address,
+                String phoneNumber,
+                UserAddress address,
                 Boolean onPlace,
                 String title,
                 String description,
                 String fbUrl,
                 String twitterUrl,
                 String instaUrl,
-                String linkedinUrl) {
+                String linkedinUrl,
+                String profileImage) {
         this.ID = ID;
         this.name = name;
         this.surname = surname;
@@ -74,13 +77,14 @@ public abstract class User implements Serializable {
         this.twitterUrl = twitterUrl;
         this.instaUrl = instaUrl;
         this.linkedinUrl = linkedinUrl;
+        this.profileImage = profileImage;
     }
 
     public User(@NonNull String email,
                 @NonNull String password,
                 @NonNull String name,
                 @NonNull String surname,
-                @NonNull UserAddress address,
+                UserAddress address,
                 @NonNull UserType userType,
                 Boolean onPlace,
                 String title,
@@ -223,5 +227,14 @@ public abstract class User implements Serializable {
 
     public void setLinkedinUrl(String linkedinUrl) {
         this.linkedinUrl = linkedinUrl;
+    }
+
+    @Column(columnDefinition = "NVARCHAR(MAX)")
+    public String getProfileImage() {
+        return profileImage;
+    }
+
+    public void setProfileImage(String profileImage) {
+        this.profileImage = profileImage;
     }
 }

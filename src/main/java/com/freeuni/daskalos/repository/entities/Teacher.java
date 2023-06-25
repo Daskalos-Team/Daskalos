@@ -15,24 +15,26 @@ public class Teacher extends User {
                    @NonNull String mail,
                    @NonNull UserType userType,
                    @NonNull String phoneNumber,
-                   @NonNull UserAddress address,
+                   UserAddress address,
                    Boolean onPlace,
                    String title,
                    String description,
                    String fbUrl,
                    String twitterUrl,
                    String instaUrl,
-                   String linkedinUrl) {
-        super(ID, name, secondName, password, mail, userType, phoneNumber, address, onPlace, title, description, fbUrl, twitterUrl, instaUrl, linkedinUrl);
+                   String linkedinUrl,
+                   String profileImage) {
+        super(ID, name, secondName, password, mail, userType, phoneNumber, address, onPlace, title, description, fbUrl, twitterUrl, instaUrl, linkedinUrl, profileImage);
     }
 
+    // TODO make address still @NonNull later
     public Teacher(@NonNull String mail,
                    @NonNull String password,
                    @NonNull String name,
                    @NonNull String surname,
-                   @NonNull UserAddress address,
+                   UserAddress address,
                    @NonNull UserType userType,
-                   @NonNull Boolean onPlace,
+                   Boolean onPlace,
                    String title,
                    String description,
                    String fbUrl,

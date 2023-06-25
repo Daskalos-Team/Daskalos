@@ -9,13 +9,14 @@ import java.util.stream.Collectors;
 
 public class DaoDtoConversionUtils {
 
+    // TODO fix correct address
     public static User toUserEntity(UserDTO userDTO) {
         return userDTO.getUserType().equals(UserType.TEACHER.name()) ?
-                new Teacher(userDTO.getEmail(), userDTO.getPassword(), userDTO.getName(), userDTO.getSurname(), userDTO.getAddress(),
-                        UserType.fromName(userDTO.getUserType()), false, null, null, null, null, null, null)
+                new Teacher(userDTO.getEmail(), userDTO.getPassword(), userDTO.getName(), userDTO.getSurname(), new UserAddress(45, 45),
+                        UserType.valueOf(userDTO.getUserType()), Boolean.FALSE, null, null, null, null, null, null)
                 :
-                new Student(userDTO.getEmail(), userDTO.getPassword(), userDTO.getName(), userDTO.getSurname(), userDTO.getAddress(),
-                        UserType.fromName(userDTO.getUserType()), false, null, null, null, null, null, null);
+                new Student(userDTO.getEmail(), userDTO.getPassword(), userDTO.getName(), userDTO.getSurname(), new UserAddress(45, 45),
+                        UserType.valueOf(userDTO.getUserType()), Boolean.FALSE, null, null, null, null, null, null);
     }
 
     public static UserDTO toUserDTO(User userEntity) {
@@ -125,7 +126,8 @@ public class DaoDtoConversionUtils {
                 teacherDTO.getFbUrl(),
                 teacherDTO.getTwitterUrl(),
                 teacherDTO.getInstaUrl(),
-                teacherDTO.getLinkedinUrl());
+                teacherDTO.getLinkedinUrl(),
+                teacherDTO.getProfileImage());
     }
 
     public static TeacherDTO toTeacherDTO(Teacher teacher, List<ExperienceDTO> experience, List<TeacherRatingDTO> ratings, List<SubjectDTO> subjects) {
@@ -148,6 +150,7 @@ public class DaoDtoConversionUtils {
                 twitterUrl(teacher.getTwitterUrl()).
                 instaUrl(teacher.getInstaUrl()).
                 linkedinUrl(teacher.getLinkedinUrl()).
+                profileImage(teacher.getProfileImage()).
                 build();
     }
 
@@ -170,6 +173,7 @@ public class DaoDtoConversionUtils {
                 twitterUrl(student.getTwitterUrl()).
                 instaUrl(student.getInstaUrl()).
                 linkedinUrl(student.getLinkedinUrl()).
+                profileImage(student.getProfileImage()).
                 build();
     }
 
@@ -188,6 +192,7 @@ public class DaoDtoConversionUtils {
                 studentDTO.getFbUrl(),
                 studentDTO.getTwitterUrl(),
                 studentDTO.getInstaUrl(),
-                studentDTO.getLinkedinUrl());
+                studentDTO.getLinkedinUrl(),
+                studentDTO.getProfileImage());
     }
 }

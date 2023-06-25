@@ -35,14 +35,6 @@ public class SubjectService {
         userToSubjectRepository.deleteBySubjectIDAndUserID(userID, subject.getID());
     }
 
-    public void clearUserSubjects(Long userID) {
-        List<UserToSubject> all = userToSubjectRepository.findAllByUserID(userID);
-        for (UserToSubject userToSubject : all) {
-            subjectRepository.deleteById(userToSubject.getSubjectID());
-            userToSubjectRepository.deleteBySubjectIDAndUserID(userID, userToSubject.getSubjectID());
-        }
-    }
-
     public SubjectDTO addUserSubject(Long userID, SubjectDTO subject) {
         Subject addedSubject = subjectRepository.save(DaoDtoConversionUtils.toSubject(subject));
         UserToSubject teacherToSubject = new UserToSubject().

@@ -107,7 +107,6 @@ public class UserController implements ErrorController {
 
     @PostMapping("/add_teacher_subjects/{id}")
     public ResponseEntity<?> addTeacherSubjects(@PathVariable long id, @RequestBody List<SubjectDTO> subjects) {
-        userService.clearSubjects(id);
         for (SubjectDTO subjectDTO : subjects) {
             ResponseEntity<SubjectDTO> result = addTeacherSubject(id, subjectDTO);
             if (result.getStatusCode() == HttpStatus.BAD_REQUEST) {

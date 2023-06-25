@@ -25,3 +25,8 @@ export const DATE_TO_WEEKDAY: any = {
     "2023-05-26": "პარასკევი",
     "2023-05-27": "შაბათი"
 };
+
+export const USER_TYPE_IN_GEORGIAN: any = {
+    "TEACHER": "მასწავლებელი",
+    "STUDENT": "მოსწავლე"
+};

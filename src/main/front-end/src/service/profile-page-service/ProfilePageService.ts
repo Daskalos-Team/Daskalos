@@ -30,3 +30,18 @@ export const updateSubjects = async (userId: number, type: string, subjects: any
             console.log(err);
         });
 };
+
+export const updateUser = async (userId: number, type: string, userData: any): Promise<any> => {
+    const userType = type.toLowerCase();
+    const promise = axios.post(`${USER_DATA_ENDPOINT}update_${userType}`, userData, {
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        }
+    });
+    return promise.then(response => {
+        // ok, updated.
+    })
+        .catch(err => {
+            console.log(err);
+        });
+};

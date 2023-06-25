@@ -81,6 +81,12 @@ public class UserService {
         Teacher updatedTeacherData = DaoDtoConversionUtils.toTeacher(
                 TeacherDTO.builder().
                         ID(teacherDTO.getID()).
+                        name(teacherDTO.getName() != null ? teacherDTO.getName() : existingData.getName()).
+                        surname(teacherDTO.getSurname() != null ? teacherDTO.getSurname() : existingData.getSurname()).
+                        password(teacherDTO.getPassword() != null ? teacherDTO.getPassword() : existingData.getPassword()).
+                        email(teacherDTO.getEmail() != null ? teacherDTO.getEmail() : existingData.getEmail()).
+                        profileImage(teacherDTO.getProfileImage() != null ? teacherDTO.getProfileImage() : existingData.getProfileImage()).
+                        userType(teacherDTO.getUserType() != null ? teacherDTO.getUserType() : existingData.getUserType()).
                         phoneNumber(teacherDTO.getPhoneNumber() != null ? teacherDTO.getPhoneNumber() : existingData.getPhoneNumber()).
                         address(teacherDTO.getAddress() != null ? teacherDTO.getAddress() : existingData.getAddress()).
                         isOnPlace(teacherDTO.getIsOnPlace() != null ? teacherDTO.getIsOnPlace() : existingData.getIsOnPlace()).
@@ -90,6 +96,10 @@ public class UserService {
                         instaUrl(teacherDTO.getInstaUrl() != null ? teacherDTO.getInstaUrl() : existingData.getInstaUrl()).
                         twitterUrl(teacherDTO.getTwitterUrl() != null ? teacherDTO.getTwitterUrl() : existingData.getTwitterUrl()).
                         linkedinUrl(teacherDTO.getLinkedinUrl() != null ? teacherDTO.getLinkedinUrl() : existingData.getLinkedinUrl()).
+                        teachersExperience(teacherDTO.getTeachersExperience() != null ? teacherDTO.getTeachersExperience() : existingData.getTeachersExperience()).
+                        teacherRatings(teacherDTO.getTeacherRatings() != null ? teacherDTO.getTeacherRatings() : existingData.getTeacherRatings()).
+                        teacherSubjects(teacherDTO.getTeacherSubjects() != null ? teacherDTO.getTeacherSubjects() : existingData.getTeacherSubjects()).
+                        isFavoriteForLoggedInStudent(teacherDTO.getIsFavoriteForLoggedInStudent() != null ? teacherDTO.getIsFavoriteForLoggedInStudent() : existingData.getIsFavoriteForLoggedInStudent()).
                         build());
         teacherRepository.save(updatedTeacherData);
     }
@@ -99,6 +109,12 @@ public class UserService {
         Student updatedStudentData = DaoDtoConversionUtils.toStudent(
                 StudentDTO.builder().
                         ID(studentDTO.getID()).
+                        name(studentDTO.getName() != null ? studentDTO.getName() : existingData.getName()).
+                        surname(studentDTO.getSurname() != null ? studentDTO.getSurname() : existingData.getSurname()).
+                        password(studentDTO.getPassword() != null ? studentDTO.getPassword() : existingData.getPassword()).
+                        email(studentDTO.getEmail() != null ? studentDTO.getEmail() : existingData.getEmail()).
+                        profileImage(studentDTO.getProfileImage() != null ? studentDTO.getProfileImage() : existingData.getProfileImage()).
+                        userType(studentDTO.getUserType() != null ? studentDTO.getUserType() : existingData.getUserType()).
                         phoneNumber(studentDTO.getPhoneNumber() != null ? studentDTO.getPhoneNumber() : existingData.getPhoneNumber()).
                         userAddress(studentDTO.getUserAddress() != null ? studentDTO.getUserAddress() : existingData.getUserAddress()).
                         onPlace(studentDTO.getOnPlace() != null ? studentDTO.getOnPlace() : existingData.getOnPlace()).
@@ -108,6 +124,8 @@ public class UserService {
                         instaUrl(studentDTO.getInstaUrl() != null ? studentDTO.getInstaUrl() : existingData.getInstaUrl()).
                         twitterUrl(studentDTO.getTwitterUrl() != null ? studentDTO.getTwitterUrl() : existingData.getTwitterUrl()).
                         linkedinUrl(studentDTO.getLinkedinUrl() != null ? studentDTO.getLinkedinUrl() : existingData.getLinkedinUrl()).
+                        studentSubjects(studentDTO.getStudentSubjects() != null ? studentDTO.getStudentSubjects() : existingData.getStudentSubjects()).
+                        studentFavouriteTeachers(studentDTO.getStudentFavouriteTeachers() != null ? studentDTO.getStudentFavouriteTeachers() : existingData.getStudentFavouriteTeachers()).
                         build());
         studentRepository.save(updatedStudentData);
     }
@@ -134,10 +152,6 @@ public class UserService {
 
     public void removeSubject(Long userID, SubjectDTO subject) {
         subjectService.deleteUserSubject(userID, subject);
-    }
-
-    public void clearSubjects(Long userID) {
-        subjectService.clearUserSubjects(userID);
     }
 
     public StudentDTO getStudentDTO(Long studentID) {

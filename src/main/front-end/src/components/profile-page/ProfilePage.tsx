@@ -20,7 +20,7 @@ import {
     getUserData,
     PROFILE_IMAGE_DEFAULT_SIZE,
     SUBJECT_IN_ENGLISH,
-    updateSubjects
+    updateSubjects, updateUser, USER_TYPE_IN_GEORGIAN
 } from "../../service/profile-page-service";
 import "./ProfilePage.css";
 import { useParams } from "react-router-dom";
@@ -52,14 +52,16 @@ export const ProfilePage = (): React.JSX.Element => {
     useEffect(() => {
         getUserData(userId, userType).then(response => {
             if (response) {
+                console.log(response.data);
                 setUserData(response.data);
+                document.title = `${response.data.name} ${response.data.surname}`;
+                window.scrollTo(0, 0);
             }
         });
     }, []);
 
     useEffect(() => {
         if (userData) {
-            console.log(userData);
             let subjects = userType === "TEACHER" ? userData.teacherSubjects : userData.studentSubjects;
             subjects = subjects.map((userSubject: any) => {
                 return {
@@ -69,8 +71,7 @@ export const ProfilePage = (): React.JSX.Element => {
                 };
             });
             setUserSubjects(subjects);
-            document.title = `${userData.name} ${userData.surname}`;
-            window.scrollTo(0, 0);
+            updateUser(userId, userType, userData);
         }
     }, [userData]);
 
@@ -106,15 +107,15 @@ export const ProfilePage = (): React.JSX.Element => {
 
                     <div className="profile-page-profile-image-container">
                         <div style={profileImageStyle}>
-                            <ProfileImage width={profileImageSize} source={"../../ado.png"} />
+                            <ProfileImage width={profileImageSize} userData={userData} setUserData={setUserData} />
                         </div>
                         <div className={userDescriptionState}>
                             <div id="name-div">
-                                {"გიორგი ადიკაშვილი"}
+                                {`${userData.name} ${userData.surname}`}
                             </div>
                             <div className="user-short-description">
                                 <div id="role-div">
-                                    {"მასწავლებელი"}
+                                    {USER_TYPE_IN_GEORGIAN[userData.userType]}
                                 </div>
                                 <div id="rating-div">
                                     {"7.7"}
@@ -127,13 +128,11 @@ export const ProfilePage = (): React.JSX.Element => {
                         <div className="profile-page-first-area">
                             <div className="profile-page-first-area-left-side">
                                 <div className="title profile-page-title">
-                                    {"პროგრამული უზრუნველყოფის ინჟინერი, მათემატიკის მასწავლებელი"}
+                                    {userData.title ? userData.title : "მომხმარებელს არ გააჩნია მოკლე სათაური"}
                                 </div>
 
                                 <div className="subtitle profile-page-subtitle">
-                                    {"2019 წლიდან ვასწავლი მათემატიკას, დამატებით ვარ პროგრამისტი და " +
-                                  "შემიძლია პროგრამირების და კიდევ სხვა საინტერესო საგნების სწავლებაც, " +
-                                  "ორივეს ერთად თუ მოისურვებთ შემოგთავაზებთ გარკვეულ ფასდაკლებებს"}
+                                    {userData.description ? userData.description : "მომხმარებელს არ სურს გაჩვენოთ მოკლე აღწერა ან რაიმე ზოგადი კომენტარი"}
                                 </div>
 
                                 <div className="profile-page-socials">

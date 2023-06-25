@@ -7,7 +7,8 @@ import {
     checkUserWithEmail,
     isEmptyInput,
     loginWithGoogle,
-    registration, sendVerificationCode,
+    registration,
+    sendVerificationCode,
     standardLogin
 } from "../../service/authorization-page-service";
 import "./AuthorizationPage.css";
@@ -17,7 +18,7 @@ import { STANDARD_LOAD_TIME } from "../../service/common-service";
 
 export const AuthorizationPage = (props: AuthorizationPageProps): React.JSX.Element => {
     const [user, setUser]: any = useState(undefined);
-    const [userType, setUserType] = useState("Teacher");
+    const [userType, setUserType] = useState("TEACHER");
     const [loginOption, setLoginOption] = useState(true);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -110,7 +111,7 @@ export const AuthorizationPage = (props: AuthorizationPageProps): React.JSX.Elem
             setVerifierContent("password");
             return;
         }
-        registration(email, password, name, surname, userType);
+        registration(email, password, name, surname, userType, props.logInFn);
         hideVerifierPopup();
     };
 
@@ -192,8 +193,8 @@ export const AuthorizationPage = (props: AuthorizationPageProps): React.JSX.Elem
                                     onChange={e => setUserType(e.target.value)}
                                     value={userType}
                                 >
-                                    <option value="Teacher">მასწავლებელი</option>
-                                    <option value="Student">მოსწავლე</option>
+                                    <option value="TEACHER">მასწავლებელი</option>
+                                    <option value="STUDENT">მოსწავლე</option>
                                 </select>
                             </div>
                             :

@@ -28,6 +28,8 @@ public class TeacherDTO {
 
     private String email;
 
+    private String profileImage;
+
     private UserType userType;
 
     private String phoneNumber;

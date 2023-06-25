@@ -3,18 +3,26 @@ import "./styles/ProfileImage.css";
 import ImageUploading from "react-images-uploading";
 
 export const ProfileImage = (props: any): React.JSX.Element => {
-    const { width, source } = props;
-    const [image, setImage] = React.useState(source);
+    const defaultImage = () => {
+        let icon = "../../images/news-feed-page/";
+        icon += userData.userType === "TEACHER" ? "TeachersIcon.png" : "StudentIcon.png";
+        return icon;
+    };
+    const { width, userData, setUserData } = props;
+    const [profileImage, setProfileImage] = React.useState(userData.profileImage || defaultImage());
 
     const onChange = (newImage: any) => {
-        setImage(newImage["0"]["data_url"]);
+        const newUrl = newImage["0"]["data_url"];
+        setProfileImage(newUrl);
+        const user = {...userData, profileImage: newUrl};
+        setUserData(user);
     };
 
     return (
         <React.Fragment>
             <ImageUploading
                 multiple={false}
-                value={image}
+                value={profileImage}
                 onChange={onChange}
                 dataURLKey="data_url"
             >
@@ -23,7 +31,7 @@ export const ProfileImage = (props: any): React.JSX.Element => {
                 }) => (
                     <div className="image-container">
                         <img src="../../upload.png" className="add-icon" onClick={onImageUpload} alt={"add icon"}/>
-                        <img src={image} alt="profile image" className="profile-image" width={width} height={width} onClick={onImageUpload} />
+                        <img src={profileImage} alt="profile image" className="profile-image" width={width} height={width} onClick={onImageUpload} />
                     </div>
                 )}
             </ImageUploading>

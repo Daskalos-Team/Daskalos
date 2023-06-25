@@ -110,7 +110,7 @@ export const checkAndSendConfirmation = async (email: string, password: string, 
     });
 };
 
-export const registration = (email: string, password: string, name: string, surname: string, userType: string) => {
+export const registration = (email: string, password: string, name: string, surname: string, userType: string, logInFn: (userId: number, userType: string) => void) => {
     const userInfo = {
         email,
         password,
@@ -123,7 +123,7 @@ export const registration = (email: string, password: string, name: string, surn
             "Content-type": "application/json; charset=UTF-8"
         }
     })
-        .then(response => alert(NOTIFICATION_MAP[response.data] || ""))
+        .then(response => standardLogin(email, password, false, logInFn))
         .catch(err => {
             alert(NOTIFICATION_MAP[err.response.data] || "");
             console.log(err);

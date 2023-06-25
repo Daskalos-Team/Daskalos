@@ -1,4 +1,4 @@
-const ENDPOINT = "https://daskalos.herokuapp.com/"; // local: "http://localhost:8080/"
+const ENDPOINT = "http://localhost:8080/"; // local: "http://localhost:8080/"
 
 export const USER_ENDPOINT = ENDPOINT + "user/";
 export const NEWS_FEED_ENDPOINT = ENDPOINT + "news_feed/";
