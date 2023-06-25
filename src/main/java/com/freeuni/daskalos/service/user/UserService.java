@@ -11,14 +11,13 @@ import com.freeuni.daskalos.service.experience.ExperienceService;
 import com.freeuni.daskalos.service.rating.RatingService;
 import com.freeuni.daskalos.service.subject.SubjectService;
 import com.freeuni.daskalos.utils.DaoDtoConversionUtils;
+import com.freeuni.daskalos.utils.UserUtils;
 import com.freeuni.daskalos.utils.exceptions.UserNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.OptionalInt;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -168,18 +167,10 @@ public class UserService {
         favouriteTeacherRepository.deleteByStudentIDAndTeacherID(studentID, teacherID);
     }
 
-    public Map.Entry<Integer, Integer> getTeacherMinMaxPrice(Long teacherID) {
-        List<SubjectDTO> teacherSubjects = subjectService.getUserSubjects(teacherID);
-        if (teacherSubjects.isEmpty()) {
-            return Map.entry(Integer.MAX_VALUE, Integer.MIN_VALUE);
-        }
-        OptionalInt minPrice = teacherSubjects.stream().mapToInt(SubjectDTO::getPrice).min();
-        OptionalInt maxPrice = teacherSubjects.stream().mapToInt(SubjectDTO::getPrice).max();
-        if (minPrice.isEmpty() || maxPrice.isEmpty()) {
-            int minP = minPrice.isEmpty() ? Integer.MIN_VALUE : minPrice.getAsInt();
-            int maxP = maxPrice.isEmpty() ? Integer.MAX_VALUE : maxPrice.getAsInt();
-            return Map.entry(minP, maxP);
-        }
-        return Map.entry(minPrice.getAsInt(), maxPrice.getAsInt());
+    public List<TeacherDTO> getAllTeachersInRadius(UserAddressDTO address, int radius) {
+        List<TeacherDTO> allTeachers = getAllTeachers();
+        return allTeachers.stream()
+                .filter(teacher -> UserUtils.isInRadius(teacher.getAddress(), address, radius))
+                .collect(Collectors.toList());
     }
 }
