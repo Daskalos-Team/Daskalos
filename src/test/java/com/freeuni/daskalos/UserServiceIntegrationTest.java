@@ -165,11 +165,13 @@ public class UserServiceIntegrationTest {
                 name("Aero Engineering").
                 description("Best lecturer in the world, Adrian Newey").
                 price(100).
+                days(new ArrayList<>()).
                 build();
         subjectDTO2 = SubjectDTO.builder().
                 name("Mechanical Engineering").
                 description("All the engineering principles in one course").
                 price(200).
+                days(new ArrayList<>()).
                 build();
     }
 

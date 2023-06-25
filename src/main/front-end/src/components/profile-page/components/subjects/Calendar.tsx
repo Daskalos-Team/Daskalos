@@ -53,8 +53,8 @@ export const Calendar = (props: any): React.JSX.Element => {
             const allSubjects = userSubject.days.map((day: any) => {
                 return {
                     id: DayPilot.guid(),
-                    text: userSubject.title,
-                    backColor: hexToRgba(SUBJECT_TO_COLOR[userSubject.title], 0.5),
+                    text: userSubject.name,
+                    backColor: hexToRgba(SUBJECT_TO_COLOR[userSubject.name], 0.5),
                     resource: "vaaax",
                     start: day.start,
                     end: day.end
@@ -130,7 +130,7 @@ export const Calendar = (props: any): React.JSX.Element => {
     };
 
     const containsSubject = (): boolean => {
-        return subjects.some((userSubject: any) => userSubject.title === subject);
+        return subjects.some((userSubject: any) => userSubject.name === subject);
     };
 
     const containsDay = (userSubject: any, newDay: string): boolean => {
@@ -152,11 +152,10 @@ export const Calendar = (props: any): React.JSX.Element => {
         }
         if (!containsSubject()) {
             const newSubject = {
-                title: subject,
+                name: subject,
                 description,
-                image: `subjects/${SUBJECT_IN_ENGLISH[subject]}.png`,
+                image: `../../subjects/${SUBJECT_IN_ENGLISH[subject]}.png`,
                 linkText: "იხილეთ დეტალები",
-                link: "https://github.com",
                 price,
                 days: [
                     {
@@ -169,7 +168,7 @@ export const Calendar = (props: any): React.JSX.Element => {
         } else {
             let containsCurrentDay = false;
             subjects.forEach((userSubject: any) => {
-                if (userSubject.title === subject) {
+                if (userSubject.name === subject) {
                     if (containsDay(userSubject, args.start.value)) {
                         containsCurrentDay = true;
                         return;
@@ -177,7 +176,7 @@ export const Calendar = (props: any): React.JSX.Element => {
                     const updatedDays = [...userSubject.days, { start: args.start.value, end: args.end.value }];
                     const updatedSubject = {...userSubject, days: updatedDays};
                     const otherSubjects = subjects.filter((sub: any) => {
-                        return sub.title !== userSubject.title;
+                        return sub.name !== userSubject.name;
                     });
                     const updatedSubjects = [updatedSubject, ...otherSubjects];
 
@@ -209,10 +208,10 @@ export const Calendar = (props: any): React.JSX.Element => {
         const currSubject = args.e.data;
 
         subjects.forEach((userSubject: any) => {
-            if (userSubject.title === currSubject["text"]) {
+            if (userSubject.name === currSubject["text"]) {
                 if (userSubject.days.length === 1) { // only 1 time left
                     const updatedSubjects = subjects.filter((sub: any) => {
-                        return sub.title !== userSubject.title;
+                        return sub.name !== userSubject.name;
                     });
                     setSubjects(updatedSubjects);
                 } else {
@@ -222,7 +221,7 @@ export const Calendar = (props: any): React.JSX.Element => {
                     const updatedSubject = {...userSubject, days: updatedDays};
 
                     const otherSubjects = subjects.filter((sub: any) => {
-                        return sub.title !== userSubject.title;
+                        return sub.name !== userSubject.name;
                     });
                     const updatedSubjects = [updatedSubject, ...otherSubjects];
 
@@ -243,7 +242,7 @@ export const Calendar = (props: any): React.JSX.Element => {
 
         let restrictSameDay = false;
         subjects.forEach((userSubject: any) => {
-            if (userSubject.title === currSubject["text"]) {
+            if (userSubject.name === currSubject["text"]) {
                 if (!isResize && oldStart.split("T")[0] != newStart.split("T")[0] && containsDay(userSubject, newStart)) {
                     restrictSameDay = true;
                     return;
@@ -258,7 +257,7 @@ export const Calendar = (props: any): React.JSX.Element => {
                 const updatedSubject = {...userSubject, days: updatedDays};
 
                 const otherSubjects = subjects.filter((sub: any) => {
-                    return sub.title !== userSubject.title;
+                    return sub.name !== userSubject.name;
                 });
                 const updatedSubjects = [updatedSubject, ...otherSubjects];
 

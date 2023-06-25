@@ -8,7 +8,7 @@ export const INFO = {
 
     subjects: [
         {
-            title: "მათემატიკა",
+            name: "მათემატიკა",
             description: "შეგასწავლით მათემატიკას 10-12 კლასელებს",
             image: "../../subjects/math.png",
             linkText: "იხილეთ დეტალები",
@@ -26,7 +26,7 @@ export const INFO = {
             ]
         },
         {
-            title: "ფიზიკა",
+            name: "ფიზიკა",
             description: "ფიზიკის სწავლა არასდროს ყოფილა ასეთი მარტივი",
             image: "../../subjects/physics.png",
             linkText: "იხილეთ დეტალები",
@@ -41,7 +41,7 @@ export const INFO = {
         },
 
         {
-            title: "ქიმია",
+            name: "ქიმია",
             description: "ქიმია ჩემი სიყვარულია, ვეცდები ეს სიყვარული თქვენც გაგიზიაროთ",
             image: "../../subjects/chemistry.png",
             linkText: "იხილეთ დეტალები",
@@ -56,7 +56,7 @@ export const INFO = {
         },
 
         {
-            title: "ბიოლოგია",
+            name: "ბიოლოგია",
             description: "უნივერსიტეტში ნორმალურად ვისწავლე, ისე კი მასწი მაძულებდა სკოლაში თუმცა რამეს ვიზამთ",
             image: "../../subjects/biology.png",
             linkText: "იხილეთ დეტალები",
@@ -71,7 +71,7 @@ export const INFO = {
         },
 
         {
-            title: "ისტორია",
+            name: "ისტორია",
             description: "აზრზე არ ვარ ისტორიის მარა ფული მჭირდება და გთხოვთ შემეხმიანოთ",
             image: "../../subjects/history.png",
             linkText: "იხილეთ დეტალები",

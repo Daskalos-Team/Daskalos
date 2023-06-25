@@ -45,7 +45,7 @@ export const AuthorizationPage = (props: AuthorizationPageProps): React.JSX.Elem
     }, [user]);
 
     useEffect(() => {
-        console.log("");
+        // login option changed
     }, [loginOption]);
 
     const handleSwitchChange = (option: boolean) => {

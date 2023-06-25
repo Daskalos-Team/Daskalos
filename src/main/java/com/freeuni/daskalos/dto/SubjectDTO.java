@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
+import java.util.List;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Data
 @NoArgsConstructor
@@ -21,4 +23,6 @@ public class SubjectDTO {
     private String description;
 
     private Integer price;
+
+    private List<SubjectScheduleDTO> days;
 }

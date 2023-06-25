@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/user_data")
 public class UserController implements ErrorController {
@@ -103,7 +105,19 @@ public class UserController implements ErrorController {
         }
     }
 
-    @PostMapping("/add_subject/{id}")
+    @PostMapping("/add_teacher_subjects/{id}")
+    public ResponseEntity<?> addTeacherSubjects(@PathVariable long id, @RequestBody List<SubjectDTO> subjects) {
+        userService.clearSubjects(id);
+        for (SubjectDTO subjectDTO : subjects) {
+            ResponseEntity<SubjectDTO> result = addTeacherSubject(id, subjectDTO);
+            if (result.getStatusCode() == HttpStatus.BAD_REQUEST) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/add_teacher_subject/{id}")
     public ResponseEntity<SubjectDTO> addTeacherSubject(@PathVariable long id, @RequestBody SubjectDTO subject) {
         try {
             SubjectDTO subjectDTO = userService.addSubject(id, subject);
@@ -114,7 +128,7 @@ public class UserController implements ErrorController {
         }
     }
 
-    @PostMapping("/remove_subject/{id}")
+    @PostMapping("/remove_teacher_subject/{id}")
     public ResponseEntity<TeacherDTO> removeTeacherSubject(@PathVariable long id, @RequestBody SubjectDTO subject) {
         try {
             userService.removeSubject(id, subject);

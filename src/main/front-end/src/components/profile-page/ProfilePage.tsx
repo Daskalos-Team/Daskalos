@@ -16,7 +16,12 @@ import {
     Calendar
 } from "./components";
 import { INFO, comments } from "./example-data";
-import { getUserData, PROFILE_IMAGE_DEFAULT_SIZE } from "../../service/profile-page-service";
+import {
+    getUserData,
+    PROFILE_IMAGE_DEFAULT_SIZE,
+    SUBJECT_IN_ENGLISH,
+    updateSubjects
+} from "../../service/profile-page-service";
 import "./ProfilePage.css";
 import { useParams } from "react-router-dom";
 
@@ -30,8 +35,8 @@ export const ProfilePage = (): React.JSX.Element => {
     const [userDescriptionState, setUserDescriptionState] = useState("user-description");
 
     // Data
-    const [userData, setUserData] = useState({});
-    const [userSubjects, setUserSubjects] = useState(INFO.subjects); // Subjects state
+    const [userData, setUserData] = useState<any>(undefined);
+    const [userSubjects, setUserSubjects] = useState(undefined); // Subjects state
 
     // large or small size during scroll
     const profileImageStyle: any = {
@@ -45,17 +50,38 @@ export const ProfilePage = (): React.JSX.Element => {
     };
 
     useEffect(() => {
-        getUserData(userId, userType).then(data => {
-            if (data) {
-                setUserData(data);
+        getUserData(userId, userType).then(response => {
+            if (response) {
+                setUserData(response.data);
             }
         });
-        document.title = "პროფილი";
-        window.scrollTo(0, 0);
     }, []);
 
-    return (
-        <React.Fragment>
+    useEffect(() => {
+        if (userData) {
+            console.log(userData);
+            let subjects = userType === "TEACHER" ? userData.teacherSubjects : userData.studentSubjects;
+            subjects = subjects.map((userSubject: any) => {
+                return {
+                    ...userSubject,
+                    image: `../../subjects/${SUBJECT_IN_ENGLISH[userSubject.name]}.png`,
+                    linkText: "იხილეთ დეტალები"
+                };
+            });
+            setUserSubjects(subjects);
+            document.title = `${userData.name} ${userData.surname}`;
+            window.scrollTo(0, 0);
+        }
+    }, [userData]);
+
+    useEffect(() => {
+        if (userSubjects) {
+            updateSubjects(userId, userType, userSubjects);
+        }
+    }, [userSubjects]);
+
+    return (<>
+        {userSubjects ? (<React.Fragment>
             <div className="page-content">
                 <NavBar active="profile" />
 
@@ -106,8 +132,8 @@ export const ProfilePage = (): React.JSX.Element => {
 
                                 <div className="subtitle profile-page-subtitle">
                                     {"2019 წლიდან ვასწავლი მათემატიკას, დამატებით ვარ პროგრამისტი და " +
-                                      "შემიძლია პროგრამირების და კიდევ სხვა საინტერესო საგნების სწავლებაც, " +
-                                      "ორივეს ერთად თუ მოისურვებთ შემოგთავაზებთ გარკვეულ ფასდაკლებებს"}
+                                  "შემიძლია პროგრამირების და კიდევ სხვა საინტერესო საგნების სწავლებაც, " +
+                                  "ორივეს ერთად თუ მოისურვებთ შემოგთავაზებთ გარკვეულ ფასდაკლებებს"}
                                 </div>
 
                                 <div className="profile-page-socials">
@@ -166,13 +192,13 @@ export const ProfilePage = (): React.JSX.Element => {
 
                             <div className="profile-page-first-area-right-side">
                                 <div className="profile-page-calendar-container">
-                                    <Calendar subjects={userSubjects} setSubjects={setUserSubjects}/>
+                                    <Calendar subjects={userSubjects} setSubjects={setUserSubjects} />
                                 </div>
                             </div>
                         </div>
 
                         <div className="profile-page-subjects">
-                            <Subjects subjects={userSubjects}/>
+                            <Subjects subjects={userSubjects} />
                         </div>
 
                         <div className="profile-page-after-title">
@@ -200,6 +226,17 @@ export const ProfilePage = (): React.JSX.Element => {
                     </div>
                 </div>
             </div>
-        </React.Fragment>
+        </React.Fragment>) : (
+            <div className="loader-container">
+                <div className="spinner-label-background"/>
+                <div className="content">
+                    <h2>დასკალოსი</h2>
+                    <h2>დასკალოსი</h2>
+                </div>
+                <div className="spinner"/>
+            </div>
+        )
+        }
+    </>
     );
 };

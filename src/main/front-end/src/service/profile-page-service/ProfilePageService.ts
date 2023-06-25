@@ -9,7 +9,22 @@ export const getUserData = async (userId: number, type: string): Promise<any> =>
         }
     });
     return promise.then(response => {
-        console.log(response);
+        return response;
+    })
+        .catch(err => {
+            console.log(err);
+        });
+};
+
+export const updateSubjects = async (userId: number, type: string, subjects: any): Promise<any> => {
+    const userType = type.toLowerCase();
+    const promise = axios.post(`${USER_DATA_ENDPOINT}add_${userType}_subjects/${userId}`, subjects, {
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        }
+    });
+    return promise.then(response => {
+        // ok, updated.
     })
         .catch(err => {
             console.log(err);

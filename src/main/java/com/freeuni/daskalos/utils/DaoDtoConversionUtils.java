@@ -5,6 +5,7 @@ import com.freeuni.daskalos.repository.embeddables.UserAddress;
 import com.freeuni.daskalos.repository.entities.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class DaoDtoConversionUtils {
 
@@ -28,6 +29,22 @@ public class DaoDtoConversionUtils {
                 jobDescription(experience.getJobDescription()).
                 startDate(experience.getStartDate()).
                 endDate(experience.getEndDate()).
+                build();
+    }
+
+    public static SubjectScheduleDTO toSubjectScheduleDTO(SubjectSchedule schedule) {
+        return SubjectScheduleDTO.builder().
+                ID(schedule.getID()).
+                start(schedule.getStart()).
+                end(schedule.getEnd()).
+                build();
+    }
+
+    public static SubjectSchedule toSubjectSchedule(SubjectScheduleDTO scheduleDTO) {
+        return SubjectSchedule.builder().
+                ID(scheduleDTO.getID()).
+                start(scheduleDTO.getStart()).
+                end(scheduleDTO.getEnd()).
                 build();
     }
 
@@ -67,12 +84,16 @@ public class DaoDtoConversionUtils {
                 name(subject.getName()).
                 description(subject.getDescription()).
                 price(subject.getPrice()).
+                days(subject.getDays().stream().map(DaoDtoConversionUtils::toSubjectScheduleDTO).collect(Collectors.toList())).
                 build();
     }
 
     public static Subject toSubject(SubjectDTO subjectDTO) {
         return new Subject(subjectDTO.getID(),
-                subjectDTO.getName(), subjectDTO.getDescription(), subjectDTO.getPrice());
+                subjectDTO.getName(),
+                subjectDTO.getDescription(),
+                subjectDTO.getPrice(),
+                subjectDTO.getDays().stream().map(DaoDtoConversionUtils::toSubjectSchedule).collect(Collectors.toList()));
     }
 
     public static UserAddressDTO toUserAddressDTO(UserAddress userAddress) {

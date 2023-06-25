@@ -9,7 +9,9 @@ import java.util.List;
 @Repository
 public interface UserToSubjectRepository extends JpaRepository<UserToSubject, Long> {
 
-    List<UserToSubject> findAllByUserID(Long teacherID);
+    List<UserToSubject> findAllByUserID(Long userID);
 
-    void deleteBySubjectIDAndUserID(Long teacherID, Long subjectID);
+    void deleteAllByUserID(Long userID);
+
+    void deleteBySubjectIDAndUserID(Long userID, Long subjectID);
 }

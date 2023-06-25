@@ -136,6 +136,10 @@ public class UserService {
         subjectService.deleteUserSubject(userID, subject);
     }
 
+    public void clearSubjects(Long userID) {
+        subjectService.clearUserSubjects(userID);
+    }
+
     public StudentDTO getStudentDTO(Long studentID) {
         Optional<Student> student = studentRepository.findById(studentID);
         if (student.isEmpty()) {

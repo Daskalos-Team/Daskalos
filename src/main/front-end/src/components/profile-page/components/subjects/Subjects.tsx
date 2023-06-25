@@ -11,7 +11,7 @@ export const Subjects = (props: any): React.JSX.Element => {
                 <div className="all-subjects-subject" key={index}>
                     <Subject
                         logo={subject.image}
-                        title={subject.title}
+                        title={subject.name}
                         description={subject.description}
                         linkText={subject.linkText}
                         price={subject.price}
