@@ -181,7 +181,7 @@ export const NewsFeedPage = (props: NewsFeedPageProps): React.JSX.Element => {
                         <ProfilePicture src="/images/news-feed-page/AccountIcon.png" alt="Profile Picture"/>
                         <UserName>სახელი გვარი</UserName>
                     </ProfileButtonMenuTop>
-                    <ProfileButtonMenuOption onClick={setTime(SMALL_LOAD_TIME)}><Link to={"" + props.userId}>ჩემი პროფილი</Link></ProfileButtonMenuOption>
+                    <ProfileButtonMenuOption onClick={setTime(SMALL_LOAD_TIME)}><Link to={`${props.userId}/${props.userType}`}>ჩემი პროფილი</Link></ProfileButtonMenuOption>
                     <ProfileButtonMenuOption onClick={() => LogOut()}>ანგარიშიდან გამოსვლა</ProfileButtonMenuOption>
                 </ProfileButtonMenu>
             </Header>

@@ -16,20 +16,21 @@ import {
     Calendar
 } from "./components";
 import { INFO, comments } from "./example-data";
-import { PROFILE_IMAGE_DEFAULT_SIZE } from "../../service/profile-page-service";
+import { getUserData, PROFILE_IMAGE_DEFAULT_SIZE } from "../../service/profile-page-service";
 import "./ProfilePage.css";
 import { useParams } from "react-router-dom";
 
 export const ProfilePage = (): React.JSX.Element => {
+    const { userId, userType }: any = useParams();
+
     // TODO if needed in future
     const [stayProfileImage, setStayProfileImage] = useState(false);
     const [profileImageSize, setProfileImageSize] = useState(PROFILE_IMAGE_DEFAULT_SIZE);
     const [oldProfileImageSize, setOldProfileImageSize] = useState(PROFILE_IMAGE_DEFAULT_SIZE);
     const [userDescriptionState, setUserDescriptionState] = useState("user-description");
 
-    const user = useParams();
-    console.log(user);
-
+    // Data
+    const [userData, setUserData] = useState({});
     const [userSubjects, setUserSubjects] = useState(INFO.subjects); // Subjects state
 
     // large or small size during scroll
@@ -44,6 +45,11 @@ export const ProfilePage = (): React.JSX.Element => {
     };
 
     useEffect(() => {
+        getUserData(userId, userType).then(data => {
+            if (data) {
+                setUserData(data);
+            }
+        });
         document.title = "პროფილი";
         window.scrollTo(0, 0);
     }, []);
@@ -74,7 +80,7 @@ export const ProfilePage = (): React.JSX.Element => {
 
                     <div className="profile-page-profile-image-container">
                         <div style={profileImageStyle}>
-                            <ProfileImage width={profileImageSize} source={"ado.png"} />
+                            <ProfileImage width={profileImageSize} source={"../../ado.png"} />
                         </div>
                         <div className={userDescriptionState}>
                             <div id="name-div">

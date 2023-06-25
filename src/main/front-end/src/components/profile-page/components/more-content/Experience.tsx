@@ -13,7 +13,7 @@ export const Experience = (): React.JSX.Element => {
                     <div className="experiences-body">
                         <div className="experience">
                             <img
-                                src="Microsoft.png"
+                                src="../../Microsoft.png"
                                 alt="twitter"
                                 className="experience-image"
                             />
@@ -26,7 +26,7 @@ export const Experience = (): React.JSX.Element => {
 
                         <div className="experience">
                             <img
-                                src="twitter.png"
+                                src="../../twitter.png"
                                 alt="facebook"
                                 className="experience-image"
                             />

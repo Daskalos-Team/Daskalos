@@ -10,7 +10,7 @@ export const INFO = {
         {
             title: "მათემატიკა",
             description: "შეგასწავლით მათემატიკას 10-12 კლასელებს",
-            image: "subjects/math.png",
+            image: "../../subjects/math.png",
             linkText: "იხილეთ დეტალები",
             link: "https://github.com",
             price: 123.1,
@@ -28,7 +28,7 @@ export const INFO = {
         {
             title: "ფიზიკა",
             description: "ფიზიკის სწავლა არასდროს ყოფილა ასეთი მარტივი",
-            image: "subjects/physics.png",
+            image: "../../subjects/physics.png",
             linkText: "იხილეთ დეტალები",
             link: "https://github.com",
             price: 100,
@@ -43,7 +43,7 @@ export const INFO = {
         {
             title: "ქიმია",
             description: "ქიმია ჩემი სიყვარულია, ვეცდები ეს სიყვარული თქვენც გაგიზიაროთ",
-            image: "subjects/chemistry.png",
+            image: "../../subjects/chemistry.png",
             linkText: "იხილეთ დეტალები",
             link: "https://github.com",
             price: 80,
@@ -58,7 +58,7 @@ export const INFO = {
         {
             title: "ბიოლოგია",
             description: "უნივერსიტეტში ნორმალურად ვისწავლე, ისე კი მასწი მაძულებდა სკოლაში თუმცა რამეს ვიზამთ",
-            image: "subjects/biology.png",
+            image: "../../subjects/biology.png",
             linkText: "იხილეთ დეტალები",
             link: "https://github.com",
             price: 70,
@@ -73,7 +73,7 @@ export const INFO = {
         {
             title: "ისტორია",
             description: "აზრზე არ ვარ ისტორიის მარა ფული მჭირდება და გთხოვთ შემეხმიანოთ",
-            image: "subjects/history.png",
+            image: "../../subjects/history.png",
             linkText: "იხილეთ დეტალები",
             link: "https://github.com",
             price: 20,

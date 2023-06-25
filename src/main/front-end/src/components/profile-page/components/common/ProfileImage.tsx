@@ -22,7 +22,7 @@ export const ProfileImage = (props: any): React.JSX.Element => {
                     onImageUpload
                 }) => (
                     <div className="image-container">
-                        <img src="upload.png" className="add-icon" onClick={onImageUpload} alt={"add icon"}/>
+                        <img src="../../upload.png" className="add-icon" onClick={onImageUpload} alt={"add icon"}/>
                         <img src={image} alt="profile image" className="profile-image" width={width} height={width} onClick={onImageUpload} />
                     </div>
                 )}

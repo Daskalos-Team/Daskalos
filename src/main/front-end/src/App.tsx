@@ -41,7 +41,7 @@ function App() {
                     <Route path="/" element={<MainPage/>}>
                         <Route path="*" element={<Navigate to="/" replace={true} />} />
                     </Route>
-                    <Route path=":userId" element={<ProfilePage />} />
+                    <Route path=":userId/:userType/" element={<ProfilePage />} />
                 </Routes>
             </BrowserRouter>
         </AppContext.Provider>
