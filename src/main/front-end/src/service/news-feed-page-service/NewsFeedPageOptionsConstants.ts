@@ -94,6 +94,8 @@ export interface ProfileButtonMenuProps {
 export interface NewsFeedPageProps {
     userId: number;
     userType: string;
+    userName: string;
+    userSurname: string;
 }
 
 export interface TopTeacherData {

@@ -318,7 +318,7 @@ const FiltersNumberField = styled.input`
   padding-bottom: 18px;
   border-width: 0;
   padding-inline: 5px;
-  font-family: "Noto Serif Georgian";
+  font-family: sans-serif;
   text-align: center;
 
   &:hover {
@@ -329,7 +329,7 @@ const FiltersNumberField = styled.input`
 const FiltersDash = styled.p`
   width: fit-content;
   font-size: 16px;
-  font-family: "Noto Serif Georgian";
+  font-family: sans-serif;
   text-align: center;
   line-height: 48px;
 `;

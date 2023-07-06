@@ -33,7 +33,7 @@ export const Recommendation = (props: RecommendationProps): React.JSX.Element =>
                     onClick={() => SelectRecommendation()}/>
                 <RecommendationTopRight>
                     <Name onClick={() => SelectRecommendation()}>{props.name + " " + props.surname}</Name>
-                    <SubjectsLabel>საგნები</SubjectsLabel>
+                    <UserTypeLabel>{props.userType == "STUDENT" ? "სტუდენტი" : "მასწავლებელი"}</UserTypeLabel>
                     <SubjectList>
                         {props.subjects.map(s => (
                             <Subject key={s}>{s}</Subject>
@@ -148,12 +148,12 @@ const Name = styled.p`
   cursor: pointer;
 `;
 
-const SubjectsLabel = styled.p`
+const UserTypeLabel = styled.p`
   width: 100%;
   height: 18%;
   font-size: 19px;
   font-weight: 600;
-  font-family: Inter;
+  font-family: sans-serif;
   text-transform: uppercase;
   box-sizing: border-box;
   cursor: default;
@@ -182,7 +182,7 @@ const DescriptionLabel = styled.div`
   margin-left: 2px;
   font-size: 1em;
   font-weight: 600;
-  font-family: Inter;
+  font-family: sans-serif;
   text-transform: uppercase;
   box-sizing: border-box;
   cursor: default;
@@ -194,7 +194,7 @@ const DescriptionTextField = styled(CustomScrollbarComponent)<RecommendationScal
   margin: 5px 0 5px 0;
   padding: 5px;
   font-size: ${props => 1 / Math.pow(props.rootScale, 0.55)}rem;
-  font-family: Inter;
+  font-family: sans-serif;
   overflow-y: auto;
   word-wrap: break-word;
   border-left: 2px solid ${NewsFeedPageColorPalette.border};

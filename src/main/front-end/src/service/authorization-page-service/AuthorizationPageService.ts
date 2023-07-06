@@ -8,7 +8,7 @@ import {
 import emailjs from "@emailjs/browser";
 import { NOTIFICATION_MAP } from "./AuthorizationPageServiceConstants";
 
-export const loginWithGoogle = (user: any, logInFn: (userId: number, userType: string) => void) => {
+export const loginWithGoogle = (user: any, logInFn: (userId: number, userType: string, userName: string, userSurname: string) => void) => {
     axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
         headers: {
             Authorization: `Bearer ${user.access_token}`,
@@ -19,7 +19,8 @@ export const loginWithGoogle = (user: any, logInFn: (userId: number, userType: s
     });
 };
 
-export const standardLogin = (email: string, password: string, google: boolean, logInFn: (userId: number, userType: string) => void) => {
+export const standardLogin = (email: string, password: string, google: boolean,
+    logInFn: (userId: number, userType: string, userName: string, userSurname: string) => void) => {
     if (isEmptyInput([email, password])) {
         alert("გთხოვთ შეიყვანოთ ყველა მონაცემი");
         return;
@@ -35,7 +36,7 @@ export const standardLogin = (email: string, password: string, google: boolean, 
         }
     })
         .then(response => {
-            logInFn(Number(response.data[1]), response.data[2]);
+            logInFn(Number(response.data[1]), response.data[2], response.data[3], response.data[4]);
         })
         .catch(err => {
             alert(NOTIFICATION_MAP[err.response.data] || "");

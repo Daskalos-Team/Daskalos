@@ -18,5 +18,5 @@ export const NOTIFICATION_MAP: any = {
 };
 
 export interface AuthorizationPageProps {
-    logInFn: (userId: number, userType: string) => void;
+    logInFn: (userId: number, userType: string, userName: string, userSurname: string) => void;
 }

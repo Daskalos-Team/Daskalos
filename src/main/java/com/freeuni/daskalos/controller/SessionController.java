@@ -27,7 +27,10 @@ public class SessionController {
     public ResponseEntity<UserMainDataDTO> getUserMainData() {
         UserType userType = SessionService.getUserType();
         Long userId = SessionService.getUserId();
-        UserMainDataDTO res = new UserMainDataDTO(userId, userType == null ? "" : userType.name());
+        String userName = SessionService.getUserName();
+        String userSurname = SessionService.getUserSurname();
+        UserMainDataDTO res = new UserMainDataDTO(userId, userType == null ? "" : userType.name(),
+                userName == null ? "" : userName, userSurname == null ? "" : userSurname);
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 }

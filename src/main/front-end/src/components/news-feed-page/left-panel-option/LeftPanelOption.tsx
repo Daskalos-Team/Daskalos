@@ -61,9 +61,9 @@ const OptionImg = styled.img`
 `;
 
 const OptionLabel = styled.p`
-  font-family: "Noto Serif Georgian";
+  font-family: sans-serif;
   width: 120px;
-  text-align: center;
+  text-align: start;
   font-size: 16px;
   line-height: 80px;
   margin-right: 15px;

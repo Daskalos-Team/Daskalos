@@ -134,7 +134,7 @@ const RatingStar = styled.img`
 const TopTeacherRatingNumeric = styled.p`
   font-size: 1.3em;
   font-weight: 600;
-  font-family: Inter;
+  font-family: sans-serif;
   grid-area: rating;
 `;
 

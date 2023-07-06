@@ -80,6 +80,9 @@ public class TeacherFilterProcessor implements FilterProcessor {
 
     private boolean checkNameSurname(TeacherDTO teacherDTO) {
         if (filter.getName() == null) {
+            if (filter.getSurname() == null) {
+                return true;
+            }
             return filter.getSurname().equals(teacherDTO.getSurname());
         }
         if (filter.getSurname() == null) {

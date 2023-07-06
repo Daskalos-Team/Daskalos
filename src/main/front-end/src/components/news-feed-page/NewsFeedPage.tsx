@@ -120,7 +120,7 @@ export const NewsFeedPage = (props: NewsFeedPageProps): React.JSX.Element => {
     };
 
     const LogOut = () => {
-        setUserMainData(-1, props.userType).then(_ => {
+        setUserMainData(-1, props.userType, "", "").then(_ => {
             window.location.reload();
         }).catch(err => console.log(err));
     };
@@ -171,7 +171,7 @@ export const NewsFeedPage = (props: NewsFeedPageProps): React.JSX.Element => {
                 <ProfileButtonMenu open={profileButtonMenuOpen} animation={profileButtonMenuAnimation}>
                     <ProfileButtonMenuTop>
                         <ProfilePicture src="/images/news-feed-page/AccountIcon.png" alt="Profile Picture"/>
-                        <UserName>სახელი გვარი</UserName>
+                        <UserName>{props.userName + " " + props.userSurname}</UserName>
                     </ProfileButtonMenuTop>
                     <ProfileButtonMenuOption>ჩემი პროფილი</ProfileButtonMenuOption>
                     <ProfileButtonMenuOption onClick={() => LogOut()}>ანგარიშიდან გამოსვლა</ProfileButtonMenuOption>
@@ -375,7 +375,7 @@ const ProfileButtonMenu = styled.div<ProfileButtonMenuProps>`
   display: flex;
   flex-direction: column;
   justify-content: stretch;
-  font-family: "Noto Serif Georgian";
+  font-family: sans-serif;
 `;
 
 const ProfileButtonMenuTop = styled.div`
@@ -466,7 +466,7 @@ const SearchLabel = styled.div`
   justify-content: center;
   align-items: center;
   font-size: 20px;
-  font-family: Noto Serif Georgian;
+  font-family: sans-serif;
   text-align: center;
   letter-spacing: 1.63px;
   text-transform: uppercase;
@@ -527,7 +527,7 @@ const TabContainer = styled.div<TabProps>`
 `;
 
 const TabTitle = styled.p`
-  font-family: "Noto Serif Georgian";
+  font-family: sans-serif;
   font-weight: 800;
   letter-spacing: 1px;
   font-size: 27px;

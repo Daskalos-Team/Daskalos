@@ -30,4 +30,19 @@ public class SessionService {
         return (UserType) getSession().getAttribute("userType");
     }
 
+    public static void setUserName(String name) {
+        getSession().setAttribute("name", name);
+    }
+
+    public static String getUserName() {
+        return (String) getSession().getAttribute("name");
+    }
+
+    public static void setUserSurname(String surname) {
+        getSession().setAttribute("surname", surname);
+    }
+
+    public static String getUserSurname() {
+        return (String) getSession().getAttribute("surname");
+    }
 }

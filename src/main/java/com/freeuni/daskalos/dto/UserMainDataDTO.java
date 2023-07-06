@@ -19,4 +19,8 @@ public class UserMainDataDTO implements Serializable {
     private Long userId;
 
     private String userType;
+
+    private String userName;
+
+    private String userSurname;
 }
