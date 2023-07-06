@@ -76,17 +76,11 @@ public class DaoDtoConversionUtils {
     }
 
     public static UserAddressDTO toUserAddressDTO(UserAddress userAddress) {
-        UserAddressDTO userAddressDTO = new UserAddressDTO(userAddress.getLatitude(), userAddress.getLongitude());
-        userAddressDTO.setCountry(userAddress.getCountry());
-        userAddressDTO.setCity(userAddress.getCity());
-        return userAddressDTO;
+        return new UserAddressDTO(userAddress.getFullAddress(), userAddress.getLatitude(), userAddress.getLongitude());
     }
 
     public static UserAddress toUserAddress(UserAddressDTO userAddressDTO) {
-        UserAddress userAddress = new UserAddress(userAddressDTO.getLatitude(), userAddressDTO.getLongitude());
-        userAddress.setCity(userAddressDTO.getCity());
-        userAddress.setCountry(userAddressDTO.getCountry());
-        return userAddress;
+        return new UserAddress(userAddressDTO.getFullAddress(), userAddressDTO.getLatitude(), userAddressDTO.getLongitude());
     }
 
     public static Teacher toTeacher(TeacherDTO teacherDTO) {

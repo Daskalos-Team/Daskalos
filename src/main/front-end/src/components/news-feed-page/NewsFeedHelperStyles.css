@@ -1,0 +1,17 @@
+.search-hide {
+    position: absolute;
+    transform: scale(0);
+}
+
+.search-show {
+    width: 90%;
+    height: 100vh;
+    left: 5%;
+    top: 100%;
+    position: absolute;
+    border: 1px rgba(0, 0, 0, 0.2) solid;
+    border-radius: 3rem;
+    z-index: 10;
+    transform: scale(1);
+    transition: 0.5s;
+}
