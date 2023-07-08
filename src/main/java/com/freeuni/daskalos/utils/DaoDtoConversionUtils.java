@@ -12,10 +12,10 @@ public class DaoDtoConversionUtils {
     // TODO fix correct address
     public static User toUserEntity(UserDTO userDTO) {
         return userDTO.getUserType().equals(UserType.TEACHER.name()) ?
-                new Teacher(userDTO.getEmail(), userDTO.getPassword(), userDTO.getName(), userDTO.getSurname(), new UserAddress(45, 45),
+                new Teacher(userDTO.getEmail(), userDTO.getPassword(), userDTO.getName(), userDTO.getSurname(), userDTO.getAddress(),
                         UserType.valueOf(userDTO.getUserType()), Boolean.FALSE, null, null, null, null, null, null)
                 :
-                new Student(userDTO.getEmail(), userDTO.getPassword(), userDTO.getName(), userDTO.getSurname(), new UserAddress(45, 45),
+                new Student(userDTO.getEmail(), userDTO.getPassword(), userDTO.getName(), userDTO.getSurname(), userDTO.getAddress(),
                         UserType.valueOf(userDTO.getUserType()), Boolean.FALSE, null, null, null, null, null, null);
     }
 

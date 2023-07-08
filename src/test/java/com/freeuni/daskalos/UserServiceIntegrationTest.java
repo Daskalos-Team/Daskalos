@@ -131,15 +131,15 @@ public class UserServiceIntegrationTest {
     public void setup() {
         teacher1 = new Teacher(10L, "Luka", "Kalandadze", "AtLeast^8", "email4",
                 UserType.TEACHER, "55555555", new UserAddress("address1", 11.0, 20.0), true,
-                null, null, null, null, null, null);
+                null, null, null, null, null, null, null);
 
         teacher2 = new Teacher(11L, "Murtaz", "Gobozovi", "AtLeast^8", "email5",
                 UserType.TEACHER, "55555555", new UserAddress("address2", 11.0, 20.0), true,
-                null, null, null, null, null, null);
+                null, null, null, null, null, null, null);
 
         teacher3 = new Teacher(12L, "Juansher", "Mamiashvili", "AtLeast^8", "email6",
                 UserType.TEACHER, "55555555", new UserAddress("address3", 11.0, 20.0), true,
-                null, null, null, null, null, null);
+                null, null, null, null, null, null, null);
 
         student1 = new Student("email1", "AtLeast^8", "Giorgi", "Adikashviili", new UserAddress("address4", 1, 2), UserType.STUDENT,
                 false, null, null, null, null, null, null);
