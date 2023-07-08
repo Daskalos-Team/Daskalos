@@ -58,7 +58,7 @@ public class TeacherFilterProcessor implements FilterProcessor {
             return filter.getMaxPrice() >= teacherMinMaxPrice.getValue();
         }
         if (filter.getMaxPrice() == null) {
-           return filter.getMinPrice() <= teacherMinMaxPrice.getKey();
+            return filter.getMinPrice() <= teacherMinMaxPrice.getKey();
         }
         return filter.getMaxPrice() >= teacherMinMaxPrice.getValue() && filter.getMinPrice() <= teacherMinMaxPrice.getKey();
     }
@@ -88,7 +88,8 @@ public class TeacherFilterProcessor implements FilterProcessor {
         if (filter.getSurname() == null) {
             return filter.getName().equals(teacherDTO.getName());
         }
-        return filter.getName().equals(teacherDTO.getName()) && filter.getSurname().equals(teacherDTO.getSurname());
+        return teacherDTO.getName().toLowerCase().contains(filter.getName().toLowerCase()) &&
+                teacherDTO.getSurname().toLowerCase().contains(filter.getSurname().toLowerCase());
     }
 
     private Map.Entry<Integer, Integer> getTeacherMinMaxPrice(TeacherDTO teacherDTO) {

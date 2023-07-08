@@ -1,6 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useGoogleLogin } from "@react-oauth/google";
+import Geocode from "react-geocode";
 import randomInteger from "random-int";
+import { useGoogleLogin } from "@react-oauth/google";
+import { PlacesAutocompleteInput } from "../helper-components";
+import { addressToCoordinates, API_KEY } from "../../service/common-service";
+import { useNavigate } from "react-router-dom";
 import {
     changePassword,
     checkAndSendConfirmation,
@@ -25,6 +29,8 @@ export const AuthorizationPage = (props: AuthorizationPageProps): React.JSX.Elem
     const [repeatedPassword, setRepeatedPassword] = useState("");
     const [name, setName] = useState("");
     const [surname, setSurname] = useState("");
+    const [fullAddress, setFullAddress] = useState("");
+    const [coordinates, setCoordinates] = useState({ lat: -1, lng: -1 });
     const [formState, setFormState] = useState("authorization-form");
     const [verifierState, setVerifierState] = useState("verifier-hide"); // verifier-hide, verifier-popup
     const [verifierContent, setVerifierContent] = useState("standard-code"); // standard-code, password-code, email, password
@@ -33,9 +39,12 @@ export const AuthorizationPage = (props: AuthorizationPageProps): React.JSX.Elem
 
     const setTime: any = useContext(AppContext);
 
+    // --------------------navigate to other page---------------------
+    const navigate = useNavigate();
+    //--------------------------------------------------------------------
+
     useEffect(() => {
-        const code = randomInteger(10000, 1000000); // generate private code
-        setRealCode(code + "");
+        Geocode.setApiKey(API_KEY); // need API KEY for usage
     }, []);
 
     useEffect(() => {
@@ -49,9 +58,22 @@ export const AuthorizationPage = (props: AuthorizationPageProps): React.JSX.Elem
         // login option changed
     }, [loginOption]);
 
+    useEffect(() => {
+        const authorizeGoogle = async () => {
+            if (user) {
+                const success = await loginWithGoogle(user, props.logInFn);
+                if (success) {
+                    navigate("/news-feed");
+                }
+            }
+        };
+        authorizeGoogle();
+    }, [user]);
+
     const handleSwitchChange = (option: boolean) => {
         setName("");
         setSurname("");
+        setFullAddress("");
         setLoginOption(option);
     };
 
@@ -60,17 +82,27 @@ export const AuthorizationPage = (props: AuthorizationPageProps): React.JSX.Elem
         onError: (error) => console.log("Login Failed:", error)
     });
 
-    const login = (e: any) => {
+    const login = async (e: any) => {
         setTime(STANDARD_LOAD_TIME);
-        standardLogin(email, password, false, props.logInFn);
+        const success = await standardLogin(email, password, false, props.logInFn);
+        if (success) {
+            navigate("/news-feed");
+        }
     };
 
     const sendVerificationEmail = async (e: any): Promise<void> => {
-        if (isEmptyInput([email, password, name, surname, userType])) {
+        if (isEmptyInput([email, password, name, surname, fullAddress, userType])) {
             alert("გთხოვთ შეიყვანოთ ყველა მონაცემი");
             return;
         }
-        await checkAndSendConfirmation(email, password, realCode).then(res => {
+        const coordinates = await addressToCoordinates(fullAddress);
+        if (coordinates === -1) {
+            alert("ასეთი მისამართი ვერ მოიძებნა");
+            return;
+        }
+        setCoordinates(coordinates);
+        const code = generateRandomCode();
+        await checkAndSendConfirmation(email, password, code).then(res => {
             if (res) {
                 showVerifierPopup();
             }
@@ -78,6 +110,11 @@ export const AuthorizationPage = (props: AuthorizationPageProps): React.JSX.Elem
     };
 
     const check = async (e: any) => {
+        const address = {
+            fullAddress: fullAddress,
+            latitude: coordinates.lat,
+            longitude: coordinates.lng
+        };
         if (verifierContent === "password") {
             if (isEmptyInput([password, repeatedPassword])) {
                 alert("გთხოვთ შეიყვანოთ ორივე მონაცემი");
@@ -97,7 +134,8 @@ export const AuthorizationPage = (props: AuthorizationPageProps): React.JSX.Elem
         if (verifierContent === "email") {
             await checkUserWithEmail(email).then(res => {
                 if (res) {
-                    sendVerificationCode(email, realCode);
+                    const code = generateRandomCode();
+                    sendVerificationCode(email, code);
                     setVerifierContent("password-code");
                 }
             });
@@ -111,8 +149,18 @@ export const AuthorizationPage = (props: AuthorizationPageProps): React.JSX.Elem
             setVerifierContent("password");
             return;
         }
-        registration(email, password, name, surname, userType, props.logInFn);
+        const success = await registration({ email, password, name, surname, address, userType });
+        if (success) {
+            navigate("/news-feed");
+            return;
+        }
         hideVerifierPopup();
+    };
+
+    const generateRandomCode = () => {
+        const code = randomInteger(10000, 1000000) + ""; // generate private code
+        setRealCode(code);
+        return code;
     };
 
     const showVerifierPopup = () => {
@@ -185,6 +233,7 @@ export const AuthorizationPage = (props: AuthorizationPageProps): React.JSX.Elem
                         <input type="password" placeholder="თქვენი პაროლი" onInput={e => setPassword(e.currentTarget.value)}/>
                         { !loginOption ? <input type="text" placeholder="თქვენი სახელი" onInput={e => setName(e.currentTarget.value)}/> : null}
                         { !loginOption ? <input type="text" placeholder="თქვენი გვარი" onInput={e => setSurname(e.currentTarget.value)}/> : null}
+                        { !loginOption ? <PlacesAutocompleteInput setAddress={setFullAddress} /> : null}
                         { !loginOption ?
                             <div className="role-div">
                                 <h5 className="role-label">თქვენი როლი</h5>
@@ -199,6 +248,7 @@ export const AuthorizationPage = (props: AuthorizationPageProps): React.JSX.Elem
                             </div>
                             :
                             <a className="forgot-password" href="javascript:void(0)" onClick={() => {
+                                setEmail("");
                                 setVerifierContent("email");
                                 showVerifierPopup();
                             }}>დაგავიწყდათ პაროლი?</a>
