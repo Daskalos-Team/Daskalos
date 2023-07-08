@@ -21,11 +21,13 @@ public class TeacherRatingDTO {
 
     private Long studentID;
 
+    private String title;
+
     private String studentComment;
 
     private int rating;
 
     private String nameSecondName;
 
-    private Date addDate;
+    private String addDate;
 }

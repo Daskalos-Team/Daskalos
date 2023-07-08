@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { faMailBulk } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -15,7 +15,7 @@ import {
     Subjects,
     Calendar
 } from "./components";
-import { INFO, comments } from "./example-data";
+import { INFO } from "./example-data";
 import {
     getUserData,
     PROFILE_IMAGE_DEFAULT_SIZE,
@@ -24,6 +24,7 @@ import {
 } from "../../service/profile-page-service";
 import "./ProfilePage.css";
 import { useParams } from "react-router-dom";
+import { getUserMainData } from "../../service/session-service";
 
 export const ProfilePage = (): React.JSX.Element => {
     const { userId, userType }: any = useParams();
@@ -35,8 +36,12 @@ export const ProfilePage = (): React.JSX.Element => {
     const [userDescriptionState, setUserDescriptionState] = useState("user-description");
 
     // Data
+    const [curUserID, setCurUserID] = useState(-1);
+    const [curUserType, setCurUserType] = useState("");
+
     const [userData, setUserData] = useState<any>(undefined);
     const [userSubjects, setUserSubjects] = useState(undefined); // Subjects state
+    const [userComments, setUserComments] = useState([]); // comments state
 
     // large or small size during scroll
     const profileImageStyle: any = {
@@ -50,9 +55,17 @@ export const ProfilePage = (): React.JSX.Element => {
     };
 
     useEffect(() => {
+        async function getLoggedUser() {
+            const response = await getUserMainData();
+            if (response.data.userId == null || (response.data.userId as number) < 0) {
+                return;
+            }
+            setCurUserID(response.data.userId as number);
+            setCurUserType(response.data.userType);
+        }
+        getLoggedUser().catch(err => console.log(err));
         getUserData(userId, userType).then(response => {
             if (response) {
-                console.log(response.data);
                 setUserData(response.data);
                 document.title = `${response.data.name} ${response.data.surname}`;
                 window.scrollTo(0, 0);
@@ -63,6 +76,7 @@ export const ProfilePage = (): React.JSX.Element => {
     useEffect(() => {
         if (userData) {
             let subjects = userType === "TEACHER" ? userData.teacherSubjects : userData.studentSubjects;
+            const comments = userType === "TEACHER" ? userData.teacherRatings : undefined;
             subjects = subjects.map((userSubject: any) => {
                 return {
                     ...userSubject,
@@ -71,6 +85,7 @@ export const ProfilePage = (): React.JSX.Element => {
                 };
             });
             setUserSubjects(subjects);
+            setUserComments(comments);
             updateUser(userId, userType, userData);
         }
     }, [userData]);
@@ -128,11 +143,11 @@ export const ProfilePage = (): React.JSX.Element => {
                         <div className="profile-page-first-area">
                             <div className="profile-page-first-area-left-side">
                                 <div className="title profile-page-title">
-                                    {userData.title ? userData.title : "მომხმარებელს არ გააჩნია მოკლე სათაური"}
+                                    {userData?.title ? userData.title : "მომხმარებელს არ გააჩნია მოკლე სათაური"}
                                 </div>
 
                                 <div className="subtitle profile-page-subtitle">
-                                    {userData.description ? userData.description : "მომხმარებელს არ სურს გაჩვენოთ მოკლე აღწერა ან რაიმე ზოგადი კომენტარი"}
+                                    {userData?.description ? userData.description : "მომხმარებელს არ სურს გაჩვენოთ მოკლე აღწერა ან რაიმე ზოგადი კომენტარი"}
                                 </div>
 
                                 <div className="profile-page-socials">
@@ -200,28 +215,42 @@ export const ProfilePage = (): React.JSX.Element => {
                             <Subjects subjects={userSubjects} />
                         </div>
 
-                        <div className="profile-page-after-title">
-                            <div className="profile-page-comments">
-                                {comments.map((comment: any, index: any) => (
-                                    <div
-                                        className="profile-page-comment"
-                                        key={(index + 1).toString()}
-                                    >
-                                        <Comment
+                        {userType === "TEACHER" ?
+                            <div className="profile-page-after-title">
+                                <div className="profile-page-comments">
+                                    {userComments ? userComments.map((comment: any, index: any) => (
+                                        <div
+                                            className="profile-page-comment"
                                             key={(index + 1).toString()}
-                                            date={comment().date}
-                                            title={comment().title}
-                                            description={comment().description}
-                                            link={"/comment/" + (index + 1)}
-                                        />
-                                    </div>
-                                ))}
-                            </div>
+                                        >
+                                            <Comment
+                                                edit={false}
+                                                key={(index + 1).toString()}
+                                                date={comment?.addDate}
+                                                title={comment?.title}
+                                                description={comment?.studentComment}
+                                                link={`/${comment?.studentID}/STUDENT`}
+                                                rating={comment?.rating}
+                                            />
+                                        </div>
+                                    )) : <h2> კომენტარები არ არის </h2>}
+                                    {
+                                        userType === "TEACHER" && curUserType === "STUDENT" ?
+                                            <Comment
+                                                edit={true}
+                                                studentID={curUserID}
+                                                teacherID={userId}
+                                                userComments={userComments}
+                                                setUserComments={setUserComments}
+                                            /> : null
+                                    }
+                                </div>
 
-                            <div className="profile-page-experiences">
-                                <Experience />
-                            </div>
-                        </div>
+                                <div className="profile-page-experiences">
+                                    <Experience />
+                                </div>
+                            </div> : null
+                        }
                     </div>
                 </div>
             </div>

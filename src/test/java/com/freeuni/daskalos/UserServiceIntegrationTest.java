@@ -246,12 +246,14 @@ public class UserServiceIntegrationTest {
         teacherRatingDTO1 = TeacherRatingDTO.builder().
                 studentID(s.getID()).
                 studentComment("very nice teacher").
+                addDate("10 ივლისი, 2022").
                 rating(5).
                 build();
 
         teacherRatingDTO2 = TeacherRatingDTO.builder().
                 studentID(s.getID()).
                 studentComment("not bad teacher").
+                addDate("10 ივლისი, 2022").
                 rating(3).
                 build();
         TeacherRatingDTO addedRating1 = userService.addTeachersRating(t.getID(), teacherRatingDTO1);
@@ -284,30 +286,30 @@ public class UserServiceIntegrationTest {
                 studentID(s1.getID()).
                 studentComment("very nice teacher").
                 rating(5).
-                addDate(new Date(2012, Calendar.JUNE, 8)).
+                addDate("8 ივნისი, 2012").
                 build();
 
         TeacherRatingDTO teacherRating2 = TeacherRatingDTO.builder().
                 studentID(s2.getID()).
                 studentComment("not bad teacher").
                 rating(3).
-                addDate(new Date(2017, Calendar.NOVEMBER, 19)).
+                addDate("19 ნოემბერი, 2017").
                 build();
 
         TeacherRatingDTO teacherRating3 = TeacherRatingDTO.builder().
                 studentID(s3.getID()).
                 studentComment("not bad teacher").
                 rating(4).
-                addDate(new Date(2014, Calendar.MAY, 19)).
+                addDate("19 მაისი, 2014").
                 build();
         TeacherRatingDTO addedRating1 = userService.addTeachersRating(t.getID(), teacherRating1);
         TeacherRatingDTO addedRating2 = userService.addTeachersRating(t.getID(), teacherRating2);
         TeacherRatingDTO addedRating3 = userService.addTeachersRating(t.getID(), teacherRating3);
 
         List<TeacherRatingDTO> teacherRatings = userService.getTeacherDTO(t.getID()).getTeacherRatings();
-        assertEquals(teacherRatings.get(0), addedRating2);
-        assertEquals(teacherRatings.get(1), addedRating3);
-        assertEquals(teacherRatings.get(2), addedRating1);
+        assertEquals(teacherRatings.get(0), addedRating1);
+        assertEquals(teacherRatings.get(1), addedRating2);
+        assertEquals(teacherRatings.get(2), addedRating3);
     }
 
     @Test

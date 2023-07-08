@@ -5,11 +5,11 @@ import ImageUploading from "react-images-uploading";
 export const ProfileImage = (props: any): React.JSX.Element => {
     const defaultImage = () => {
         let icon = "../../images/news-feed-page/";
-        icon += userData.userType === "TEACHER" ? "TeachersIcon.png" : "StudentIcon.png";
+        icon += userData?.userType === "TEACHER" ? "TeachersIcon.png" : "StudentIcon.png";
         return icon;
     };
     const { width, userData, setUserData } = props;
-    const [profileImage, setProfileImage] = React.useState(userData.profileImage || defaultImage());
+    const [profileImage, setProfileImage] = React.useState(userData?.profileImage || defaultImage());
 
     const onChange = (newImage: any) => {
         const newUrl = newImage["0"]["data_url"];

@@ -45,3 +45,17 @@ export const updateUser = async (userId: number, type: string, userData: any): P
             console.log(err);
         });
 };
+
+export const addComment = async (studentID: string, teacherId: string, rating: any): Promise<any> => {
+    const promise = axios.post(`${USER_DATA_ENDPOINT}add_rating/${teacherId}`, rating, {
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        }
+    });
+    return promise.then(response => {
+        // ok, updated.
+    })
+        .catch(err => {
+            console.log(err);
+        });
+};

@@ -4,11 +4,19 @@ import { MainPage } from "./components/main-page";
 import { ProfilePage } from "./components/profile-page";
 import "./App.css";
 
-export const AppContext: any = createContext(undefined); // context for global state control
+export const AppContext: any = createContext({
+    curUserID: -1,
+    setCurUserID: undefined,
+    curUserType: "",
+    setCurUserType: undefined,
+    setTime: undefined
+}); // context for global state control
 
 function App() {
     const [loading, setLoading] = useState<boolean>(false);
     const [time, setTime] = useState<number>(3000);
+    const [curUserID, setCurUserID] = useState<number>(-1);
+    const [curUserType, setCurUserType] = useState<string>("");
 
     useEffect(() => {
         setLoading(true);
@@ -25,7 +33,13 @@ function App() {
     }, [time]);
 
     return (
-        <AppContext.Provider value={setTime}>
+        <AppContext.Provider value={{
+            curUserID,
+            setCurUserID,
+            curUserType,
+            setCurUserType,
+            setTime
+        }}>
             {loading ? (
                 <div className="loader-container">
                     <div className="spinner-label-background"/>

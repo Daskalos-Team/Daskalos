@@ -63,6 +63,7 @@ public class DaoDtoConversionUtils {
         return TeacherRatingDTO.builder().
                 ID(teacherRating.getID()).
                 studentID(teacherRating.getStudentID()).
+                title(teacherRating.getTitle()).
                 studentComment(teacherRating.getStudentComment()).
                 rating(teacherRating.getRating()).
                 addDate(teacherRating.getAddDate()).
@@ -73,6 +74,7 @@ public class DaoDtoConversionUtils {
         return TeacherRating.builder().
                 ID(teacherRating.getID()).
                 studentID(teacherRating.getStudentID()).
+                title(teacherRating.getTitle()).
                 studentComment(teacherRating.getStudentComment()).
                 rating(teacherRating.getRating()).
                 addDate(teacherRating.getAddDate()).

@@ -37,7 +37,7 @@ export const AuthorizationPage = (props: AuthorizationPageProps): React.JSX.Elem
     const [inputCode, setInputCode] = useState("");
     const [realCode, setRealCode] = useState("bad");
 
-    const setTime: any = useContext(AppContext);
+    const { setTime }: any = useContext(AppContext);
 
     // --------------------navigate to other page---------------------
     const navigate = useNavigate();
@@ -83,7 +83,6 @@ export const AuthorizationPage = (props: AuthorizationPageProps): React.JSX.Elem
     });
 
     const login = async (e: any) => {
-        setTime(STANDARD_LOAD_TIME);
         const success = await standardLogin(email, password, false, props.logInFn);
         if (success) {
             navigate("/news-feed");
@@ -151,6 +150,8 @@ export const AuthorizationPage = (props: AuthorizationPageProps): React.JSX.Elem
         }
         const success = await registration({ email, password, name, surname, address, userType });
         if (success) {
+            setTime(STANDARD_LOAD_TIME);
+            await login(e);
             navigate("/news-feed");
             return;
         }
