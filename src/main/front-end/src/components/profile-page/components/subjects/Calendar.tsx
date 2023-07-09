@@ -25,6 +25,7 @@ export const Calendar = (props: any): React.JSX.Element => {
         headerDateFormat: "ddd",
         durationBarVisible: true,
         eventDeleteHandling: userID == loggedUserID ? "Update" : "Disabled",
+        eventResizeHandling: userID == loggedUserID ? "Update" : "Disabled",
         timeRangeSelectedHandling: userID == loggedUserID ? "Enabled" : "Disabled",
         onTimeRangeSelected: async (args: any) => {
             setArgs(args);
@@ -57,6 +58,7 @@ export const Calendar = (props: any): React.JSX.Element => {
                     id: DayPilot.guid(),
                     text: userSubject.name,
                     backColor: hexToRgba(SUBJECT_TO_COLOR[userSubject.name], 0.5),
+                    color: "white",
                     resource: "vaaax",
                     start: day.start,
                     end: day.end
@@ -199,6 +201,7 @@ export const Calendar = (props: any): React.JSX.Element => {
             end: args.end,
             id: DayPilot.guid(),
             text: subject,
+            color: "white",
             backColor: hexToRgba(SUBJECT_TO_COLOR[subject], subjectOpacity.get(subject))
         });
         setPrice("");

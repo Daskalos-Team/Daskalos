@@ -15,12 +15,13 @@ import {
     Subjects,
     Calendar
 } from "./components";
-import { INFO } from "./example-data";
 import {
     getUserData,
     PROFILE_IMAGE_DEFAULT_SIZE,
     SUBJECT_IN_ENGLISH,
-    updateSubjects, updateUser, USER_TYPE_IN_GEORGIAN
+    updateSubjects,
+    updateUser,
+    USER_TYPE_IN_GEORGIAN
 } from "../../service/profile-page-service";
 import "./ProfilePage.css";
 import { useParams } from "react-router-dom";
@@ -42,6 +43,15 @@ export const ProfilePage = (): React.JSX.Element => {
     const [userData, setUserData] = useState<any>(undefined);
     const [userSubjects, setUserSubjects] = useState(undefined); // Subjects state
     const [userComments, setUserComments] = useState<any[]>([]); // comments state
+    const [windowState, setWindowState] = useState<string>("window-hide"); // edit window state
+    const [dimmerState, setDimmerState] = useState<string>("dimmer-hide");
+
+    const [headerTitle, setHeaderTitle] = useState<string>("მომხმარებელს არ გააჩნია მოკლე სათაური");
+    const [headerDescription, setHeaderDescription] = useState<string>("მომხმარებელს არ სურს გაჩვენოთ მოკლე აღწერა ან რაიმე ზოგადი კომენტარი");
+    const [facebookUrl, setFacebookUrl] = useState<string>("");
+    const [linkedinUrl, setLinkedinUrl] = useState<string>("");
+    const [twitterUrl, setTwitterUrl] = useState<string>("");
+    const [instagramUrl, setInstagramUrl] = useState<string>("");
 
     // large or small size during scroll
     const profileImageStyle: any = {
@@ -96,6 +106,13 @@ export const ProfilePage = (): React.JSX.Element => {
             });
             setUserSubjects(subjects);
             setUserComments(comments);
+            setHeaderTitle(userData?.title || "მომხმარებელს არ გააჩნია მოკლე სათაური");
+            setHeaderDescription(userData?.description || "მომხმარებელს არ სურს გაჩვენოთ მოკლე აღწერა ან რაიმე ზოგადი კომენტარი");
+            setFacebookUrl(userData?.fbUrl || "");
+            setLinkedinUrl(userData?.linkedinUrl || "");
+            setTwitterUrl(userData?.twitterUrl || "");
+            setInstagramUrl(userData?.instaUrl || "");
+
             updateUser(userId, userType, userData);
         }
     }, [userData]);
@@ -105,6 +122,30 @@ export const ProfilePage = (): React.JSX.Element => {
             updateSubjects(userId, userType, userSubjects);
         }
     }, [userSubjects]);
+
+    const showWindow = (): void => {
+        setDimmerState("dimmer");
+        setWindowState("window-popup");
+    };
+
+    const hideWindow = (): void => {
+        setDimmerState("dimmer-hide");
+        setWindowState("window-hide");
+    };
+
+    const updateUserDescription = (): void => {
+        if (!headerTitle || headerTitle.length < 30) {
+            alert("სათაური მოკლეა");
+            return;
+        }
+        if (!headerDescription || headerDescription.length < 50) {
+            alert("აღწერა მოკლეა");
+            return;
+        }
+        const updatedUserData = {...userData, title: headerTitle, description: headerDescription, fbUrl: facebookUrl, instaUrl: instagramUrl, linkedinUrl, twitterUrl};
+        setUserData(updatedUserData);
+        hideWindow();
+    };
 
     return (<>
         {userSubjects ? (<React.Fragment>
@@ -132,19 +173,21 @@ export const ProfilePage = (): React.JSX.Element => {
 
                     <div className="profile-page-profile-image-container">
                         <div style={profileImageStyle}>
-                            <ProfileImage width={profileImageSize} userData={userData} setUserData={setUserData} />
+                            <ProfileImage userID={userId} loggedUserID={curUserID} width={profileImageSize} userData={userData} setUserData={setUserData} />
                         </div>
                         <div className={userDescriptionState}>
                             <div id="name-div">
                                 {`${userData.name} ${userData.surname}`}
                             </div>
                             <div className="user-short-description">
-                                <div id="role-div">
+                                <div id="role-div" style={{background: userType === "TEACHER" ? "antiquewhite" : "greenyellow"}}>
                                     {USER_TYPE_IN_GEORGIAN[userData.userType]}
                                 </div>
-                                <div id="rating-div">
-                                    {"7.7"}
-                                </div>
+                                { userType === "TEACHER" ?
+                                    <div id="rating-div">
+                                        {"7.7"}
+                                    </div> : null
+                                }
                             </div>
                         </div>
                     </div>
@@ -153,56 +196,64 @@ export const ProfilePage = (): React.JSX.Element => {
                         <div className="profile-page-first-area">
                             <div className="profile-page-first-area-left-side">
                                 <div className="title profile-page-title">
-                                    {userData?.title ? userData.title : "მომხმარებელს არ გააჩნია მოკლე სათაური"}
+                                    {headerTitle}
                                 </div>
 
                                 <div className="subtitle profile-page-subtitle">
-                                    {userData?.description ? userData.description : "მომხმარებელს არ სურს გაჩვენოთ მოკლე აღწერა ან რაიმე ზოგადი კომენტარი"}
+                                    {headerDescription}
                                 </div>
 
                                 <div className="profile-page-socials">
+                                    {facebookUrl !== "" ?
+                                        <a
+                                            href={`${facebookUrl}`}
+                                            target="_blank"
+                                            rel="noreferrer"
+                                        >
+                                            <FontAwesomeIcon
+                                                icon={faFacebook}
+                                                className="profile-page-social-icon"
+                                            />
+                                        </a> : null
+                                    }
+                                    {linkedinUrl !== "" ?
+                                        <a
+                                            href={`${linkedinUrl}`}
+                                            target="_blank"
+                                            rel="noreferrer"
+                                        >
+                                            <FontAwesomeIcon
+                                                icon={faLinkedin}
+                                                className="profile-page-social-icon"
+                                            />
+                                        </a> : null
+                                    }
+                                    {twitterUrl !== "" ?
+                                        <a
+                                            href={`${twitterUrl}`}
+                                            target="_blank"
+                                            rel="noreferrer"
+                                        >
+                                            <FontAwesomeIcon
+                                                icon={faTwitter}
+                                                className="profile-page-social-icon"
+                                            />
+                                        </a> : null
+                                    }
+                                    {instagramUrl !== "" ?
+                                        <a
+                                            href={`${instagramUrl}`}
+                                            target="_blank"
+                                            rel="noreferrer"
+                                        >
+                                            <FontAwesomeIcon
+                                                icon={faInstagram}
+                                                className="profile-page-social-icon"
+                                            />
+                                        </a> : null
+                                    }
                                     <a
-                                        href={INFO.socials.facebook}
-                                        target="_blank"
-                                        rel="noreferrer"
-                                    >
-                                        <FontAwesomeIcon
-                                            icon={faFacebook}
-                                            className="profile-page-social-icon"
-                                        />
-                                    </a>
-                                    <a
-                                        href={INFO.socials.linkedin}
-                                        target="_blank"
-                                        rel="noreferrer"
-                                    >
-                                        <FontAwesomeIcon
-                                            icon={faLinkedin}
-                                            className="profile-page-social-icon"
-                                        />
-                                    </a>
-                                    <a
-                                        href={INFO.socials.twitter}
-                                        target="_blank"
-                                        rel="noreferrer"
-                                    >
-                                        <FontAwesomeIcon
-                                            icon={faTwitter}
-                                            className="profile-page-social-icon"
-                                        />
-                                    </a>
-                                    <a
-                                        href={INFO.socials.instagram}
-                                        target="_blank"
-                                        rel="noreferrer"
-                                    >
-                                        <FontAwesomeIcon
-                                            icon={faInstagram}
-                                            className="profile-page-social-icon"
-                                        />
-                                    </a>
-                                    <a
-                                        href={"mailto:adikashviligiorgi@gmail.com"}
+                                        href={`mailto:${userData?.email}`}
                                         target="_blank"
                                         rel="noreferrer"
                                     >
@@ -212,8 +263,55 @@ export const ProfilePage = (): React.JSX.Element => {
                                         />
                                     </a>
                                 </div>
+                                {curUserID == userId && <div className="update-description" onClick={() => showWindow()}>განახლება</div>}
                             </div>
 
+                            <div className={dimmerState}></div>
+                            <div className={windowState}>
+                                <textarea className="title-area description-area" maxLength={70} value={headerTitle} placeholder="მოკლე სათაური" onChange={(e) => setHeaderTitle(e.currentTarget.value)} />
+                                <textarea className="description-area" maxLength={150} value={headerDescription} placeholder="ზოგადი კომენტარი" onChange={(e) => setHeaderDescription(e.currentTarget.value)} />
+
+                                <h6 style={{color: "lightgreen"}}>________________ სოციალური ქსელები ________________</h6>
+
+                                <div className="social-input">
+                                    <label>
+                                        <FontAwesomeIcon
+                                            icon={faFacebook}
+                                            className="profile-page-social-icon"
+                                        /></label>
+                                    <input placeholder="თუ არ გაქვთ, დატოვეთ ცარიელი" value={facebookUrl} onChange={(e) => setFacebookUrl(e.currentTarget.value)}/>
+                                </div>
+                                <div className="social-input">
+                                    <label>
+                                        <FontAwesomeIcon
+                                            icon={faLinkedin}
+                                            className="profile-page-social-icon"
+                                        /></label>
+                                    <input placeholder="თუ არ გაქვთ, დატოვეთ ცარიელი" value={linkedinUrl} onChange={(e) => setLinkedinUrl(e.currentTarget.value)}/>
+                                </div>
+                                <div className="social-input">
+                                    <label>
+                                        <FontAwesomeIcon
+                                            icon={faTwitter}
+                                            className="profile-page-social-icon"
+                                        /></label>
+                                    <input placeholder="თუ არ გაქვთ, დატოვეთ ცარიელი" value={twitterUrl} onChange={(e) => setTwitterUrl(e.currentTarget.value)}/>
+                                </div>
+                                <div className="social-input">
+                                    <label>
+                                        <FontAwesomeIcon
+                                            icon={faInstagram}
+                                            className="profile-page-social-icon"
+                                        /></label>
+                                    <input placeholder="თუ არ გაქვთ, დატოვეთ ცარიელი" value={instagramUrl} onChange={(e) => setInstagramUrl(e.currentTarget.value)}/>
+                                </div>
+                                <div className="verifier-buttons">
+                                    <div className="verifier-ok" onClick={() => updateUserDescription()}>დადასტურება</div>
+                                    <div className="verifier-close" onClick={() => {
+                                        hideWindow();
+                                    }}>დახურვა</div>
+                                </div>
+                            </div>
                             <div className="profile-page-first-area-right-side">
                                 <div className="profile-page-calendar-container">
                                     <Calendar userID={userId} loggedUserID={curUserID} subjects={userSubjects} setSubjects={setUserSubjects} />
