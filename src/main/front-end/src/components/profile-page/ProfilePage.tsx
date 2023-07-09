@@ -54,6 +54,7 @@ export const ProfilePage = (): React.JSX.Element => {
     const [twitterUrl, setTwitterUrl] = useState<string>("");
     const [instagramUrl, setInstagramUrl] = useState<string>("");
     const [userFavourites, setUserFavourites] = useState<any>(undefined);
+    const [userRatings, setUserRatings] = useState<any>(undefined);
 
     // large or small size during scroll
     const profileImageStyle: any = {
@@ -106,6 +107,9 @@ export const ProfilePage = (): React.JSX.Element => {
         if (userData) {
             let subjects = userType === "TEACHER" ? userData.teacherSubjects : userData.studentSubjects;
             const comments = userType === "TEACHER" ? userData.teacherRatings : undefined;
+            if (comments) {
+                setUserRatings(comments.map((comment: any) => comment.rating));
+            }
             subjects = subjects.map((userSubject: any) => {
                 return {
                     ...userSubject,
@@ -164,6 +168,20 @@ export const ProfilePage = (): React.JSX.Element => {
         hideWindow();
     };
 
+    const ratingDivStyle = (): string => {
+        const rating = userRatings.length == 0 ? 0 : userRatings.reduce((sum: number, curr: any) => sum + curr, 0) / userRatings.length;
+        if (rating <= 5.0) {
+            return "rating-div-red";
+        }
+        if (rating <= 7.0) {
+            return "rating-div-pink";
+        }
+        if (rating <= 8.5) {
+            return "rating-div-green";
+        }
+        return "rating-div-gold";
+    };
+
     return (<>
         {userSubjects ? (<React.Fragment>
             <div className="page-content">
@@ -201,8 +219,8 @@ export const ProfilePage = (): React.JSX.Element => {
                                     {USER_TYPE_IN_GEORGIAN[userData.userType]}
                                 </div>
                                 { userType === "TEACHER" ?
-                                    <div id="rating-div">
-                                        {"7.7"}
+                                    <div className={`score-rating-div ${ratingDivStyle()}`}>
+                                        {userRatings.length == 0 ? "0.0" : (userRatings.reduce((sum: number, curr: any) => sum + curr, 0) / userRatings.length).toFixed(1)}
                                     </div> : null
                                 }
                             </div>
@@ -351,6 +369,8 @@ export const ProfilePage = (): React.JSX.Element => {
                                         >
                                             <Comment
                                                 edit={false}
+                                                studentID={curUserID}
+                                                teacherID={userId}
                                                 key={(index + 1).toString()}
                                                 date={comment?.addDate}
                                                 title={comment?.title}
@@ -368,6 +388,8 @@ export const ProfilePage = (): React.JSX.Element => {
                                                 teacherID={userId}
                                                 userComments={userComments}
                                                 setUserComments={setUserComments}
+                                                userRatings={userRatings}
+                                                setUserRatings={setUserRatings}
                                             /> : null
                                     }
                                 </div>

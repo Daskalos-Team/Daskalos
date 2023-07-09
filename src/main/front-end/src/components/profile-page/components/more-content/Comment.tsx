@@ -7,7 +7,7 @@ import { addComment, months } from "../../../../service/profile-page-service";
 import { AppContext } from "../../../../App";
 
 export const Comment = (props: any): React.JSX.Element => {
-    const { edit, studentID, teacherID, title, description, date, link, rating, userComments, setUserComments } = props;
+    const { edit, studentID, teacherID, title, description, date, link, rating, userComments, setUserComments, userRatings, setUserRatings } = props;
     const { setTime }: any = useContext(AppContext);
     const [score, setScore] = useState<number>(0);
     const [comment, setComment] = useState<string>("");
@@ -33,6 +33,7 @@ export const Comment = (props: any): React.JSX.Element => {
         };
 
         setUserComments([...userComments, rating]);
+        setUserRatings([...userRatings, score]);
         await addComment(studentID, teacherID, rating);
     };
 
@@ -152,6 +153,7 @@ export const Comment = (props: any): React.JSX.Element => {
                                 <div className="content-comment-description">
                                     {description}
                                 </div>
+                                {studentID == teacherID &&
                                 <a className="content-comment-link" onClick={() => goToStudentProfile()}>
                                     <Link to={link}>
                             ნახეთ მოსწავლე{" "}
@@ -160,7 +162,7 @@ export const Comment = (props: any): React.JSX.Element => {
                                             icon={faChevronRight}
                                         />
                                     </Link>
-                                </a>
+                                </a>}
                             </>
                     }
                 </div>

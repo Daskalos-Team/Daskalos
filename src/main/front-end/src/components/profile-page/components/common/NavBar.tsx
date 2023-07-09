@@ -18,7 +18,7 @@ export const NavBar = (props: any): React.JSX.Element => {
     };
 
     const logOut = () => {
-        setUserMainData(-1, props.userType).then(_ => {
+        setUserMainData(-1, props.userType, "", "").then(_ => {
             window.location.reload();
         }).catch(err => console.log(err));
     };

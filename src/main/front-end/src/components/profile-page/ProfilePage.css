@@ -96,16 +96,34 @@
     padding: 10px;
 }
 
-#rating-div {
+.score-rating-div {
     font-size: 30px;
     font-weight: 600;
     z-index: 1;
-    color: darkgreen;
-    border: 5px solid yellow;
+    border: 5px solid antiquewhite;
     border-radius: 50%;
-    outline: 3px solid lightcoral;
     background: lightyellow;
     padding: 1em;
+}
+
+.rating-div-red {
+    outline: 3px solid darkred;
+    color: darkred;
+}
+
+.rating-div-pink {
+    outline: 3px solid hotpink;
+    color: hotpink;
+}
+
+.rating-div-green {
+    outline: 3px solid green;
+    color: darkgreen;
+}
+
+.rating-div-gold {
+    outline: 3px solid goldenrod;
+    color: goldenrod;
 }
 
 .user-description-hide {
@@ -567,7 +585,7 @@
 
 .message {
     background: #ffe271;
-    color: rgba(0, 0, 0, 0.25);
+    color: grey;
     padding: 2vmin 5vmin 2vmin 10vmin;
     border-radius: 0 50px 50px 0;
     margin-left: 16vmin;
