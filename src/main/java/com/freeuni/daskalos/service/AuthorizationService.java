@@ -49,7 +49,8 @@ public class AuthorizationService {
         Optional<User> currentUser = userRepository.findByEmail(user.getEmail());
 
         if (currentUser.isEmpty()) {
-            userRepository.save(DaoDtoConversionUtils.toUserEntity(user));
+            User currUser = DaoDtoConversionUtils.toUserEntity(user);
+            userRepository.save(currUser);
             return AuthorizationStatus.SUCCESSFUL_REGISTRATION.name();
         }
 

@@ -7,6 +7,11 @@
     "@reach/combobox": "^0.18.0",
     "@reach/menu-button": "^0.18.0",
     "@reach/visually-hidden": "^0.18.0",
+    "@fortawesome/fontawesome-svg-core": "^6.4.0",
+    "@fortawesome/free-brands-svg-icons": "^6.4.0",
+    "@fortawesome/free-regular-svg-icons": "^6.4.0",
+    "@fortawesome/free-solid-svg-icons": "^6.4.0",
+    "@fortawesome/react-fontawesome": "^0.2.0",
     "@react-google-maps/api": "^2.18.1",
     "@react-oauth/google": "^0.9.0",
     "@testing-library/jest-dom": "^5.16.5",
@@ -26,6 +31,7 @@
     "react-dom": "^17",
     "react-geocode": "^0.2.3",
     "react-google-login": "^5.2.2",
+    "react-images-uploading": "^3.1.7",
     "react-scripts": "^5.0.1",
     "rest": "^1.3.1",
     "styled-components": "^5.3.9",
@@ -61,6 +67,7 @@
     ]
   },
   "devDependencies": {
+    "@daypilot/daypilot-lite-react": "^3.14.0",
     "@googlemaps/react-wrapper": "^1.1.35",
     "@types/react-geocode": "^0.2.1",
     "@types/react-places-autocomplete": "^7.2.9",
@@ -81,7 +88,8 @@
     "react-places-autocomplete": "^7.3.0",
     "react-router-dom": "^6.9.0",
     "three": "^0.152.2",
-    "typescript": "^4"
+    "typescript": "^4",
+    "webpack-cli": "^5.1.4"
   },
   "browser": {
     "fs": false,

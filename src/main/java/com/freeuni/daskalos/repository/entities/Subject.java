@@ -3,6 +3,8 @@ package com.freeuni.daskalos.repository.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
@@ -30,4 +32,6 @@ public class Subject {
     @Column(name = "price")
     private Integer price;
 
+    @ManyToMany(cascade = CascadeType.ALL)
+    private List<SubjectSchedule> days;
 }

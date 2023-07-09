@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/user_data")
 public class UserController implements ErrorController {
@@ -103,8 +105,20 @@ public class UserController implements ErrorController {
         }
     }
 
-    @PostMapping("/add_subject/{id}")
-    public ResponseEntity<SubjectDTO> addTeacherSubject(@PathVariable long id, @RequestBody SubjectDTO subject) {
+    @PostMapping("/add_user_subjects/{id}")
+    public ResponseEntity<?> addUserSubjects(@PathVariable long id, @RequestBody List<SubjectDTO> subjects) {
+        userService.removeAllSubjects(id);
+        for (SubjectDTO subjectDTO : subjects) {
+            ResponseEntity<SubjectDTO> result = addUserSubject(id, subjectDTO);
+            if (result.getStatusCode() == HttpStatus.BAD_REQUEST) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/add_user_subject/{id}")
+    public ResponseEntity<SubjectDTO> addUserSubject(@PathVariable long id, @RequestBody SubjectDTO subject) {
         try {
             SubjectDTO subjectDTO = userService.addSubject(id, subject);
             return new ResponseEntity<>(subjectDTO, HttpStatus.OK);
@@ -114,7 +128,7 @@ public class UserController implements ErrorController {
         }
     }
 
-    @PostMapping("/remove_subject/{id}")
+    @PostMapping("/remove_teacher_subject/{id}")
     public ResponseEntity<TeacherDTO> removeTeacherSubject(@PathVariable long id, @RequestBody SubjectDTO subject) {
         try {
             userService.removeSubject(id, subject);
@@ -141,6 +155,17 @@ public class UserController implements ErrorController {
         try {
             userService.removeStudentFavouriteTeacher(student_id, teacher_id);
             return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping("/{student_id}/favourites")
+    public ResponseEntity<List<TeacherDTO>> getStudentFavourites(@PathVariable long student_id) {
+        try {
+            List<TeacherDTO> teachers = userService.getStudentFavouriteTeachers(student_id);
+            return new ResponseEntity<>(teachers, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

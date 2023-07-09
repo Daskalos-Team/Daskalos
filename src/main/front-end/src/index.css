@@ -1,0 +1,18 @@
+@import url("https://fonts.googleapis.com/css2?family=Heebo:wght@300&family=Roboto:wght@500&display=swap");
+
+:root {
+    --primary-color: #27272a;
+    --secondary-color: #65656d;
+    --tertiary-color: #acacb4;
+    --quaternary-color: #e4e4e7;
+    --link-color: #14b8a6;
+    --primary-font: "Heebo", sans-serif;
+    --secondary-font: "Roboto", sans-serif;
+}
+
+body {
+    margin: 0;
+    font-family: var(--primary-font);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}

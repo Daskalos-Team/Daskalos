@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Geocode from "react-geocode";
 import randomInteger from "random-int";
 import { useGoogleLogin } from "@react-oauth/google";
@@ -17,10 +17,12 @@ import {
 } from "../../service/authorization-page-service";
 import "./AuthorizationPage.css";
 import { AuthorizationPageProps } from "../../service/authorization-page-service/AuthorizationPageServiceConstants";
+import { AppContext } from "../../App";
+import { STANDARD_LOAD_TIME } from "../../service/common-service";
 
 export const AuthorizationPage = (props: AuthorizationPageProps): React.JSX.Element => {
     const [user, setUser]: any = useState(undefined);
-    const [userType, setUserType] = useState("Teacher");
+    const [userType, setUserType] = useState("TEACHER");
     const [loginOption, setLoginOption] = useState(true);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -35,6 +37,8 @@ export const AuthorizationPage = (props: AuthorizationPageProps): React.JSX.Elem
     const [inputCode, setInputCode] = useState("");
     const [realCode, setRealCode] = useState("bad");
 
+    const { setTime }: any = useContext(AppContext);
+
     // --------------------navigate to other page---------------------
     const navigate = useNavigate();
     //--------------------------------------------------------------------
@@ -42,6 +46,17 @@ export const AuthorizationPage = (props: AuthorizationPageProps): React.JSX.Elem
     useEffect(() => {
         Geocode.setApiKey(API_KEY); // need API KEY for usage
     }, []);
+
+    useEffect(() => {
+        if (user) {
+            setTime(STANDARD_LOAD_TIME);
+            loginWithGoogle(user, props.logInFn);
+        }
+    }, [user]);
+
+    useEffect(() => {
+        // login option changed
+    }, [loginOption]);
 
     useEffect(() => {
         const authorizeGoogle = async () => {
@@ -54,10 +69,6 @@ export const AuthorizationPage = (props: AuthorizationPageProps): React.JSX.Elem
         };
         authorizeGoogle();
     }, [user]);
-
-    useEffect(() => {
-        console.log("");
-    }, [loginOption]);
 
     const handleSwitchChange = (option: boolean) => {
         setName("");
@@ -139,6 +150,8 @@ export const AuthorizationPage = (props: AuthorizationPageProps): React.JSX.Elem
         }
         const success = await registration({ email, password, name, surname, address, userType });
         if (success) {
+            setTime(STANDARD_LOAD_TIME);
+            await login(e);
             navigate("/news-feed");
             return;
         }
@@ -230,8 +243,8 @@ export const AuthorizationPage = (props: AuthorizationPageProps): React.JSX.Elem
                                     onChange={e => setUserType(e.target.value)}
                                     value={userType}
                                 >
-                                    <option value="Teacher">მასწავლებელი</option>
-                                    <option value="Student">მოსწავლე</option>
+                                    <option value="TEACHER">მასწავლებელი</option>
+                                    <option value="STUDENT">მოსწავლე</option>
                                 </select>
                             </div>
                             :

@@ -5,11 +5,13 @@ import {
     NewsFeedPageColorPalette, RecommendationProfilePictureProps,
     RecommendationProps, RecommendationRootProps, RecommendationScaleProps, FavouriteProps
 } from "../../../service/news-feed-page-service";
+import { useNavigate } from "react-router-dom";
 
 export const Recommendation = (props: RecommendationProps): React.JSX.Element => {
     const [imageSrc, setImageSrc] = useState(props.isFavourite ?
         "/images/news-feed-page/FavouriteSelected.png" : "/images/news-feed-page/FavouriteUnselected.png");
     const [favouriteAnimation, setFavouriteAnimation] = useState<Keyframes | null>(null);
+    const navigate = useNavigate();
 
     const FavouriteFunction = () => {
         if (imageSrc == "/images/news-feed-page/FavouriteUnselected.png") {
@@ -24,7 +26,7 @@ export const Recommendation = (props: RecommendationProps): React.JSX.Element =>
             "/images/news-feed-page/FavouriteUnselected.png");
     };
     const SelectRecommendation = () => {
-        alert("Recommendation with id " + props.userId + " was clicked");
+        navigate(`/${props.userId}/${props.userType}/`);
     };
     return (
         <RecommendationRoot userType={props.userType} rootScale={props.rootScale}>

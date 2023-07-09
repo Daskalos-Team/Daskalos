@@ -22,8 +22,9 @@ public class Student extends User {
                    String fbUrl,
                    String twitterUrl,
                    String instaUrl,
-                   String linkedinUrl) {
-        super(ID, name, secondName, password, mail, userType, phoneNumber, address, onPlace, title, description, fbUrl, twitterUrl, instaUrl, linkedinUrl);
+                   String linkedinUrl,
+                   String profileImage) {
+        super(ID, name, secondName, password, mail, userType, phoneNumber, address, onPlace, title, description, fbUrl, twitterUrl, instaUrl, linkedinUrl, profileImage);
     }
 
     public Student(@NonNull String mail,

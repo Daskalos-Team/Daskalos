@@ -48,9 +48,6 @@ public class RatingService {
     }
 
     public TeacherRatingDTO addTeacherRating(Long teacherID, TeacherRatingDTO teacherRating) {
-        if (teacherRating.getAddDate() == null) {
-            teacherRating.setAddDate(new Date());
-        }
         User student = userRepository.findById(teacherRating.getStudentID()).get();
         TeacherRating addedRating = teacherRatingRepository.save(DaoDtoConversionUtils.toTeacherRating(teacherRating));
         TeacherToRating teacherToRating = TeacherToRating.

@@ -1,4 +1,4 @@
-import React, { useState, useLayoutEffect, useEffect } from "react";
+import React, { useState, useLayoutEffect, useEffect, useContext } from "react";
 import styled, { Keyframes, keyframes } from "styled-components";
 import { SearchComponent } from "./search-component";
 import { LeftPanelOption } from "./left-panel-option";
@@ -24,8 +24,15 @@ import { TopTenTab } from "./top-10-tab";
 import { Recommendation } from "./recommended-teacher";
 import "./NewsFeedHelperStyles.css";
 import { setUserMainData } from "../../service/session-service";
+import { AppContext } from "../../App";
+import { Link } from "react-router-dom";
+import { NEWS_FEED_LOAD_TIME, SMALL_LOAD_TIME } from "../../service/common-service";
 
 export const NewsFeedPage = (props: NewsFeedPageProps): React.JSX.Element => {
+    const maxMenuOnWindowWidth = 1180;
+    const maxUnscaledRootWidth = 700;
+    const { setTime }: any = useContext(AppContext);
+
     const [filtersOpen, setFiltersOpen] = useState(false);
     const [searchState, setSearchState] = useState("search-hide");
     const [dimmingOpacity, setDimmingOpacity] = useState(0);
@@ -146,6 +153,11 @@ export const NewsFeedPage = (props: NewsFeedPageProps): React.JSX.Element => {
         }).catch(err => console.log(err));
     };
 
+    useEffect(() => {
+        setTime(NEWS_FEED_LOAD_TIME);
+        document.title = "სიახლეები";
+    }, []);
+
     useLayoutEffect(() => {
         function CheckForMenuResize() {
             const currWidth = document.body.offsetWidth;
@@ -196,7 +208,7 @@ export const NewsFeedPage = (props: NewsFeedPageProps): React.JSX.Element => {
                         <ProfilePicture src="/images/news-feed-page/AccountIcon.png" alt="Profile Picture"/>
                         <UserName>{props.userName + " " + props.userSurname}</UserName>
                     </ProfileButtonMenuTop>
-                    <ProfileButtonMenuOption>ჩემი პროფილი</ProfileButtonMenuOption>
+                    <ProfileButtonMenuOption onClick={setTime(SMALL_LOAD_TIME)}><Link to={`${props.userId}/${props.userType}`}>ჩემი პროფილი</Link></ProfileButtonMenuOption>
                     <ProfileButtonMenuOption onClick={() => LogOut()}>ანგარიშიდან გამოსვლა</ProfileButtonMenuOption>
                 </ProfileButtonMenu>
             </Header>

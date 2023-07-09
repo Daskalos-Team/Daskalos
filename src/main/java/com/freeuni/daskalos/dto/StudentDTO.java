@@ -28,6 +28,8 @@ public class StudentDTO {
 
     private String email;
 
+    private String profileImage;
+
     private UserType userType;
 
     private String phoneNumber;

@@ -39,7 +39,7 @@ export const standardLogin = async (email: string, password: string, google: boo
         logInFn(Number(response.data[1]), response.data[2], response.data[3], response.data[4]);
         return true;
     }).catch(err => {
-        alert(NOTIFICATION_MAP[err.response.data] || "");
+        alert(NOTIFICATION_MAP[err.response.data] || "წარუმატებელი ავტორიზაცია");
         return false;
     });
 };
@@ -122,6 +122,7 @@ export const registration = async (registrationCredentials: RegistrationCredenti
     return promise.then(response => {
         return true;
     }).catch(err => {
+        alert("რეგისტრაცია ვერ მოხერხდა");
         return false;
     });
 };

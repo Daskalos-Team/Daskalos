@@ -25,6 +25,10 @@ public class TeacherRating {
     private Long studentID;
 
     @Basic
+    @Column(name = "title")
+    private String title;
+
+    @Basic
     @Column(name = "student_comment")
     private String studentComment;
 
@@ -34,5 +38,5 @@ public class TeacherRating {
 
     @Basic
     @Column(name = "addDate")
-    private Date addDate;
+    private String addDate;
 }

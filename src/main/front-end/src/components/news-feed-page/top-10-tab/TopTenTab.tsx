@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { getTopTenTeachers, NewsFeedPageColorPalette, TopTeacherData } from "../../../service/news-feed-page-service";
+import { useNavigate } from "react-router-dom";
 
 export const TopTenTab = (): React.JSX.Element => {
     const [topTeachers, setTopTeachers] = useState<TopTeacherData[]>([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         async function updateTopTen() {
@@ -39,7 +41,7 @@ export const TopTenTab = (): React.JSX.Element => {
     };
 
     const moveToTeachersPage = (teacherId: number) => {
-        alert("moving to teacher " + teacherId + "'s page");
+        navigate(`/${teacherId}/TEACHER/`);
     };
 
     return (

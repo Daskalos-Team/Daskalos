@@ -131,15 +131,15 @@ public class UserServiceIntegrationTest {
     public void setup() {
         teacher1 = new Teacher(10L, "Luka", "Kalandadze", "AtLeast^8", "email4",
                 UserType.TEACHER, "55555555", new UserAddress("address1", 11.0, 20.0), true,
-                null, null, null, null, null, null);
+                null, null, null, null, null, null, null);
 
         teacher2 = new Teacher(11L, "Murtaz", "Gobozovi", "AtLeast^8", "email5",
                 UserType.TEACHER, "55555555", new UserAddress("address2", 11.0, 20.0), true,
-                null, null, null, null, null, null);
+                null, null, null, null, null, null, null);
 
         teacher3 = new Teacher(12L, "Juansher", "Mamiashvili", "AtLeast^8", "email6",
                 UserType.TEACHER, "55555555", new UserAddress("address3", 11.0, 20.0), true,
-                null, null, null, null, null, null);
+                null, null, null, null, null, null, null);
 
         student1 = new Student("email1", "AtLeast^8", "Giorgi", "Adikashviili", new UserAddress("address4", 1, 2), UserType.STUDENT,
                 false, null, null, null, null, null, null);
@@ -165,11 +165,13 @@ public class UserServiceIntegrationTest {
                 name("Aero Engineering").
                 description("Best lecturer in the world, Adrian Newey").
                 price(100).
+                days(new ArrayList<>()).
                 build();
         subjectDTO2 = SubjectDTO.builder().
                 name("Mechanical Engineering").
                 description("All the engineering principles in one course").
                 price(200).
+                days(new ArrayList<>()).
                 build();
     }
 
@@ -244,12 +246,14 @@ public class UserServiceIntegrationTest {
         teacherRatingDTO1 = TeacherRatingDTO.builder().
                 studentID(s.getID()).
                 studentComment("very nice teacher").
+                addDate("10 ივლისი, 2022").
                 rating(5).
                 build();
 
         teacherRatingDTO2 = TeacherRatingDTO.builder().
                 studentID(s.getID()).
                 studentComment("not bad teacher").
+                addDate("10 ივლისი, 2022").
                 rating(3).
                 build();
         TeacherRatingDTO addedRating1 = userService.addTeachersRating(t.getID(), teacherRatingDTO1);
@@ -282,30 +286,30 @@ public class UserServiceIntegrationTest {
                 studentID(s1.getID()).
                 studentComment("very nice teacher").
                 rating(5).
-                addDate(new Date(2012, Calendar.JUNE, 8)).
+                addDate("8 ივნისი, 2012").
                 build();
 
         TeacherRatingDTO teacherRating2 = TeacherRatingDTO.builder().
                 studentID(s2.getID()).
                 studentComment("not bad teacher").
                 rating(3).
-                addDate(new Date(2017, Calendar.NOVEMBER, 19)).
+                addDate("19 ნოემბერი, 2017").
                 build();
 
         TeacherRatingDTO teacherRating3 = TeacherRatingDTO.builder().
                 studentID(s3.getID()).
                 studentComment("not bad teacher").
                 rating(4).
-                addDate(new Date(2014, Calendar.MAY, 19)).
+                addDate("19 მაისი, 2014").
                 build();
         TeacherRatingDTO addedRating1 = userService.addTeachersRating(t.getID(), teacherRating1);
         TeacherRatingDTO addedRating2 = userService.addTeachersRating(t.getID(), teacherRating2);
         TeacherRatingDTO addedRating3 = userService.addTeachersRating(t.getID(), teacherRating3);
 
         List<TeacherRatingDTO> teacherRatings = userService.getTeacherDTO(t.getID()).getTeacherRatings();
-        assertEquals(teacherRatings.get(0), addedRating2);
-        assertEquals(teacherRatings.get(1), addedRating3);
-        assertEquals(teacherRatings.get(2), addedRating1);
+        assertEquals(teacherRatings.get(0), addedRating1);
+        assertEquals(teacherRatings.get(1), addedRating2);
+        assertEquals(teacherRatings.get(2), addedRating3);
     }
 
     @Test

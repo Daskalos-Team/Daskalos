@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { getUserMainData } from "../../service/session-service";
 import { NewsFeedPage } from "../news-feed-page";
 import { AuthorizationPage } from "../authorization-page";
+import { AppContext } from "../../App";
 
 export const MainPage = (): React.JSX.Element => {
+    const { setCurUserID, setCurUserType }: any = useContext(AppContext);
+
     const [loggedIn, setLoggedIn] = useState(false);
     const [userId, setUserId] = useState(-1);
     const [userType, setUserType] = useState("");
@@ -12,7 +15,9 @@ export const MainPage = (): React.JSX.Element => {
 
     const logIn = (newUserId: number, newUserType: string, newUserName: string, newUserSurname: string) => {
         setUserId(newUserId);
+        setCurUserID(newUserId);
         setUserType(newUserType);
+        setCurUserType(newUserType);
         setUserName(newUserName);
         setUserSurname(newUserSurname);
         setLoggedIn(true);
