@@ -41,7 +41,7 @@ export const ProfilePage = (): React.JSX.Element => {
 
     const [userData, setUserData] = useState<any>(undefined);
     const [userSubjects, setUserSubjects] = useState(undefined); // Subjects state
-    const [userComments, setUserComments] = useState([]); // comments state
+    const [userComments, setUserComments] = useState<any[]>([]); // comments state
 
     // large or small size during scroll
     const profileImageStyle: any = {
@@ -52,6 +52,16 @@ export const ProfilePage = (): React.JSX.Element => {
         borderRadius: "50%",
         border: "1px solid white",
         boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.25)"
+    };
+
+    const noCommentStyle: any = {
+        display: "flex",
+        "justify-content": "center",
+        "align-items": "center",
+        padding: "10px",
+        "margin-right": "10px",
+        border: "1px solid whitesmoke",
+        "border-radius": "20px"
     };
 
     useEffect(() => {
@@ -206,7 +216,7 @@ export const ProfilePage = (): React.JSX.Element => {
 
                             <div className="profile-page-first-area-right-side">
                                 <div className="profile-page-calendar-container">
-                                    <Calendar subjects={userSubjects} setSubjects={setUserSubjects} />
+                                    <Calendar userID={userId} loggedUserID={curUserID} subjects={userSubjects} setSubjects={setUserSubjects} />
                                 </div>
                             </div>
                         </div>
@@ -218,7 +228,7 @@ export const ProfilePage = (): React.JSX.Element => {
                         {userType === "TEACHER" ?
                             <div className="profile-page-after-title">
                                 <div className="profile-page-comments">
-                                    {userComments ? userComments.map((comment: any, index: any) => (
+                                    {userComments && userComments.length !== 0 ? userComments.map((comment: any, index: any) => (
                                         <div
                                             className="profile-page-comment"
                                             key={(index + 1).toString()}
@@ -233,7 +243,7 @@ export const ProfilePage = (): React.JSX.Element => {
                                                 rating={comment?.rating}
                                             />
                                         </div>
-                                    )) : <h2> კომენტარები არ არის </h2>}
+                                    )) : <h2 style={noCommentStyle}> კომენტარები არ არის </h2>}
                                     {
                                         userType === "TEACHER" && curUserType === "STUDENT" ?
                                             <Comment

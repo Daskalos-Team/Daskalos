@@ -105,10 +105,11 @@ public class UserController implements ErrorController {
         }
     }
 
-    @PostMapping("/add_teacher_subjects/{id}")
-    public ResponseEntity<?> addTeacherSubjects(@PathVariable long id, @RequestBody List<SubjectDTO> subjects) {
+    @PostMapping("/add_user_subjects/{id}")
+    public ResponseEntity<?> addUserSubjects(@PathVariable long id, @RequestBody List<SubjectDTO> subjects) {
+        userService.removeAllSubjects(id);
         for (SubjectDTO subjectDTO : subjects) {
-            ResponseEntity<SubjectDTO> result = addTeacherSubject(id, subjectDTO);
+            ResponseEntity<SubjectDTO> result = addUserSubject(id, subjectDTO);
             if (result.getStatusCode() == HttpStatus.BAD_REQUEST) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
@@ -116,8 +117,8 @@ public class UserController implements ErrorController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping("/add_teacher_subject/{id}")
-    public ResponseEntity<SubjectDTO> addTeacherSubject(@PathVariable long id, @RequestBody SubjectDTO subject) {
+    @PostMapping("/add_user_subject/{id}")
+    public ResponseEntity<SubjectDTO> addUserSubject(@PathVariable long id, @RequestBody SubjectDTO subject) {
         try {
             SubjectDTO subjectDTO = userService.addSubject(id, subject);
             return new ResponseEntity<>(subjectDTO, HttpStatus.OK);

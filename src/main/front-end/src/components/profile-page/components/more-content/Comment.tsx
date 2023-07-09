@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import "./styles/Comment.css";
 import { addComment, months } from "../../../../service/profile-page-service";
-import { SMALL_LOAD_TIME } from "../../../../service/common-service";
 import { AppContext } from "../../../../App";
 
 export const Comment = (props: any): React.JSX.Element => {
@@ -38,7 +37,6 @@ export const Comment = (props: any): React.JSX.Element => {
     };
 
     const goToStudentProfile = () => {
-        setTime(SMALL_LOAD_TIME);
         window.location.reload();
     };
 

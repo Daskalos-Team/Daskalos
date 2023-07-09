@@ -17,8 +17,7 @@ export const getUserData = async (userId: number, type: string): Promise<any> =>
 };
 
 export const updateSubjects = async (userId: number, type: string, subjects: any): Promise<any> => {
-    const userType = type.toLowerCase();
-    const promise = axios.post(`${USER_DATA_ENDPOINT}add_${userType}_subjects/${userId}`, subjects, {
+    const promise = axios.post(`${USER_DATA_ENDPOINT}add_user_subjects/${userId}`, subjects, {
         headers: {
             "Content-type": "application/json; charset=UTF-8"
         }

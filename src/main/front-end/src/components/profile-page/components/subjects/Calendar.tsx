@@ -6,7 +6,7 @@ import "./styles/Calendar.css";
 import { SUBJECT_IN_ENGLISH, SUBJECT_TO_COLOR } from "../../../../service/profile-page-service";
 
 export const Calendar = (props: any): React.JSX.Element => {
-    const { subjects, setSubjects } = props; // global user subjects cache
+    const { userID, loggedUserID, subjects, setSubjects } = props; // with global user subjects cache
 
     const [windowState, setWindowState] = useState<string>("window-hide");
     const [dimmerState, setDimmerState] = useState<string>("dimmer-hide");
@@ -20,13 +20,12 @@ export const Calendar = (props: any): React.JSX.Element => {
 
     const allSubjectsList = ["მათემატიკა", "ფიზიკა", "ქიმია", "ბიოლოგია", "ისტორია"];
     const calendarRef = useRef<any>();
-    const calendarConfig = {
+    const calendarConfig: any = {
         viewType: "Week",
         headerDateFormat: "ddd",
         durationBarVisible: true,
-        eventDeleteHandling: "Update", // Disabled
-        timeRangeSelectedHandling: "Enabled", // Disabled
-        // eventMoveHandling: "Disabled",
+        eventDeleteHandling: userID == loggedUserID ? "Update" : "Disabled",
+        timeRangeSelectedHandling: userID == loggedUserID ? "Enabled" : "Disabled",
         onTimeRangeSelected: async (args: any) => {
             setArgs(args);
             showWindow();
@@ -42,6 +41,9 @@ export const Calendar = (props: any): React.JSX.Element => {
         },
         onEventClick: undefined
     };
+    if (userID != loggedUserID) {
+        calendarConfig.eventMoveHandling = "Disabled";
+    }
 
     // 2023-05-22 default date / 05-21 for sunday
     // INITIAL PROCESSING OF SUBJECTS

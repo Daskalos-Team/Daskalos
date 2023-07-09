@@ -154,6 +154,13 @@ public class UserService {
         subjectService.deleteUserSubject(userID, subject);
     }
 
+    public void removeAllSubjects(Long userID) {
+        List<SubjectDTO> allSubjects = subjectService.getUserSubjects(userID);
+        for (SubjectDTO subject : allSubjects) {
+            removeSubject(userID, subject);
+        }
+    }
+
     public StudentDTO getStudentDTO(Long studentID) {
         Optional<Student> student = studentRepository.findById(studentID);
         if (student.isEmpty()) {

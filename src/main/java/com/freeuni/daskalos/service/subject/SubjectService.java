@@ -37,12 +37,12 @@ public class SubjectService {
 
     public SubjectDTO addUserSubject(Long userID, SubjectDTO subject) {
         Subject addedSubject = subjectRepository.save(DaoDtoConversionUtils.toSubject(subject));
-        UserToSubject teacherToSubject = new UserToSubject().
+        UserToSubject userToSubject = new UserToSubject().
                 toBuilder().
                 userID(userID).
                 subjectID(addedSubject.getID()).
                 build();
-        userToSubjectRepository.save(teacherToSubject);
+        userToSubjectRepository.save(userToSubject);
         return DaoDtoConversionUtils.toSubjectDTO(addedSubject);
     }
 }

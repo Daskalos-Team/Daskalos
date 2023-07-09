@@ -156,6 +156,7 @@ export const NewsFeedPage = (props: NewsFeedPageProps): React.JSX.Element => {
 
     useEffect(() => {
         setTime(NEWS_FEED_LOAD_TIME);
+        document.title = "სიახლეები";
     }, []);
 
     useLayoutEffect(() => {
