@@ -3,6 +3,12 @@ import { NEWS_FEED_ENDPOINT, USER_DATA_ENDPOINT } from "../common-service";
 import { UserFilters } from "./NewsFeedPageOptionsConstants";
 
 export const getTeachers = (studentID: number, filters: UserFilters): Promise<any> => {
+    if (filters.minPrice! < 0) {
+        filters.minPrice = null;
+    }
+    if (filters.maxPrice! > 10000) {
+        filters.maxPrice = null;
+    }
     return axios.post(NEWS_FEED_ENDPOINT + "get_filtered_teachers/" + studentID, filters, {
         headers: {
             "Content-type": "application/json; charset=UTF-8"
