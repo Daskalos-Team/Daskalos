@@ -98,6 +98,21 @@ export interface NewsFeedPageProps {
     userSurname: string;
 }
 
+export interface DropDownArrowProps {
+    rotation: number;
+}
+
+export interface SearchComponentProps {
+    userId: number;
+    userType: string;
+}
+
+export interface SearchListMenuProps {
+    open: boolean;
+    animation: Keyframes | null;
+    scrollable: boolean;
+}
+
 export interface TopTeacherData {
     teacherId: number;
     name: string;
@@ -106,13 +121,22 @@ export interface TopTeacherData {
     voterNum: number;
 }
 
+export interface Address {
+    fullAddress: string;
+    latitude: number;
+    longitude: number;
+}
+
 export interface UserFilters {
-    minPrice: number,
-    maxPrice: number,
+    name: string,
+    surname: string,
+    minPrice: number | null,
+    maxPrice: number | null,
     favouritesOnly: boolean,
     onPlace: boolean | null,
     subjectsOnly: string[],
-    weekdays: string[]
+    userAddressDTO: Address,
+    radius: number
 }
 
 export interface UserProps {
@@ -152,3 +176,11 @@ export const NewsFeedPageColorPalette = {
     profileButtonMenuBorder: "#0000ff30",
     topTeacherBG: "linear-gradient(130deg, rgba(70,207,255,0.4) 0%, rgba(130,187,255,0.5) 40%, rgba(50,157,255,0.7) 100%)"
 };
+
+export const MAX_MENU_ON_WINDOW_WIDTH = 1180;
+
+export const MAX_UNSCALED_ROOT_WIDTH = 700;
+
+export const SUBJECTS = ["მათემატიკა", "ქართული", "ფიზიკა", "ბიოლოგია", "გეოგრაფია", "ისტორია"];
+
+export const ON_PLACE_OPTIONS = ["ადგილზე", "დისტანციური", "ნებისმიერი"];

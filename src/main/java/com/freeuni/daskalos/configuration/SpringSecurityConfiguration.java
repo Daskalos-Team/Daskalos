@@ -1,4 +1,4 @@
-package com.freeuni.daskalos.controller;
+package com.freeuni.daskalos.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

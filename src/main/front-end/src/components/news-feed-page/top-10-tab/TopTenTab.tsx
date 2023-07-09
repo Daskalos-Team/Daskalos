@@ -16,7 +16,7 @@ export const TopTenTab = (): React.JSX.Element => {
                     name: teacher.name,
                     surname: teacher.surname,
                     rating: teacher.teacherRatings.length == 0 ? 0 :
-                        teacher.teacherRatings.reduce((sum: number, curr: any) => sum + curr.rating) / teacher.teacherRatings.length,
+                        teacher.teacherRatings.reduce((sum: number, curr: any) => sum + curr.rating, 0) / teacher.teacherRatings.length,
                     voterNum: teacher.teacherRatings.length
                 });
             }

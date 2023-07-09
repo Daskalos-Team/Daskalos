@@ -91,7 +91,7 @@
     width: 40%;
     height: 3em;
     background-color: lightcoral;
-    color: dimgrey;
+    color: white;
     font-size: 1em;
     display: flex;
     justify-content: center;
@@ -195,7 +195,7 @@ input {
     border: none;
     background-color: #ecf0ef;
     width: 80%;
-    height: 0.5em;
+    height: 0.2em;
     border-radius: 0.75em;
     text-align: center;
     padding: 2em;
@@ -278,7 +278,7 @@ select:hover {
 }
 
 .authorization-button:hover {
-    transform: scale(1.25);
+    transform: scale(1.15);
 }
 
 .blue {
@@ -350,6 +350,9 @@ select:hover {
     color: #fff;
     transition: 0.5s;
     background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .more-button.button-ghost:hover {
@@ -418,7 +421,11 @@ select:hover {
 
     .authorization-form {
         width: 25%;
-        height: 65%;
+        height: 70%;
+    }
+
+    input {
+        font-size: 0.85rem !important;
     }
 }
 
@@ -456,7 +463,21 @@ select:hover {
 
     .authorization-form {
         width: 30%;
-        height: 90%;
+        height: 97%;
+    }
+
+    .more-button {
+        height: 1em;
+        width: 15rem;
+    }
+
+    .authorization-button {
+        height: 2em;
+    }
+
+    input {
+        height: 0.15em !important;
+        font-size: 0.8rem !important;
     }
 }
 

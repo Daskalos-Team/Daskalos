@@ -17,6 +17,19 @@ export const NOTIFICATION_MAP: any = {
     "SUCCESSFUL_CHANGE": "პაროლი წარმატებით შეიცვალა"
 };
 
+export interface RegistrationCredentials {
+    email: string;
+    password: string;
+    name: string;
+    surname: string;
+    address: {
+        fullAddress: string;
+        latitude: number;
+        longitude: number;
+    };
+    userType: string
+}
+
 export interface AuthorizationPageProps {
     logInFn: (userId: number, userType: string, userName: string, userSurname: string) => void;
 }

@@ -1,34 +1,29 @@
 import React, { useState } from "react";
 import styled, { Keyframes, keyframes } from "styled-components";
 import {
-    CheckboxProps,
     NewsFeedPageColorPalette,
     SettingArrowProps,
-    SettingOptionsProps, SettingsProps
+    SettingOptionsProps, SettingsProps, SUBJECTS
 } from "../../../service/news-feed-page-service";
+import { CheckboxComponent } from "../../helper-components/CheckboxComponent";
 
 export const SettingsTab = (props: SettingsProps): React.JSX.Element => {
     const filters = props.filters;
-    const [settingOptionsOpen, setSettingOptionsOpen] = useState([false, false, false]);
+    const [settingOptionsOpen, setSettingOptionsOpen] = useState([false, false]);
     const [settingOptionsAnimations, setSettingOptionsAnimations] = useState<(Keyframes | null)[]>([null, null]);
-    const [arrowRotations, setArrowRotations] = useState([0, 0, 0, 0]);
+    const [arrowRotations, setArrowRotations] = useState([0, 0, 0]);
 
-    const subjects = ["მათემატიკა", "ქართული", "ფიზიკა", "ბიოლოგია", "გეოგრაფია", "ისტორია"];
-    const weekdays = ["ორშაბათი", "სამშაბათი", "ოთხშაბათი", "ხუთშაბათი", "პარასკევი", "შაბათი", "კვირა"];
     const checkedInitial = new Map([
         ["ფავორიტები", filters.favouritesOnly],
         ["დისტანციური სწავლება", filters.onPlace == null ? true : !filters.onPlace],
         ["ადგილზე სწავლება", filters.onPlace == null ? true : filters.onPlace],
-        ["ფასი", filters.minPrice >= 0 && filters.maxPrice <= 10000 && filters.minPrice <= filters.maxPrice]
+        ["ფასი", (filters.minPrice != null || filters.maxPrice != null) && (filters.minPrice! >= 0 || filters.maxPrice! <= 10000)]
     ]);
-    subjects.forEach(subject => {
+    SUBJECTS.forEach(subject => {
         checkedInitial.set(subject, filters.subjectsOnly.includes(subject));
     });
-    weekdays.forEach(weekday => {
-        checkedInitial.set(weekday, filters.weekdays.includes(weekday));
-    });
     const [checked, setChecked] = useState(checkedInitial);
-    const [prices, setPrices] = useState([Math.max(filters.minPrice, 0), Math.max(Math.min(filters.maxPrice, 10000), filters.minPrice)]);
+    const [prices, setPrices] = useState([filters.minPrice == null ? 0 : Math.max(filters.minPrice, 0), filters.maxPrice == null ? 10000 : Math.min(filters.maxPrice, 10000)]);
 
     const toggleSettings = (settingId: number) => {
         const newSettingOptionsOpen = settingOptionsOpen.slice();
@@ -42,11 +37,12 @@ export const SettingsTab = (props: SettingsProps): React.JSX.Element => {
         setArrowRotations(newArrowRotations);
     };
 
-    const updatePrices = (newPrices: number[]) => {
-        filters.minPrice = Math.min(Math.max(0, newPrices[0]!), 10000);
-        filters.maxPrice = Math.max(Math.min(10000, newPrices[1]!), 0);
-        if (filters.minPrice > filters.maxPrice) {
-            filters.maxPrice = filters.minPrice;
+    const updatePrices = (newPrices: number[], updateFilters: boolean) => {
+        filters.minPrice = Math.min(Math.max(0, newPrices[0]), 10000);
+        filters.maxPrice = Math.max(Math.min(10000, newPrices[1]), 0);
+        setPrices([filters.minPrice, filters.maxPrice]);
+        if (updateFilters) {
+            props.filtersSetFn(filters);
         }
     };
 
@@ -78,25 +74,20 @@ export const SettingsTab = (props: SettingsProps): React.JSX.Element => {
             }
             case "ფასი": {
                 if (!checked.get(checkboxName)) {
-                    updatePrices(prices);
+                    updatePrices(prices, true);
                 } else {
                     filters.minPrice = -1;
                     filters.maxPrice = 1000000;
+                    props.filtersSetFn(filters);
                 }
                 break;
             }
             default: {
-                if (subjects.includes(checkboxName)) {
+                if (SUBJECTS.includes(checkboxName)) {
                     if (checked.get(checkboxName)) {
                         filters.subjectsOnly = filters.subjectsOnly.filter(s => s != checkboxName);
                     } else {
                         filters.subjectsOnly.push(checkboxName);
-                    }
-                } else if (weekdays.includes(checkboxName)) {
-                    if (checked.get(checkboxName)) {
-                        filters.weekdays = filters.weekdays.filter(w => w != checkboxName);
-                    } else {
-                        filters.weekdays.push(checkboxName);
                     }
                 }
             }
@@ -110,14 +101,19 @@ export const SettingsTab = (props: SettingsProps): React.JSX.Element => {
     const setPriceLimit = (type: string, e: React.ChangeEvent<HTMLInputElement>) => {
         const newPrices = [prices[0], prices[1]];
         if (type == "max") {
-            newPrices[1] = e.target.valueAsNumber;
+            if (e.target.value.length < 1) {
+                newPrices[1] = 10000;
+            } else {
+                newPrices[1] = e.target.valueAsNumber;
+            }
         } else if (type == "min") {
-            newPrices[0] = e.target.valueAsNumber;
+            if (e.target.value.length < 1) {
+                newPrices[0] = 0;
+            } else {
+                newPrices[0] = e.target.valueAsNumber;
+            }
         }
-        if (checked.get("ფასი")) {
-            updatePrices(newPrices);
-        }
-        setPrices(newPrices);
+        updatePrices(newPrices, checked.get("ფასი") as boolean);
     };
 
     return (
@@ -133,16 +129,16 @@ export const SettingsTab = (props: SettingsProps): React.JSX.Element => {
                         {props.currUserType == "STUDENT" && (
                             <SettingOption>
                                 <OptionLabel>ფავორიტები</OptionLabel>
-                                <Checkbox checked={checked.get("ფავორიტები") as boolean} onClick={() => toggleCheckboxChecked("ფავორიტები")}/>
+                                <SettingsCheckbox checked={checked.get("ფავორიტები") as boolean} onClick={() => toggleCheckboxChecked("ფავორიტები")}/>
                             </SettingOption>
                         )}
                         <SettingOption>
                             <OptionLabel>დისტანციური სწავლება</OptionLabel>
-                            <Checkbox checked={checked.get("დისტანციური სწავლება") as boolean} onClick={() => toggleCheckboxChecked("დისტანციური სწავლება")}/>
+                            <SettingsCheckbox checked={checked.get("დისტანციური სწავლება") as boolean} onClick={() => toggleCheckboxChecked("დისტანციური სწავლება")}/>
                         </SettingOption>
                         <SettingOption>
                             <OptionLabel>ადგილზე სწავლება</OptionLabel>
-                            <Checkbox checked={checked.get("ადგილზე სწავლება") as boolean} onClick={() => toggleCheckboxChecked("ადგილზე სწავლება")}/>
+                            <SettingsCheckbox checked={checked.get("ადგილზე სწავლება") as boolean} onClick={() => toggleCheckboxChecked("ადგილზე სწავლება")}/>
                         </SettingOption>
                         <SettingOption>
                             <OptionLabel>ფასი</OptionLabel>
@@ -151,7 +147,7 @@ export const SettingsTab = (props: SettingsProps): React.JSX.Element => {
                                 <FiltersDash>–</FiltersDash>
                                 <FiltersNumberField type="number" value={prices[1]} min={0} max={10000} onChange={(e) => setPriceLimit("max", e)}/>
                             </PriceRangeContainer>
-                            <Checkbox checked={checked.get("ფასი") as boolean} onClick={() => toggleCheckboxChecked("ფასი")}/>
+                            <SettingsCheckbox checked={checked.get("ფასი") as boolean} onClick={() => toggleCheckboxChecked("ფასი")}/>
                         </SettingOption>
                         <SettingOption onClick={() => toggleSettings(2)}>
                             <Arrows src="/images/news-feed-page/DownArrow.png" rotation={arrowRotations[2]} rotationDirection={1}/>
@@ -160,25 +156,10 @@ export const SettingsTab = (props: SettingsProps): React.JSX.Element => {
                         </SettingOption>
                         <SettingOptionsContainer open={settingOptionsOpen[2]} animation={settingOptionsAnimations[2]}>
                             <SettingOptions>
-                                {subjects.map((subject) => (
+                                {SUBJECTS.map((subject) => (
                                     <SettingOption key={subject}>
                                         <OptionLabel>{subject}</OptionLabel>
-                                        <Checkbox checked={checked.get(subject) as boolean} onClick={() => toggleCheckboxChecked(subject)}/>
-                                    </SettingOption>
-                                ))}
-                            </SettingOptions>
-                        </SettingOptionsContainer>
-                        <SettingOption onClick={() => toggleSettings(3)}>
-                            <Arrows src="/images/news-feed-page/DownArrow.png" rotation={arrowRotations[3]} rotationDirection={1}/>
-                            <SettingTitle>თავისუფალი დღეები</SettingTitle>
-                            <Arrows src="/images/news-feed-page/DownArrow.png" rotation={arrowRotations[3]} rotationDirection={-1}/>
-                        </SettingOption>
-                        <SettingOptionsContainer open={settingOptionsOpen[3]} animation={settingOptionsAnimations[3]}>
-                            <SettingOptions>
-                                {weekdays.map((weekday) => (
-                                    <SettingOption key={weekday}>
-                                        <OptionLabel>{weekday}</OptionLabel>
-                                        <Checkbox checked={checked.get(weekday) as boolean} onClick={() => toggleCheckboxChecked(weekday)}/>
+                                        <SettingsCheckbox checked={checked.get(subject) as boolean} onClick={() => toggleCheckboxChecked(subject)}/>
                                     </SettingOption>
                                 ))}
                             </SettingOptions>
@@ -284,23 +265,10 @@ const OptionLabel = styled.p`
   cursor: default;
 `;
 
-const Checkbox = styled.div<CheckboxProps>`
+const SettingsCheckbox = styled(CheckboxComponent)`
   margin-right: 20px;
   width: 35px;
   height: 35px;
-  background: ${NewsFeedPageColorPalette.secondaryColor};
-  border: 3px solid ${props => props.checked ? NewsFeedPageColorPalette.checkboxCheckedBorder :
-        NewsFeedPageColorPalette.checkboxUncheckedBorder};
-  border-radius: 7px;
-  cursor: pointer;
-  transition-property: border-color;
-  transition-duration: 200ms;
-  background-size: cover;
-  ${props => props.checked ? "background-image: url(\"/images/news-feed-page/Check.png\")" : ""};
-  &:hover {
-    border-color: ${props => props.checked ? NewsFeedPageColorPalette.checkboxUncheckedBorder :
-        NewsFeedPageColorPalette.checkboxCheckedBorder};
-  };
 `;
 
 const PriceRangeContainer = styled.div`
