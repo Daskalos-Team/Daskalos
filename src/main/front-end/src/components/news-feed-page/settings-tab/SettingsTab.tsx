@@ -3,30 +3,27 @@ import styled, { Keyframes, keyframes } from "styled-components";
 import {
     NewsFeedPageColorPalette,
     SettingArrowProps,
-    SettingOptionsProps, SettingsProps, SUBJECTS, WEEKDAYS
+    SettingOptionsProps, SettingsProps, SUBJECTS
 } from "../../../service/news-feed-page-service";
 import { CheckboxComponent } from "../../helper-components/CheckboxComponent";
 
 export const SettingsTab = (props: SettingsProps): React.JSX.Element => {
     const filters = props.filters;
-    const [settingOptionsOpen, setSettingOptionsOpen] = useState([false, false, false]);
+    const [settingOptionsOpen, setSettingOptionsOpen] = useState([false, false]);
     const [settingOptionsAnimations, setSettingOptionsAnimations] = useState<(Keyframes | null)[]>([null, null]);
-    const [arrowRotations, setArrowRotations] = useState([0, 0, 0, 0]);
+    const [arrowRotations, setArrowRotations] = useState([0, 0, 0]);
 
     const checkedInitial = new Map([
         ["ფავორიტები", filters.favouritesOnly],
         ["დისტანციური სწავლება", filters.onPlace == null ? true : !filters.onPlace],
         ["ადგილზე სწავლება", filters.onPlace == null ? true : filters.onPlace],
-        ["ფასი", filters.minPrice >= 0 && filters.maxPrice <= 10000 && filters.minPrice <= filters.maxPrice]
+        ["ფასი", (filters.minPrice != null || filters.maxPrice != null) && (filters.minPrice! >= 0 || filters.maxPrice! <= 10000)]
     ]);
     SUBJECTS.forEach(subject => {
         checkedInitial.set(subject, filters.subjectsOnly.includes(subject));
     });
-    WEEKDAYS.forEach(weekday => {
-        checkedInitial.set(weekday, filters.weekdays.includes(weekday));
-    });
     const [checked, setChecked] = useState(checkedInitial);
-    const [prices, setPrices] = useState([Math.max(filters.minPrice, 0), Math.max(Math.min(filters.maxPrice, 10000), filters.minPrice)]);
+    const [prices, setPrices] = useState([filters.minPrice == null ? 0 : Math.max(filters.minPrice, 0), filters.maxPrice == null ? 10000 : Math.min(filters.maxPrice, 10000)]);
 
     const toggleSettings = (settingId: number) => {
         const newSettingOptionsOpen = settingOptionsOpen.slice();
@@ -40,11 +37,12 @@ export const SettingsTab = (props: SettingsProps): React.JSX.Element => {
         setArrowRotations(newArrowRotations);
     };
 
-    const updatePrices = (newPrices: number[]) => {
-        filters.minPrice = Math.min(Math.max(0, newPrices[0]!), 10000);
-        filters.maxPrice = Math.max(Math.min(10000, newPrices[1]!), 0);
-        if (filters.minPrice > filters.maxPrice) {
-            filters.maxPrice = filters.minPrice;
+    const updatePrices = (newPrices: number[], updateFilters: boolean) => {
+        filters.minPrice = Math.min(Math.max(0, newPrices[0]), 10000);
+        filters.maxPrice = Math.max(Math.min(10000, newPrices[1]), 0);
+        setPrices([filters.minPrice, filters.maxPrice]);
+        if (updateFilters) {
+            props.filtersSetFn(filters);
         }
     };
 
@@ -76,10 +74,11 @@ export const SettingsTab = (props: SettingsProps): React.JSX.Element => {
             }
             case "ფასი": {
                 if (!checked.get(checkboxName)) {
-                    updatePrices(prices);
+                    updatePrices(prices, true);
                 } else {
                     filters.minPrice = -1;
                     filters.maxPrice = 1000000;
+                    props.filtersSetFn(filters);
                 }
                 break;
             }
@@ -89,12 +88,6 @@ export const SettingsTab = (props: SettingsProps): React.JSX.Element => {
                         filters.subjectsOnly = filters.subjectsOnly.filter(s => s != checkboxName);
                     } else {
                         filters.subjectsOnly.push(checkboxName);
-                    }
-                } else if (WEEKDAYS.includes(checkboxName)) {
-                    if (checked.get(checkboxName)) {
-                        filters.weekdays = filters.weekdays.filter(w => w != checkboxName);
-                    } else {
-                        filters.weekdays.push(checkboxName);
                     }
                 }
             }
@@ -108,14 +101,19 @@ export const SettingsTab = (props: SettingsProps): React.JSX.Element => {
     const setPriceLimit = (type: string, e: React.ChangeEvent<HTMLInputElement>) => {
         const newPrices = [prices[0], prices[1]];
         if (type == "max") {
-            newPrices[1] = e.target.valueAsNumber;
+            if (e.target.value.length < 1) {
+                newPrices[1] = 10000;
+            } else {
+                newPrices[1] = e.target.valueAsNumber;
+            }
         } else if (type == "min") {
-            newPrices[0] = e.target.valueAsNumber;
+            if (e.target.value.length < 1) {
+                newPrices[0] = 0;
+            } else {
+                newPrices[0] = e.target.valueAsNumber;
+            }
         }
-        if (checked.get("ფასი")) {
-            updatePrices(newPrices);
-        }
-        setPrices(newPrices);
+        updatePrices(newPrices, checked.get("ფასი") as boolean);
     };
 
     return (
@@ -162,21 +160,6 @@ export const SettingsTab = (props: SettingsProps): React.JSX.Element => {
                                     <SettingOption key={subject}>
                                         <OptionLabel>{subject}</OptionLabel>
                                         <SettingsCheckbox checked={checked.get(subject) as boolean} onClick={() => toggleCheckboxChecked(subject)}/>
-                                    </SettingOption>
-                                ))}
-                            </SettingOptions>
-                        </SettingOptionsContainer>
-                        <SettingOption onClick={() => toggleSettings(3)}>
-                            <Arrows src="/images/news-feed-page/DownArrow.png" rotation={arrowRotations[3]} rotationDirection={1}/>
-                            <SettingTitle>თავისუფალი დღეები</SettingTitle>
-                            <Arrows src="/images/news-feed-page/DownArrow.png" rotation={arrowRotations[3]} rotationDirection={-1}/>
-                        </SettingOption>
-                        <SettingOptionsContainer open={settingOptionsOpen[3]} animation={settingOptionsAnimations[3]}>
-                            <SettingOptions>
-                                {WEEKDAYS.map((weekday) => (
-                                    <SettingOption key={weekday}>
-                                        <OptionLabel>{weekday}</OptionLabel>
-                                        <SettingsCheckbox checked={checked.get(weekday) as boolean} onClick={() => toggleCheckboxChecked(weekday)}/>
                                     </SettingOption>
                                 ))}
                             </SettingOptions>
@@ -303,7 +286,7 @@ const FiltersNumberField = styled.input`
   padding-bottom: 18px;
   border-width: 0;
   padding-inline: 5px;
-  font-family: "Noto Serif Georgian";
+  font-family: sans-serif;
   text-align: center;
 
   &:hover {
@@ -314,7 +297,7 @@ const FiltersNumberField = styled.input`
 const FiltersDash = styled.p`
   width: fit-content;
   font-size: 16px;
-  font-family: "Noto Serif Georgian";
+  font-family: sans-serif;
   text-align: center;
   line-height: 48px;
 `;

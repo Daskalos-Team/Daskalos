@@ -8,7 +8,7 @@ import {
 import emailjs from "@emailjs/browser";
 import { NOTIFICATION_MAP, RegistrationCredentials } from "./AuthorizationPageServiceConstants";
 
-export const loginWithGoogle = async (user: any, logInFn: (userId: number, userType: string) => void): Promise<boolean> => {
+export const loginWithGoogle = async (user: any, logInFn: (userId: number, userType: string, userName: string, userSurname: string) => void): Promise<boolean> => {
     const res = await axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
         headers: {
             Authorization: `Bearer ${user.access_token}`,
@@ -19,7 +19,8 @@ export const loginWithGoogle = async (user: any, logInFn: (userId: number, userT
     return standardLogin(res.data.email, res.data.id, true, logInFn);
 };
 
-export const standardLogin = async (email: string, password: string, google: boolean, logInFn: (userId: number, userType: string) => void): Promise<boolean> => {
+export const standardLogin = async (email: string, password: string, google: boolean,
+    logInFn: (userId: number, userType: string, userName: string, userSurname: string) => void): Promise<boolean> => {
     if (isEmptyInput([email, password])) {
         alert("გთხოვთ შეიყვანოთ ყველა მონაცემი");
         return false;
@@ -35,7 +36,7 @@ export const standardLogin = async (email: string, password: string, google: boo
         }
     });
     return promise.then(response => {
-        logInFn(Number(response.data[1]), response.data[2]);
+        logInFn(Number(response.data[1]), response.data[2], response.data[3], response.data[4]);
         return true;
     }).catch(err => {
         alert(NOTIFICATION_MAP[err.response.data] || "წარუმატებელი ავტორიზაცია");

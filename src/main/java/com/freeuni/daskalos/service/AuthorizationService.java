@@ -68,7 +68,8 @@ public class AuthorizationService {
 
         User currUser = currentUser.get();
         saveCurrentUser(currUser);
-        return new String[]{AuthorizationStatus.SUCCESSFUL_LOGIN.name(), currUser.getID().toString(), currUser.getUserType().name()};
+        return new String[]{AuthorizationStatus.SUCCESSFUL_LOGIN.name(), currUser.getID().toString(), currUser.getUserType().name(),
+            currUser.getName(), currUser.getSurname()};
     }
 
     public String changePassword(String email, String password) {
@@ -93,5 +94,7 @@ public class AuthorizationService {
     private void saveCurrentUser(User user) {
         SessionService.setUserId(user.getID());
         SessionService.setUserType(user.getUserType());
+        SessionService.setUserName(user.getName());
+        SessionService.setUserSurname(user.getSurname());
     }
 }

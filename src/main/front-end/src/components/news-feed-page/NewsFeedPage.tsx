@@ -57,7 +57,6 @@ export const NewsFeedPage = (props: NewsFeedPageProps): React.JSX.Element => {
         favouritesOnly: false,
         onPlace: null,
         subjectsOnly: [],
-        weekdays: [],
         userAddressDTO: {
             fullAddress: "",
             latitude: 0,
@@ -68,7 +67,7 @@ export const NewsFeedPage = (props: NewsFeedPageProps): React.JSX.Element => {
 
     async function updateRecommendations() {
         const teachers = await getTeachers(props.userId, filters);
-        const students = await getStudents(filters);
+        const students = (filters.minPrice != null && filters.minPrice >= 0) || (filters.maxPrice != null && filters.maxPrice <= 10000) ? null : await getStudents(filters);
         const teachersProps: UserProps[] = [];
         const studentsProps: UserProps[] = [];
         for (let i = 0; i < teachers.data.length; i++) {
@@ -83,12 +82,12 @@ export const NewsFeedPage = (props: NewsFeedPageProps): React.JSX.Element => {
                 userType: teacher.userType,
                 description: teacher.description,
                 rating: teacher.teacherRatings.length == 0 ? 0 :
-                    teacher.teacherRatings.reduce((sum: number, curr: any) => sum + curr.rating) / teacher.teacherRatings.length,
+                    teacher.teacherRatings.reduce((sum: number, curr: any) => sum + curr.rating, 0) / teacher.teacherRatings.length,
                 subjects: teacher.teacherSubjects.map((subject: any) => subject.name),
                 isFavourite: teacher.isFavoriteForLoggedInStudent
             });
         }
-        if (!filters.favouritesOnly) {
+        if (!filters.favouritesOnly && students != null) {
             for (let i = 0; i < students.data.length; i++) {
                 const student = students.data[i];
                 if (student.id == props.userId) {
@@ -149,7 +148,7 @@ export const NewsFeedPage = (props: NewsFeedPageProps): React.JSX.Element => {
     };
 
     const LogOut = () => {
-        setUserMainData(-1, props.userType).then(_ => {
+        setUserMainData(-1, props.userType, "", "").then(_ => {
             window.location.reload();
         }).catch(err => console.log(err));
     };
@@ -206,8 +205,8 @@ export const NewsFeedPage = (props: NewsFeedPageProps): React.JSX.Element => {
                 />
                 <ProfileButtonMenu open={profileButtonMenuOpen} animation={profileButtonMenuAnimation}>
                     <ProfileButtonMenuTop>
-                        <ProfilePicture src={`/images/news-feed-page/${props.userType === "TEACHER" ? "Teachers" : "Student"}.png`} alt="Profile Picture"/>
-                        <UserName>სახელი გვარი</UserName>
+                        <ProfilePicture src="/images/news-feed-page/AccountIcon.png" alt="Profile Picture"/>
+                        <UserName>{props.userName + " " + props.userSurname}</UserName>
                     </ProfileButtonMenuTop>
                     <ProfileButtonMenuOption onClick={setTime(SMALL_LOAD_TIME)}><Link to={`${props.userId}/${props.userType}`}>ჩემი პროფილი</Link></ProfileButtonMenuOption>
                     <ProfileButtonMenuOption onClick={() => LogOut()}>ანგარიშიდან გამოსვლა</ProfileButtonMenuOption>
@@ -411,7 +410,7 @@ const ProfileButtonMenu = styled.div<ProfileButtonMenuProps>`
   display: flex;
   flex-direction: column;
   justify-content: stretch;
-  font-family: "Noto Serif Georgian";
+  font-family: sans-serif;
 `;
 
 const ProfileButtonMenuTop = styled.div`
@@ -502,7 +501,7 @@ const SearchLabel = styled.div`
   justify-content: center;
   align-items: center;
   font-size: 15px;
-  font-family: Noto Serif Georgian;
+  font-family: sans-serif;
   text-align: center;
   text-transform: uppercase;
   box-sizing: border-box;
@@ -564,7 +563,7 @@ const TabContainer = styled.div<TabProps>`
 `;
 
 const TabTitle = styled.p`
-  font-family: "Noto Serif Georgian";
+  font-family: sans-serif;
   font-weight: 800;
   letter-spacing: 1px;
   font-size: 27px;

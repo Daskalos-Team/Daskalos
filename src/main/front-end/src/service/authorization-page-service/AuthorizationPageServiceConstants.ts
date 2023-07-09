@@ -31,5 +31,5 @@ export interface RegistrationCredentials {
 }
 
 export interface AuthorizationPageProps {
-    logInFn: (userId: number, userType: string) => void;
+    logInFn: (userId: number, userType: string, userName: string, userSurname: string) => void;
 }

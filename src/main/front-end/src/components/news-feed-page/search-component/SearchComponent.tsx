@@ -46,7 +46,6 @@ export const SearchComponent = (props: SearchComponentProps): React.JSX.Element 
         favouritesOnly: false,
         onPlace: null,
         subjectsOnly: [],
-        weekdays: [],
         userAddressDTO: {
             fullAddress: "",
             latitude: 0,
@@ -149,11 +148,11 @@ export const SearchComponent = (props: SearchComponentProps): React.JSX.Element 
     };
 
     const setPriceLimit = (low: boolean, e: React.ChangeEvent<HTMLInputElement>) => {
-        const res = e.target.valueAsNumber;
+        const res = Math.max(0, Math.min(e.target.valueAsNumber, 10000));
         if (low) {
             filters.minPrice = res;
         } else {
-            filters.maxPrice = Math.max(res, filters.minPrice);
+            filters.maxPrice = res;
         }
         setFilters(filters);
     };

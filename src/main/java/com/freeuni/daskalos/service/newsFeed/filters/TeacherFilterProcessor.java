@@ -42,16 +42,19 @@ public class TeacherFilterProcessor implements FilterProcessor {
         }
         Set<String> userSubjects = teacherDTO.getTeacherSubjects().stream().map(SubjectDTO::getName).collect(Collectors.toSet());
         for (String subject : chosenSubjects) {
-            if (!userSubjects.contains(subject)) {
-                return false;
+            if (userSubjects.contains(subject)) {
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     private boolean checkPriceRange(TeacherDTO teacherDTO) {
         if (filter.getMinPrice() == null && filter.getMaxPrice() == null) {
             return true;
+        }
+        if (teacherDTO.getTeacherSubjects().isEmpty()) {
+            return false;
         }
         Map.Entry<Integer, Integer> teacherMinMaxPrice = getTeacherMinMaxPrice(teacherDTO);
         if (filter.getMinPrice() == null) {
@@ -83,10 +86,13 @@ public class TeacherFilterProcessor implements FilterProcessor {
             return false;
         }
         if (filter.getName() == null) {
-            return filter.getSurname().equals(teacherDTO.getSurname());
+            if (filter.getSurname() == null) {
+                return true;
+            }
+            return teacherDTO.getSurname().toLowerCase().contains(filter.getSurname().toLowerCase());
         }
         if (filter.getSurname() == null) {
-            return filter.getName().equals(teacherDTO.getName());
+            return teacherDTO.getName().toLowerCase().contains(filter.getName().toLowerCase());
         }
         return teacherDTO.getName().toLowerCase().contains(filter.getName().toLowerCase()) &&
                 teacherDTO.getSurname().toLowerCase().contains(filter.getSurname().toLowerCase());

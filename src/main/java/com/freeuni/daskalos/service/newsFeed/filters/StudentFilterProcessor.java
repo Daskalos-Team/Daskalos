@@ -32,11 +32,11 @@ public class StudentFilterProcessor implements FilterProcessor {
         }
         Set<String> userSubjects = userService.getStudentDTO(userID).getStudentSubjects().stream().map(SubjectDTO::getName).collect(Collectors.toSet());
         for (String subject : chosenSubjects) {
-            if (!userSubjects.contains(subject)) {
-                return false;
+            if (userSubjects.contains(subject)) {
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     private boolean checkOnPlace(Long userID) {
