@@ -16,6 +16,20 @@ export const getUserData = async (userId: number, type: string): Promise<any> =>
         });
 };
 
+export const getStudentFavourites = async (studentId: number): Promise<any> => {
+    const promise = axios.post(`${USER_DATA_ENDPOINT}${studentId}/favourites`, {}, {
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        }
+    });
+    return promise.then(response => {
+        return response;
+    })
+        .catch(err => {
+            console.log(err);
+        });
+};
+
 export const updateSubjects = async (userId: number, type: string, subjects: any): Promise<any> => {
     const promise = axios.post(`${USER_DATA_ENDPOINT}add_user_subjects/${userId}`, subjects, {
         headers: {

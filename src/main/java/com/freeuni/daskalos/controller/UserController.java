@@ -160,4 +160,15 @@ public class UserController implements ErrorController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+
+    @PostMapping("/{student_id}/favourites")
+    public ResponseEntity<List<TeacherDTO>> getStudentFavourites(@PathVariable long student_id) {
+        try {
+            List<TeacherDTO> teachers = userService.getStudentFavouriteTeachers(student_id);
+            return new ResponseEntity<>(teachers, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 }

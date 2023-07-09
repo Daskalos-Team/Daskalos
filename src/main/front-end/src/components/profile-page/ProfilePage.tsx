@@ -16,6 +16,7 @@ import {
     Calendar
 } from "./components";
 import {
+    getStudentFavourites,
     getUserData,
     PROFILE_IMAGE_DEFAULT_SIZE,
     SUBJECT_IN_ENGLISH,
@@ -24,7 +25,7 @@ import {
     USER_TYPE_IN_GEORGIAN
 } from "../../service/profile-page-service";
 import "./ProfilePage.css";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { getUserMainData } from "../../service/session-service";
 
 export const ProfilePage = (): React.JSX.Element => {
@@ -52,6 +53,7 @@ export const ProfilePage = (): React.JSX.Element => {
     const [linkedinUrl, setLinkedinUrl] = useState<string>("");
     const [twitterUrl, setTwitterUrl] = useState<string>("");
     const [instagramUrl, setInstagramUrl] = useState<string>("");
+    const [userFavourites, setUserFavourites] = useState<any>(undefined);
 
     // large or small size during scroll
     const profileImageStyle: any = {
@@ -82,8 +84,15 @@ export const ProfilePage = (): React.JSX.Element => {
             }
             setCurUserID(response.data.userId as number);
             setCurUserType(response.data.userType);
+            return response;
         }
-        getLoggedUser().catch(err => console.log(err));
+        getLoggedUser().then(response => {
+            if (userType === "STUDENT" && userId == response.data.userId) {
+                getStudentFavourites(userId).then(response => {
+                    setUserFavourites(response.data || []);
+                });
+            }
+        });
         getUserData(userId, userType).then(response => {
             if (response) {
                 setUserData(response.data);
@@ -106,12 +115,7 @@ export const ProfilePage = (): React.JSX.Element => {
             });
             setUserSubjects(subjects);
             setUserComments(comments);
-            setHeaderTitle(userData?.title || "მომხმარებელს არ გააჩნია მოკლე სათაური");
-            setHeaderDescription(userData?.description || "მომხმარებელს არ სურს გაჩვენოთ მოკლე აღწერა ან რაიმე ზოგადი კომენტარი");
-            setFacebookUrl(userData?.fbUrl || "");
-            setLinkedinUrl(userData?.linkedinUrl || "");
-            setTwitterUrl(userData?.twitterUrl || "");
-            setInstagramUrl(userData?.instaUrl || "");
+            updateFromUserData();
 
             updateUser(userId, userType, userData);
         }
@@ -123,6 +127,15 @@ export const ProfilePage = (): React.JSX.Element => {
         }
     }, [userSubjects]);
 
+    const updateFromUserData = () => {
+        setHeaderTitle(userData?.title || "მომხმარებელს არ გააჩნია მოკლე სათაური");
+        setHeaderDescription(userData?.description || "მომხმარებელს არ სურს გაჩვენოთ მოკლე აღწერა ან რაიმე ზოგადი კომენტარი");
+        setFacebookUrl(userData?.fbUrl || "");
+        setLinkedinUrl(userData?.linkedinUrl || "");
+        setTwitterUrl(userData?.twitterUrl || "");
+        setInstagramUrl(userData?.instaUrl || "");
+    };
+
     const showWindow = (): void => {
         setDimmerState("dimmer");
         setWindowState("window-popup");
@@ -131,6 +144,10 @@ export const ProfilePage = (): React.JSX.Element => {
     const hideWindow = (): void => {
         setDimmerState("dimmer-hide");
         setWindowState("window-hide");
+    };
+
+    const goToStudentProfile = () => {
+        window.location.reload();
     };
 
     const updateUserDescription = (): void => {
@@ -308,6 +325,7 @@ export const ProfilePage = (): React.JSX.Element => {
                                 <div className="verifier-buttons">
                                     <div className="verifier-ok" onClick={() => updateUserDescription()}>დადასტურება</div>
                                     <div className="verifier-close" onClick={() => {
+                                        updateFromUserData();
                                         hideWindow();
                                     }}>დახურვა</div>
                                 </div>
@@ -357,8 +375,32 @@ export const ProfilePage = (): React.JSX.Element => {
                                 <div className="profile-page-experiences">
                                     <Experience />
                                 </div>
-                            </div> : null
-                        }
+                            </div> : null}
+                        {userFavourites &&
+                          <>
+                              <legend className="your-favourites-label">თქვენი ფავორიტები</legend>
+                              <hr/>
+                              <div className="profile-page-favourites">
+                                  {
+                                      userFavourites.map((favourite: any, index: any) => (
+                                          <div className="chat" key={(index + 1).toString()}>
+                                              <div className="profile" onClick={() => goToStudentProfile()}>
+                                                  <Link to={`/${favourite?.id}/TEACHER`}>
+                                                      <img className="favourite-img"
+                                                          src={favourite?.profileImage || "../images/news-feed-page/TeachersIcon.png"}
+                                                          alt=""/>
+                                                  </Link>
+                                              </div>
+                                              <div className="message">
+                                                  {favourite?.title}
+                                              </div>
+                                              <div className="user">
+                                                  {`${favourite.name} ${favourite.surname}`}
+                                              </div>
+                                          </div>))
+                                  }
+                              </div>
+                          </>}
                     </div>
                 </div>
             </div>
