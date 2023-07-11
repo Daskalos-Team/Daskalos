@@ -174,7 +174,8 @@ export const NewsFeedPageColorPalette = {
     checkboxUncheckedBorder: "skyblue",
     profileButtonMenuBG: "linear-gradient(130deg, rgba(210,217,255,1) 0%, rgba(240,247,255,1) 40%, rgba(210,217,255,1) 100%)",
     profileButtonMenuBorder: "#0000ff30",
-    topTeacherBG: "linear-gradient(130deg, rgba(70,207,255,0.4) 0%, rgba(130,187,255,0.5) 40%, rgba(50,157,255,0.7) 100%)"
+    topTeacherBG: "linear-gradient(130deg, rgba(70,207,255,0.4) 0%, rgba(130,187,255,0.5) 40%, rgba(50,157,255,0.7) 100%)",
+    optionDefaultTextColor: "#192147"
 };
 
 export const MAX_MENU_ON_WINDOW_WIDTH = 1180;

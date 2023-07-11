@@ -35,6 +35,8 @@ const OptionContainer = styled.div<OptionContainerProps>`
   overflow: hidden;
   position: relative;
   cursor: pointer;
+  color: ${NewsFeedPageColorPalette.optionDefaultTextColor};
+  font-weight: 600;
   ${props => props.isSelected && `
     border: 5px solid ${NewsFeedPageColorPalette.secondaryColor};
     color: ${NewsFeedPageColorPalette.secondaryColor};
@@ -55,7 +57,7 @@ const SelectedEnd = styled.div`
 `;
 
 const OptionImg = styled.img`
-  margin: 30px 35px 30px 12.5px;
+  margin: 30px 25px 30px 12.5px;
   width: 45px;
   height: auto;
 `;
@@ -64,7 +66,7 @@ const OptionLabel = styled.p`
   font-family: sans-serif;
   width: 120px;
   text-align: start;
-  font-size: 16px;
+  font-size: 18px;
   line-height: 80px;
   margin-right: 15px;
 `;
