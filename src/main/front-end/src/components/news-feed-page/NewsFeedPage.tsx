@@ -29,8 +29,6 @@ import { Link } from "react-router-dom";
 import { NEWS_FEED_LOAD_TIME, SMALL_LOAD_TIME } from "../../service/common-service";
 
 export const NewsFeedPage = (props: NewsFeedPageProps): React.JSX.Element => {
-    const maxMenuOnWindowWidth = 1180;
-    const maxUnscaledRootWidth = 700;
     const { setTime }: any = useContext(AppContext);
 
     const [filtersOpen, setFiltersOpen] = useState(false);

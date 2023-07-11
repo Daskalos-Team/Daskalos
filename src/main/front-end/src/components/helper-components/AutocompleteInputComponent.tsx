@@ -9,6 +9,7 @@ import {
 import "@reach/combobox/styles.css";
 import "../news-feed-page/search-component/SearchComponent.css";
 import React from "react";
+import "./AutocompleteInputComponent.css";
 
 export const PlacesAutocompleteInput = ({setAddress}: any): React.JSX.Element => {
     const {
@@ -37,14 +38,16 @@ export const PlacesAutocompleteInput = ({setAddress}: any): React.JSX.Element =>
                 className="combobox-input"
                 placeholder="თქვენი ლოკაცია"
             />
-            <ComboboxPopover className={"suggestions-combo"}>
-                <ComboboxList>
-                    {status === "OK" &&
-                      data.map(({ place_id, description }) => (
-                          <ComboboxOption key={place_id} value={description} />
-                      ))}
-                </ComboboxList>
-            </ComboboxPopover>
+            {data.length > 0 && (
+                <ComboboxPopover className={"suggestions-combo"}>
+                    <ComboboxList className="combobox-list">
+                        {status === "OK" &&
+                            data.map(({ place_id, description }) => (
+                                <ComboboxOption key={place_id} value={description} />
+                            ))}
+                    </ComboboxList>
+                </ComboboxPopover>
+            )}
         </Combobox>
     );
 };

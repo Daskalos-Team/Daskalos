@@ -102,6 +102,7 @@
 }
 
 .authorization-form {
+    min-width: 350px;
     background-color: #f6f2f1;
     position: absolute;
     border-radius: 1em;
@@ -151,6 +152,10 @@
     align-items: center;
     justify-content: center;
     row-gap: 1rem;
+}
+
+.places-autocomplete-input {
+    width: 80%;
 }
 
 .password-section {

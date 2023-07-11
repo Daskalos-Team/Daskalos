@@ -181,7 +181,7 @@ export const AuthorizationPage = (props: AuthorizationPageProps): React.JSX.Elem
                 <div className="caption">
                     <div className="daskalos-name" data-text="&nbsp;დასკალოსი">&nbsp;დასკალოსი&nbsp;</div>
                     <h1 className="welcome">კეთილი იყოს თქვენი მობრძანება დასკალოსზე, იქ, სადაც მარტივია იპოვო სასურველი მოსწავლე ან მასწავლებელი</h1>
-                    <a href="#" className="more-button button-ghost">მეტი ჩვენ შესახებ</a>
+                    <a href="https://www.facebook.com/groups/262298213095632" target="_blank" rel="noreferrer" className="more-button button-ghost">მეტი ჩვენ შესახებ</a>
                 </div>
             </div>
             <div className="authorization-section">
@@ -234,7 +234,9 @@ export const AuthorizationPage = (props: AuthorizationPageProps): React.JSX.Elem
                         <input type="password" placeholder="თქვენი პაროლი" onInput={e => setPassword(e.currentTarget.value)}/>
                         { !loginOption ? <input type="text" placeholder="თქვენი სახელი" onInput={e => setName(e.currentTarget.value)}/> : null}
                         { !loginOption ? <input type="text" placeholder="თქვენი გვარი" onInput={e => setSurname(e.currentTarget.value)}/> : null}
-                        { !loginOption ? <PlacesAutocompleteInput setAddress={setFullAddress} /> : null}
+                        { !loginOption ? <div className="places-autocomplete-input">
+                            <PlacesAutocompleteInput setAddress={setFullAddress} />
+                        </div>: null}
                         { !loginOption ?
                             <div className="role-div">
                                 <h5 className="role-label">თქვენი როლი</h5>

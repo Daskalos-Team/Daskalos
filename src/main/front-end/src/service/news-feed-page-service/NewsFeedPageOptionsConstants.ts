@@ -181,6 +181,6 @@ export const MAX_MENU_ON_WINDOW_WIDTH = 1180;
 
 export const MAX_UNSCALED_ROOT_WIDTH = 700;
 
-export const SUBJECTS = ["მათემატიკა", "ქართული", "ფიზიკა", "ბიოლოგია", "გეოგრაფია", "ისტორია"];
+export const SUBJECTS = ["მათემატიკა", "ფიზიკა", "ქიმია", "ბიოლოგია", "ისტორია"];
 
 export const ON_PLACE_OPTIONS = ["ადგილზე", "დისტანციური", "ნებისმიერი"];
