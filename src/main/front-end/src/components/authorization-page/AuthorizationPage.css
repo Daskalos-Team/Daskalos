@@ -88,7 +88,7 @@
 }
 
 .verifier-close {
-    width: 45%;
+    width: 60% !important;
     height: 3em;
     background-color: lightcoral;
     color: white;

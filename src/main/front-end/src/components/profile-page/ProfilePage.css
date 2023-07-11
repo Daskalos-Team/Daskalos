@@ -200,7 +200,7 @@
     display: flex;
 }
 
-.profile-page-subjects, .profile-page-favourites {
+.profile-page-subjects {
     flex-basis: 300px;
     padding-top: 40px;
 }
@@ -209,7 +209,9 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
-    gap: 20px;
+    gap: 50px;
+    margin-top: 20px;
+    margin-bottom: 50px;
 }
 
 .your-favourites-label {
@@ -459,8 +461,22 @@
     100% {transform: translate(-50%, 0%) rotateZ(360deg);}
 }
 
+.checkbox-div {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-top: 5px;
+}
+
+.update-section {
+    display: flex;
+    justify-content: center !important;
+    flex-direction: column;
+    gap: 12px;
+}
+
 .update-description {
-    width: 30%;
+    width: 40%;
     height: 2em;
     margin-top: 2em;
     padding: 20pt;
@@ -558,29 +574,26 @@
 }
 
 .chat {
-    position: relative;
-    display: inline-block;
-    width: 30vw;
+    display: flex;
+    width: 100%;
     min-width: 400px;
     margin-left: 20px;
-    max-width: 80%;
 }
 
 .favourite-img {
-    height: 22vmin;
+    width: 20vmin;
+    height: 20vmin;
+    border-radius: 50%;
     z-index: 1000;
 }
 
 .profile {
-    display:  inline-block;
-    width: 22vmin;
-    height: 22vmin;
-    border-radius:  50%;
-    overflow:  hidden;
-    position: absolute;
-    top: -1vmin;
+    width: 20vmin;
+    height: 20vmin;
+    border-radius: 50%;
     border: 1vmin solid #fff;
     cursor: pointer;
+    z-index: 1000;
 }
 
 .message {
@@ -588,7 +601,7 @@
     color: grey;
     padding: 2vmin 5vmin 2vmin 10vmin;
     border-radius: 0 50px 50px 0;
-    margin-left: 16vmin;
+    margin-left: -4vmin;
     font-size: 3vmin;
     font-weight: 600;
     text-align: left;
@@ -597,13 +610,16 @@
 .user {
     text-align: left;
     padding: 2px 30px 5px 60px;
-    margin-left: 16vmin;
-    border-radius: 0 0 15px;
+    margin-left: -4vmin;
+    border-radius: 0 50px 50px 0;
     font-size: 3.2vmin;
     background: antiquewhite;
     color: #83aebd;
-    display: inline-block;
     float: left;
     font-weight: 600;
     font-style: normal;
+}
+
+.profile-description {
+    margin-top: 3vmin;
 }

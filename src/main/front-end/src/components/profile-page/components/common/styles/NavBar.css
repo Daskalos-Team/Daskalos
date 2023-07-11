@@ -34,6 +34,10 @@
 	border-radius: 40px;
 }
 
+.nav-background-short {
+	width: 300px;
+}
+
 .nav-list {
 	display: flex;
 	justify-content: space-around;

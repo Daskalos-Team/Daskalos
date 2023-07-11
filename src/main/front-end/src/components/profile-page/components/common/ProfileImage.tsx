@@ -11,7 +11,8 @@ export const ProfileImage = (props: any): React.JSX.Element => {
     const { userID, loggedUserID, width, userData, setUserData } = props;
     const [profileImage, setProfileImage] = React.useState(userData?.profileImage || defaultImage());
 
-    const onChange = (newImage: any) => {
+    const onChange = (newImage: any, newIndex: any) => {
+        console.log(newIndex);
         const newUrl = newImage["0"]["data_url"];
         setProfileImage(newUrl);
         const user = {...userData, profileImage: newUrl};
@@ -23,7 +24,7 @@ export const ProfileImage = (props: any): React.JSX.Element => {
             {
                 userID == loggedUserID ?
                     <ImageUploading
-                        multiple={false}
+                        multiple={true}
                         value={profileImage}
                         onChange={onChange}
                         dataURLKey="data_url"

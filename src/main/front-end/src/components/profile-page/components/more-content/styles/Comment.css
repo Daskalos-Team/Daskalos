@@ -8,6 +8,10 @@
 	--secondary-font: "Roboto", sans-serif;
 }
 
+a {
+	color: inherit;
+}
+
 .content-comment {
 	width: 90%;
 	mix-blend-mode: normal;
@@ -203,6 +207,7 @@
 	outline: none;
 	position: relative;
 	padding: 10px;
+	text-decoration: none;
 }
 
 .send-button::before {
@@ -218,6 +223,12 @@
 	transform: translate(-50%, -50%);
 	opacity: 0;
 	transition: all .3s ease-in-out 0s;
+	color: floralwhite;
+	text-decoration: none;
+}
+
+.send-button:hover {
+	color: whitesmoke;
 }
 
 .send-button:hover::before, .send-button:focus::before {
@@ -235,6 +246,8 @@
 	left: 50%;
 	transform: translate(-50%, -50%);
 	animation: ring 1.5s infinite;
+	color: floralwhite;
+	text-decoration: none;
 }
 
 .send-button:hover::after, .send-button:focus::after {

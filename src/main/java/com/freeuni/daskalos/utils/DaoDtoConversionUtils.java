@@ -116,7 +116,7 @@ public class DaoDtoConversionUtils {
                 teacherDTO.getUserType(),
                 teacherDTO.getPhoneNumber(),
                 toUserAddress(teacherDTO.getAddress()),
-                teacherDTO.getIsOnPlace(),
+                teacherDTO.getOnPlace(),
                 teacherDTO.getTitle(),
                 teacherDTO.getDescription(),
                 teacherDTO.getFbUrl(),
@@ -136,7 +136,7 @@ public class DaoDtoConversionUtils {
                 userType(teacher.getUserType()).
                 phoneNumber(teacher.getPhoneNumber()).
                 address(toUserAddressDTO(teacher.getAddress())).
-                isOnPlace(teacher.getOnPlace()).
+                onPlace(teacher.getOnPlace()).
                 teachersExperience(experience).
                 teacherRatings(ratings).
                 teacherSubjects(subjects).
