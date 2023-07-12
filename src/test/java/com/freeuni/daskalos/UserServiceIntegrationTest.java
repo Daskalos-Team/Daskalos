@@ -350,11 +350,11 @@ public class UserServiceIntegrationTest {
         assertEquals(userAddress.getLongitude(), 20.0, 0.00001);
 
         // update on place
-        userService.updateTeacher(TeacherDTO.builder().ID(t.getID()).isOnPlace(false).build());
-        assertFalse(userService.getTeacherDTO(t.getID()).getIsOnPlace());
+        userService.updateTeacher(TeacherDTO.builder().ID(t.getID()).onPlace(false).build());
+        assertFalse(userService.getTeacherDTO(t.getID()).getOnPlace());
 
-        userService.updateTeacher(TeacherDTO.builder().ID(t.getID()).isOnPlace(true).build());
-        assertTrue(userService.getTeacherDTO(t.getID()).getIsOnPlace());
+        userService.updateTeacher(TeacherDTO.builder().ID(t.getID()).onPlace(true).build());
+        assertTrue(userService.getTeacherDTO(t.getID()).getOnPlace());
 
         userService.updateTeacher(TeacherDTO.builder().ID(t.getID()).description("bla bla bla").title("ble ble ble").build());
         assertEquals("bla bla bla", userService.getTeacherDTO(t.getID()).getDescription());

@@ -1,14 +1,12 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import "./styles/Comment.css";
 import { addComment, months } from "../../../../service/profile-page-service";
-import { AppContext } from "../../../../App";
 
 export const Comment = (props: any): React.JSX.Element => {
     const { edit, studentID, teacherID, title, description, date, link, rating, userComments, setUserComments, userRatings, setUserRatings } = props;
-    const { setTime }: any = useContext(AppContext);
     const [score, setScore] = useState<number>(0);
     const [comment, setComment] = useState<string>("");
 
@@ -140,7 +138,13 @@ export const Comment = (props: any): React.JSX.Element => {
                                 <div className="bottom-send">
                                     <textarea className="description-area" maxLength={150} placeholder="დატოვეთ კომენტარი" onChange={e => setComment(e.currentTarget.value)} />
                                     <div className="wrap">
-                                        <button className="send-button" onClick={e => saveStudentComment(e)}>დამატება</button>
+                                        <a className="send-button"
+                                            target="_blank"
+                                            rel="noreferrer"
+                                            onClick={e => saveStudentComment(e)}
+                                        >
+                                            დამატება
+                                        </a>
                                     </div>
                                 </div>
                             </div>

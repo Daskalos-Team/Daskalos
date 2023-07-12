@@ -78,7 +78,7 @@ public class TeacherFilterProcessor implements FilterProcessor {
         if (filter.getOnPlace() == null) {
             return true;
         }
-        return teacherDTO.getIsOnPlace() == filter.getOnPlace();
+        return teacherDTO.getOnPlace() == filter.getOnPlace();
     }
 
     private boolean checkNameSurname(TeacherDTO teacherDTO) {

@@ -229,7 +229,7 @@ public abstract class User implements Serializable {
         this.linkedinUrl = linkedinUrl;
     }
 
-    @Column(columnDefinition = "NVARCHAR(MAX)")
+    @Column(columnDefinition = "LONGTEXT")
     public String getProfileImage() {
         return profileImage;
     }

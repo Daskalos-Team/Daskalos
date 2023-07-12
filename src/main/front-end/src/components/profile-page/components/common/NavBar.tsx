@@ -6,7 +6,7 @@ import { AppContext } from "../../../../App";
 import { NEWS_FEED_LOAD_TIME } from "../../../../service/common-service";
 
 export const NavBar = (props: any): React.JSX.Element => {
-    const { active } = props;
+    const { active, isCurrUser } = props;
     const { setTime }: any = useContext(AppContext);
 
     const scrollToTop = () => {
@@ -27,7 +27,7 @@ export const NavBar = (props: any): React.JSX.Element => {
         <React.Fragment>
             <div className="nav-container">
                 <nav className="navbar">
-                    <div className="nav-background">
+                    <div className={isCurrUser ? "nav-background" : "nav-background nav-background-short"}>
                         <ul className="nav-list">
                             <li
                                 className={
@@ -48,6 +48,7 @@ export const NavBar = (props: any): React.JSX.Element => {
                             >
                                 <Link to="/" onClick={() => moveToNewsFeed()}>მთავარი გვერდი</Link>
                             </li>
+                            {isCurrUser &&
                             <li
                                 className={
                                     active === "logout"
@@ -58,6 +59,7 @@ export const NavBar = (props: any): React.JSX.Element => {
                             >
                                 <a>გამოსვლა</a>
                             </li>
+                            }
                         </ul>
                     </div>
                 </nav>

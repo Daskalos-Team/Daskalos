@@ -36,7 +36,7 @@ public class TeacherDTO {
 
     private UserAddressDTO address;
 
-    private Boolean isOnPlace;
+    private Boolean onPlace;
 
     private String title;
 

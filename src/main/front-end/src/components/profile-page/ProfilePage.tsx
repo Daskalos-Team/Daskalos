@@ -27,6 +27,8 @@ import {
 import "./ProfilePage.css";
 import { Link, useParams } from "react-router-dom";
 import { getUserMainData } from "../../service/session-service";
+import styled from "styled-components";
+import { CheckboxComponent } from "../helper-components/CheckboxComponent";
 
 export const ProfilePage = (): React.JSX.Element => {
     const { userId, userType }: any = useParams();
@@ -55,6 +57,7 @@ export const ProfilePage = (): React.JSX.Element => {
     const [instagramUrl, setInstagramUrl] = useState<string>("");
     const [userFavourites, setUserFavourites] = useState<any>(undefined);
     const [userRatings, setUserRatings] = useState<any>(undefined);
+    const [checked, setChecked] = useState<any>(undefined);
 
     // large or small size during scroll
     const profileImageStyle: any = {
@@ -117,6 +120,12 @@ export const ProfilePage = (): React.JSX.Element => {
                     linkText: "იხილეთ დეტალები"
                 };
             });
+            const onPlace = userData.onPlace;
+            const checkedState = new Map([
+                ["დისტანციური სწავლება", onPlace == null ? true : !onPlace],
+                ["ადგილზე სწავლება", onPlace == null ? true : onPlace]
+            ]);
+            setChecked(checkedState);
             setUserSubjects(subjects);
             setUserComments(comments);
             updateFromUserData();
@@ -182,10 +191,54 @@ export const ProfilePage = (): React.JSX.Element => {
         return "rating-div-gold";
     };
 
+    const toggleCheckboxChecked = (checkboxName: string): void => {
+        if (curUserID != userId) {
+            return;
+        }
+        switch (checkboxName) {
+            case "დისტანციური სწავლება": {
+                const distant = checked.get("დისტანციური სწავლება");
+                const onPlace = checked.get("ადგილზე სწავლება");
+                if (distant && !onPlace) {
+                    alert("გთხოვთ მონიშნოთ მინიმუმ 1 ჩექბოქსი");
+                    return;
+                }
+                if (!distant && onPlace) {
+                    setUserData({...userData, onPlace: undefined});
+                } else if (distant) {
+                    setUserData({...userData, onPlace: true});
+                } else {
+                    setUserData({...userData, onPlace: false});
+                }
+                break;
+            }
+            case "ადგილზე სწავლება": {
+                const distant = checked.get("დისტანციური სწავლება");
+                const onPlace = checked.get("ადგილზე სწავლება");
+                if (!distant && onPlace) {
+                    alert("გთხოვთ მონიშნოთ მინიმუმ 1 ჩექბოქსი");
+                    return;
+                }
+                if (distant && !onPlace) {
+                    setUserData({...userData, onPlace: undefined});
+                } else if (onPlace) {
+                    setUserData({...userData, onPlace: false});
+                } else {
+                    setUserData({...userData, onPlace: true});
+                }
+                break;
+            }
+            default: break;
+        }
+        const newChecked = new Map(checked);
+        newChecked.set(checkboxName, !newChecked.get(checkboxName));
+        setChecked(newChecked);
+    };
+
     return (<>
         {userSubjects ? (<React.Fragment>
             <div className="page-content">
-                <NavBar active="profile" />
+                <NavBar active="profile" isCurrUser={curUserID == userId} />
 
                 <svg className="cover-svg" viewBox="0 0 1440 320" xmlns="http://www.w3.org/2000/svg">
                     <defs>
@@ -298,7 +351,11 @@ export const ProfilePage = (): React.JSX.Element => {
                                         />
                                     </a>
                                 </div>
-                                {curUserID == userId && <div className="update-description" onClick={() => showWindow()}>განახლება</div>}
+                                <div className="update-section">
+                                    {curUserID == userId && <div className="update-description" onClick={() => showWindow()}>განახლება</div>}
+                                    <div className="checkbox-div"><div>დისტანციური სწავლება </div><Checkbox checked={checked.get("დისტანციური სწავლება") as boolean} onClick={() => toggleCheckboxChecked("დისტანციური სწავლება")}/></div>
+                                    <div className="checkbox-div"><div>ადგილზე სწავლება </div><Checkbox checked={checked.get("ადგილზე სწავლება") as boolean} onClick={() => toggleCheckboxChecked("ადგილზე სწავლება")}/></div>
+                                </div>
                             </div>
 
                             <div className={dimmerState}></div>
@@ -413,11 +470,13 @@ export const ProfilePage = (): React.JSX.Element => {
                                                           alt=""/>
                                                   </Link>
                                               </div>
-                                              <div className="message">
-                                                  {favourite?.title}
-                                              </div>
-                                              <div className="user">
-                                                  {`${favourite.name} ${favourite.surname}`}
+                                              <div className="profile-description">
+                                                  <div className="message">
+                                                      {favourite?.title}
+                                                  </div>
+                                                  <div className="user">
+                                                      {`${favourite.name} ${favourite.surname}`}
+                                                  </div>
                                               </div>
                                           </div>))
                                   }
@@ -440,3 +499,9 @@ export const ProfilePage = (): React.JSX.Element => {
     </>
     );
 };
+
+const Checkbox = styled(CheckboxComponent)`
+  margin-right: 20px;
+  width: 35px;
+  height: 35px;
+`;

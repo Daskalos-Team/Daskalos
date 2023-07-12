@@ -42,6 +42,8 @@ https://www.fast.design/docs/integrations/react/
 2. გაჰყევით ინსტალერს next-ებით და კარგად დაიმახსოვრეთ username / password რასაც შეიყვანთ (სასურველია root / admin)
 3. დაამატეთ ინტელიჯეიში MySQL database პანელზე და მასში დაამატეთ ახალი სქემა სახელად: daskalos
 
+ასევე კონსოლში გაუშვით: `ALTER TABLE user MODIFY profile_image LONGTEXT;`
+
 -------------------------
 
 redis-ის გამართვის ინსტრუქცია

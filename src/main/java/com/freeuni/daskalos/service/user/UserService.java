@@ -89,7 +89,7 @@ public class UserService {
                         userType(teacherDTO.getUserType() != null ? teacherDTO.getUserType() : existingData.getUserType()).
                         phoneNumber(teacherDTO.getPhoneNumber() != null ? teacherDTO.getPhoneNumber() : existingData.getPhoneNumber()).
                         address(teacherDTO.getAddress() != null ? teacherDTO.getAddress() : existingData.getAddress()).
-                        isOnPlace(teacherDTO.getIsOnPlace() != null ? teacherDTO.getIsOnPlace() : existingData.getIsOnPlace()).
+                        onPlace(teacherDTO.getOnPlace()).
                         title(teacherDTO.getTitle() != null ? teacherDTO.getTitle() : existingData.getTitle()).
                         description(teacherDTO.getDescription() != null ? teacherDTO.getDescription() : existingData.getDescription()).
                         fbUrl(teacherDTO.getFbUrl() != null ? teacherDTO.getFbUrl() : existingData.getFbUrl()).
@@ -117,7 +117,7 @@ public class UserService {
                         userType(studentDTO.getUserType() != null ? studentDTO.getUserType() : existingData.getUserType()).
                         phoneNumber(studentDTO.getPhoneNumber() != null ? studentDTO.getPhoneNumber() : existingData.getPhoneNumber()).
                         userAddress(studentDTO.getUserAddress() != null ? studentDTO.getUserAddress() : existingData.getUserAddress()).
-                        onPlace(studentDTO.getOnPlace() != null ? studentDTO.getOnPlace() : existingData.getOnPlace()).
+                        onPlace(studentDTO.getOnPlace()).
                         title(studentDTO.getTitle() != null ? studentDTO.getTitle() : existingData.getTitle()).
                         description(studentDTO.getDescription() != null ? studentDTO.getDescription() : existingData.getDescription()).
                         fbUrl(studentDTO.getFbUrl() != null ? studentDTO.getFbUrl() : existingData.getFbUrl()).
