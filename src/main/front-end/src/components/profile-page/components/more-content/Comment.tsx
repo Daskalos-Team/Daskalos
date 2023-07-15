@@ -30,8 +30,8 @@ export const Comment = (props: any): React.JSX.Element => {
             addDate: fullDate
         };
 
-        setUserComments([...userComments, rating]);
-        setUserRatings([...userRatings, score]);
+        setUserComments([rating, ...userComments]);
+        setUserRatings([score, ...userRatings]);
         await addComment(studentID, teacherID, rating);
     };
 
