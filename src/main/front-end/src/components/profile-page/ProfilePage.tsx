@@ -45,7 +45,7 @@ export const ProfilePage = (): React.JSX.Element => {
 
     const [userData, setUserData] = useState<any>(undefined);
     const [userSubjects, setUserSubjects] = useState(undefined); // Subjects state
-    const [userComments, setUserComments] = useState<any[]>([]); // comments state
+    const [userComments, setUserComments] = useState<any>(undefined); // comments state
     const [windowState, setWindowState] = useState<string>("window-hide"); // edit window state
     const [dimmerState, setDimmerState] = useState<string>("dimmer-hide");
 
@@ -70,7 +70,7 @@ export const ProfilePage = (): React.JSX.Element => {
         boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.25)"
     };
 
-    const noCommentStyle: any = {
+    const noContentStyle: any = {
         display: "flex",
         "justify-content": "center",
         "align-items": "center",
@@ -108,8 +108,14 @@ export const ProfilePage = (): React.JSX.Element => {
 
     useEffect(() => {
         if (userData) {
-            let subjects = userType === "TEACHER" ? userData.teacherSubjects : userData.studentSubjects;
-            const comments = userType === "TEACHER" ? userData.teacherRatings : undefined;
+            let subjects: any = userSubjects;
+            if (!subjects) {
+                subjects = userType === "TEACHER" ? userData.teacherSubjects : userData.studentSubjects;
+            }
+            let comments: any = userComments;
+            if (!comments) {
+                comments = userType === "TEACHER" ? userData.teacherRatings : undefined;
+            }
             if (comments) {
                 setUserRatings(comments.map((comment: any) => comment.rating));
             }
@@ -419,6 +425,18 @@ export const ProfilePage = (): React.JSX.Element => {
                         {userType === "TEACHER" ?
                             <div className="profile-page-after-title">
                                 <div className="profile-page-comments">
+                                    {
+                                        userType === "TEACHER" && curUserType === "STUDENT" ?
+                                            <Comment
+                                                edit={true}
+                                                studentID={curUserID}
+                                                teacherID={userId}
+                                                userComments={userComments}
+                                                setUserComments={setUserComments}
+                                                userRatings={userRatings}
+                                                setUserRatings={setUserRatings}
+                                            /> : null
+                                    }
                                     {userComments && userComments.length !== 0 ? userComments.map((comment: any, index: any) => (
                                         <div
                                             className="profile-page-comment"
@@ -436,26 +454,14 @@ export const ProfilePage = (): React.JSX.Element => {
                                                 rating={comment?.rating}
                                             />
                                         </div>
-                                    )) : <h2 style={noCommentStyle}> კომენტარები არ არის </h2>}
-                                    {
-                                        userType === "TEACHER" && curUserType === "STUDENT" ?
-                                            <Comment
-                                                edit={true}
-                                                studentID={curUserID}
-                                                teacherID={userId}
-                                                userComments={userComments}
-                                                setUserComments={setUserComments}
-                                                userRatings={userRatings}
-                                                setUserRatings={setUserRatings}
-                                            /> : null
-                                    }
+                                    )) : <h2 style={noContentStyle}> კომენტარები არ არის </h2>}
                                 </div>
 
                                 <div className="profile-page-experiences">
                                     <Experience />
                                 </div>
                             </div> : null}
-                        {userFavourites &&
+                        {userFavourites && userFavourites.length > 0 &&
                           <>
                               <legend className="your-favourites-label">თქვენი ფავორიტები</legend>
                               <hr/>

@@ -26,6 +26,7 @@ export const Calendar = (props: any): React.JSX.Element => {
         durationBarVisible: true,
         eventDeleteHandling: userID == loggedUserID ? "Update" : "Disabled",
         eventResizeHandling: userID == loggedUserID ? "Update" : "Disabled",
+        eventMoveHandling: "Update",
         timeRangeSelectedHandling: userID == loggedUserID ? "Enabled" : "Disabled",
         onTimeRangeSelected: async (args: any) => {
             setArgs(args);
