@@ -96,5 +96,6 @@ public class AuthorizationService {
         SessionService.setUserType(user.getUserType());
         SessionService.setUserName(user.getName());
         SessionService.setUserSurname(user.getSurname());
+        SessionService.setUserProfileImage(user.getProfileImage());
     }
 }

@@ -32,6 +32,7 @@ export interface RecommendationProps {
     rating: number;
     description: string;
     subjects: string[];
+    profileImage: string | null;
 }
 
 export interface RecommendationRootProps {
@@ -96,6 +97,7 @@ export interface NewsFeedPageProps {
     userType: string;
     userName: string;
     userSurname: string;
+    profileImage: string | null;
 }
 
 export interface DropDownArrowProps {
@@ -119,6 +121,7 @@ export interface TopTeacherData {
     surname: string;
     rating: number;
     voterNum: number;
+    profileImage: string | null;
 }
 
 export interface Address {
@@ -147,7 +150,8 @@ export interface UserProps {
     description: string,
     rating: number,
     subjects: string[],
-    isFavourite: boolean
+    isFavourite: boolean,
+    profileImage: string | null
 }
 
 export const NewsFeedPageColorPalette = {

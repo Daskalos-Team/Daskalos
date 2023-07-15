@@ -12,14 +12,16 @@ export const MainPage = (): React.JSX.Element => {
     const [userType, setUserType] = useState("");
     const [userName, setUserName] = useState("");
     const [userSurname, setUserSurname] = useState("");
+    const [userProfileImage, setUserProfileImage] = useState<string | null>(null);
 
-    const logIn = (newUserId: number, newUserType: string, newUserName: string, newUserSurname: string) => {
+    const logIn = (newUserId: number, newUserType: string, newUserName: string, newUserSurname: string, newUserProfileImage: string | null) => {
         setUserId(newUserId);
         setCurUserID(newUserId);
         setUserType(newUserType);
         setCurUserType(newUserType);
         setUserName(newUserName);
         setUserSurname(newUserSurname);
+        setUserProfileImage(newUserProfileImage);
         setLoggedIn(true);
     };
 
@@ -29,12 +31,12 @@ export const MainPage = (): React.JSX.Element => {
             if (response.data.userId == null || (response.data.userId as number) < 0) {
                 return response;
             }
-            logIn(response.data.userId as number, response.data.userType, response.data.userName, response.data.userSurname);
+            logIn(response.data.userId as number, response.data.userType, response.data.userName, response.data.userSurname, response.data.userProfileImage);
             return response;
         }
         checkLoggedIn().catch(err => console.log(err));
     }, []);
 
-    return loggedIn ? <NewsFeedPage userId={userId} userType={userType} userName={userName} userSurname={userSurname}/>
+    return loggedIn ? <NewsFeedPage userId={userId} userType={userType} userName={userName} userSurname={userSurname} profileImage={userProfileImage}/>
         : <AuthorizationPage logInFn={logIn}/>;
 };
