@@ -52,7 +52,7 @@ export const updateUser = async (userId: number, type: string, userData: any): P
         }
     });
     return promise.then(response => {
-        // ok, updated.
+        return response;
     })
         .catch(err => {
             console.log(err);

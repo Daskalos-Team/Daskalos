@@ -1,6 +1,7 @@
 package com.freeuni.daskalos.controller;
 
 import com.freeuni.daskalos.dto.*;
+import com.freeuni.daskalos.repository.entities.Teacher;
 import com.freeuni.daskalos.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.error.ErrorController;
@@ -40,10 +41,10 @@ public class UserController implements ErrorController {
     }
 
     @PostMapping("/update_teacher")
-    public ResponseEntity<HttpStatus> updateTeacherData(@RequestBody TeacherDTO teacher) {
+    public ResponseEntity<?> updateTeacherData(@RequestBody TeacherDTO teacher) {
         try {
-            userService.updateTeacher(teacher);
-            return new ResponseEntity<>(HttpStatus.OK);
+            Teacher updatedTeacher = userService.updateTeacher(teacher);
+            return new ResponseEntity<>(updatedTeacher, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

@@ -58,6 +58,7 @@ export const ProfilePage = (): React.JSX.Element => {
     const [userFavourites, setUserFavourites] = useState<any>(undefined);
     const [userRatings, setUserRatings] = useState<any>(undefined);
     const [checked, setChecked] = useState<any>(undefined);
+    const [userExperiences, setUserExperiences] = useState<any>(undefined);
 
     // large or small size during scroll
     const profileImageStyle: any = {
@@ -136,7 +137,10 @@ export const ProfilePage = (): React.JSX.Element => {
             setUserComments(comments);
             updateFromUserData();
 
-            updateUser(userId, userType, userData);
+            updateUser(userId, userType, userData).then((response => {
+                console.log(response?.data.teachersExperience);
+                setUserExperiences(response?.data.teachersExperience);
+            }));
         }
     }, [userData]);
 
@@ -145,6 +149,12 @@ export const ProfilePage = (): React.JSX.Element => {
             updateSubjects(userId, userType, userSubjects);
         }
     }, [userSubjects]);
+
+    useEffect(() => {
+        if (userSubjects) {
+            // reload
+        }
+    }, [userExperiences]);
 
     const updateFromUserData = () => {
         setHeaderTitle(userData?.title || "მომხმარებელს არ გააჩნია მოკლე სათაური");
@@ -458,7 +468,7 @@ export const ProfilePage = (): React.JSX.Element => {
                                 </div>
 
                                 <div className="profile-page-experiences">
-                                    <Experience />
+                                    {userExperiences && <Experience userExperiences={userExperiences} userData={userData} setUserData={setUserData} isLoggedUser={curUserID == userId} />}
                                 </div>
                             </div> : null}
                         {userFavourites && userFavourites.length > 0 &&

@@ -2,11 +2,22 @@ package com.freeuni.daskalos.repository.entities;
 
 import com.freeuni.daskalos.repository.embeddables.UserAddress;
 import com.freeuni.daskalos.utils.UserType;
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
+import lombok.*;
 import reactor.util.annotation.NonNull;
 
+import java.util.List;
+
 @Entity
+@Getter
+@Setter
+@Builder
+@ToString
+@AllArgsConstructor
 public class Teacher extends User {
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    private List<Experience> teachersExperience;
 
     public Teacher(Long ID,
                    @NonNull String name,
@@ -23,16 +34,17 @@ public class Teacher extends User {
                    String twitterUrl,
                    String instaUrl,
                    String linkedinUrl,
-                   String profileImage) {
+                   String profileImage,
+                   List<Experience> teachersExperience) {
         super(ID, name, secondName, password, mail, userType, phoneNumber, address, onPlace, title, description, fbUrl, twitterUrl, instaUrl, linkedinUrl, profileImage);
+        this.teachersExperience = teachersExperience;
     }
 
-    // TODO make address still @NonNull later
     public Teacher(@NonNull String mail,
                    @NonNull String password,
                    @NonNull String name,
                    @NonNull String surname,
-                   UserAddress address,
+                   @NonNull UserAddress address,
                    @NonNull UserType userType,
                    Boolean onPlace,
                    String title,
