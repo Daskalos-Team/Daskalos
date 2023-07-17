@@ -422,6 +422,7 @@ const ProfileButtonMenuTop = styled.div`
 `;
 
 const ProfilePicture = styled.img`
+  object-fit: cover;
   width: 120px;
   height: 120px;
   padding: 14px;

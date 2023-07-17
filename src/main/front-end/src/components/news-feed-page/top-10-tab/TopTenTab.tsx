@@ -89,6 +89,7 @@ const TopTeacher = styled.div`
 `;
 
 const TopTeacherPicture = styled.img`
+  object-fit: cover;
   width: 6em;
   height: 6em;
   background-size: cover;

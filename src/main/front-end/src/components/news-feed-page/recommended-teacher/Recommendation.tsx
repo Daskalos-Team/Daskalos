@@ -121,6 +121,7 @@ const RecommendationTop = styled.div`
 `;
 
 const ProfilePicture = styled.img<RecommendationProfilePictureProps>`
+  object-fit: cover;
   width: 150px;
   height: 150px;
   border: 5px solid ${props => props.userType == "TEACHER" ? NewsFeedPageColorPalette.recommendedTeacherPictureBorder :
