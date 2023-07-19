@@ -53,9 +53,6 @@ public class TeacherFilterProcessor implements FilterProcessor {
         if (filter.getMinPrice() == null && filter.getMaxPrice() == null) {
             return true;
         }
-        if (teacherDTO.getTeacherSubjects().isEmpty()) {
-            return false;
-        }
         Map.Entry<Integer, Integer> teacherMinMaxPrice = getTeacherMinMaxPrice(teacherDTO);
         if (filter.getMinPrice() == null) {
             return filter.getMaxPrice() >= teacherMinMaxPrice.getValue();
