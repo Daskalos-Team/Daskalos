@@ -22,7 +22,7 @@ export const Recommendation = (props: RecommendationProps): React.JSX.Element =>
             setFavouriteAnimation(spinCounterClockwise);
         }
         setImageSrc(imageSrc == "/images/news-feed-page/FavouriteUnselected.png" ?
-            "images/news-feed-page/FavouriteSelected.png" :
+            "/images/news-feed-page/FavouriteSelected.png" :
             "/images/news-feed-page/FavouriteUnselected.png");
     };
     const SelectRecommendation = () => {
@@ -65,15 +65,17 @@ export const Recommendation = (props: RecommendationProps): React.JSX.Element =>
     );
 };
 
-const spinClockwise = keyframes`
+export const spinClockwise = keyframes`
   0% { transform: rotateY(0); pointer-events: none; background-image: url("/images/news-feed-page/FavouriteUnselected.png") }
-  50% { background-image: url("/images/news-feed-page/FavouriteSelected.png") }
+  50% { background-image: url("/images/news-feed-page/FavouriteSelected.png"); pointer-events: none }
+  99% { pointer-events: none }
   100% { transform: rotateY(3600deg); pointer-events: auto }
 `;
 
-const spinCounterClockwise = keyframes`
+export const spinCounterClockwise = keyframes`
   0% { transform: rotateY(0); pointer-events: none; background-image: url("/images/news-feed-page/FavouriteSelected.png") }
-  50% { background-image: url("/images/news-feed-page/FavouriteUnselected.png") }
+  50% { background-image: url("/images/news-feed-page/FavouriteUnselected.png"); pointer-events: none }
+  99% { pointer-events: none }
   100% { transform: rotateY(-3600deg); pointer-events: auto }
 `;
 

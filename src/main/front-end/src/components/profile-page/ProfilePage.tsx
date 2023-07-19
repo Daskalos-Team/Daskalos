@@ -27,8 +27,10 @@ import {
 import "./ProfilePage.css";
 import { Link, useParams } from "react-router-dom";
 import { getUserMainData } from "../../service/session-service";
-import styled from "styled-components";
+import styled, { Keyframes } from "styled-components";
 import { CheckboxComponent } from "../helper-components/CheckboxComponent";
+import { addFavourite, FavouriteProps, removeFavourite } from "../../service/news-feed-page-service";
+import { spinClockwise, spinCounterClockwise } from "../news-feed-page/recommended-teacher";
 
 export const ProfilePage = (): React.JSX.Element => {
     const { userId, userType }: any = useParams();
@@ -59,6 +61,22 @@ export const ProfilePage = (): React.JSX.Element => {
     const [checked, setChecked] = useState<any>(undefined);
     const [userExperiences, setUserExperiences] = useState<any>(undefined);
 
+    const [favouriteImageSrc, setFavouriteImageSrc] = useState("");
+    const [favouriteAnimation, setFavouriteAnimation] = useState<Keyframes | null>(null);
+
+    const FavouriteFunction = () => {
+        if (favouriteImageSrc == "/images/news-feed-page/FavouriteUnselected.png") {
+            addFavourite(curUserID, userId);
+            setFavouriteAnimation(spinClockwise);
+        } else {
+            removeFavourite(curUserID, userId);
+            setFavouriteAnimation(spinCounterClockwise);
+        }
+        setFavouriteImageSrc(favouriteImageSrc == "/images/news-feed-page/FavouriteUnselected.png" ?
+            "/images/news-feed-page/FavouriteSelected.png" :
+            "/images/news-feed-page/FavouriteUnselected.png");
+    };
+
     // large or small size during scroll
     const profileImageStyle: any = {
         display: "flex",
@@ -88,6 +106,19 @@ export const ProfilePage = (): React.JSX.Element => {
             }
             setCurUserID(response.data.userId as number);
             setCurUserType(response.data.userType);
+            if (response.data.userType == "STUDENT" && userType == "TEACHER") {
+                getStudentFavourites(response.data.userId as number).then(resp => {
+                    let selected = false;
+                    if (resp.data) {
+                        resp.data.forEach((favourite: any) => {
+                            if (favourite.id == userId) {
+                                selected = true;
+                            }
+                        });
+                    }
+                    setFavouriteImageSrc(selected ? "/images/news-feed-page/FavouriteSelected.png" : "/images/news-feed-page/FavouriteUnselected.png");
+                }).catch(err => console.log(err));
+            }
             return response;
         }
         getLoggedUser().then(response => {
@@ -292,6 +323,9 @@ export const ProfilePage = (): React.JSX.Element => {
                                 }
                             </div>
                         </div>
+                        {userType == "TEACHER" && curUserType == "STUDENT" && (
+                            <Favourite imageSrc={favouriteImageSrc} animation={favouriteAnimation} onClick={() => FavouriteFunction()}/>
+                        )}
                     </div>
 
                     <div className="profile-page-container">
@@ -518,4 +552,19 @@ const Checkbox = styled(CheckboxComponent)`
   margin-right: 20px;
   width: 35px;
   height: 35px;
+`;
+
+const Favourite = styled.div<FavouriteProps>`
+  width: 35px;
+  height: 35px;
+  margin-right: 30px;
+  margin-left: auto;
+  margin-bottom: 10px;
+  align-self: end;
+  box-sizing: border-box;
+  cursor: pointer;
+  background-size: cover;
+  background-image: url(${props => props.imageSrc});
+  animation: ${props => props.animation} 1s;
+  z-index: 10;
 `;
