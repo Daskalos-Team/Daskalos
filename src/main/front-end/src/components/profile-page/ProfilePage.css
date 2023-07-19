@@ -581,6 +581,7 @@
 }
 
 .favourite-img {
+    object-fit: cover;
     width: 20vmin;
     height: 20vmin;
     border-radius: 50%;
