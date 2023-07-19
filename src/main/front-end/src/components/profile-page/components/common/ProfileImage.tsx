@@ -12,8 +12,7 @@ export const ProfileImage = (props: any): React.JSX.Element => {
     const [profileImage, setProfileImage] = React.useState(userData?.profileImage || defaultImage());
 
     const onChange = (newImage: any, newIndex: any) => {
-        console.log(newIndex);
-        const newUrl = newImage[newIndex["0"]]["data_url"];
+        const newUrl = newImage["0"]["data_url"];
         setProfileImage(newUrl);
         const user = {...userData, profileImage: newUrl};
         setUserData(user);

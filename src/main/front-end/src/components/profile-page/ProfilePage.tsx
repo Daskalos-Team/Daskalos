@@ -35,7 +35,6 @@ import { spinClockwise, spinCounterClockwise } from "../news-feed-page/recommend
 export const ProfilePage = (): React.JSX.Element => {
     const { userId, userType }: any = useParams();
 
-    // TODO if needed in future
     const [stayProfileImage, setStayProfileImage] = useState(false);
     const [profileImageSize, setProfileImageSize] = useState(PROFILE_IMAGE_DEFAULT_SIZE);
     const [oldProfileImageSize, setOldProfileImageSize] = useState(PROFILE_IMAGE_DEFAULT_SIZE);
@@ -60,6 +59,7 @@ export const ProfilePage = (): React.JSX.Element => {
     const [userFavourites, setUserFavourites] = useState<any>(undefined);
     const [userRatings, setUserRatings] = useState<any>(undefined);
     const [checked, setChecked] = useState<any>(undefined);
+    const [userExperiences, setUserExperiences] = useState<any>(undefined);
 
     const [favouriteImageSrc, setFavouriteImageSrc] = useState("");
     const [favouriteAnimation, setFavouriteAnimation] = useState<Keyframes | null>(null);
@@ -167,7 +167,9 @@ export const ProfilePage = (): React.JSX.Element => {
             setUserComments(comments);
             updateFromUserData();
 
-            updateUser(userId, userType, userData);
+            updateUser(userId, userType, userData).then((response => {
+                setUserExperiences(response?.data.teachersExperience);
+            }));
         }
     }, [userData]);
 
@@ -176,6 +178,12 @@ export const ProfilePage = (): React.JSX.Element => {
             updateSubjects(userId, userType, userSubjects);
         }
     }, [userSubjects]);
+
+    useEffect(() => {
+        if (userExperiences) {
+            // reload
+        }
+    }, [userExperiences]);
 
     const updateFromUserData = () => {
         setHeaderTitle(userData?.title || "მომხმარებელს არ გააჩნია მოკლე სათაური");
@@ -492,7 +500,7 @@ export const ProfilePage = (): React.JSX.Element => {
                                 </div>
 
                                 <div className="profile-page-experiences">
-                                    <Experience />
+                                    {userExperiences && <Experience userExperiences={userExperiences} userData={userData} setUserData={setUserData} isLoggedUser={curUserID == userId} />}
                                 </div>
                             </div> : null}
                         {userFavourites && userFavourites.length > 0 &&

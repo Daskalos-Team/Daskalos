@@ -8,7 +8,6 @@ export const addressToCoordinates = async (address: string): Promise<any> => {
             return response.results[0].geometry.location;
         },
         (error) => {
-            console.log(error);
             return -1;
         }
     );

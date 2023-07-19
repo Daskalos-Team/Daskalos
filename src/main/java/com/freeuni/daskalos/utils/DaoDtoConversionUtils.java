@@ -9,7 +9,6 @@ import java.util.stream.Collectors;
 
 public class DaoDtoConversionUtils {
 
-    // TODO fix correct address
     public static User toUserEntity(UserDTO userDTO) {
         return userDTO.getUserType().equals(UserType.TEACHER.name()) ?
                 new Teacher(userDTO.getEmail(), userDTO.getPassword(), userDTO.getName(), userDTO.getSurname(), userDTO.getAddress(),
@@ -123,7 +122,8 @@ public class DaoDtoConversionUtils {
                 teacherDTO.getTwitterUrl(),
                 teacherDTO.getInstaUrl(),
                 teacherDTO.getLinkedinUrl(),
-                teacherDTO.getProfileImage());
+                teacherDTO.getProfileImage(),
+                teacherDTO.getTeachersExperience().stream().map(DaoDtoConversionUtils::toExperience).collect(Collectors.toList()));
     }
 
     public static TeacherDTO toTeacherDTO(Teacher teacher, List<ExperienceDTO> experience, List<TeacherRatingDTO> ratings, List<SubjectDTO> subjects) {
@@ -137,7 +137,6 @@ public class DaoDtoConversionUtils {
                 phoneNumber(teacher.getPhoneNumber()).
                 address(toUserAddressDTO(teacher.getAddress())).
                 onPlace(teacher.getOnPlace()).
-                teachersExperience(experience).
                 teacherRatings(ratings).
                 teacherSubjects(subjects).
                 title(teacher.getTitle()).
@@ -147,6 +146,7 @@ public class DaoDtoConversionUtils {
                 instaUrl(teacher.getInstaUrl()).
                 linkedinUrl(teacher.getLinkedinUrl()).
                 profileImage(teacher.getProfileImage()).
+                teachersExperience(teacher.getTeachersExperience() != null ? teacher.getTeachersExperience().stream().map(DaoDtoConversionUtils::toExperienceDTO).collect(Collectors.toList()) : experience).
                 build();
     }
 

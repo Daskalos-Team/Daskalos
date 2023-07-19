@@ -79,7 +79,7 @@ export const AuthorizationPage = (props: AuthorizationPageProps): React.JSX.Elem
 
     const googleLogin = useGoogleLogin({
         onSuccess: (codeResponse) => setUser(codeResponse),
-        onError: (error) => console.log("Login Failed:", error)
+        onError: () => undefined
     });
 
     const login = async (e: any) => {

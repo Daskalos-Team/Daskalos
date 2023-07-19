@@ -33,3 +33,6 @@ export const USER_TYPE_IN_GEORGIAN: any = {
     "TEACHER": "მასწავლებელი",
     "STUDENT": "მოსწავლე"
 };
+
+export const TEACHER_ROLE_MIN_LENGTH = 5;
+export const TEACHER_ROLE_DESCRIPTION_MIN_LENGTH = 5;

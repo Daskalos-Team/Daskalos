@@ -21,7 +21,7 @@ export const NavBar = (props: any): React.JSX.Element => {
     const logOut = () => {
         setUserMainData(-1, "STUDENT", "", "").then(_ => {
             navigate("/");
-        }).catch(err => console.log(err));
+        }).catch(() => undefined);
     };
 
     return (

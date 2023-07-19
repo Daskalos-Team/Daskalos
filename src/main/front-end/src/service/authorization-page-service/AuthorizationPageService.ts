@@ -59,7 +59,6 @@ export const changePassword = async (email: string, newPassword: string): Promis
         return true;
     }).catch(err => {
         alert(NOTIFICATION_MAP[err.response.data] || "");
-        console.log(err);
         return false;
     });
 };
@@ -70,7 +69,7 @@ export const sendVerificationCode = (email: string, code: string) => {
         user_code: code
     };
     emailjs.send(SERVICE_ID, TEMPLATE_ID, params, PUBLIC_KEY).then(function (res) {
-        console.log("confirmation mail successfully sent, statusCode: " + res.status);
+        // successfully sent
     });
 };
 

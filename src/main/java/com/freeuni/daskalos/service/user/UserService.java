@@ -76,7 +76,7 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
-    public void updateTeacher(TeacherDTO teacherDTO) {
+    public Teacher updateTeacher(TeacherDTO teacherDTO) {
         TeacherDTO existingData = getTeacherDTO(teacherDTO.getID());
         Teacher updatedTeacherData = DaoDtoConversionUtils.toTeacher(
                 TeacherDTO.builder().
@@ -102,6 +102,7 @@ public class UserService {
                         isFavoriteForLoggedInStudent(teacherDTO.getIsFavoriteForLoggedInStudent() != null ? teacherDTO.getIsFavoriteForLoggedInStudent() : existingData.getIsFavoriteForLoggedInStudent()).
                         build());
         teacherRepository.save(updatedTeacherData);
+        return teacherRepository.findById(teacherDTO.getID()).get();
     }
 
     public void updateStudent(StudentDTO studentDTO) {
