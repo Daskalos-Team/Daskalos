@@ -623,3 +623,7 @@
 .profile-description {
     margin-top: 3vmin;
 }
+
+.profile-image {
+    object-fit: cover;
+}

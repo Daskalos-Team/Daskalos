@@ -39,6 +39,7 @@ public class UserUtils {
     }
 
     public static Double teacherAverageRating(TeacherDTO teacherDTO) {
-        return teacherDTO.getTeacherRatings().stream().mapToDouble(TeacherRatingDTO::getRating).sum() / teacherDTO.getTeacherRatings().size();
+        double res = teacherDTO.getTeacherRatings().stream().mapToDouble(TeacherRatingDTO::getRating).sum() / teacherDTO.getTeacherRatings().size();
+        return Double.isNaN(res) ? 0 : res;
     }
 }

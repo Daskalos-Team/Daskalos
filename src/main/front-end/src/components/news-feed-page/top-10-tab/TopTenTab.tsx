@@ -19,7 +19,8 @@ export const TopTenTab = (): React.JSX.Element => {
                     surname: teacher.surname,
                     rating: teacher.teacherRatings.length == 0 ? 0 :
                         teacher.teacherRatings.reduce((sum: number, curr: any) => sum + curr.rating, 0) / teacher.teacherRatings.length,
-                    voterNum: teacher.teacherRatings.length
+                    voterNum: teacher.teacherRatings.length,
+                    profileImage: teacher.profileImage
                 });
             }
             setTopTeachers(newTopTeachers);
@@ -48,7 +49,7 @@ export const TopTenTab = (): React.JSX.Element => {
         <TopTenRoot>
             {topTeachers.map((teacher) => (
                 <TopTeacher key={teacher.teacherId} onClick={() => moveToTeachersPage(teacher.teacherId)}>
-                    <TopTeacherPicture src="/images/news-feed-page/TopTenIcon.png"/>
+                    <TopTeacherPicture src={teacher.profileImage || "/images/news-feed-page/TopTenIcon.png"}/>
                     <TopTeacherName>{teacher.name + " " + teacher.surname}</TopTeacherName>
                     <Rating>
                         <TopTeacherRatingNumeric>{teacher.rating.toFixed(1)}/10.0</TopTeacherRatingNumeric>
@@ -88,10 +89,12 @@ const TopTeacher = styled.div`
 `;
 
 const TopTeacherPicture = styled.img`
+  object-fit: cover;
   width: 6em;
   height: 6em;
   background-size: cover;
   margin-left: 1%;
+  border-radius: 50%;
 `;
 
 const TopTeacherName = styled.p`

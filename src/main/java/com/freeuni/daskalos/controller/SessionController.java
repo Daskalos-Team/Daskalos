@@ -29,8 +29,9 @@ public class SessionController {
         Long userId = SessionService.getUserId();
         String userName = SessionService.getUserName();
         String userSurname = SessionService.getUserSurname();
+        String userProfileImage = SessionService.getUserProfileImage();
         UserMainDataDTO res = new UserMainDataDTO(userId, userType == null ? "" : userType.name(),
-                userName == null ? "" : userName, userSurname == null ? "" : userSurname);
+                userName == null ? "" : userName, userSurname == null ? "" : userSurname, userProfileImage);
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 }

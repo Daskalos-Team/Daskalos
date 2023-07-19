@@ -23,4 +23,6 @@ public class UserMainDataDTO implements Serializable {
     private String userName;
 
     private String userSurname;
+
+    private String userProfileImage;
 }

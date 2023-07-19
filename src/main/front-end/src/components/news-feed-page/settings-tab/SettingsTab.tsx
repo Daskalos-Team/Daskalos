@@ -121,7 +121,7 @@ export const SettingsTab = (props: SettingsProps): React.JSX.Element => {
             <Setting>
                 <SettingTitleContainer onClick={() => toggleSettings(0)}>
                     <Arrows src="/images/news-feed-page/DownArrow.png" rotation={arrowRotations[0]} rotationDirection={1}/>
-                    <SettingTitle>რეკომენდირებული მასწავლებლების ფილტრები</SettingTitle>
+                    <SettingTitle>რეკომენდაციების ფილტრები</SettingTitle>
                     <Arrows src="/images/news-feed-page/DownArrow.png" rotation={arrowRotations[0]} rotationDirection={-1}/>
                 </SettingTitleContainer>
                 <SettingOptionsContainer open={settingOptionsOpen[0]} animation={settingOptionsAnimations[0]}>

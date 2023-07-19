@@ -45,4 +45,12 @@ public class SessionService {
     public static String getUserSurname() {
         return (String) getSession().getAttribute("surname");
     }
+
+    public static void setUserProfileImage(String profileImage) {
+        getSession().setAttribute("profileImage", profileImage);
+    }
+
+    public static String getUserProfileImage() {
+        return (String) getSession().getAttribute("profileImage");
+    }
 }
