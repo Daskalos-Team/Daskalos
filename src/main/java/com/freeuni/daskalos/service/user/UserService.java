@@ -9,6 +9,7 @@ import com.freeuni.daskalos.repository.entities.StudentToFavouriteTeacher;
 import com.freeuni.daskalos.repository.entities.Teacher;
 import com.freeuni.daskalos.service.experience.ExperienceService;
 import com.freeuni.daskalos.service.rating.RatingService;
+import com.freeuni.daskalos.service.session.SessionService;
 import com.freeuni.daskalos.service.subject.SubjectService;
 import com.freeuni.daskalos.utils.DaoDtoConversionUtils;
 import com.freeuni.daskalos.utils.UserUtils;
@@ -77,6 +78,9 @@ public class UserService {
     }
 
     public Teacher updateTeacher(TeacherDTO teacherDTO) {
+        if (teacherDTO.getID().equals(SessionService.getUserId())) {
+            SessionService.setUserProfileImage(teacherDTO.getProfileImage());
+        }
         TeacherDTO existingData = getTeacherDTO(teacherDTO.getID());
         Teacher updatedTeacherData = DaoDtoConversionUtils.toTeacher(
                 TeacherDTO.builder().
@@ -106,6 +110,9 @@ public class UserService {
     }
 
     public void updateStudent(StudentDTO studentDTO) {
+        if (studentDTO.getID().equals(SessionService.getUserId())) {
+            SessionService.setUserProfileImage(studentDTO.getProfileImage());
+        }
         StudentDTO existingData = getStudentDTO(studentDTO.getID());
         Student updatedStudentData = DaoDtoConversionUtils.toStudent(
                 StudentDTO.builder().
