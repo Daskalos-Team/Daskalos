@@ -34,7 +34,7 @@ export const MainPage = (): React.JSX.Element => {
             logIn(response.data.userId as number, response.data.userType, response.data.userName, response.data.userSurname, response.data.userProfileImage);
             return response;
         }
-        checkLoggedIn().catch(err => console.log(err));
+        checkLoggedIn().catch(() => undefined);
     }, []);
 
     return loggedIn ? <NewsFeedPage userId={userId} userType={userType} userName={userName} userSurname={userSurname} profileImage={userProfileImage}/>

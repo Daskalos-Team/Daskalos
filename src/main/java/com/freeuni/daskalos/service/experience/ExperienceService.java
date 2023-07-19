@@ -34,7 +34,6 @@ public class ExperienceService {
 
     public void removeTeacherExperience(ExperienceDTO experience) {
         experienceRepository.delete(DaoDtoConversionUtils.toExperience(experience));
-        teacherToExperienceRepository.deleteByExperienceID(experience.getID());
     }
 
     public ExperienceDTO addTeacherExperience(Long teacherID, ExperienceDTO experience) {

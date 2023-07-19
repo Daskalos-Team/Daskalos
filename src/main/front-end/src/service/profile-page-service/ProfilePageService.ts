@@ -12,7 +12,7 @@ export const getUserData = async (userId: number, type: string): Promise<any> =>
         return response;
     })
         .catch(err => {
-            console.log(err);
+            // error
         });
 };
 
@@ -26,7 +26,7 @@ export const getStudentFavourites = async (studentId: number): Promise<any> => {
         return response;
     })
         .catch(err => {
-            console.log(err);
+            // error
         });
 };
 
@@ -40,7 +40,7 @@ export const updateSubjects = async (userId: number, type: string, subjects: any
         // ok, updated.
     })
         .catch(err => {
-            console.log(err);
+            // error
         });
 };
 
@@ -52,10 +52,10 @@ export const updateUser = async (userId: number, type: string, userData: any): P
         }
     });
     return promise.then(response => {
-        // ok, updated.
+        return response;
     })
         .catch(err => {
-            console.log(err);
+            // error
         });
 };
 
@@ -69,6 +69,6 @@ export const addComment = async (studentID: string, teacherId: string, rating: a
         // ok, updated.
     })
         .catch(err => {
-            console.log(err);
+            // error
         });
 };
