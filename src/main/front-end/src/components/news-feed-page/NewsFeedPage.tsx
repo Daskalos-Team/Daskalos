@@ -82,7 +82,8 @@ export const NewsFeedPage = (props: NewsFeedPageProps): React.JSX.Element => {
                 rating: teacher.teacherRatings.length == 0 ? 0 :
                     teacher.teacherRatings.reduce((sum: number, curr: any) => sum + curr.rating, 0) / teacher.teacherRatings.length,
                 subjects: teacher.teacherSubjects.map((subject: any) => subject.name),
-                isFavourite: teacher.isFavoriteForLoggedInStudent
+                isFavourite: teacher.isFavoriteForLoggedInStudent,
+                profileImage: teacher.profileImage
             });
         }
         if (!filters.favouritesOnly && students != null) {
@@ -99,7 +100,8 @@ export const NewsFeedPage = (props: NewsFeedPageProps): React.JSX.Element => {
                     description: student.description,
                     rating: 0,
                     subjects: student.studentSubjects.map((subject: any) => subject.name),
-                    isFavourite: false
+                    isFavourite: false,
+                    profileImage: student.profileImage
                 });
             }
         }
@@ -203,7 +205,7 @@ export const NewsFeedPage = (props: NewsFeedPageProps): React.JSX.Element => {
                 />
                 <ProfileButtonMenu open={profileButtonMenuOpen} animation={profileButtonMenuAnimation}>
                     <ProfileButtonMenuTop>
-                        <ProfilePicture src="/images/news-feed-page/AccountIcon.png" alt="Profile Picture"/>
+                        <ProfilePicture src={props.profileImage || "/images/news-feed-page/AccountIcon.png"} alt="Profile Picture"/>
                         <UserName>{props.userName + " " + props.userSurname}</UserName>
                     </ProfileButtonMenuTop>
                     <ProfileButtonMenuOption onClick={setTime(SMALL_LOAD_TIME)}><Link to={`${props.userId}/${props.userType}`}>ჩემი პროფილი</Link></ProfileButtonMenuOption>
@@ -237,7 +239,7 @@ export const NewsFeedPage = (props: NewsFeedPageProps): React.JSX.Element => {
                                 <TabContent>
                                     {recommendations.map((r) => (
                                         <React.Fragment key={r.userId}>
-                                            <Recommendation currUserId={props.userId} currUserType={props.userType} isFavourite={r.isFavourite} rootScale={rootScale} userType={r.userType} userId={r.userId} name={r.name} surname={r.surname} rating={r.rating} description={r.description} subjects={r.subjects}/>
+                                            <Recommendation currUserId={props.userId} currUserType={props.userType} isFavourite={r.isFavourite} rootScale={rootScale} userType={r.userType} userId={r.userId} name={r.name} surname={r.surname} rating={r.rating} description={r.description} subjects={r.subjects} profileImage={r.profileImage}/>
                                         </React.Fragment>
                                     ))}
                                 </TabContent>
@@ -420,9 +422,11 @@ const ProfileButtonMenuTop = styled.div`
 `;
 
 const ProfilePicture = styled.img`
+  object-fit: cover;
   width: 120px;
   height: 120px;
   padding: 14px;
+  border-radius: 50%;
 `;
 
 const UserName = styled.p`

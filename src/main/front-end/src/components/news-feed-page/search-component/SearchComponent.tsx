@@ -21,6 +21,7 @@ import {
     SUBJECTS,
     UserFilters
 } from "../../../service/news-feed-page-service";
+import { useNavigate } from "react-router-dom";
 
 export const SearchComponent = (props: SearchComponentProps): React.JSX.Element => {
     const [map, setMap] = useState<any>(null);
@@ -53,6 +54,7 @@ export const SearchComponent = (props: SearchComponentProps): React.JSX.Element 
         },
         radius: radius / 1000
     });
+    const navigate = useNavigate();
 
     useEffect(() => {
         Geocode.setApiKey(API_KEY); // need API KEY for usage
@@ -96,7 +98,7 @@ export const SearchComponent = (props: SearchComponentProps): React.JSX.Element 
                     lng: teacher["address"]["longitude"]
                 }),
                 icon: {
-                    url: "ado.png",
+                    url: (teacher.profileImage || "/images/news-feed-page/TeachersIcon.png") + "#marker_image",
                     scaledSize: new google.maps.Size(ICON_SIZE, ICON_SIZE)
                 },
                 animation: window.google.maps.Animation.DROP,
@@ -110,11 +112,7 @@ export const SearchComponent = (props: SearchComponentProps): React.JSX.Element 
             });
 
             marker.addListener("click", () => {
-                const infoWindow = new google.maps.InfoWindow({
-                    content: "<h1> example </h1>",
-                    zIndex: 99
-                });
-                infoWindow.open(map, marker);
+                navigate(`/${teacher.id}/TEACHER`);
             });
 
             return marker;

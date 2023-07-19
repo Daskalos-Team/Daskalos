@@ -28,10 +28,15 @@ export const Recommendation = (props: RecommendationProps): React.JSX.Element =>
     const SelectRecommendation = () => {
         navigate(`/${props.userId}/${props.userType}/`);
     };
+    const defaultImage = () => {
+        let icon = "../../images/news-feed-page/";
+        icon += props.userType === "TEACHER" ? "TeachersIcon.png" : "StudentIcon.png";
+        return icon;
+    };
     return (
         <RecommendationRoot userType={props.userType} rootScale={props.rootScale}>
             <RecommendationTop>
-                <ProfilePicture userType={props.userType} src={"/images/news-feed-page/" + (props.userType == "TEACHER" ? "TeachersIcon.png" : "StudentIcon.png")}
+                <ProfilePicture userType={props.userType} src={props.profileImage || defaultImage()}
                     onClick={() => SelectRecommendation()}/>
                 <RecommendationTopRight>
                     <Name onClick={() => SelectRecommendation()}>{props.name + " " + props.surname}</Name>
@@ -116,7 +121,8 @@ const RecommendationTop = styled.div`
 `;
 
 const ProfilePicture = styled.img<RecommendationProfilePictureProps>`
-  width: 170px;
+  object-fit: cover;
+  width: 150px;
   height: 150px;
   border: 5px solid ${props => props.userType == "TEACHER" ? NewsFeedPageColorPalette.recommendedTeacherPictureBorder :
         NewsFeedPageColorPalette.recommendedStudentPictureBorder};
