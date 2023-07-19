@@ -102,7 +102,7 @@ public class UserService {
                         isFavoriteForLoggedInStudent(teacherDTO.getIsFavoriteForLoggedInStudent() != null ? teacherDTO.getIsFavoriteForLoggedInStudent() : existingData.getIsFavoriteForLoggedInStudent()).
                         build());
         teacherRepository.save(updatedTeacherData);
-        return updatedTeacherData;
+        return teacherRepository.findById(teacherDTO.getID()).get();
     }
 
     public void updateStudent(StudentDTO studentDTO) {

@@ -124,7 +124,7 @@ export const NewsFeedPage = (props: NewsFeedPageProps): React.JSX.Element => {
             return;
         }
         if (option_id == 0) {
-            updateRecommendations().catch(err => console.log(err));
+            updateRecommendations().catch(() => undefined);
         }
         const newSelectedOptions = [false, false];
         newSelectedOptions[option_id] = true;
@@ -148,7 +148,7 @@ export const NewsFeedPage = (props: NewsFeedPageProps): React.JSX.Element => {
     const LogOut = () => {
         setUserMainData(-1, props.userType, "", "").then(_ => {
             window.location.reload();
-        }).catch(err => console.log(err));
+        }).catch(() => undefined);
     };
 
     useEffect(() => {
@@ -179,7 +179,7 @@ export const NewsFeedPage = (props: NewsFeedPageProps): React.JSX.Element => {
 
     useEffect(() => {
         if (recommendations.length == 0) {
-            updateRecommendations().catch(err => console.log(err));
+            updateRecommendations().catch(() => undefined);
         }
     }, [filters]);
 

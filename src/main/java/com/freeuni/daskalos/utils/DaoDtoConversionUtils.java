@@ -9,7 +9,6 @@ import java.util.stream.Collectors;
 
 public class DaoDtoConversionUtils {
 
-    // TODO fix correct address
     public static User toUserEntity(UserDTO userDTO) {
         return userDTO.getUserType().equals(UserType.TEACHER.name()) ?
                 new Teacher(userDTO.getEmail(), userDTO.getPassword(), userDTO.getName(), userDTO.getSurname(), userDTO.getAddress(),

@@ -33,7 +33,6 @@ import { CheckboxComponent } from "../helper-components/CheckboxComponent";
 export const ProfilePage = (): React.JSX.Element => {
     const { userId, userType }: any = useParams();
 
-    // TODO if needed in future
     const [stayProfileImage, setStayProfileImage] = useState(false);
     const [profileImageSize, setProfileImageSize] = useState(PROFILE_IMAGE_DEFAULT_SIZE);
     const [oldProfileImageSize, setOldProfileImageSize] = useState(PROFILE_IMAGE_DEFAULT_SIZE);
@@ -138,7 +137,6 @@ export const ProfilePage = (): React.JSX.Element => {
             updateFromUserData();
 
             updateUser(userId, userType, userData).then((response => {
-                console.log(response?.data.teachersExperience);
                 setUserExperiences(response?.data.teachersExperience);
             }));
         }
@@ -151,7 +149,7 @@ export const ProfilePage = (): React.JSX.Element => {
     }, [userSubjects]);
 
     useEffect(() => {
-        if (userSubjects) {
+        if (userExperiences) {
             // reload
         }
     }, [userExperiences]);

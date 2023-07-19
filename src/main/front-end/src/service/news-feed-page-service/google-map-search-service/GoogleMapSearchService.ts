@@ -20,6 +20,5 @@ export const getTeachersInRadius = async (userId: number, filters: UserFilters):
         return res;
     }).catch(error => {
         alert("მასწავლებლები ამ რადიუსში ვერ მოიძებნა");
-        console.log(error);
     });
 };

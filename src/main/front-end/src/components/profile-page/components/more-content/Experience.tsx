@@ -5,15 +5,12 @@ import "./styles/Experience.css";
 
 export const Experience = (props: any): React.JSX.Element => {
     const { userExperiences, userData, setUserData, isLoggedUser } = props;
-    console.log(userExperiences);
 
     const removeExperience = (id: any): void => {
-        console.log(id);
         const updatedExperiences = userExperiences.filter((experience: any) => {
             return experience.id != id;
         });
         const updatedUserData = {...userData, teachersExperience: updatedExperiences};
-        console.log(updatedUserData);
         setUserData(updatedUserData);
     };
 
@@ -33,7 +30,7 @@ export const Experience = (props: any): React.JSX.Element => {
                                 />
                                 <div className="experience-title">{experience?.employer}</div>
                                 <div className="experience-subtitle">{experience?.jobDescription}</div>
-                                <div className="experience-duration">2019 - 2022</div>
+                                <div className="experience-duration">{experience?.startDate.split("T")[0]} -- {experience?.endDate.split("T")[0]}</div>
                                 {isLoggedUser && <div className="remove-experience" onClick={() => removeExperience(experience.id)}>x</div>}
                             </div>
                         ))}

@@ -37,7 +37,7 @@ export const addFavourite = (studentId: number, teacherId: number) => {
         headers: {
             "Content-type": "application/json; charset=UTF-8"
         }
-    }).catch(err => console.log(err));
+    }).catch(() => undefined);
 };
 
 export const removeFavourite = (studentId: number, teacherId: number) => {
@@ -45,5 +45,5 @@ export const removeFavourite = (studentId: number, teacherId: number) => {
         headers: {
             "Content-type": "application/json; charset=UTF-8"
         }
-    }).catch(err => console.log(err));
+    }).catch(() => undefined);
 };
