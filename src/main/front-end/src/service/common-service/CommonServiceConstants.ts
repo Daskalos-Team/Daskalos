@@ -1,6 +1,6 @@
 const PROD_ENDPOINT = "https://daskalos.herokuapp.com/";
 const LOCAL_ENDPOINT = "http://localhost:8080/";
-const ENDPOINT = LOCAL_ENDPOINT;
+const ENDPOINT = PROD_ENDPOINT;
 
 export const USER_ENDPOINT = `${ENDPOINT}user/`;
 export const NEWS_FEED_ENDPOINT = `${ENDPOINT}news_feed/`;
