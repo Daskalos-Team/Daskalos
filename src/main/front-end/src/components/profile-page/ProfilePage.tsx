@@ -408,8 +408,8 @@ export const ProfilePage = (): React.JSX.Element => {
 
                             <div className={dimmerState}></div>
                             <div className={windowState}>
-                                <textarea className="title-area description-area" maxLength={70} value={headerTitle} placeholder="მოკლე სათაური" onChange={(e) => setHeaderTitle(e.currentTarget.value)} />
-                                <textarea className="description-area" maxLength={150} value={headerDescription} placeholder="ზოგადი კომენტარი" onChange={(e) => setHeaderDescription(e.currentTarget.value)} />
+                                <textarea className="title-area description-area" maxLength={30} value={headerTitle} placeholder="მოკლე სათაური" onChange={(e) => setHeaderTitle(e.currentTarget.value)} />
+                                <textarea className="description-area" maxLength={100} value={headerDescription} placeholder="ზოგადი კომენტარი" onChange={(e) => setHeaderDescription(e.currentTarget.value)} />
 
                                 <h6 style={{color: "lightgreen"}}>________________ სოციალური ქსელები ________________</h6>
 
